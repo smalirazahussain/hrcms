@@ -54,12 +54,12 @@ public class Base_Class {
             String projectpath = System.getProperty("user.dir");
             System.out.println("Project path is:" + projectpath);
 
-            System.setProperty("webdriver.chrome.driver", "C:\\hrcms\\Kamelpay_Final_Automation-main\\apps\\chromedriver.exe");
+            System.setProperty("webdriver.chrome.driver", "apps/chromedriver.exe");
             driver = new ChromeDriver();
             //driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(4000));
             driver.manage().window().maximize();
             //System.setProperty("webdriver.chrome.whitelistedIps", "");
-            URL url = new URL("http://10.40.5.218:59610/#");
+            URL url = new URL("http://10.40.5.218:55291");
             driver.navigate().to(url);
 
 

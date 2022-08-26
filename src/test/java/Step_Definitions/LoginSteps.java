@@ -1,4 +1,4 @@
-/*package Step_Definitions;
+package Step_Definitions;
 
 import Pages.Android.LoginPage;
 import Pages.Android.SignUpPage;
@@ -6,6 +6,7 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import io.cucumber.java8.Th;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -33,9 +34,10 @@ public class LoginSteps {
     }
 
     @When("[Login Page] User enter the password {string}")
-    public void loginPageUserEnterThePassword(String password) {
+    public void loginPageUserEnterThePassword(String password) throws InterruptedException {
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(Enter_Password)));
         LoginPage.get_Enter_Password().sendKeys(password);
+        Thread.sleep(5000);
 
     }
 
@@ -46,10 +48,11 @@ public class LoginSteps {
         Thread.sleep(5000);
     }
 
-    @And("[Login page] Verified user land on upadte profile page {string}")
+    @And("[Login page] Verified user land on update profile page {string}")
     public void loginPageVerfiedUserLandOnUpadteProfilePage(String profile) throws InterruptedException {
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(Update_ProFile)));
         LoginPage.get_Update_ProFile().isDisplayed();
+        Assert.assertEquals(profile,"Update Profile");
         Thread.sleep(5000);
 
     }
@@ -58,12 +61,14 @@ public class LoginSteps {
     public void loginPageValidateErrorMessageInEmail(String email_error) {
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(Error_Message_In_Email)));
         LoginPage.get_Error_Message_In_Email().isDisplayed();
+        Assert.assertEquals(email_error, "Please enter your Email.");
     }
 
     @And("[Login page] Validate error message in Password {string}")
     public void loginPageValidateErrorMessageInPassword(String password_error) {
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(Error_Message_In_Password)));
         LoginPage.get_Error_Message_In_Password().isDisplayed();
+        Assert.assertEquals(password_error,"Please enter your Password.");
     }
 
     @And("[Login Page] User tap on eye button")
@@ -76,10 +81,20 @@ public class LoginSteps {
     @Then("[Login Page] User validate password is hidden {string}")
     public void loginPageUserValidatePasswordIsHidden(String password) {
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(Enter_Password)));
-        String current_password = LoginPage.get_Enter_Password().getText();
-        Assert.assertEquals(current_password,password);
+        LoginPage.get_Enter_Password().isDisplayed();
+        Assert.assertEquals(password,".........");
+        //String current_password = LoginPage.get_Enter_Password().getAttribute("value");
+        //Assert.assertEquals(current_password,password);
+    }
+
+    @Then("[Login Page] Validate the password {string}")
+    public void loginPageValidateThePassword(String current_password) throws InterruptedException {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(Enter_Password)));
+        LoginPage.get_Enter_Password().isDisplayed();
+        Assert.assertEquals(current_password,"Password1");
+        //String current_password = LoginPage.get_Enter_Password().getText();
+        Thread.sleep(5000);
     }
 }
 
 
-*/

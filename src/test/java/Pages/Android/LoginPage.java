@@ -24,6 +24,7 @@ public class LoginPage {
     public static String Error_Message_In_Email = ".error";
     public static String Error_Message_In_Password = ".error";
     public static String Eye_Button = "img[alt='icon']";
+    //public static String .ant-input-suffix img
 
     public LoginPage() {
     }
