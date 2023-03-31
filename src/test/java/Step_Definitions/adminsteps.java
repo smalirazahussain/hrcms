@@ -8,6 +8,7 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.cucumber.java8.Th;
+import org.bouncycastle.jcajce.provider.symmetric.Threefish;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -121,6 +122,7 @@ public class adminsteps {
     public void adminPageUserEnterTheCompanyName() throws InterruptedException {
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(Company_Client)));
         AdminPage.get_Company_Client().sendKeys(companyName+Keys.ENTER);
+        Thread.sleep(5000);
 
     }
 

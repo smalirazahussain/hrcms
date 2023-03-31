@@ -53,7 +53,7 @@ public class UpdateProfile {
     }
 
 
-    long first14;
+    public static long first14;
     @Then("[Update Profile] User enter the establishment id {string}")
     public void updateProfileUserEnterTheEstablishmentId(String eid) {
          first14 = (long) (Math.random() * 10000000000000000L);
@@ -147,9 +147,6 @@ public class UpdateProfile {
         //wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"root\"]/div/div/div[2]/div[2]")));
         UpdateProliePage.getSubmitButton().click();
 
-
-
-        Thread.sleep(50000);
 
     }
 

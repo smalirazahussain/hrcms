@@ -26,7 +26,7 @@ public class AdminPage {
     public static String Admin_Password = "#password";
     public static String Onboard_Approvals = "#onboardApprovals";
     //public static String Approve_Button = "div[role='dialog'] button[title='Approve']";
-    public static String Approve_Button ="div[class='btn-group'] div:nth-child(1) button:nth-child(1) span:nth-child(1)";
+    public static String Approve_Button ="div[class='ant-drawer-wrapper-body'] div:nth-child(1) button:nth-child(1) span:nth-child(2)";
     public static String Establishmentid = "ul:nth-child(1) li:nth-child(2) span:nth-child(2)";
     public static String View = "(//button[contains(@title,'View')])[1]";
     public static String company_Name = "//body//div//ul[2]";

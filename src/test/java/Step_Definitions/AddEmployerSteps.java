@@ -139,8 +139,8 @@ public class AddEmployerSteps<Save_mol> {
 //        Random random = new Random();
 //           long randomLong = random.nextLong();
 //        long  min = 100000000000000L;
-//        long  max = 900000000000000L;
-//        long randomLong = min + (long) (random.nextDouble() * (max - min));
+ //       long  max = 900000000000000L;
+  //      long randomLong = min + (long) (random.nextDouble() * (max - min));
 
         AddEmployerPages.get_Mol_No().sendKeys(first14 +Molno);
          EmpMol = first14 + Molno;
@@ -415,6 +415,7 @@ public class AddEmployerSteps<Save_mol> {
         String companyTittle = AddEmployerPages.get_Company_Tittle().getText();
         AddEmployerPages.get_Establishment_Id().sendKeys(companyTittle+Keys.ENTER);
          companyName = companyTittle;
+        System.out.println(companyName);
 
     }
 

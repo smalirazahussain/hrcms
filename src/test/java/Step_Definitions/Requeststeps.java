@@ -22,6 +22,7 @@ import static Pages.Android.RequestPage.Mol_Num;
 import static Pages.Android.UpdateProliePage.*;
 import static Step_Definitions.AddEmployerSteps.EmpMol;
 import static Step_Definitions.AddEmployerSteps.Passportno;
+import static Step_Definitions.UpdateProfile.first14;
 import static Tests.Current_Date.currentMonth;
 
 public class Requeststeps {
@@ -32,7 +33,8 @@ public class Requeststeps {
 
 
     @And("[Request Page] User tap on the request button")
-    public void requestPageUserTapOnTheRequestButton() {
+    public void requestPageUserTapOnTheRequestButton() throws InterruptedException {
+        Thread.sleep(10000);
         RequestPage.get_Request().click();
 
     }
@@ -48,14 +50,36 @@ public class Requeststeps {
     @And("[Request Page] User verify the mol and passport no and then click the approve button")
     public void requestPageUserVerifyTheMolAndPassportNoAndThenClickTheApproveButton() throws InterruptedException {
 
-        if(EmpMol == RequestPage.get_Mol_Num().getText()
-        && RequestPage.get_Passport_No().getText().equals(Passportno));{
-           AdminPage.get_Approve_Button().click();
+        if (EmpMol == RequestPage.get_Mol_Num().getText()
+                && RequestPage.get_Passport_No().getText().equals(Passportno)) ;
+        {
+            AdminPage.get_Approve_Button().click();
             wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(Approval_Ok)));
-           AdminPage.get_Approval_Ok().click();
+            AdminPage.get_Approval_Ok().click();
         }
-        System.out.println(EmpMol+Mol_Num+Passportno);
+        System.out.println(EmpMol + Mol_Num + Passportno);
+    }
+
+    @And("[Request Page] User verify the establishment id and then click the approval button")
+    public void requestPageUserVerifyTheEstablishmentIdAndThenClickTheApprovalButton() {
+        if (first14 == Long.parseLong(RequestPage.get_Admin_Est_id().getText())) {
+            AdminPage.get_Approve_Button().click();
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(Approval_Ok)));
+            AdminPage.get_Approval_Ok().click();
+
+        }
+    }
+
+    @And("[Request Page] User verify the establishment id in employer and then click the approval button")
+    public void requestPageUserVerifyTheEstablishmentIdInEmployerAndThenClickTheApprovalButton() {
+        if (first14 == Long.parseLong(RequestPage.get_Est_id().getText())) {
+            AdminPage.get_Approve_Button().click();
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(Approval_Ok)));
+            AdminPage.get_Approval_Ok().click();
+        }
     }
 }
+
+
 
 
