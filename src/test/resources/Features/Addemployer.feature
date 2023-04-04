@@ -1156,6 +1156,25 @@ Feature: AddEmployer
     And     [Employees Page] User enter Employee ID ""
 
 
+  Scenario Outline: Create Employee
+    Given I am on the Employees page
+    When I enter Employee ID "<employee_id>"
+    And I enter First Name "<first_name>"
+    And I enter Last Name "<last_name>"
+    And I enter Email "<email>"
+    And I enter Mobile "<mobile>"
+    And I enter Home Address "<home_address>"
+    And I enter Work Address "<work_address>"
+    And I click Submit button
+    Then Employee should be created successfully
+
+    Examples:
+      | employee_id | first_name | last_name | email             | mobile       | home_address           | work_address           |
+      | 1001        | John       | Smith     | john.smith@acme.com| 1234567890   | 123 Main St, Anytown   | 456 Oak Ave, Anycity   |
+      | 1002        | Jane       | Doe       | jane.doe@acme.com  | 9876543210   | 456 High St, Somewhere | 789 Low Ave, Anyplace |
+
+
+
 
 
 
