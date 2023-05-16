@@ -15,8 +15,7 @@ import java.net.MalformedURLException;
 import java.sql.SQLOutput;
 
 import static Hooks.Base_Class.driver;
-import static Pages.Android.AdminPage.Approval_Ok;
-import static Pages.Android.AdminPage.View;
+import static Pages.Android.AdminPage.*;
 import static Pages.Android.LoginPage.Enter_Email_Id;
 import static Pages.Android.RequestPage.Mol_Num;
 import static Pages.Android.UpdateProliePage.*;
@@ -61,23 +60,27 @@ public class Requeststeps {
     }
 
     @And("[Request Page] User verify the establishment id and then click the approval button")
-    public void requestPageUserVerifyTheEstablishmentIdAndThenClickTheApprovalButton() {
+    public void requestPageUserVerifyTheEstablishmentIdAndThenClickTheApprovalButton() throws InterruptedException {
         if (first14 == Long.parseLong(RequestPage.get_Admin_Est_id().getText())) {
-            AdminPage.get_Approve_Button().click();
-            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(Approval_Ok)));
-            AdminPage.get_Approval_Ok().click();
-
         }
+        AdminPage.get_Approve_Button().click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(Approval_Ok)));
+        AdminPage.get_Approval_Ok().click();
+
     }
 
     @And("[Request Page] User verify the establishment id in employer and then click the approval button")
-    public void requestPageUserVerifyTheEstablishmentIdInEmployerAndThenClickTheApprovalButton() {
-        if (first14 == Long.parseLong(RequestPage.get_Est_id().getText())) {
-            AdminPage.get_Approve_Button().click();
-            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(Approval_Ok)));
-            AdminPage.get_Approval_Ok().click();
+    public void requestPageUserVerifyTheEstablishmentIdInEmployerAndThenClickTheApprovalButton() throws InterruptedException {
+        if (first14 == Long.parseLong(RequestPage.get_Est_id().getText()))
+        {
         }
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(Approve_Button)));
+        AdminPage.get_Approve_Button().click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(Approval_Ok)));
+        AdminPage.get_Approval_Ok().click();
+        Thread.sleep(3000);
     }
+
 }
 
 

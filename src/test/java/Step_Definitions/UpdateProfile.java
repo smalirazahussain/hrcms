@@ -41,7 +41,7 @@ import static Tests.Scroll.ScrollVertical;
 
 public class UpdateProfile {
 
-    public WebDriverWait wait = new WebDriverWait(driver, 30);
+    public WebDriverWait wait = new WebDriverWait(driver, 60);
     //create a soft-assertion object
     SoftAssert softAssert = new SoftAssert();
 

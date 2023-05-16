@@ -66,7 +66,7 @@ public class Base_Class {
             //driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(4000));
             driver.manage().window().maximize();
             //System.setProperty("webdriver.chrome.whitelistedIps", "");
-            URL url = new URL("http://employer.getthelingo.com");
+            URL url = new URL("https://stage.exchangehouse.getthelingo.com/#");
             driver.navigate().to(url);
 
 
