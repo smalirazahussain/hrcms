@@ -69,7 +69,7 @@ public class Base_Class {
             //System.setProperty("webdriver.chrome.whitelistedIps", "");
             Duration timeout = Duration.ofSeconds(30);
             WebDriverWait wait = new WebDriverWait(driver, timeout);
-            URL url = new URL("https://stage.exchangehouse.getthelingo.com/#");
+            URL url = new URL("https://exchangehouse.getthelingo.com/#");
             driver.navigate().to(url);
 
 

@@ -34,7 +34,7 @@ public class AdminPage {
     public static String View = "(//button[contains(@title,'View')])[1]";
     public static String company_Name = "//body//div//ul[2]";
     public static String Trade_No = "//body//div//ul[2]";
-    public static String Approval_Ok = "//span[normalize-space()='OK']";
+    public static String Approval_Ok = "button:nth-child(2)";
     public static String Client_Approval = "#approval";
     public static String Company_Client = "(//input[@id=\"client\"])[2]";
     public static String Action_Successfully = "div[class='ant-message'] span:nth-child(2)";
@@ -90,7 +90,7 @@ public class AdminPage {
 
     public static WebElement get_Approval_Ok() {
 
-        return Base_Class.driver.findElement(By.xpath(Approval_Ok));
+        return Base_Class.driver.findElement(By.cssSelector(Approval_Ok));
     }
 
     public static WebElement get_Client_Approval() {

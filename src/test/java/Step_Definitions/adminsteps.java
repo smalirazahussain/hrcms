@@ -46,9 +46,9 @@ public class adminsteps {
     public void adminPageOpenTheAdminTab(String admintabURL) throws AWTException, InterruptedException, MalformedURLException {
 
         //wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(admin_Tab)));
-        //AdminPage.get_Admin_Tab().click();
+        AdminPage.get_Admin_Tab().click();
         driver.navigate().to(admintabURL);
-        Thread.sleep(10000);
+       // Thread.sleep(10000);
 
 /*        Robot rb = new Robot();
         rb.keyPress(KeyEvent.VK_CONTROL);

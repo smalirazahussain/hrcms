@@ -20,7 +20,7 @@ public class OnBoardApprovalHeadOfficePage {
 
     //locator
     public static String create_Account_Button = "//*[@text='Create account']";
-    public static String Onboard_Approval = "onBoardApprovals";
+    public static String  Onboard_Approval = "onBoardApprovals";
     public static String Phone_No = "ul:nth-child(3) > li:nth-child(7) > span:nth-child(2)";
 
 
