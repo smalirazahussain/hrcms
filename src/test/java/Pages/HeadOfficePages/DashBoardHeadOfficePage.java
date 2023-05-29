@@ -6,11 +6,16 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.Duration;
+
+import static Hooks.Base_Class.driver;
+
 
 public class DashBoardHeadOfficePage {
 
     private WebDriver driver;
-    public WebDriverWait wait = new WebDriverWait(driver, 30);
+    Duration timeout = Duration.ofSeconds(30);
+    WebDriverWait wait = new WebDriverWait(driver, timeout);
 
     //locator
     public static String create_Account_Button = "//*[@text='Create account']";

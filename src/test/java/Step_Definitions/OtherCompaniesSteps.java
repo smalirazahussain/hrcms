@@ -15,13 +15,16 @@ import org.testng.asserts.SoftAssert;
 
 import javax.print.attribute.standard.MediaSize;
 
+import java.time.Duration;
+
 import static Hooks.Base_Class.driver;
 import static Pages.Android.UpdateProliePage.*;
 import static Tests.Current_Date.currentYear;
 
 public class OtherCompaniesSteps {
 
-    public WebDriverWait wait = new WebDriverWait(driver, 30);
+    Duration timeout = Duration.ofSeconds(30);
+    WebDriverWait wait = new WebDriverWait(driver, timeout);
     //create a soft-assertion object
     SoftAssert softAssert = new SoftAssert();
 

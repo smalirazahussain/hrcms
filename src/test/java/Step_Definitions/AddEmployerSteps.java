@@ -12,10 +12,7 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.cucumber.java8.Th;
 import net.bytebuddy.pool.TypePool;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -28,6 +25,7 @@ import java.awt.event.KeyEvent;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.sql.SQLOutput;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -39,7 +37,8 @@ import static Tests.Current_Date.currentYear;
 
 public class AddEmployerSteps<Save_mol> {
 
-    public WebDriverWait wait = new WebDriverWait(driver, 30);
+    Duration timeout = Duration.ofSeconds(30);
+    WebDriverWait wait = new WebDriverWait(driver, timeout);
     //create a soft-assertion object
     SoftAssert softAssert = new SoftAssert();
 

@@ -10,6 +10,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import io.appium.java_client.android.AndroidElement;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 
 import java.net.MalformedURLException;
@@ -66,6 +67,8 @@ public class Base_Class {
             //driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(4000));
             driver.manage().window().maximize();
             //System.setProperty("webdriver.chrome.whitelistedIps", "");
+            Duration timeout = Duration.ofSeconds(30);
+            WebDriverWait wait = new WebDriverWait(driver, timeout);
             URL url = new URL("https://stage.exchangehouse.getthelingo.com/#");
             driver.navigate().to(url);
 

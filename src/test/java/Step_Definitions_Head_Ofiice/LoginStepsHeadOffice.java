@@ -12,16 +12,21 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 
+import java.time.Duration;
+import java.time.Instant;
+
 import static Hooks.Base_Class.driver;
 import static Pages.Android.LoginPage.Enter_Email_Id;
 import static Pages.Android.LoginPage.Enter_Password;
+import static Pages.HeadOfficePages.HeadOfficeLoginPage.Head_office_Email;
 //import static Pages.Android.LoginPage.create_Account_Button;
 //import static Tests.Useful_functions.getRandomNumberLowerAndUpperBound;
 
 
 public class LoginStepsHeadOffice {
 
-    public WebDriverWait wait = new WebDriverWait(driver, 30);
+//    Duration timeout = Duration.ofSeconds(30);
+//    WebDriverWait wait = new WebDriverWait(driver, timeout);
     //create a soft-assertion object
     SoftAssert softAssert = new SoftAssert();
 
@@ -33,6 +38,7 @@ public class LoginStepsHeadOffice {
 
     @When("[Login Head Office Page] User enter email id {string}")
     public void loginHeadOfficePageUserEnterEmailId(String email) {
+       // wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(Head_office_Email)));
         HeadOfficeLoginPage.get_Head_office_Email().sendKeys(email);
     }
 
@@ -44,6 +50,7 @@ public class LoginStepsHeadOffice {
 
     @And("[Login Head Office Page] User tap on the login button")
     public void loginHeadOfficePageUserTapOnTheLoginButton() throws InterruptedException {
+
         HeadOfficeLoginPage.get_Head_office_Login_Button().click();
         Thread.sleep(5000);
     }

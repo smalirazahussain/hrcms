@@ -8,12 +8,16 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import javax.swing.plaf.nimbus.State;
+import java.time.Duration;
+
+import static Hooks.Base_Class.driver;
 
 
 public class OtherCompaniesPage {
 
     private WebDriver driver;
-    public WebDriverWait wait = new WebDriverWait(driver, 30);
+    Duration timeout = Duration.ofSeconds(30);
+    WebDriverWait wait = new WebDriverWait(driver, timeout);
 
     //locator
     public static String Other_Companies = "#companies";

@@ -25,6 +25,7 @@ import java.awt.datatransfer.StringSelection;
 import java.awt.event.KeyEvent;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.time.Duration;
 import java.util.ArrayList;
 
 import static Hooks.Base_Class.driver;
@@ -35,8 +36,8 @@ import static Step_Definitions.AddEmployerSteps.companyName;
 import static Tests.Current_Date.currentMonth;
 
 public class adminsteps {
-
-    public WebDriverWait wait = new WebDriverWait(driver, 30);
+    Duration timeout = Duration.ofSeconds(30);
+    WebDriverWait wait = new WebDriverWait(driver, timeout);
     //create a soft-assertion object
     SoftAssert softAssert = new SoftAssert();
 

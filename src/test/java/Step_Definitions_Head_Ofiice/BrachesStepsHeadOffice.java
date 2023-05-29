@@ -1,5 +1,6 @@
 package Step_Definitions_Head_Ofiice;
 
+import Pages.Android.SignUpPage;
 import Pages.HeadOfficePages.BranchesHeadOfficePage;
 import Pages.HeadOfficePages.HeadOfficeLoginPage;
 import io.appium.java_client.android.nativekey.KeyEvent;
@@ -7,18 +8,26 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 
+import java.time.Duration;
+
 import static Hooks.Base_Class.driver;
+import static Pages.Android.SignUpPage.signUpUserEnterThePhoneNo;
+import static Pages.HeadOfficePages.BranchesHeadOfficePage.Toast_message;
 //import static Pages.Android.LoginPage.create_Account_Button;
 //import static Tests.Useful_functions.getRandomNumberLowerAndUpperBound;
 
 
 public class BrachesStepsHeadOffice {
 
-    public WebDriverWait wait = new WebDriverWait(driver, 30);
+    Duration timeout = Duration.ofSeconds(30);
+    WebDriverWait wait = new WebDriverWait(driver, timeout);
     //create a soft-assertion object
     SoftAssert softAssert = new SoftAssert();
 
@@ -70,17 +79,26 @@ public class BrachesStepsHeadOffice {
     }
 
     @And("[Branch Head Office Page] User validate toast message {string}")
-    public void branchHeadOfficePageUserValidateToastMessage(String arg0) {
+    public void branchHeadOfficePageUserValidateToastMessage(String toastMsg) throws InterruptedException {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(Toast_message)));
         String message = BranchesHeadOfficePage.get_Toast_message().getText();
+        Assert.assertEquals(message,toastMsg);
         System.out.println(message);
     }
-
+    public static String phno ;
     @And("[Branch Head Office Page] User enter branch phone no {string}")
     public void branchHeadOfficePageUserEnterBranchPhoneNo(String no) {
         Long randomempno = (long) ((Math.random() * 10000000L));
         String phoneNo = String.valueOf(randomempno); // Convert Long to String
-        BranchesHeadOfficePage.get_Branch_Phone_No().sendKeys(no);
+        BranchesHeadOfficePage.get_Branch_Phone_No().click();
+        BranchesHeadOfficePage.get_Branch_Phone_No().sendKeys(no+randomempno);
+        String  phno = String.valueOf(Long.parseLong(no+randomempno));
+
         System.out.println(randomempno);
+//        SignUpPage.signUpUserEnterThePhoneNo().click();
+
+//        SignUpPage.signUpUserEnterThePhoneNo().sendKeys(no);
+
     }
 
 

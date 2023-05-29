@@ -15,6 +15,7 @@ import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 
 import java.sql.SQLOutput;
+import java.time.Duration;
 
 import static Hooks.Base_Class.driver;
 import static Pages.Android.LinkEstablishmentIdPage.Est_Already_Submitted;
@@ -29,7 +30,8 @@ import static Tests.Current_Date.currentYear;
 
 public class LinkEstablishmentIdSteps {
 
-    public WebDriverWait wait = new WebDriverWait(driver, 30);
+    Duration timeout = Duration.ofSeconds(30);
+    WebDriverWait wait = new WebDriverWait(driver, timeout);
     //create a soft-assertion object
     SoftAssert softAssert = new SoftAssert();
 

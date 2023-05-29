@@ -8,13 +8,17 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.Duration;
 import java.util.BitSet;
+
+import static Hooks.Base_Class.driver;
 
 
 public class SubAdminPages {
 
     private WebDriver driver;
-    public WebDriverWait wait = new WebDriverWait(driver, 30);
+    Duration timeout = Duration.ofSeconds(30);
+    WebDriverWait wait = new WebDriverWait(driver, timeout);
     //locator
     public static String Sub_Admin_Button = "#user";
     public static String Add_Admin_BUtton= "//button[@title='Add Team Member']";

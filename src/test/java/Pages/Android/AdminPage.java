@@ -10,14 +10,17 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.awt.*;
+import java.time.Duration;
 
+import static Hooks.Base_Class.driver;
 import static Pages.Android.SubAdminPages.Email;
 
 
 public class AdminPage {
 
     private WebDriver driver;
-    public WebDriverWait wait = new WebDriverWait(driver, 30);
+    Duration timeout = Duration.ofSeconds(30);
+    WebDriverWait wait = new WebDriverWait(driver, timeout);
 
     //locator
     public static String admin_Tab = "//div[@class='body-container scroll-y']";
@@ -26,12 +29,12 @@ public class AdminPage {
     public static String Admin_Password = "#password";
     public static String Onboard_Approvals = "#onboardApprovals";
     //public static String Approve_Button = "div[role='dialog'] button[title='Approve']";
-    public static String Approve_Button ="//div[contains(@class,'btn-group')]//span[contains(text(),'Approve')]";
+    public static String Approve_Button ="div:nth-child(2) > div:nth-child(1) > button:nth-child(1)";
     public static String Establishmentid = "ul:nth-child(1) li:nth-child(2) span:nth-child(2)";
     public static String View = "(//button[contains(@title,'View')])[1]";
     public static String company_Name = "//body//div//ul[2]";
     public static String Trade_No = "//body//div//ul[2]";
-    public static String Approval_Ok = "(//span[normalize-space()='OK'])";
+    public static String Approval_Ok = "//span[normalize-space()='OK']";
     public static String Client_Approval = "#approval";
     public static String Company_Client = "(//input[@id=\"client\"])[2]";
     public static String Action_Successfully = "div[class='ant-message'] span:nth-child(2)";
@@ -61,7 +64,7 @@ public class AdminPage {
     }
 
     public static WebElement get_Approve_Button() {
-        return Base_Class.driver.findElement(By.xpath(Approve_Button));
+        return Base_Class.driver.findElement(By.cssSelector(Approve_Button));
     }
     public static WebElement get_Establishmentid() {
         return Base_Class.driver.findElement(By.cssSelector(Establishmentid));

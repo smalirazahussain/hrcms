@@ -8,14 +8,17 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.awt.*;
+import java.time.Duration;
 
+import static Hooks.Base_Class.driver;
 import static Pages.Android.AdminPage.View;
 
 
 public class RequestPage {
 
     private WebDriver driver;
-    public WebDriverWait wait = new WebDriverWait(driver, 30);
+    Duration timeout = Duration.ofSeconds(30);
+    WebDriverWait wait = new WebDriverWait(driver, timeout);
 
     public static String Request = "/requests";
     public static String Mol_Num = "(//span[.='MOL Number'])[1]//following-sibling::*";

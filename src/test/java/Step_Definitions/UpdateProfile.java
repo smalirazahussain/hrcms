@@ -26,6 +26,7 @@ import org.testng.asserts.SoftAssert;
 import java.awt.*;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.KeyEvent;
+import java.time.Duration;
 import java.time.Instant;
 
 import static Hooks.Base_Class.driver;
@@ -41,7 +42,8 @@ import static Tests.Scroll.ScrollVertical;
 
 public class UpdateProfile {
 
-    public WebDriverWait wait = new WebDriverWait(driver, 60);
+    Duration timeout = Duration.ofSeconds(30);
+    WebDriverWait wait = new WebDriverWait(driver, timeout);
     //create a soft-assertion object
     SoftAssert softAssert = new SoftAssert();
 

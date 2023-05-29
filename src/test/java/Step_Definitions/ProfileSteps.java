@@ -14,6 +14,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 
+import java.time.Duration;
+
 import static Hooks.Base_Class.driver;
 import static Pages.Android.LoginPage.Enter_Email_Id;
 import static Pages.Android.LoginPage.Enter_Password;
@@ -24,7 +26,8 @@ import static Step_Definitions.AddEmployerSteps.companyName;
 
 public class ProfileSteps {
 
-    public WebDriverWait wait = new WebDriverWait(driver, 30);
+    Duration timeout = Duration.ofSeconds(30);
+    WebDriverWait wait = new WebDriverWait(driver, timeout);
     //create a soft-assertion object
     SoftAssert softAssert = new SoftAssert();
 

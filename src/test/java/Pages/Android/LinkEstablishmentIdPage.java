@@ -8,13 +8,17 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import javax.swing.*;
 
+import java.time.Duration;
+
+import static Hooks.Base_Class.driver;
 import static Pages.Android.AddEmployerPages.Notification_Message;
 
 
 public class LinkEstablishmentIdPage {
 
     private WebDriver driver;
-    public WebDriverWait wait = new WebDriverWait(driver, 30);
+    Duration timeout = Duration.ofSeconds(30);
+    WebDriverWait wait = new WebDriverWait(driver, timeout);
     public static String Add_Estblishment_Button = "addTradeLicense";
     public static String EstExpireDate = "expiryDate0";
     public static String Est_Notification_Message = "//span[normalize-space()='Approval is processed for further actions']";

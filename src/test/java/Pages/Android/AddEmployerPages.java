@@ -9,8 +9,10 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import javax.management.Notification;
 import java.awt.*;
+import java.time.Duration;
 import java.util.BitSet;
 
+import static Hooks.Base_Class.driver;
 import static Pages.Android.UpdateProliePage.*;
 import static Pages.Android.UpdateProliePage.document;
 
@@ -18,7 +20,8 @@ import static Pages.Android.UpdateProliePage.document;
 public class AddEmployerPages {
 
     private WebDriver driver;
-    public WebDriverWait wait = new WebDriverWait(driver, 30);
+    Duration timeout = Duration.ofSeconds(30);
+    WebDriverWait wait = new WebDriverWait(driver, timeout);
 
 
     //locator

@@ -13,6 +13,7 @@ import org.testng.asserts.SoftAssert;
 import java.awt.*;
 import java.net.MalformedURLException;
 import java.sql.SQLOutput;
+import java.time.Duration;
 
 import static Hooks.Base_Class.driver;
 import static Pages.Android.AdminPage.*;
@@ -26,7 +27,8 @@ import static Tests.Current_Date.currentMonth;
 
 public class Requeststeps {
 
-    public WebDriverWait wait = new WebDriverWait(driver, 30);
+    Duration timeout = Duration.ofSeconds(30);
+    WebDriverWait wait = new WebDriverWait(driver, timeout);
     //create a soft-assertion object
     SoftAssert softAssert = new SoftAssert();
 

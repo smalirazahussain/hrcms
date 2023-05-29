@@ -6,11 +6,19 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.Duration;
+
 
 public class UpdateProliePage {
 
     private WebDriver driver;
-    public WebDriverWait wait = new WebDriverWait(driver, 30);
+    Duration timeout = Duration.ofSeconds(30);
+    WebDriverWait wait = new WebDriverWait(driver, timeout);
+
+
+//    WebDriver driver =...; // Initialize your WebDriver object
+//    Duration timeout = Duration.ofSeconds(30);
+//    WebDriverWait wait = new WebDriverWait(driver, timeout);
 
     //locator
     public static String establishmentId = "input[placeholder='Establishment ID']";

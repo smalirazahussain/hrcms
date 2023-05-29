@@ -15,10 +15,17 @@ Feature: Branches
     Then   [Branch Head Office Page] User enter the email address "UKbranch"
     And    [Branch Head Office Page] User enter the Password "Password1"
     When   [Branch Head Office Page] User enter the confirm Password "Password1"
-    And    [Branch Head Office Page] User enter branch phone no "8 888 8888"
+    And    [Branch Head Office Page] User enter branch phone no "971"
     Then   [Branch Head Office Page] User tap on add branch button
-    And    [Branch Head Office Page] User validate toast message ""
-
+    And    [Branch Head Office Page] User validate toast message "Branch has been created and has been sent for further approval."
+    Then   [OnBoard Approval Head Office Page] User tap onboard approval
+    And    [OnBoard Approval Head Office Page] User tap on view button
+    Then   [Admin Page] Open the admin tab "http://stage.admin.getthelingo.com"
+    And    [Admin Page] User tap on login page
+    Then   [Admin Page] User enter the  email "admin@admin.com"
+    When   [Admin Page] User enter the Password "12345678"
+    And    [Admin Page] User tap on login page
+    When   [Admin Page] User tap on client Approvals
 
 
 

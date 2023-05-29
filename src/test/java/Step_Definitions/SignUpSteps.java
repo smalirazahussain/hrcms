@@ -13,6 +13,7 @@ import org.testng.asserts.SoftAssert;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.time.Duration;
 import java.util.Random;
 
 import static Hooks.Base_Class.driver;
@@ -25,7 +26,8 @@ import static Tests.Current_Date.currentMonth;
 
 public class SignUpSteps {
 
-    public WebDriverWait wait = new WebDriverWait(driver, 30);
+    Duration timeout = Duration.ofSeconds(30);
+    WebDriverWait wait = new WebDriverWait(driver, timeout);
     //create a soft-assertion object
     SoftAssert softAssert = new SoftAssert();
 
