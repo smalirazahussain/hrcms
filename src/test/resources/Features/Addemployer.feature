@@ -1148,30 +1148,28 @@ Feature: AddEmployer
       Then    [Employees Page] User tap on Template button "kamelpayEmployees"
 
   Scenario: User Download a KamelPays Bulk Employees file download and add employee detail
-    #Given   [Login Page] User enter the email "11793"
-    #When    [Login Page] User enter the password "Password1"
-    #Then    [Login page] User tap on login button
-    #Then    [Employees Page] User tap on employees button
-    #Then    [Employees Page] User tap on Template button "kamelpayEmployees"
+    Given   [Login Page] User enter the email "11793"
+    When    [Login Page] User enter the password "Password1"
+    Then    [Login page] User tap on login button
+    Then    [Employees Page] User tap on employees button
+    Then    [Employees Page] User tap on Template button "kamelpayEmployees"
     And     [Employees Page] User enter Employee ID ""
 
+ Scenario Outline: User create a excel and enter the multiple employee data and then approve the admin side
+   Given   [Login Page] User enter the email "11793"
+   When    [Login Page] User enter the password "Password1"
+   Then    [Login page] User tap on login button
+   Then    [Employees Page] User tap on employees button
+   And     [Employees Page] User create a multiple data for the employer "<MolNo>" "<EmpCode>" "<FirstName>" "<LastName>" "<DisplayName>" "<DOB>" " <Gender> "   " <Nationality>" "<JoiningDate>"   "<Email>" "<MobileNo>"   "<AlternatePhone>" "<HomeAddress>" "<HomeState>" "<HomePostCode>"  "<WorkAddress>" "<WorkState>" "<WorkPostCode>" "<PassportNo>"     "<PassportExpiry>" "<EID>" "<EIDExpiry>" "<EstablishmentId>"
+   Examples:
+     | FirstName | MolNo             | EmpCode | LastName | DisplayName | DOB         | Gender | Nationality | JoiningDate    | Email          | MobileNo      | AlternatePhone | HomeAddress | HomeState | HomePostCode | WorkAddress | WorkState | WorkPostCode | PassportNo       | PassportExpiry | EID              | EIDExpiry      | EstablishmentId                |
+     | User     | 098765456789oiuytrt | 2123    | 1    | User1            | 05/05/1978 | M      | PK          | 05/05/1978    | user1@gmail.com| 97100011111 | 97100011111    | Address1    | State1    | 00001        | WorkAddress1 | State2    | 00002        | PassportNumber1  | 10/05/2029     | EIDNumber1       | 10/05/2029     | EstablishmentId1               |
+     | User2     | jnvnaskfb23459cvq27 | 5678    | 2    | User2            | 06/06/1980 | F      | US          | 06/06/1980    | user2@gmail.com| 97100022222 | 97100022222    | Address2    | State2    | 00002        | WorkAddress2 | State3    | 00003        | PassportNumber2  | 15/05/2030     | EIDNumber2       | 15/05/2030     | EstablishmentId2               |
 
-  Scenario Outline: Create Employee
-    Given I am on the Employees page
-    When I enter Employee ID "<employee_id>"
-    And I enter First Name "<first_name>"
-    And I enter Last Name "<last_name>"
-    And I enter Email "<email>"
-    And I enter Mobile "<mobile>"
-    And I enter Home Address "<home_address>"
-    And I enter Work Address "<work_address>"
-    And I click Submit button
-    Then Employee should be created successfully
+   #And     [Employees Page] User upload a bulk employees file ""
 
-    Examples:
-      | employee_id | first_name | last_name | email             | mobile       | home_address           | work_address           |
-      | 1001        | John       | Smith     | john.smith@acme.com| 1234567890   | 123 Main St, Anytown   | 456 Oak Ave, Anycity   |
-      | 1002        | Jane       | Doe       | jane.doe@acme.com  | 9876543210   | 456 High St, Somewhere | 789 Low Ave, Anyplace |
+
+
 
 
 

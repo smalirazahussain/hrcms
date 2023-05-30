@@ -19,7 +19,7 @@ public class EmployeesPage {
     //locator
     public static String employees = "(//li[@class='side-menu-list-item']//child::a)[3]";
     public static String Upload_Excel = "uploadExcel";
-    public static String Template_Button = "div[class='d-flex justify-between'] div:nth-child(3) button:nth-child(1)";
+    public static String Template_Button = "button[title='Template'] span:nth-child(1)";
 
     public static WebElement get_Employees() {
         return Base_Class.driver.findElement(By.xpath(employees));
