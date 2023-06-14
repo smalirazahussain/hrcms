@@ -48,6 +48,8 @@ import static Hooks.Base_Class.driver;
 import static Pages.Android.AddEmployerPages.*;
 import static Pages.Android.AdminPage.admin_Tab;
 import static Pages.Android.UpdateProliePage.*;
+import static Step_Definitions.Employeessteps.filePath;
+import static Step_Definitions.Employeessteps.randomNumbers;
 import static Tests.Current_Date.currentYear;
 
 public class AddEmployerSteps<Save_mol> {
@@ -56,6 +58,8 @@ public class AddEmployerSteps<Save_mol> {
     WebDriverWait wait = new WebDriverWait(driver, timeout);
     //create a soft-assertion object
     SoftAssert softAssert = new SoftAssert();
+
+
 
     @Given("[Add Employer] user tap on new employer button")
     public void addEmployerUserTapOnNewEmployerButton() throws InterruptedException {
@@ -470,6 +474,9 @@ public class AddEmployerSteps<Save_mol> {
         Thread.sleep(5000);
     }
 
+
+
+
     @And("[Employees Page] User create a multiple data for the employer")
     public void employeesPageUserCreateAMultipleDataForTheEmployer() throws IOException {
         String[] headers = {"Mol No", "Emp Code", "First Name", "Last Name", "Display Name", "Date of Birth", "Gender(M/F)", "Nationality", "Date of Joining", "Email", "Mobile", "Alternate Phone", "Home Address", "Home State", "Home Post Code", "Work Address", "Work State", "Work Post Code", "Passport Number", "Passport Expiry", "EID", "EID Expiry", "Establishment Id"};
@@ -487,11 +494,11 @@ public class AddEmployerSteps<Save_mol> {
 
         Random random = new Random();
 
-        int randomNumber = random.nextInt(10000);
+          int randomNumbers = random.nextInt(10000);
 
 
         // Write the workbook to an output stream
-        String filePath = "D:\\Hrcms\\src\\test\\java\\document\\" + randomNumber + ".xlsx";
+        String filePath = "D:\\Hrcms\\src\\test\\java\\document\\" + randomNumbers + ".xlsx";
         try (FileOutputStream fileOut = new FileOutputStream(filePath)) {
             workbook.write(fileOut);
         } catch (IOException e) {
@@ -501,12 +508,18 @@ public class AddEmployerSteps<Save_mol> {
         }
     }
 
+
     @And("[Employees Page] User upload a bulk employees file {string}")
     public void employeesPageUserUploadABulkEmployeesFile(String arg0) throws InterruptedException, AWTException {
-//        AddEmployerPages.get_uploadExcel().click();
-//
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(uploadExcel)));
+        Thread.sleep(5000);
+        AddEmployerPages.get_uploadExcel().click();
+
 //        Robot rb = new Robot();
-//        StringSelection str = new StringSelection("D:\\Hrcms\\src\\test\\java\\document\\"+randomNumber+".xlsx");
+//        System.out.println(filePath);
+//        //StringSelection str = new StringSelection(filePath);
+//        StringSelection str = new StringSelection("D:\\Hrcms\\src\\test\\java\\document\\965.xlsx");
+//        System.out.println(str);
 //        Toolkit.getDefaultToolkit().getSystemClipboard().setContents(str, null);
 //        // press Contol+V for pasting
 //        rb.keyPress(KeyEvent.VK_CONTROL);
@@ -520,11 +533,29 @@ public class AddEmployerSteps<Save_mol> {
 //        rb.keyPress(KeyEvent.VK_ENTER);
 //        rb.keyRelease(KeyEvent.VK_ENTER);
 //        //ScrollVertical(get_Add_Emplyer_Button());
-//        Thread.sleep(5000);
-//
-//    }
+//        Thread.sleep(10000);
+        Thread.sleep(3000);
+
+
+        Robot rb = new Robot();
+        StringSelection str = new StringSelection("D:\\Hrcms\\src\\test\\java\\document\\"+randomNumbers+".xlsx");
+        Toolkit.getDefaultToolkit().getSystemClipboard().setContents(str, null);
+        // press Contol+V for pasting
+        rb.keyPress(KeyEvent.VK_CONTROL);
+        rb.keyPress(KeyEvent.VK_V);
+
+        // release Contol+V for pasting
+        rb.keyRelease(KeyEvent.VK_CONTROL);
+        rb.keyRelease(KeyEvent.VK_V);
+
+        // for pressing and releasing Enter
+        rb.keyPress(KeyEvent.VK_ENTER);
+        rb.keyRelease(KeyEvent.VK_ENTER);
+        //ScrollVertical(get_Add_Emplyer_Button());
+        Thread.sleep(5000);
+
     }
-}
+    }
 
 
 

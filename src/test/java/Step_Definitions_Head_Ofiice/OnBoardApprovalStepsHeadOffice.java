@@ -49,12 +49,13 @@ public class OnBoardApprovalStepsHeadOffice {
             //        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(Approval_Ok)));
         AdminPage.get_Approve_Button().click();
         Thread.sleep(5000);
-        AdminPage.get_Approval_Ok().getText();
-        JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;
-        jsExecutor.executeScript("arguments[0].click();", driver.findElement(By.cssSelector(Approval_Ok)));
+        AdminPage.get_Approval_Ok().click();
+//        JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;
+//        jsExecutor.executeScript("arguments[0].click();", driver.findElement(By.cssSelector(Approval_Ok)));
        // AdminPage.get_Approval_Ok().click();
         Thread.sleep(5000);
         System.out.println(Phone_No);
+        Thread.sleep(5000);
 
     }
 

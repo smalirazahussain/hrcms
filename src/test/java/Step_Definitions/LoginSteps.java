@@ -39,6 +39,7 @@ public class LoginSteps {
         // LoginPage.get_Enter_Email_Id().sendKeys(email+randomInt+"@mailinator.com");
         LoginPage.get_Enter_Email_Id().sendKeys(email);
 
+
     }
 
     @When("[Login Page] User enter the password {string}")

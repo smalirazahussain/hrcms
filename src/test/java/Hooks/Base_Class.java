@@ -8,6 +8,9 @@ import io.cucumber.java.Before;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.devtools.DevTools;
+import org.openqa.selenium.devtools.v110.page.Page;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import io.appium.java_client.android.AndroidElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -17,6 +20,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.io.File;
 import java.time.Duration;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 
@@ -56,14 +61,32 @@ public class Base_Class {
 
             driver = new AndroidDriver<AndroidElement>(url, caps);
             */
+
+            // Set ChromeOptions
+            ChromeOptions options = new ChromeOptions();
+            Map<String, Object> prefs = new HashMap<>();
+            prefs.put("download.default_directory", "D:\\Hrcms\\src\\test\\java\\document");
+            options.setExperimentalOption("prefs", prefs);
+            // Set ChromeDriver path
+            //System.setProperty("webdriver.chrome.driver", "C:\\path\\to\\chromedriver.exe"); // Replace with your actual path to chromedriver.exe
+            System.setProperty("webdriver.chrome.driver", "D:\\Hrcms\\src\\test\\java\\document");
+
+            // Launch Chrome browser with the desired options
+
+//            WebDriver driver = new ChromeDriver(options);
+            // Perform actions to trigger the file download
+//            driver.get("https://example.com/download");
+
             String projectpath = System.getProperty("user.dir");
+            System.out.println(projectpath);
             System.out.println("Project path is:" + projectpath);
 
             WebDriverManager.chromedriver().setup();
 
            // System.setProperty("webdriver.chrome.driver", "apps/chromedriver.exe");
-            driver = new ChromeDriver();
-            driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+            driver = new ChromeDriver(options);
+
+            driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
             //driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(4000));
             driver.manage().window().maximize();
             //System.setProperty("webdriver.chrome.whitelistedIps", "");

@@ -83,6 +83,13 @@ public class Requeststeps {
         Thread.sleep(3000);
     }
 
+    @And("[Request Page] User tap on the Approve button")
+    public void requestPageUserTapOnTheApproveButton() throws InterruptedException {
+        AdminPage.get_Approve_Button().click();
+        Thread.sleep(5000);
+        AdminPage.get_Approval_Ok().click();;
+        Thread.sleep(5000);
+    }
 }
 
 

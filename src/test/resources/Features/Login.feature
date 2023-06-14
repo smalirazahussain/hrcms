@@ -16,7 +16,7 @@ Feature: Login Tests
 
   @Login @Login03
   Scenario: User login without Password
-    Given   [Login Page] User enter the email "kardiya01@mailinator.com"
+    Given   [Login Page] User enter the email ""
     Then    [Login page] User tap on login button
     And     [Login page] Validate error message in Password "Please enter your Password."
 

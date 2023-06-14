@@ -36,14 +36,14 @@ public class BrachesStepsHeadOffice {
         BranchesHeadOfficePage.get_Add_Branch().click();
 
     }
-
+    public static String branch;
     @When("[Branch Head Office Page] User enter branch name {string}")
     public void branchHeadOfficePageUserEnterBranchName(String branchname) {
         int randomempno = (int) ((Math.random()*100000));
         //String branch = BranchesHeadOfficePage.get_Branch_Name().sendKeys(branchname+randomempno);
         //String sendKeysCommand = "BranchesHeadOfficePage.get_Branch_Name().sendKeys(" + branchname + randomempno + ");";
         BranchesHeadOfficePage.get_Branch_Name().sendKeys(branchname+randomempno);
-        String branch = BranchesHeadOfficePage.get_Branch_Name().getAttribute("value");
+         branch = BranchesHeadOfficePage.get_Branch_Name().getAttribute("value");
         System.out.println(branch);
     }
 
@@ -92,7 +92,7 @@ public class BrachesStepsHeadOffice {
         String phoneNo = String.valueOf(randomempno); // Convert Long to String
         BranchesHeadOfficePage.get_Branch_Phone_No().click();
         BranchesHeadOfficePage.get_Branch_Phone_No().sendKeys(no+randomempno);
-        String  phno = String.valueOf(Long.parseLong(no+randomempno));
+        phno = String.valueOf(Long.parseLong(no+randomempno));
 
         System.out.println(randomempno);
 //        SignUpPage.signUpUserEnterThePhoneNo().click();

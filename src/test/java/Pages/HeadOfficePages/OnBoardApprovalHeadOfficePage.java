@@ -7,6 +7,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import javax.swing.*;
+import java.awt.*;
 import java.time.Duration;
 
 import static Hooks.Base_Class.driver;
@@ -22,6 +23,7 @@ public class OnBoardApprovalHeadOfficePage {
     public static String create_Account_Button = "//*[@text='Create account']";
     public static String  Onboard_Approval = "onBoardApprovals";
     public static String Phone_No = "ul:nth-child(3) > li:nth-child(7) > span:nth-child(2)";
+    public static String Phone_No_admin_Side = "ul:nth-child(1) li:nth-child(6) span:nth-child(2)";
 
 
     //return function
@@ -36,6 +38,10 @@ public class OnBoardApprovalHeadOfficePage {
 
     public static WebElement get_Phone_No() {
         return Base_Class.driver.findElement(By.cssSelector(Phone_No));
+    }
+
+    public static WebElement get_Phone_No_admin_Side() {
+        return Base_Class.driver.findElement(By.cssSelector(Phone_No_admin_Side));
     }
 }
 

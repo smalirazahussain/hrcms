@@ -31,6 +31,7 @@ public class SignUpSteps {
     //create a soft-assertion object
     SoftAssert softAssert = new SoftAssert();
 
+
     @Given("[Sign Up] User tap on Sign up button")
     public void signUpUserTapOnSignUpButton() throws InterruptedException {
        // wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(signUpUserTapOnSignUpButton)));
@@ -82,8 +83,10 @@ public class SignUpSteps {
     @Then("[Sign Up] User enter the phone no {string}")
     public void signUpUserEnterThePhoneNo(String phone_no) throws InterruptedException {
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(signUpUserEnterThePhoneNo)));
+        Random randomGenerator = new Random();
+        int randomno = randomGenerator.nextInt(100000);
         SignUpPage.signUpUserEnterThePhoneNo().click();
-        SignUpPage.signUpUserEnterThePhoneNo().sendKeys(phone_no);
+        SignUpPage.signUpUserEnterThePhoneNo().sendKeys(phone_no+1);
 
     }
 

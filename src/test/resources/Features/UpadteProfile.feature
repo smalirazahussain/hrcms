@@ -235,7 +235,7 @@ Feature: Update Profile
     When    [Sign Up] User enter the name "company"
     Then    [Sign Up] User enter the email "email"
     #Then    [Sign Up] Enter the Phone code "971"
-    Then    [Sign Up] User enter the phone no "3451234567"
+    Then    [Sign Up] User enter the phone no "12345678"
     When    [Login Page] User enter the password "Password1"
     Then    [Sign Up] User enter the confirm password "Password1"
     And     [Sign Up] User tap on Sign up button on SignUp Page

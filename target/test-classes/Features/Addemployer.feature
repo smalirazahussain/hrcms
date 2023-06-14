@@ -2,7 +2,7 @@
 Feature: AddEmployer
 
   @Update @UpdateProfile1
-  Scenario: Add new employer
+  Scenario: Add new employee
     Given   [Login Page] User enter the email "11834"
     When    [Login Page] User enter the password "Password1"
     Then    [Login page] User tap on login button
@@ -1141,7 +1141,7 @@ Feature: AddEmployer
     Then    [Add Employer] Validate the bank "Arab African International Bank"
 
     Scenario: User Download a KamelPays Bulk Employees file download
-      Given   [Login Page] User enter the email "11793"
+      Given   [Login Page] User enter the email "12202"
       When    [Login Page] User enter the password "Password1"
       Then    [Login page] User tap on login button
       Then    [Employees Page] User tap on employees button
@@ -1160,14 +1160,59 @@ Feature: AddEmployer
    When    [Login Page] User enter the password "Password1"
    Then    [Login page] User tap on login button
    Then    [Employees Page] User tap on employees button
-   And     [Employees Page] User create a multiple data for the employer "<MolNo>" "<EmpCode>" "<FirstName>" "<LastName>" "<DisplayName>" "<DOB>" " <Gender> "   " <Nationality>" "<JoiningDate>"   "<Email>" "<MobileNo>"   "<AlternatePhone>" "<HomeAddress>" "<HomeState>" "<HomePostCode>"  "<WorkAddress>" "<WorkState>" "<WorkPostCode>" "<PassportNo>"     "<PassportExpiry>" "<EID>" "<EIDExpiry>" "<EstablishmentId>"
-   Examples:
-     | FirstName | MolNo             | EmpCode | LastName | DisplayName | DOB         | Gender | Nationality | JoiningDate    | Email          | MobileNo      | AlternatePhone | HomeAddress | HomeState | HomePostCode | WorkAddress | WorkState | WorkPostCode | PassportNo       | PassportExpiry | EID              | EIDExpiry      | EstablishmentId                |
-     | User     | 098765456789oiuytrt | 2123    | 1    | User1            | 05/05/1978 | M      | PK          | 05/05/1978    | user1@gmail.com| 97100011111 | 97100011111    | Address1    | State1    | 00001        | WorkAddress1 | State2    | 00002        | PassportNumber1  | 10/05/2029     | EIDNumber1       | 10/05/2029     | EstablishmentId1               |
-     | User2     | jnvnaskfb23459cvq27 | 5678    | 2    | User2            | 06/06/1980 | F      | US          | 06/06/1980    | user2@gmail.com| 97100022222 | 97100022222    | Address2    | State2    | 00002        | WorkAddress2 | State3    | 00003        | PassportNumber2  | 15/05/2030     | EIDNumber2       | 15/05/2030     | EstablishmentId2               |
-
+   #And     [Employees Page] User create a multiple data for the employer "<MolNo>" "<EmpCode>" "<FirstName>" "<LastName>" "<DisplayName>" "<DOB>" " <Gender> "   " <Nationality>" "<JoiningDate>"   "<Email>" "<MobileNo>"   "<AlternatePhone>" "<HomeAddress>" "<HomeState>" "<HomePostCode>"  "<WorkAddress>" "<WorkState>" "<WorkPostCode>" "<PassportNo>"     "<PassportExpiry>" "<EID>" "<EIDExpiry>" "<EstablishmentId>"
    And     [Employees Page] User upload a bulk employees file ""
-   
+   And     [Request Page] User tap on the request button
+   Then    [Request Page] User tap on the view button
+   And     [Request Page] User tap on the Approve button
+   Then    [Admin Page] Open the admin tab "https://admin.getthelingo.com/"
+   And     [Admin Page] User tap on login page
+   Then    [Admin Page] User enter the  email "admin@admin.com"
+   When    [Admin Page] User enter the Password "12345678"
+   And     [Admin Page] User tap on login page
+   When    [Admin Page] User tap on client Approvals
+   Then    [Admin Page] User enter the company name
+   And     [Admin Page] User tap on view button
+   Then    [Admin Page] User tap on approve button
+   Then    [Admin Page] User Tap om the browse button
+   Then    [Admin Page] User select the card type "Centiv"
+   Then    [Admin Page] User tap No other bank employees in given file
+   And     [Admin Page] User Tap on the approve button
+
+  # Examples:
+   #  | FirstName | MolNo             | EmpCode | LastName | DisplayName | DOB         | Gender | Nationality | JoiningDate    | Email          | MobileNo      | AlternatePhone | HomeAddress | HomeState | HomePostCode | WorkAddress | WorkState | WorkPostCode | PassportNo       | PassportExpiry | EID              | EIDExpiry      | EstablishmentId                |
+    # | User     | 098765456789oiuytrt | 2123    | 1    | User1            | 05/05/1978 | M      | PK          | 05/05/1978    | user1@gmail.com| 97100011111 | 97100011111    | Address1    | State1    | 00001        | WorkAddress1 | State2    | 00002        | PassportNumber1  | 10/05/2029     | EIDNumber1       | 10/05/2029     | 8711258059247301               |
+     #| User2     | jnvnaskfb23459cvq27 | 5678    | 2    | User2            | 06/06/1980 | F      | US          | 06/06/1980    | user2@gmail.com| 97100022222 | 97100022222    | Address2    | State2    | 00002        | WorkAddress2 | State3    | 00003        | PassportNumber2  | 15/05/2030     | EIDNumber2       | 15/05/2030     | EstablishmentId2               |
+
+  Scenario Outline: Create multiple Employee
+    Given   [Login Page] User enter the email "12205"
+    When    [Login Page] User enter the password "Password1"
+    Then    [Login page] User tap on login button
+    Then    [Employees Page] User tap on employees button
+    And     [Employees Page] User create a multiple data for the employer "<MolNo>""<EmpCode>""<FirstName>""<LastName>""<DisplayName>""<DOB>"" <Gender> "" <Nationality>""<JoiningDate>""<Email>""<MobileNo>""<AlternatePhone>""<HomeAddress>""<HomeState>""<HomePostCode>""<WorkAddress>""<WorkState>""<WorkPostCode>""<PassportNo>""<PassportExpiry>""<EID>""<EIDExpiry>""<EstablishmentId>"
+    And     [Employees Page] User upload a bulk employees file ""
+    And     [Request Page] User tap on the request button
+    Then    [Request Page] User tap on the view button
+    And     [Request Page] User tap on the Approve button
+    Then    [Admin Page] Open the admin tab "https://admin.getthelingo.com/"
+    And     [Admin Page] User tap on login page
+    Then    [Admin Page] User enter the  email "admin@admin.com"
+    When    [Admin Page] User enter the Password "12345678"
+    And     [Admin Page] User tap on login page
+    When    [Admin Page] User tap on client Approvals
+    Then    [Admin Page] User enter the company name
+    And     [Admin Page] User tap on view button
+    Then    [Admin Page] User tap on approve button
+    Then    [Admin Page] User Tap om the browse button
+    Then    [Admin Page] User select the card type "PayD"
+    Then    [Admin Page] User tap No other bank employees in given file
+    And     [Admin Page] User Tap on the approve button
+    Then    [Admin Page] User verify the notification message "Action Successfully"
+
+    Examples:
+      |FirstName|MolNo|EmpCode|LastName|DisplayName|DOB|Gender|Nationality|JoiningDate|Email|MobileNo|AlternatePhone|HomeAddress|HomeState|HomePostCode|WorkAddress|WorkState|WorkPostCode|PassportNo|PassportExpiry|EID|EIDExpiry|EstablishmentId|
+      |User|Mol12345|1|1|User|05/05/1978|M|BD|05/05/1978|@mailinator.com|971|971|Address|1|00001|2|2|2|Passport|10/05/2029|10000000000|10/05/2029|7754116879536638|
+
 
 
 

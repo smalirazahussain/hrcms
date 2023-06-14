@@ -142,7 +142,7 @@ public class AddEmployerPages {
     public static String Notification_Message = "//span[contains(text(),'New employee added successfully, Please wait for a')]";
     public static String  Add_Document = "div[class='inline-form col'] button:nth-child(1) span:nth-child(2)";
     public static String Check = "//*[@id=\"root\"]/div/div/div[2]/div[2]/div[1]/div/div[2]/div/ul/li[3]/span[2]";
-    public static String uploadExcel = "uploadExcel";
+    public static String uploadExcel = "//*[@id=\"uploadExcel\"]";
 
     public static WebElement get_Country(String country) {
         return Base_Class.driver.findElement(By.xpath(Country(country)));
@@ -313,7 +313,7 @@ public class AddEmployerPages {
     }
 
     public static WebElement get_uploadExcel() {
-        return Base_Class.driver.findElement(By.id(uploadExcel));
+        return Base_Class.driver.findElement(By.xpath(uploadExcel));
 
     }
 }

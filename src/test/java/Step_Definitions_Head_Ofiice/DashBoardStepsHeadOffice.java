@@ -1,5 +1,6 @@
 package Step_Definitions_Head_Ofiice;
 
+import Pages.Android.AddEmployerPages;
 import Pages.HeadOfficePages.DashBoardHeadOfficePage;
 import Pages.HeadOfficePages.HeadOfficeLoginPage;
 import io.cucumber.java.en.And;
@@ -28,9 +29,10 @@ public class DashBoardStepsHeadOffice {
     public void dashboardHeadOfficePageUserVerifyToToastMessageTo(String toastmessage) {
         DashBoardHeadOfficePage.get_Toast_Message(toastmessage).getText();
     }
-
+    public static String exchangeHouseTittle;
     @And("[Dashboard Head Office Page] User tap on the branches button")
     public void dashboardHeadOfficePageUserTapOnTheBranchesButton() {
+        exchangeHouseTittle = AddEmployerPages.get_Company_Tittle().getText();
         DashBoardHeadOfficePage.get_Branches_Button().click();
     }
 }
