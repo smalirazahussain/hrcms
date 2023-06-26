@@ -1,22 +1,13 @@
 package Step_Definitions;
 
-import Pages.Android.AddEmployerPages;
 import Pages.Android.AdminPage;
-import Pages.Android.LoginPage;
 import Pages.HeadOfficePages.ManageEmployeesHeadOfficePage;
 import Pages.HeadOfficePages.OnBoardApprovalHeadOfficePage;
 import io.cucumber.java.en.And;
-import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import io.cucumber.java8.Th;
-import org.bouncycastle.jcajce.provider.symmetric.Threefish;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.safari.SafariDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
@@ -26,16 +17,12 @@ import java.awt.*;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.KeyEvent;
 import java.net.MalformedURLException;
-import java.net.URL;
 import java.time.Duration;
-import java.util.ArrayList;
 
 import static Hooks.Base_Class.driver;
 import static Pages.Android.AdminPage.*;
-import static Pages.Android.LoginPage.Enter_Password;
 import static Pages.Android.UpdateProliePage.*;
 import static Pages.HeadOfficePages.OnBoardApprovalHeadOfficePage.Phone_No;
-import static Step_Definitions.AddEmployerSteps.companyName;
 import static Step_Definitions.Employeessteps.companyTittle;
 import static Step_Definitions.Employeessteps.randomNumbers;
 import static Step_Definitions_Head_Ofiice.BrachesStepsHeadOffice.branch;
@@ -147,7 +134,7 @@ public class adminsteps {
     @Then("[Admin Page] User validate the toast message {string}")
     public void adminPageUserValidateTheToastMessage(String actual) throws InterruptedException {
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(Action_Successfully)));
-        String expect = AdminPage.get_Action_Successfully().getText();
+        String expect = AdminPage.get_Action_Successfully(wait).getText();
         Assert.assertEquals(actual,expect);
     }
 
@@ -163,7 +150,7 @@ public class adminsteps {
 
     @Then("[Admin Page] User Tap om the browse button")
     public void adminPageUserTapOmTheBrowseButton() throws AWTException, InterruptedException {
-        //AdminPage.get_Browse_Button().click();
+        AdminPage.get_Browse_Button().click();
         Thread.sleep(3000);
 
 
@@ -194,6 +181,7 @@ public class adminsteps {
 
     @And("[Admin Page] User Tap on the approve button")
     public void adminPageUserTapOnTheApproveButton() throws InterruptedException {
+        Thread.sleep(3000);
         AdminPage.get_Approve_Bulk_Button().click();
 //        Thread.sleep(30000);
     }
@@ -237,7 +225,7 @@ public class adminsteps {
     @Then("[Admin Page] User verify the notification message {string}")
     public void adminPageUserVerifyTheNotificationMessage(String after) throws InterruptedException {
        // wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(Action_Successfully)));
-        String actual = AdminPage.get_Action_Successfully().getText();
+        String actual = AdminPage.get_Action_Successfully(wait).getText();
         Assert.assertEquals(actual,after);
     }
 
@@ -247,6 +235,30 @@ public class adminsteps {
         ManageEmployeesHeadOfficePage.get_Manage_Branch().sendKeys(exchangeHouseTittle+ Keys.ENTER);
         Thread.sleep(5000);
         AdminPage.get_Admin_Branch_Name().sendKeys(branch+Keys.ENTER);
+    }
+
+    @Then("[Admin Page] User Tap om the exchange house browse button")
+    public void adminPageUserTapOmTheExchangeHouseBrowseButton() throws InterruptedException, AWTException {
+        AdminPage.get_Exchange_House_Browse_Button().click();
+        Thread.sleep(3000);
+
+
+        Robot rb = new Robot();
+        StringSelection str = new StringSelection("D:\\Hrcms\\src\\test\\java\\document\\"+randomNumbers+".xlsx");
+        Toolkit.getDefaultToolkit().getSystemClipboard().setContents(str, null);
+        // press Contol+V for pasting
+        rb.keyPress(KeyEvent.VK_CONTROL);
+        rb.keyPress(KeyEvent.VK_V);
+
+        // release Contol+V for pasting
+        rb.keyRelease(KeyEvent.VK_CONTROL);
+        rb.keyRelease(KeyEvent.VK_V);
+
+        // for pressing and releasing Enter
+        rb.keyPress(KeyEvent.VK_ENTER);
+        rb.keyRelease(KeyEvent.VK_ENTER);
+        //ScrollVertical(get_Add_Emplyer_Button());
+        Thread.sleep(5000);
     }
 }
 

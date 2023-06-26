@@ -1,15 +1,11 @@
 package Step_Definitions_Head_Ofiice;
 
-import Pages.Android.AddEmployerPages;
-import Pages.HeadOfficePages.DashBoardHeadOfficePage;
 import Pages.HeadOfficePages.ManageEmployeesHeadOfficePage;
-import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.asserts.SoftAssert;
 
-import java.security.Key;
 import java.time.Duration;
 
 import static Hooks.Base_Class.driver;

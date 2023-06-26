@@ -1,54 +1,34 @@
 package Step_Definitions;
 
-import Hooks.Base_Class;
 import Pages.Android.AddEmployerPages;
-import Pages.Android.AdminPage;
 import Pages.Android.UpdateProliePage;
-import Tests.Scroll;
-import com.github.dockerjava.core.dockerfile.DockerfileStatement;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import io.cucumber.java8.Th;
-import net.bytebuddy.pool.TypePool;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.openqa.selenium.*;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
-
 
 import java.awt.*;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.KeyEvent;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.sql.SQLOutput;
 import java.time.Duration;
-import java.util.ArrayList;
 import java.util.Random;
-
-
-import io.cucumber.java.ParameterType;
-import io.cucumber.java.en.And;
-import io.cucumber.java.en.Given;
-import io.cucumber.java.en.When;
-
-import java.util.Map;
 
 import static Hooks.Base_Class.driver;
 import static Pages.Android.AddEmployerPages.*;
-import static Pages.Android.AdminPage.admin_Tab;
-import static Pages.Android.UpdateProliePage.*;
-import static Step_Definitions.Employeessteps.filePath;
+import static Pages.Android.UpdateProliePage.get_year_arrow_xpath;
+import static Pages.Android.UpdateProliePage.issueDate;
 import static Step_Definitions.Employeessteps.randomNumbers;
 import static Tests.Current_Date.currentYear;
 
@@ -511,7 +491,7 @@ public class AddEmployerSteps<Save_mol> {
 
     @And("[Employees Page] User upload a bulk employees file {string}")
     public void employeesPageUserUploadABulkEmployeesFile(String arg0) throws InterruptedException, AWTException {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(uploadExcel)));
+        //wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(uploadExcel)));
         Thread.sleep(5000);
         AddEmployerPages.get_uploadExcel().click();
 

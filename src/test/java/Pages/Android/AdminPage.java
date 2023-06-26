@@ -1,20 +1,13 @@
 package Pages.Android;
 
 import Hooks.Base_Class;
-import org.codehaus.jackson.map.MapperConfig;
 import org.openqa.selenium.By;
-import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 
-import java.awt.*;
 import java.time.Duration;
-
-import static Hooks.Base_Class.driver;
-import static Pages.Android.SubAdminPages.Email;
 
 
 public class AdminPage {
@@ -54,6 +47,7 @@ public class AdminPage {
     public static String message = "//*[@text='Action Successfully']";
     public static String ExchangeHouse_Client_Approvals_Button = "//a[@id='exchangeHouseApproval']";
     public static String Admin_Branch_Name = "(//input[@type='search'])[2]";
+    public static String Exchange_House_Browse_Button = "button.ant-btn#uploadExcel.primary-outline-filled[title='Browse File'";
     public static String Select_Exchange_House = "client";
     public static WebElement get_Admin_Tab(){
         return Base_Class.driver.findElement(By.xpath(admin_Tab));
@@ -118,7 +112,7 @@ public class AdminPage {
         return Base_Class.driver.findElement(By.xpath(Company_Client));
     }
 
-    public static WebElement get_Action_Successfully() {
+    public static WebElement get_Action_Successfully(WebDriverWait wait) {
         return Base_Class.driver.findElement(By.cssSelector(Action_Successfully));
     }
 
@@ -169,5 +163,9 @@ public class AdminPage {
 
     public static WebElement get_Admin_Branch_Name() {
         return Base_Class.driver.findElement(By.xpath(Admin_Branch_Name));
+    }
+
+    public static WebElement get_Exchange_House_Browse_Button() {
+        return Base_Class.driver.findElement(By.cssSelector(Exchange_House_Browse_Button));
     }
 }

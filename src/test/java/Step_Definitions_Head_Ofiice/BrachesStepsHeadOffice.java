@@ -1,15 +1,10 @@
 package Step_Definitions_Head_Ofiice;
 
-import Pages.Android.SignUpPage;
 import Pages.HeadOfficePages.BranchesHeadOfficePage;
-import Pages.HeadOfficePages.HeadOfficeLoginPage;
-import io.appium.java_client.android.nativekey.KeyEvent;
 import io.cucumber.java.en.And;
-import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
@@ -18,7 +13,7 @@ import org.testng.asserts.SoftAssert;
 import java.time.Duration;
 
 import static Hooks.Base_Class.driver;
-import static Pages.Android.SignUpPage.signUpUserEnterThePhoneNo;
+import static Pages.HeadOfficePages.BranchesHeadOfficePage.Add_Branch_Button;
 import static Pages.HeadOfficePages.BranchesHeadOfficePage.Toast_message;
 //import static Pages.Android.LoginPage.create_Account_Button;
 //import static Tests.Useful_functions.getRandomNumberLowerAndUpperBound;
@@ -75,6 +70,7 @@ public class BrachesStepsHeadOffice {
 
     @Then("[Branch Head Office Page] User tap on add branch button")
     public void branchHeadOfficePageUserTapOnAddBranchButton() {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(Add_Branch_Button)));
         BranchesHeadOfficePage.get_Add_Branch_Button().click();
     }
 
@@ -88,7 +84,7 @@ public class BrachesStepsHeadOffice {
     public static String phno ;
     @And("[Branch Head Office Page] User enter branch phone no {string}")
     public void branchHeadOfficePageUserEnterBranchPhoneNo(String no) {
-        Long randomempno = (long) ((Math.random() * 10000000L));
+        Long randomempno = (long) ((Math.random() * 1000000000L));
         String phoneNo = String.valueOf(randomempno); // Convert Long to String
         BranchesHeadOfficePage.get_Branch_Phone_No().click();
         BranchesHeadOfficePage.get_Branch_Phone_No().sendKeys(no+randomempno);

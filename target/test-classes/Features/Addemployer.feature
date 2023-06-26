@@ -1179,10 +1179,10 @@ Feature: AddEmployer
    Then    [Admin Page] User tap No other bank employees in given file
    And     [Admin Page] User Tap on the approve button
 
-  # Examples:
+   Examples:
    #  | FirstName | MolNo             | EmpCode | LastName | DisplayName | DOB         | Gender | Nationality | JoiningDate    | Email          | MobileNo      | AlternatePhone | HomeAddress | HomeState | HomePostCode | WorkAddress | WorkState | WorkPostCode | PassportNo       | PassportExpiry | EID              | EIDExpiry      | EstablishmentId                |
     # | User     | 098765456789oiuytrt | 2123    | 1    | User1            | 05/05/1978 | M      | PK          | 05/05/1978    | user1@gmail.com| 97100011111 | 97100011111    | Address1    | State1    | 00001        | WorkAddress1 | State2    | 00002        | PassportNumber1  | 10/05/2029     | EIDNumber1       | 10/05/2029     | 8711258059247301               |
-     #| User2     | jnvnaskfb23459cvq27 | 5678    | 2    | User2            | 06/06/1980 | F      | US          | 06/06/1980    | user2@gmail.com| 97100022222 | 97100022222    | Address2    | State2    | 00002        | WorkAddress2 | State3    | 00003        | PassportNumber2  | 15/05/2030     | EIDNumber2       | 15/05/2030     | EstablishmentId2               |
+     | User2     | jnvnaskfb23459cvq27 | 5678    | 2    | User2            | 06/06/1980 | F      | US          | 06/06/1980    | user2@gmail.com| 97100022222 | 97100022222    | Address2    | State2    | 00002        | WorkAddress2 | State3    | 00003        | PassportNumber2  | 15/05/2030     | EIDNumber2       | 15/05/2030     | EstablishmentId2               |
 
   Scenario Outline: Create multiple Employee
     Given   [Login Page] User enter the email "12205"
