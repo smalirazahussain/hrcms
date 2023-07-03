@@ -55,8 +55,8 @@ public class WebPortalHeadOfficeSteps {
     }
 
     @When("[Web Portal Page] User tap on the employer product")
-    public void webPortalPageUserTapOnTheEmployerProduct() {
-
+    public void webPortalPageUserTapOnTheEmployerProduct() throws InterruptedException {
+        wait(30,30);
          WebPortalHeadOfficePage.get_Employer_Product(wait).click();
     }
 

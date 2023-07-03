@@ -3,6 +3,7 @@ package Step_Definitions;
 import Pages.Android.AddEmployerPages;
 import Pages.Android.ProcessSalariesDepositSlipPages;
 import io.cucumber.java.en.And;
+import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -11,14 +12,16 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.asserts.SoftAssert;
 
 import java.awt.*;
-import java.io.BufferedInputStream;
+import java.awt.datatransfer.StringSelection;
+import java.awt.event.KeyEvent;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.Duration;
+import java.util.Random;
 
 import static Hooks.Base_Class.driver;
 import static Step_Definitions.SignUpSteps.companyName;
@@ -41,60 +44,63 @@ public class ProcessSalariesDepositSlipSteps {
         ProcessSalariesDepositSlipPages.get_Process_Salaries_Deposit_Slip().click();
     }
 
-    @When("[Process Salaries DepositSlip Page] User enter company name and download the salary template")
-    public void processSalariesDepositSlipPageUserEnterCompanyNameAndDownloadTheSalaryTemplate() throws InterruptedException, IOException, AWTException {
-
-        String fileUrl = "https://example.com/path/to/excel.xlsx";
-        String destinationPath = "path/to/save/excel.xlsx";
-
-        try {
-            ProcessSalariesDepositSlipPages.get_Company_Name().sendKeys(companyTittle + Keys.ENTER);
-            Thread.sleep(6000);
-            ProcessSalariesDepositSlipPages.get_Download_Button().click();
-            Thread.sleep(10000);
-
-            URL url = new URL(fileUrl);
-            BufferedInputStream bis = new BufferedInputStream(url.openStream());
-            FileOutputStream fos = new FileOutputStream(destinationPath);
-
-            byte[] buffer = new byte[1024];
-            int bytesRead;
-            while ((bytesRead = bis.read(buffer, 0, 1024)) != -1) {
-                fos.write(buffer, 0, bytesRead);
-            }
-
-            fos.close();
-            bis.close();
-
-            String filePath = "path/to/excel.xlsx";
-
-            try (Workbook workbook = WorkbookFactory.create(new File(filePath))) {
-                Sheet sheet = workbook.getSheetAt(0);
-
-                for (Row row : sheet) {
-                    for (Cell cell : row) {
-                        CellType cellType = cell.getCellType();
-
-                        if (cellType == CellType.STRING) {
-                            System.out.print(cell.getStringCellValue() + "\t");
-                        } else if (cellType == CellType.NUMERIC) {
-                            System.out.print(cell.getNumericCellValue() + "\t");
-                        } else if (cellType == CellType.BOOLEAN) {
-                            System.out.print(cell.getBooleanCellValue() + "\t");
-                        } else if (cellType == CellType.BLANK) {
-                            System.out.print("\t");
-                        }
-                    }
-
-                    System.out.println();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        } catch (InterruptedException | IOException e) {
-            e.printStackTrace();
-        }
-    }
+//    @When("[Process Salaries DepositSlip Page] User enter company name and download the salary template")
+//    public void processSalariesDepositSlipPageUserEnterCompanyNameAndDownloadTheSalaryTemplate() throws InterruptedException, IOException, AWTException {
+//
+//        String fileUrl = "https://example.com/path/to/excel.xlsx";
+//        String destinationPath = "path/to/save/excel.xlsx";
+//
+//        try {
+//            ProcessSalariesDepositSlipPages.get_Company_Name().sendKeys(companyTittle + Keys.ENTER);
+//            Thread.sleep(6000);
+//            ProcessSalariesDepositSlipPages.get_Download_Button().click();
+//            Thread.sleep(10000);
+//
+//            URL url = new URL(fileUrl);
+//            BufferedInputStream bis = new BufferedInputStream(url.openStream());
+//            FileOutputStream fos = new FileOutputStream(destinationPath);
+//
+//
+//            byte[] buffer = new byte[1024];
+//            int bytesRead;
+//            while ((bytesRead = bis.read(buffer, 0, 1024)) != -1) {
+//                fos.write(buffer, 0, bytesRead);
+//            }
+//
+//            fos.close();
+//            bis.close();
+//
+//
+//            String filePath = "D:\\Hrcms\\src\\test\\java\\document\\" + fos + ".xlsx";
+//            System.out.println(filePath);
+//
+//            try (Workbook workbook = WorkbookFactory.create(new File(filePath))) {
+//                Sheet sheet = workbook.getSheetAt(0);
+//
+//                for (Row row : sheet) {
+//                    for (Cell cell : row) {
+//                        CellType cellType = cell.getCellType();
+//
+//                        if (cellType == CellType.STRING) {
+//                            System.out.print(cell.getStringCellValue() + "\t");
+//                        } else if (cellType == CellType.NUMERIC) {
+//                            System.out.print(cell.getNumericCellValue() + "\t");
+//                        } else if (cellType == CellType.BOOLEAN) {
+//                            System.out.print(cell.getBooleanCellValue() + "\t");
+//                        } else if (cellType == CellType.BLANK) {
+//                            System.out.print("\t");
+//                        }
+//                    }
+//
+//                    System.out.println();
+//                }
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        } catch (InterruptedException | IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
 
 //        ProcessSalariesDepositSlipPages.get_Company_Name().sendKeys(companyTittle + Keys.ENTER);
@@ -315,7 +321,7 @@ public class ProcessSalariesDepositSlipSteps {
         }
         return null;
     }
-}
+
 
 
 
@@ -523,66 +529,186 @@ public class ProcessSalariesDepositSlipSteps {
 ////    }
 ////}
 //
-////    @When("[Process Salaries DepositSlip Page] User enter company name and download the salary template")
-////    public void processSalariesDepositSlipPageUserEnterCompanyNameAndDownloadTheSalaryTemplate() throws InterruptedException, IOException, AWTException {
-////        ProcessSalariesDepositSlipPages.get_Company_Name().sendKeys(companyTittle + Keys.ENTER);
-////        //wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(Download_Button)));
-////        Thread.sleep(3000);
-////        ProcessSalariesDepositSlipPages.get_Download_Button().click();
-////        Thread.sleep(10000);
-////
-////        // Get the latest downloaded file from the download directory
-////        File downloadDir = new File("D:\\Hrcms\\src\\test\\java\\document"); // Replace with the actual download directory path
-////        File[] files = downloadDir.listFiles();
-////        File latestFile = null;
-////        long lastModifiedTime = Long.MIN_VALUE;
-////        for (File file : files) {
-////            if (file.lastModified() > lastModifiedTime) {
-////                lastModifiedTime = file.lastModified();
-////                latestFile = file;
-////            }
-////        }
-////
-////        if (latestFile != null) {
-////            String downloadedFileName = latestFile.getName();
-////            System.out.println("Downloaded file name: " + downloadedFileName);
-////            // Read the contents of the XLSX file
-////            //read excel file
-////            FileInputStream fileInputStream = new FileInputStream(latestFile);
-////            Workbook workbook = new XSSFWorkbook(fileInputStream);
-////            Sheet sheet = workbook.getSheetAt(0); // Assuming the data is in the first sheet
-////
-////            // Iterate over rows and columns
-////            for (Row row : sheet) {
-////                for (Cell cell : row) {
-////                    // Access cell values
-////                    CellType cellType = cell.getCellType();
-////                    if (cellType == CellType.STRING) {
-////                        String cellValue = cell.getStringCellValue();
-////                        System.out.print(cellValue + "\t");
-////                    } else if (cellType == CellType.NUMERIC) {
-////                        double cellValue = cell.getNumericCellValue();
-////                        System.out.print(cellValue + "\t");
-////                    }
-////                    // Add handling for other cell types as needed
-////                }
-////                System.out.println(); // Move to the next row
-////            }
-////
-////            // Close the workbook and input stream
-////            workbook.close();
-////            fileInputStream.close();
-////
-////            // Perform assertions or further operations with the downloaded file name
-////            // ...
-////        } else {
-////            System.out.println("No file downloaded");
-////            // Handle the case where no file is downloaded
-////            // ...
-////        }
-////    }
-////}
+//    @When("[Process Salaries DepositSlip Page] User enter company name and download the salary template")
+//    public void processSalariesDepositSlipPageUserEnterCompanyNameAndDownloadTheSalaryTemplate() throws InterruptedException, IOException, AWTException {
+//        ProcessSalariesDepositSlipPages.get_Company_Name().sendKeys(companyTittle + Keys.ENTER);
+//        //wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(Download_Button)));
+//        Thread.sleep(3000);
+//        ProcessSalariesDepositSlipPages.get_Download_Button().click();
+//        Thread.sleep(10000);
 //
+//        // Get the latest downloaded file from the download directory
+//        File downloadDir = new File("D:\\Hrcms\\src\\test\\java\\document"); // Replace with the actual download directory path
+//        File[] files = downloadDir.listFiles();
+//        File latestFile = null;
+//        long lastModifiedTime = Long.MIN_VALUE;
+//        for (File file : files) {
+//            if (file.lastModified() > lastModifiedTime) {
+//                lastModifiedTime = file.lastModified();
+//                latestFile = file;
+//            }
+//        }
+//
+//        Workbook workbook = null;
+//        FileInputStream fileInputStream = null;
+//        if (latestFile != null) {
+//            String downloadedFileName = latestFile.getName();
+//            System.out.println("Downloaded file name: " + downloadedFileName);
+//            // Read the contents of the XLSX file
+//            //read excel file
+//            fileInputStream = new FileInputStream(latestFile);
+//            workbook = new XSSFWorkbook(fileInputStream);
+//            Sheet sheet = workbook.getSheetAt(0); // Assuming the data is in the first sheet
+//
+//            Workbook newWorkbook = new XSSFWorkbook();
+//            Sheet newSheet = newWorkbook.createSheet();
+//
+//            Sheet originalSheet = workbook.getSheetAt(0);
+//            newWorkbook.setSheetName(0, originalSheet.getSheetName());
+//            newSheet = newWorkbook.cloneSheet(0);
+//
+//            int rowIndex = 0;
+//            for (Row row : newSheet) {
+//                if (rowIndex > 0) {
+//                    Row originalRow = originalSheet.getRow(rowIndex);
+//                    if (originalRow != null) {
+//                        for (Cell originalCell : originalRow) {
+//                            Cell newCell = row.createCell(originalCell.getColumnIndex());
+//
+//                            CellType cellType = originalCell.getCellType();
+//                            if (cellType == CellType.STRING) {
+//                                String cellValue = originalCell.getStringCellValue();
+//                                newCell.setCellValue(cellValue);
+//                                System.out.println(cellValue);
+//                            } else if (cellType == CellType.NUMERIC) {
+//                                double cellValue = originalCell.getNumericCellValue();
+//                                newCell.setCellValue(cellValue);
+//                            }
+//                        }
+//                    }
+//
+//                    Cell seventhCell = row.createCell(6);
+//                    seventhCell.setCellValue(69);
+//                    System.out.println(seventhCell);
+//                }
+//                rowIndex++;
+//            }
+//
+//            try (FileOutputStream fos = new FileOutputStream("D:\\Hrcms\\src\\test\\java\\document\\" + downloadedFileName + ".xlsx")) {
+//                newWorkbook.write(fos);
+//                System.out.println("New file saved successfully.");
+//                System.out.println(fos);
+//            } catch (IOException e) {
+//                System.out.println("Error occurred while saving the new file: " + e.getMessage());
+//            }
+//
+//
+//            workbook.close();
+//            fileInputStream.close();
+//
+//            // Perform assertions or further operations with the downloaded file name
+//            // ...
+//        } else {
+//            System.out.println("No file downloaded");
+//            // Handle the case where no file is downloaded
+//            // ...
+//        }
+//
+//
+//    }
+//}
+      public static String  downloadedFileName;
+@When("[Process Salaries DepositSlip Page] User enter company name and download the salary template")
+public void processSalariesDepositSlipPageUserEnterCompanyNameAndDownloadTheSalaryTemplate() throws InterruptedException, IOException, AWTException {
+    ProcessSalariesDepositSlipPages.get_Company_Name().sendKeys(companyTittle + Keys.ENTER);
+    Thread.sleep(3000);
+    ProcessSalariesDepositSlipPages.get_Download_Button().click();
+    Thread.sleep(10000);
+
+    // Get the latest downloaded file from the download directory
+    File downloadDir = new File("D:\\Hrcms\\src\\test\\java\\document"); // Replace with the actual download directory path
+    File[] files = downloadDir.listFiles();
+    File latestFile = null;
+    long lastModifiedTime = Long.MIN_VALUE;
+    for (File file : files) {
+        if (file.lastModified() > lastModifiedTime) {
+            lastModifiedTime = file.lastModified();
+            latestFile = file;
+        }
+    }
+
+    if (latestFile != null) {
+        downloadedFileName = latestFile.getName();
+        System.out.println("Downloaded file name: " + downloadedFileName);
+
+        // Read the contents of the downloaded XLSX file
+        FileInputStream fileInputStream = new FileInputStream(latestFile);
+        Workbook workbook = new XSSFWorkbook(fileInputStream);
+        Sheet sheet = workbook.getSheetAt(0); // Assuming the data is in the first sheet
+        int rowIndex = 0;
+        Random random = new Random();
+        for (Row row : sheet) {
+            if (rowIndex > 0) {
+                Cell seventhCell = row.createCell(6);
+                int randomValue = random.nextInt(10000); // Generate a random number between 0 and 99
+                seventhCell.setCellValue(randomValue);
+                System.out.println(seventhCell);
+                Thread.sleep(1);
+            }
+            rowIndex++;
+        }
+
+        // Save the modified workbook back to the same file
+        try (FileOutputStream fos = new FileOutputStream(latestFile)) {
+            workbook.write(fos);
+            System.out.println("File modified and saved successfully.");
+        } catch (IOException e) {
+            System.out.println("Error occurred while saving the modified file: " + e.getMessage());
+        }
+
+        workbook.close();
+        fileInputStream.close();
+    } else {
+        System.out.println("No file downloaded");
+        // Handle the case where no file is downloaded
+        // ...
+    }
+
+}
+
+    @Then("[Process Salaries DepositSlip Page] User select the month and then upload the process file {string}")
+    public void processSalariesDepositSlipPageUserSelectTheMonthAndThenUploadTheProcessFile(String date) throws InterruptedException {
+        ProcessSalariesDepositSlipPages.get_Salary_Date().sendKeys(date+Keys.ENTER);
+        Thread.sleep(5000);
+    }
+
+    @And("[Process Salaries DepositSlip Page] User tap on browse file and upload a salary process file")
+    public void processSalariesDepositSlipPageUserTapOnBrowseFileAndUploadASalaryProcessFile() throws InterruptedException, AWTException {
+        ProcessSalariesDepositSlipPages.get_Salary_Browse_File().click();
+        Thread.sleep(3000);
+
+
+        Robot rb = new Robot();
+        StringSelection str = new StringSelection("D:\\Hrcms\\src\\test\\java\\document\\"+downloadedFileName+"");
+        Toolkit.getDefaultToolkit().getSystemClipboard().setContents(str, null);
+        // press Contol+V for pasting
+        rb.keyPress(KeyEvent.VK_CONTROL);
+        rb.keyPress(KeyEvent.VK_V);
+
+        // release Contol+V for pasting
+        rb.keyRelease(KeyEvent.VK_CONTROL);
+        rb.keyRelease(KeyEvent.VK_V);
+
+        // for pressing and releasing Enter
+        rb.keyPress(KeyEvent.VK_ENTER);
+        rb.keyRelease(KeyEvent.VK_ENTER);
+        //ScrollVertical(get_Add_Emplyer_Button());
+        Thread.sleep(10000);
+
+    }
+}
+
+
 ////        String downloadDir = "D:/Hrcms/src/test/java/document";
 ////        ProcessSalariesDepositSlipPages.get_Download_Button().click();
 ////        String fileName = "salary_template.xlsx";

@@ -1,11 +1,13 @@
 package Step_Definitions;
 
 import Pages.Android.SignUpPage;
+import com.google.gson.Gson;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Credentials;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
@@ -13,6 +15,8 @@ import org.testng.asserts.SoftAssert;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.io.FileReader;
+import java.io.IOException;
 import java.time.Duration;
 import java.util.Random;
 
@@ -31,6 +35,12 @@ public class SignUpSteps {
     //create a soft-assertion object
     SoftAssert softAssert = new SoftAssert();
 
+    public static Credentials getCredentials() throws IOException {
+        Gson gson = new Gson();
+        try (FileReader reader = new FileReader("D:\\Hrcms\\src\\json\\credential.json")) {
+            return gson.fromJson(reader, Credentials.class);
+        }
+    }
 
     @Given("[Sign Up] User tap on Sign up button")
     public void signUpUserTapOnSignUpButton() throws InterruptedException {
