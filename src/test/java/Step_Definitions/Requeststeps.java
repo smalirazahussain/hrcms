@@ -4,26 +4,19 @@ import Pages.Android.AdminPage;
 import Pages.Android.RequestPage;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
-import io.cucumber.java.en.When;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.asserts.SoftAssert;
 
-import java.awt.*;
-import java.net.MalformedURLException;
-import java.sql.SQLOutput;
 import java.time.Duration;
 
 import static Hooks.Base_Class.driver;
 import static Pages.Android.AdminPage.*;
-import static Pages.Android.LoginPage.Enter_Email_Id;
 import static Pages.Android.RequestPage.Mol_Num;
-import static Pages.Android.UpdateProliePage.*;
 import static Step_Definitions.AddEmployerSteps.EmpMol;
 import static Step_Definitions.AddEmployerSteps.Passportno;
 import static Step_Definitions.UpdateProfile.first14;
-import static Tests.Current_Date.currentMonth;
 
 public class Requeststeps {
 
@@ -35,7 +28,6 @@ public class Requeststeps {
 
     @And("[Request Page] User tap on the request button")
     public void requestPageUserTapOnTheRequestButton() throws InterruptedException {
-        Thread.sleep(10000);
         RequestPage.get_Request().click();
 
     }

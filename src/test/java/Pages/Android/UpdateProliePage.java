@@ -56,7 +56,9 @@ public class UpdateProliePage {
     public static String SponsorExpYearArrow = "(//button[@class='ant-picker-header-super-next-btn'])[4]";
     public static String Sponsor_Document_No = "#documentNumber1";
     public static String SponsorDocumentBrowseFile = "(//*[@id='uploadExcel'])[2]";
-    public static String Approval_Msg = "//span[normalize-space()='On Board request has been sent to admin']";
+    public static String Approval_Msg(String beforemsg) {
+        return "//span[normalize-space()='" + beforemsg + "']";
+    }
 
     public static String month(String current_month) {
         return "//div//button[normalize-space()='" + current_month + "']";
@@ -357,10 +359,11 @@ public class UpdateProliePage {
         return Base_Class.driver.findElement(By.xpath(SponsorDocumentBrowseFile));
     }
 
-    public static WebElement get_Approval_Msg() {
+    public static WebElement get_Approval_Msg(String beforemsg) {
 
-        return Base_Class.driver.findElement(By.xpath(Approval_Msg));
+        return Base_Class.driver.findElement(By.xpath(Approval_Msg(beforemsg)));
     }
+
 
     public static WebElement get_month(String current_month) {
         return Base_Class.driver.findElement(By.xpath(month(current_month)));

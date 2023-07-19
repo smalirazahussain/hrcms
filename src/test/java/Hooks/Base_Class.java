@@ -1,28 +1,17 @@
 package Hooks;
 
-import io.appium.java_client.AppiumDriver;
-import io.appium.java_client.android.AndroidDriver;
-import io.appium.java_client.remote.MobileCapabilityType;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.devtools.DevTools;
-import org.openqa.selenium.devtools.v110.page.Page;
-import org.openqa.selenium.remote.DesiredCapabilities;
-import io.appium.java_client.android.AndroidElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.io.File;
 import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 
 public class Base_Class {
@@ -86,13 +75,14 @@ public class Base_Class {
            // System.setProperty("webdriver.chrome.driver", "apps/chromedriver.exe");
             driver = new ChromeDriver(options);
 
-            driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-            //driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(4000));
+            //driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
             driver.manage().window().maximize();
             //System.setProperty("webdriver.chrome.whitelistedIps", "");
             Duration timeout = Duration.ofSeconds(30);
             WebDriverWait wait = new WebDriverWait(driver, timeout);
             URL url = new URL("https://employer.getthelingo.com/");
+
             driver.navigate().to(url);
 
 

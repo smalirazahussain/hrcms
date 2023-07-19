@@ -5,7 +5,7 @@ Feature: Branches
   Scenario: User add new branch to the Head office add approve by itself and admin
     Given  [Login Head Office Page] User enter the URL "https://exchangehouse.getthelingo.com/"
     When   [Login Head Office Page] User enter email id "dubaiexchange@mailinator.com"
-    Then   [Login Head Office Page] User enter the Password "123kamelpay321"
+    Then   [Login Head Office Page] User enter the Password "Password1"
     And    [Login Head Office Page] User tap on the login button
     #Then   [Dashboard Head Office Page] User verify to toast message to "Successfully Login"
     And    [Dashboard Head Office Page] User tap on the branches button
@@ -34,7 +34,7 @@ Feature: Branches
   Scenario Outline: Exchange house create a branch and then create multiple Employee in exchange house branch
     Given  [Login Head Office Page] User enter the URL "https://exchangehouse.getthelingo.com/"
     When   [Login Head Office Page] User enter email id "dubaiexchange@mailinator.com"
-    Then   [Login Head Office Page] User enter the Password "123kamelpay321"
+    Then   [Login Head Office Page] User enter the Password "Password1"
     And    [Login Head Office Page] User tap on the login button
     #Then   [Dashboard Head Office Page] User verify to toast message to "Successfully Login"
     And    [Dashboard Head Office Page] User tap on the branches button

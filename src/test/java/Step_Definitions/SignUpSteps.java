@@ -86,7 +86,6 @@ public class SignUpSteps {
         String cc = String.valueOf(country_code);
         SignUpPage.signUpEnterTheCompanyCode().sendKeys(cc);
         SignUpPage.signUpEnterTheCompanyCode().click();
-        Thread.sleep(4000);
     }
 
 
@@ -94,9 +93,10 @@ public class SignUpSteps {
     public void signUpUserEnterThePhoneNo(String phone_no) throws InterruptedException {
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(signUpUserEnterThePhoneNo)));
         Random randomGenerator = new Random();
-        int randomno = randomGenerator.nextInt(100000);
+        int randomno = randomGenerator.nextInt(999999999);
+        System.out.println(randomno);
         SignUpPage.signUpUserEnterThePhoneNo().click();
-        SignUpPage.signUpUserEnterThePhoneNo().sendKeys(phone_no+1);
+        SignUpPage.signUpUserEnterThePhoneNo().sendKeys(String.valueOf(randomno));
 
     }
 

@@ -232,7 +232,7 @@ Feature: Update Profile
 
   Scenario: User successfully login
     Given   [Sign Up] User tap on Sign up button
-    When    [Sign Up] User enter the name "company"
+    When    [Sign Up] User enter the name "dubaicompany"
     Then    [Sign Up] User enter the email "email"
     #Then    [Sign Up] Enter the Phone code "971"
     Then    [Sign Up] User enter the phone no "12345678"
@@ -248,7 +248,7 @@ Feature: Update Profile
     And     [Update Profile] Select the state "Dubai"
     When    [Update Profile] User enter the city "Dubai"
     Then    [Update Profile] User select the Payroll type"WPS"
-    Then    [Update Profile] User select the Payroll type"NON-WPS"
+    #Then    [Update Profile] User select the Payroll type"NON-WPS"
     And     [Update Profile] User select the FreeZone
     And     [Update Profile] User select the Migrated
     #Then    [Update Profile] User enter the document name "Trade License"
@@ -279,4 +279,105 @@ Feature: Update Profile
     When    [Admin Page] User tap on onboard Approvals
     And     [Admin Page] User tap on view button
     Then    [Admin Page] User verify establishment id and approve by admin
+    And     [Admin Page] User verify the employer approve by the admin "Action Successfully"
+
+   Scenario: Employer create by the admin side and then approve him self
+     Then    [Admin Page] Open the admin tab "http://admin.getthelingo.com"
+     And     [Admin Page] User tap on login page
+     Then    [Admin Page] User enter the  email "admin@admin.com"
+     When    [Admin Page] User enter the Password "12345678"
+     And     [Admin Page] User tap on login page
+     Then    [Admin Page] User tap on employer
+     And     [Admin Page] User tap on Add employer
+     When    [Sign Up] User enter the name "dubaicompany"
+     Then    [Sign Up] User enter the email "email"
+    #Then    [Sign Up] Enter the Phone code "971"
+     #Then    [Sign Up] User enter the phone no "12345678"
+     When    [Login Page] User enter the password "Password1"
+     Then    [Sign Up] User enter the confirm password "Password1"
+     #And     [Sign Up] User tap on Sign up button on SignUp Page
+     #Then    [Sign Up] User enter the otp code "1111"
+     #And     [Sign Up] User tap on verify button
+     #And     [Login page] Verified user land on update profile page "Update Profile"
+     Then    [Update Profile] User enter the establishment id ""
+     And     [Update Profile] User the address "Company Address "
+     Then    [Update Profile] User enter the building no ""
+     #And     [Update Profile] Select the state "Dubai"
+     When    [Update Profile] User enter the city "Dubai"
+     Then    [Update Profile] User select the Payroll type"WPS"
+    #Then    [Update Profile] User select the Payroll type"NON-WPS"
+     And     [Update Profile] User select the FreeZone
+     And     [Update Profile] User select the Migrated
+    #Then    [Update Profile] User enter the document name "Trade License"
+    #And     [Update Profile] User enter the document tittle "personal details"
+     Then    [Update Profile] User enter the year 2017
+     And     [Update Profile] User enter the month "Dec"
+     Then    [Update Profile] User enter the day "3"
+     And     [Update Profile] User enter the expire year 2030
+     Then    [Update Profile] User enter the expire month "Oct"
+     And     [Update Profile] User enter the expire day "31"
+     Then    [Update Profile] User enter the Trade License Number "TLNO"
+     Then    [Update Profile] User tap on browse file
+     When    [Update Profile] User enter the Sponsor Document year "2018"
+     When    [Update Profile] User enter the Sponsor Document month "Dec"
+     Then    [Update Profile] User enter the Sponsor day "11"
+     And     [Update Profile] User enter the Sponsor expire year 2030
+     Then    [Update Profile] User enter the Sponsor expire month "Oct"
+     And     [Update Profile] User enter the Sponsor expire day "31"
+     And     [Update Profile] User enter the Sponsor document number "SDNO"
+     Then    [Update Profile] User tap on Sponsor document browse file
+     And     [Update Profile] User enter the submit button
+     Then    [Update Profile] Validate the onboard approval message "On Board request has been sent to admin"
+
+
+  Scenario: User sends an approval, but the admin rejects it and provides the user with a rejection message.
+    Given   [Sign Up] User tap on Sign up button
+    When    [Sign Up] User enter the name "dubaigroupofcompany"
+    Then    [Sign Up] User enter the email "email"
+    #Then    [Sign Up] Enter the Phone code "971"
+    Then    [Sign Up] User enter the phone no "12345678"
+    When    [Login Page] User enter the password "Password1"
+    Then    [Sign Up] User enter the confirm password "Password1"
+    And     [Sign Up] User tap on Sign up button on SignUp Page
+    Then    [Sign Up] User enter the otp code "1111"
+    And     [Sign Up] User tap on verify button
+    And     [Login page] Verified user land on update profile page "Update Profile"
+    Then    [Update Profile] User enter the establishment id ""
+    And     [Update Profile] User the address "Company Address "
+    Then    [Update Profile] User enter the building no ""
+    And     [Update Profile] Select the state "Dubai"
+    When    [Update Profile] User enter the city "Dubai"
+    Then    [Update Profile] User select the Payroll type"WPS"
+    #Then    [Update Profile] User select the Payroll type"NON-WPS"
+    And     [Update Profile] User select the FreeZone
+    And     [Update Profile] User select the Migrated
+    #Then    [Update Profile] User enter the document name "Trade License"
+    #And     [Update Profile] User enter the document tittle "personal details"
+    Then    [Update Profile] User enter the year 2017
+    And     [Update Profile] User enter the month "Dec"
+    Then    [Update Profile] User enter the day "3"
+    And     [Update Profile] User enter the expire year 2030
+    Then    [Update Profile] User enter the expire month "Oct"
+    And     [Update Profile] User enter the expire day "31"
+    Then    [Update Profile] User enter the Trade License Number "TLNO"
+    Then    [Update Profile] User tap on browse file
+    When    [Update Profile] User enter the Sponsor Document year "2018"
+    When    [Update Profile] User enter the Sponsor Document month "Dec"
+    Then    [Update Profile] User enter the Sponsor day "11"
+    And     [Update Profile] User enter the Sponsor expire year 2030
+    Then    [Update Profile] User enter the Sponsor expire month "Oct"
+    And     [Update Profile] User enter the Sponsor expire day "31"
+    And     [Update Profile] User enter the Sponsor document number "SDNO"
+    Then    [Update Profile] User tap on Sponsor document browse file
+    And     [Update Profile] User enter the submit button
+    Then    [Update Profile] Validate the onboard approval message "On Board request has been sent to admin"
+    Then    [Admin Page] Open the admin tab "http://admin.getthelingo.com"
+    And     [Admin Page] User tap on login page
+    Then    [Admin Page] User enter the  email "admin@admin.com"
+    When    [Admin Page] User enter the Password "12345678"
+    And     [Admin Page] User tap on login page
+    When    [Admin Page] User tap on onboard Approvals
+    And     [Admin Page] User tap on view button
+    Then    [Admin Page] User verify establishment id and approve by admin
+
 

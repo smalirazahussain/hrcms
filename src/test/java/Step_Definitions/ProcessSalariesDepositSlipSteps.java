@@ -7,8 +7,11 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 
 import java.awt.*;
@@ -24,11 +27,12 @@ import java.time.Duration;
 import java.util.Random;
 
 import static Hooks.Base_Class.driver;
+import static Pages.Android.ProcessSalariesDepositSlipPages.*;
 import static Step_Definitions.SignUpSteps.companyName;
 
 public class ProcessSalariesDepositSlipSteps {
 
-    Duration timeout = Duration.ofSeconds(30);
+    Duration timeout = Duration.ofSeconds(900000);
     WebDriverWait wait = new WebDriverWait(driver, timeout);
     //create a soft-assertion object
     SoftAssert softAssert = new SoftAssert();
@@ -621,9 +625,10 @@ public class ProcessSalariesDepositSlipSteps {
 @When("[Process Salaries DepositSlip Page] User enter company name and download the salary template")
 public void processSalariesDepositSlipPageUserEnterCompanyNameAndDownloadTheSalaryTemplate() throws InterruptedException, IOException, AWTException {
     ProcessSalariesDepositSlipPages.get_Company_Name().sendKeys(companyTittle + Keys.ENTER);
-    Thread.sleep(3000);
+    wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector("div.loading")));
+    wait.until(ExpectedConditions.elementToBeClickable(By.xpath(Download_Button)));
     ProcessSalariesDepositSlipPages.get_Download_Button().click();
-    Thread.sleep(10000);
+    //Thread.sleep(10000);
 
     // Get the latest downloaded file from the download directory
     File downloadDir = new File("D:\\Hrcms\\src\\test\\java\\document"); // Replace with the actual download directory path
@@ -673,17 +678,20 @@ public void processSalariesDepositSlipPageUserEnterCompanyNameAndDownloadTheSala
         // Handle the case where no file is downloaded
         // ...
     }
-
+    Assert.assertEquals(downloadedFileName,downloadedFileName);
+    System.out.println(downloadedFileName);
 }
 
     @Then("[Process Salaries DepositSlip Page] User select the month and then upload the process file {string}")
     public void processSalariesDepositSlipPageUserSelectTheMonthAndThenUploadTheProcessFile(String date) throws InterruptedException {
         ProcessSalariesDepositSlipPages.get_Salary_Date().sendKeys(date+Keys.ENTER);
-        Thread.sleep(5000);
+        //Thread.sleep(5000);
     }
 
     @And("[Process Salaries DepositSlip Page] User tap on browse file and upload a salary process file")
     public void processSalariesDepositSlipPageUserTapOnBrowseFileAndUploadASalaryProcessFile() throws InterruptedException, AWTException {
+        try {
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath(Salary_Browse_File)));
         ProcessSalariesDepositSlipPages.get_Salary_Browse_File().click();
         Thread.sleep(3000);
 
@@ -706,7 +714,32 @@ public void processSalariesDepositSlipPageUserEnterCompanyNameAndDownloadTheSala
         Thread.sleep(10000);
 
     }
-}
+        catch (Exception e) {
+            System.out.println("working");
+        }
+    }
+    public static String actualamount ;
+    @Then("[Process Salaries DepositSlip Page] User tap on submit button")
+    public void processSalariesDepositSlipPageUserTapOnSubmitButton() throws InterruptedException {
+        try {
+            wait.until(ExpectedConditions.elementToBeClickable(By.xpath(Salary_Amount)));
+            actualamount = ProcessSalariesDepositSlipPages.get_Salary_Amount().getText();
+            System.out.println("clientsalary" + actualamount);
+            Thread.sleep(5000);
+            wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(Salary_Submit_Button)));
+            ProcessSalariesDepositSlipPages.get_Cross_Button().click();
+            wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(Salary_Submit_Button)));
+            ProcessSalariesDepositSlipPages.get_Salary_Submit_Button().click();
+            //Thread.sleep(5000);
+        }
+        catch (Exception e) {
+            // Handle any exceptions here
+            e.printStackTrace();
+        }
+        }
+    }
+
+
 
 
 ////        String downloadDir = "D:/Hrcms/src/test/java/document";

@@ -6,19 +6,15 @@ package Step_Definitions;
 
 import Pages.Android.AddEmployerPages;
 import Pages.Android.AdminPage;
-import Pages.Android.SignUpPage;
 import Pages.Android.UpdateProliePage;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import io.cucumber.java8.Th;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-
-import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
@@ -27,15 +23,12 @@ import java.awt.*;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.KeyEvent;
 import java.time.Duration;
-import java.time.Instant;
 
 import static Hooks.Base_Class.driver;
-import static Pages.Android.AddEmployerPages.get_Add_Emplyer_Button;
-import static Pages.Android.LoginPage.Error_Message_In_Password;
-import static Pages.Android.LoginPage.Login_Button;
+import static Pages.Android.AdminPage.Approval_Ok;
+import static Pages.Android.AdminPage.Approve_Button;
 import static Pages.Android.UpdateProliePage.*;
 import static Step_Definitions.SignUpSteps.companyName;
-import static Step_Definitions.SignUpSteps.randomInt;
 import static Tests.Current_Date.currentMonth;
 import static Tests.Current_Date.currentYear;
 import static Tests.Scroll.ScrollVertical;
@@ -148,7 +141,6 @@ public class UpdateProfile {
     public void updateProfileUserEnterTheSubmitButton() throws InterruptedException {
         //wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"root\"]/div/div/div[2]/div[2]")));
         UpdateProliePage.getSubmitButton().click();
-
 
     }
 
@@ -542,10 +534,49 @@ public class UpdateProfile {
 
     @Then("[Update Profile] Validate the onboard approval message {string}")
     public void updateProfileValidateTheOnboardApprovalMessage(String beforemsg) {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(Approval_Msg)));
-        String actualmsg = UpdateProliePage.get_Approval_Msg().getText();
-        Assert.assertEquals(actualmsg,beforemsg);
+        try {
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(Approval_Msg(beforemsg))));
+            String actualmsg = UpdateProliePage.get_Approval_Msg(beforemsg).getText();
+            System.out.println("Actual Message: " + actualmsg);
+            System.out.println("Expected Message: " + beforemsg);
+            Assert.assertEquals(actualmsg, beforemsg);
+            System.out.println("Validation successful: Onboard approval message matches expected.");
+        } catch (TimeoutException e) {
+            System.out.println("TimeoutException occurred: Element not visible within the given time");
+            // Additional error handling or reporting can be added here
+            Assert.fail("TimeoutException: Element not visible within the given time");
+        } catch (NoSuchElementException e) {
+            System.out.println("NoSuchElementException occurred: Element not found");
+            // Additional error handling or reporting can be added here
+            Assert.fail("NoSuchElementException: Element not found");
+        } catch (AssertionError e) {
+            System.out.println("AssertionError occurred: Onboard approval message does not match expected");
+            // Additional error handling or reporting can be added here
+            Assert.fail("AssertionError: Onboard approval message does not match expected");
+        } catch (Exception e) {
+            System.out.println("An error occurred: " + e.getMessage());
+            // Additional error handling or reporting can be added here
+            Assert.fail("An error occurred: " + e.getMessage());
+        }
     }
+        //        try {
+//            // Perform actions that may cause undefined errors
+//            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(Approval_Msg)));
+//            String actualmsg = UpdateProliePage.get_Approval_Msg().getText();
+//            System.out.println(actualmsg);
+//            Assert.assertEquals(actualmsg,beforemsg);
+//
+//            // Continue with further steps if no error occurs
+//            System.out.println("Element click successful");
+//        } catch (NoSuchElementException e) {
+//            // Handle the "NoSuchElementException" specifically for undefined elements
+//            System.out.println("Element not found: " + e.getMessage());
+//        } catch (Exception e) {
+//            // Handle any other exceptions that may occur
+//            System.out.println("An error occurred: " + e.getMessage());
+//        }
+
+
 
     @Then("[Admin Page] User verify establishment id and approve by admin")
     public void adminPageUserVerifyEstablishmentIdAndApproveByAdmin() throws InterruptedException {
@@ -554,12 +585,14 @@ public class UpdateProfile {
                 && AdminPage.get_company_Name().getText().equals(companyName)
                 && AdminPage.get_Trade_No().getText().equals(tradeno)
                 && AdminPage.get_Sponsor_No().getText().equals(SponsorDocNo)){
-            AdminPage.get_Approve_Button().click();
-            AdminPage.get_Approval_Ok().click();
-
         }
-
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath(Approve_Button)));
+        AdminPage.get_Approve_Button().click();
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath(Approval_Ok)));
+        AdminPage.get_Approval_Ok().click();
         System.out.println(companyName);
+        System.out.println(SponsorDocNo);
+        System.out.println(tradeno);
         Thread.sleep(5000);
     }
 

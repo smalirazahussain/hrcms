@@ -43,8 +43,32 @@ public class AddEmployerSteps<Save_mol> {
 
     @Given("[Add Employer] user tap on new employer button")
     public void addEmployerUserTapOnNewEmployerButton() throws InterruptedException {
+        Thread.sleep(3000);
+//        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(Add_New_Emplyer)));
+//        wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(Add_New_Emplyer)));
+//        AddEmployerPages.get_Add_New_Emplyer().click();
+//        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(Add_New_Emplyer)));
+//
+//        WebElement addEmployerButton = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(Add_New_Emplyer)));
+//        if (!addEmployerButton.isEnabled()) {
+//            System.out.println("Add Employer button is disabled. Taking appropriate action to enable it.");
+//            // Add code to enable the button or wait for it to become enabled.
+//        }
+//
+//        addEmployerButton.click();
+//        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(Add_New_Emplyer)));
+//        WebElement addEmployerButton = driver.findElement(By.cssSelector(Add_New_Emplyer));
+        wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(Add_New_Emplyer)));
         AddEmployerPages.get_Add_New_Emplyer().click();
+        try {
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(Add_New_Emplyer)));
+            wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(Add_New_Emplyer)));
+            AddEmployerPages.get_Add_New_Emplyer().click();
+        } catch (Exception e) {
+            System.out.println("Error occurred while clicking on the element: " + e.getMessage());
+        }
     }
+
 
 
     @Then("[Add Employer] user enter the first name {string}")
@@ -207,7 +231,7 @@ public class AddEmployerSteps<Save_mol> {
     public void addEmployerUserValidateTheErrorMessageOnFirstName(String fisrtnameerror) throws InterruptedException {
         AddEmployerPages.get_first_Name_Error().isDisplayed();
         Assert.assertEquals(fisrtnameerror, "Please enter First Name");
-        Thread.sleep(3000);
+        //Thread.sleep(3000);
 
     }
 

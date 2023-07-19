@@ -20,6 +20,9 @@ public class ProcessSalariesDepositSlipPages {
     public static String Download_Button = "//div//button[@title='Download Salary Template']";
     public static String Salary_Date = "salaryFileDate";
     public static String Salary_Browse_File = "//div[contains(@class,'flex0 w-40')]//span[contains(text(),'Browse File')]";
+    public static String Salary_Submit_Button = "div:nth-child(7) > button:nth-child(1)";
+    public static String Cross_Button = ".ant-modal-close-x";
+    public static String Salary_Amount = "//div[@class='ant-modal-body']//span[1]//span[1]";
 
     public static WebElement get_Process_Salaries_Deposit_Slip() {
 
@@ -40,6 +43,18 @@ public class ProcessSalariesDepositSlipPages {
 
     public static WebElement get_Salary_Browse_File() {
         return Base_Class.driver.findElement(By.xpath(Salary_Browse_File));
+    }
+
+    public static WebElement get_Salary_Submit_Button() {
+        return Base_Class.driver.findElement(By.cssSelector(Salary_Submit_Button));
+    }
+
+    public static WebElement get_Cross_Button() {
+        return Base_Class.driver.findElement(By.cssSelector(Cross_Button));
+    }
+
+    public static WebElement get_Salary_Amount() {
+        return Base_Class.driver.findElement(By.xpath(Salary_Amount));
     }
 
     //locator

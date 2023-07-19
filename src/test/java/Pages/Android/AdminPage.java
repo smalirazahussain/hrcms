@@ -6,7 +6,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-
 import java.time.Duration;
 
 
@@ -32,7 +31,7 @@ public class AdminPage {
     public static String Approval_Ok = "//span[normalize-space()='OK']";
     public static String Client_Approval = "#approval";
     public static String Company_Client = "(//input[@id=\"client\"])[2]";
-    public static String Action_Successfully = "div[class='ant-message'] span:nth-child(2)";
+    public static String Action_Successfully = "//span[normalize-space()='Action Successfully']";
     public static String Admin_Approval_Ok = "//button[@class='ant-btn css-dev-only-do-not-override-1vtf12y ant-btn-primary ant-btn-sm']";
 
     public static String Browse_Button = "div:nth-child(4) > button:nth-child(2)";
@@ -48,6 +47,9 @@ public class AdminPage {
     public static String ExchangeHouse_Client_Approvals_Button = "//a[@id='exchangeHouseApproval']";
     public static String Admin_Branch_Name = "(//input[@type='search'])[2]";
     public static String Exchange_House_Browse_Button = "button.ant-btn#uploadExcel.primary-outline-filled[title='Browse File'";
+    public static String admin_Client_Salary = "div:first-child > ul:first-child > li:nth-child(32) > span:nth-child(2)";
+    public static  String Admin_Employer_Button = "#employer";
+    public static  String Admin_Add_Employer_Button = "button[title='Add Employer']";
     public static String Select_Exchange_House = "client";
     public static WebElement get_Admin_Tab(){
         return Base_Class.driver.findElement(By.xpath(admin_Tab));
@@ -112,8 +114,8 @@ public class AdminPage {
         return Base_Class.driver.findElement(By.xpath(Company_Client));
     }
 
-    public static WebElement get_Action_Successfully(WebDriverWait wait) {
-        return Base_Class.driver.findElement(By.cssSelector(Action_Successfully));
+    public static WebElement get_Action_Successfully() {
+        return Base_Class.driver.findElement(By.xpath(Action_Successfully));
     }
 
     public static WebElement get_Admin_Approval_Ok() {
@@ -167,5 +169,18 @@ public class AdminPage {
 
     public static WebElement get_Exchange_House_Browse_Button() {
         return Base_Class.driver.findElement(By.cssSelector(Exchange_House_Browse_Button));
+    }
+
+    public static WebElement get_admin_Client_Salary() {
+        return Base_Class.driver.findElement(By.cssSelector(admin_Client_Salary));
+    }
+
+    public static WebElement get_Admin_Employer_Button() {
+        return Base_Class.driver.findElement(By.cssSelector(Admin_Employer_Button));
+    }
+
+    public static WebElement get_Admin_Add_Employer_Button() {
+
+        return Base_Class.driver.findElement(By.cssSelector(Admin_Add_Employer_Button));
     }
 }

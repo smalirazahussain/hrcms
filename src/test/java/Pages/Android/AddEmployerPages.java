@@ -1,20 +1,12 @@
 package Pages.Android;
 
 import Hooks.Base_Class;
-import org.codehaus.jackson.map.MapperConfig;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import javax.management.Notification;
-import java.awt.*;
 import java.time.Duration;
-import java.util.BitSet;
-
-import static Hooks.Base_Class.driver;
-import static Pages.Android.UpdateProliePage.*;
-import static Pages.Android.UpdateProliePage.document;
 
 
 public class AddEmployerPages {
@@ -46,7 +38,7 @@ public class AddEmployerPages {
     }
 
     public static String Date_Of_Birth = "dob";
-    public static String Pass_Port_no = "passportNumber";
+    public static String Pass_Port_no = "documentNumber0";
 
     public static String Country(String country) {
         return "//div[contains(text(),'"+country+"')]";
