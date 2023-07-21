@@ -650,14 +650,17 @@ public void processSalariesDepositSlipPageUserEnterCompanyNameAndDownloadTheSala
         FileInputStream fileInputStream = new FileInputStream(latestFile);
         Workbook workbook = new XSSFWorkbook(fileInputStream);
         Sheet sheet = workbook.getSheetAt(0); // Assuming the data is in the first sheet
+        System.out.println(sheet);
         int rowIndex = 0;
         Random random = new Random();
         for (Row row : sheet) {
             if (rowIndex > 0) {
                 Cell seventhCell = row.createCell(6);
+
                 int randomValue = random.nextInt(10000); // Generate a random number between 0 and 99
                 seventhCell.setCellValue(randomValue);
                 System.out.println(seventhCell);
+
                 Thread.sleep(1);
             }
             rowIndex++;

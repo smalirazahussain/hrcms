@@ -50,6 +50,7 @@ public class AdminPage {
     public static String admin_Client_Salary = "div:first-child > ul:first-child > li:nth-child(32) > span:nth-child(2)";
     public static  String Admin_Employer_Button = "#employer";
     public static  String Admin_Add_Employer_Button = "button[title='Add Employer']";
+    public static String Admin_Company_Name = "input[placeholder='Search']";
     public static String Select_Exchange_House = "client";
     public static WebElement get_Admin_Tab(){
         return Base_Class.driver.findElement(By.xpath(admin_Tab));
@@ -182,5 +183,10 @@ public class AdminPage {
     public static WebElement get_Admin_Add_Employer_Button() {
 
         return Base_Class.driver.findElement(By.cssSelector(Admin_Add_Employer_Button));
+    }
+
+    public static WebElement get_Admin_Company_Name() {
+
+        return Base_Class.driver.findElement(By.cssSelector(Admin_Company_Name));
     }
 }

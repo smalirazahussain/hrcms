@@ -59,7 +59,7 @@ Feature: Branches
     And    [Admin Page] User tap on view button
     #And    [OnBoard Approval Head Office Page] User tap on view button
     Then   [Admin Page] Admin verification the branch and then approve
-    Given  [Login Head Office Page] User enter the URL "http://83.111.40.2:8087/#/login"
+    Given  [Login Head Office Page] User enter the URL "http://10.10.5.67:9000/#/login"
     Then   [Web Portal Page] User enter the user name "admin"
     Then   [Web Portal Page] User enter the Password "admin"
     Then   [Web Portal Page] User tap on the login button

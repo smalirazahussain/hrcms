@@ -19,6 +19,7 @@ public class Base_Class {
     //AppiumDriver driver;
     //public static AppiumDriver<AndroidElement> driver;
     public static WebDriver driver = null;
+    public static WebDriverWait wait ;
 
 
     @Before
@@ -80,8 +81,8 @@ public class Base_Class {
             driver.manage().window().maximize();
             //System.setProperty("webdriver.chrome.whitelistedIps", "");
             Duration timeout = Duration.ofSeconds(30);
-            WebDriverWait wait = new WebDriverWait(driver, timeout);
-            URL url = new URL("https://employer.getthelingo.com/");
+            wait = new WebDriverWait(driver, timeout);
+            URL url = new URL("http://employer.getthelingo.com/");
 
             driver.navigate().to(url);
 

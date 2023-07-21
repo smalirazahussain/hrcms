@@ -62,7 +62,7 @@ public class WebPortalHeadOfficePage {
         return Base_Class.driver.findElement(By.xpath(Web_Edit_Button));
     }
 
-    public static WebElement get_Employer_Product(WebDriverWait wait) {
+    public static WebElement get_Employer_Product() {
         return Base_Class.driver.findElement(By.xpath(Employer_Product));
     }
 

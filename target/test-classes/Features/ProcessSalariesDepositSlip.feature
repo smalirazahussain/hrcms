@@ -10,8 +10,8 @@ Feature: ProcessSalariesDepositSlip
     When    [Process Salaries DepositSlip Page] User enter company name and download the salary template
 
   Scenario: Add salary against the employees and create a approval foe the employer and then approve for the admin portal
-    Given   [Login Page] User enter the email "11944"
-    When    [Login Page] User enter the password "Password1"
+    Given   [Login Page] User enter the email "12205"
+    When    [Login Page] User enter the password "Password2"
     Then    [Login page] User tap on login button
     And     [Process Salaries DepositSlip Page] User Tap on Process Salaries Deposit Slip
     When    [Process Salaries DepositSlip Page] User enter company name and download the salary template

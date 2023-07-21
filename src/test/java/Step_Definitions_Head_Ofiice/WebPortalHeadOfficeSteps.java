@@ -3,13 +3,16 @@ package Step_Definitions_Head_Ofiice;
 import Pages.HeadOfficePages.WebPortalHeadOfficePage;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.asserts.SoftAssert;
 
 import java.time.Duration;
 
 import static Hooks.Base_Class.driver;
+import static Pages.HeadOfficePages.WebPortalHeadOfficePage.Web_Company_Name;
 import static Pages.HeadOfficePages.WebPortalHeadOfficePage.get_Select_Product;
 import static Step_Definitions_Head_Ofiice.BrachesStepsHeadOffice.branch;
 import static Step_Definitions_Head_Ofiice.DashBoardStepsHeadOffice.exchangeHouseTittle;
@@ -44,7 +47,9 @@ public class WebPortalHeadOfficeSteps {
     }
 
     @When("[Web Portal Page] User enter the branch name {string}")
-    public void webPortalPageUserEnterTheBranchName(String args) {
+    public void webPortalPageUserEnterTheBranchName(String args) throws InterruptedException {
+        Thread.sleep(5000);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(Web_Company_Name)));
         WebPortalHeadOfficePage.get_Web_Company_Name().sendKeys(branch+ Keys.ENTER);
     }
 
@@ -56,8 +61,7 @@ public class WebPortalHeadOfficeSteps {
 
     @When("[Web Portal Page] User tap on the employer product")
     public void webPortalPageUserTapOnTheEmployerProduct() throws InterruptedException {
-        wait(30,30);
-         WebPortalHeadOfficePage.get_Employer_Product(wait).click();
+         WebPortalHeadOfficePage.get_Employer_Product().click();
     }
 
     @Then("[Web Portal Page] User select the product {string}")

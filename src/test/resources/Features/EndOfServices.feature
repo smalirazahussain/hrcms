@@ -108,7 +108,7 @@ Feature: AddEmployer
     And     [Request Page] User verify the mol and passport no and then click the approve button
     Then    [Admin Page] User validate the toast message "Action Successfully"
 
-  Scenario: Add new employer with other bank
+  Scenario: Add a new employee from another bank, create an End of Services file, and approve the file on the admin portal. Also, check the employee table
     Given   [Login Page] User enter the email "11793"
     When    [Login Page] User enter the password "Password1"
     Then    [Login page] User tap on login button
@@ -164,6 +164,8 @@ Feature: AddEmployer
     And     [Admin Page] User tap on view button
     And     [Request Page] User verify the mol and passport no and then click the approve button
     Then    [Admin Page] User validate the toast message "Action Successfully"
+    Then    [Admin Employer Page] User tap on the employer page and enter the company name
+    Then    [Admin Employer Page] User create a EOS file against the wallet id then appload ""
 
   @Update @UpdateProfile1
   Scenario: Add new employer without enter employee type and validate the error message "Please enter Employee Type"

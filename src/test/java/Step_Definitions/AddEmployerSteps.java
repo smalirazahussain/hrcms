@@ -369,10 +369,15 @@ public class AddEmployerSteps<Save_mol> {
     public void addEmployerUserEnterTheBranchName(String BranchName) {
         AddEmployerPages.get_Branch_Name().sendKeys(BranchName);
     }
-
+    public static String IbanNo;
     @Then("[Add Employer] User enter the iBAN no {string}")
     public void addEmployerUserEnterTheIBANNo(String Iban) {
-        AddEmployerPages.get_Iban().sendKeys(Iban);
+        long iban = (long) (Math.random()*(100000000));
+        System.out.println(iban);
+        String generateIban = Iban+iban;
+        AddEmployerPages.get_Iban().sendKeys(Iban+iban);
+        IbanNo = generateIban ;
+        System.out.println("IBAN"+IbanNo);
     }
 
     @Then("[Add Employer] Validate employees should add successfully {string}")

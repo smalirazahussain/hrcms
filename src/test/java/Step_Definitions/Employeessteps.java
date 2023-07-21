@@ -51,7 +51,7 @@ public class Employeessteps {
     public void employeesPageUserTapOnEmployeesButton() throws InterruptedException {
         companyTittle = AddEmployerPages.get_Company_Tittle().getText();
         companyName = companyTittle;
-        System.out.println(companyName);
+        System.out.println("CompanyName"+companyName);
         EmployeesPage.get_Employees().click();
         //Thread.sleep(5000);
 
@@ -169,7 +169,7 @@ public class Employeessteps {
 //            String branchEstablishmentId = establishmentsStepsHeadOffice.branchEstablishmentId;
 
         //System.out.println(branchEstablishmentId);
-        for (int j = 0; j < 10; j++) {
+        for (int j = 0; j < 100; j++) {
             int randomNumber = random.nextInt(1000000000);
 
 
