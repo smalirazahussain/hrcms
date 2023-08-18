@@ -1186,7 +1186,7 @@ Feature: AddEmployer
 
   Scenario Outline: Create multiple Employee
     Given   [Login Page] User enter the email "12205"
-    When    [Login Page] User enter the password "Password1"
+    When    [Login Page] User enter the password "Password2"
     Then    [Login page] User tap on login button
     Then    [Employees Page] User tap on employees button
     And     [Employees Page] User create a multiple data for the employer "<MolNo>""<EmpCode>""<FirstName>""<LastName>""<DisplayName>""<DOB>"" <Gender> "" <Nationality>""<JoiningDate>""<Email>""<MobileNo>""<AlternatePhone>""<HomeAddress>""<HomeState>""<HomePostCode>""<WorkAddress>""<WorkState>""<WorkPostCode>""<PassportNo>""<PassportExpiry>""<EID>""<EIDExpiry>""<EstablishmentId>"

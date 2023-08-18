@@ -30,7 +30,7 @@ public class AddEmployerPages {
 
     public static String Mobile_No = "mobileNo";
     public static String Alternate_Mobile_no = "altMobileNo";
-    public static String Add_Employer_Button = "button[title='Add Employee']";
+
 
 
     public static String Gender(String gender) {
@@ -166,10 +166,6 @@ public class AddEmployerPages {
 
     public static WebElement get_Alternate_Mobile_No() {
         return Base_Class.driver.findElement(By.id(Alternate_Mobile_no));
-    }
-
-    public static WebElement get_Add_Emplyer_Button() {
-        return Base_Class.driver.findElement(By.cssSelector(Add_Employer_Button));
     }
 
     /*  public static WebElement get_Employee_Already_Exsist(){

@@ -25,7 +25,7 @@ public class AdminPage {
     //public static String Approve_Button = "div[role='dialog'] button[title='Approve']";
     public static String Approve_Button ="//div[contains(@class,'btn-group')]//button[contains(@title,'Approve')]";
     public static String Establishmentid = "ul:nth-child(1) li:nth-child(2) span:nth-child(2)";
-    public static String View = "(//button[contains(@title,'View')])[1]";
+    public static String View = "button[title='View']:nth-child(1)";
     public static String company_Name = "//body//div//ul[2]";
     public static String Trade_No = "//body//div//ul[2]";
     public static String Approval_Ok = "//span[normalize-space()='OK']";
@@ -51,6 +51,8 @@ public class AdminPage {
     public static  String Admin_Employer_Button = "#employer";
     public static  String Admin_Add_Employer_Button = "button[title='Add Employer']";
     public static String Admin_Company_Name = "input[placeholder='Search']";
+    public static String Upload_EOS_Button = "div:nth-child(4) button:nth-child(1) span:nth-child(2)";
+    public static String Eos_Template = "button[title='EOS Template']";
     public static String Select_Exchange_House = "client";
     public static WebElement get_Admin_Tab(){
         return Base_Class.driver.findElement(By.xpath(admin_Tab));
@@ -86,7 +88,7 @@ public class AdminPage {
 
     public static WebElement get_View() {
 
-        return Base_Class.driver.findElement(By.xpath(View));
+        return Base_Class.driver.findElement(By.cssSelector(View));
     }
 
     public static WebElement get_company_Name() {
@@ -188,5 +190,13 @@ public class AdminPage {
     public static WebElement get_Admin_Company_Name() {
 
         return Base_Class.driver.findElement(By.cssSelector(Admin_Company_Name));
+    }
+
+    public static WebElement get_Upload_EOS_Button() {
+        return Base_Class.driver.findElement(By.cssSelector(Upload_EOS_Button));
+    }
+
+    public static WebElement get_Eos_Template() {
+        return Base_Class.driver.findElement(By.cssSelector(Eos_Template));
     }
 }

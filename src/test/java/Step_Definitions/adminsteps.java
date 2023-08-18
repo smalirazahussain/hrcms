@@ -7,6 +7,11 @@ import Pages.HeadOfficePages.OnBoardApprovalHeadOfficePage;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.StaleElementReferenceException;
@@ -18,15 +23,21 @@ import org.testng.asserts.SoftAssert;
 import java.awt.*;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.KeyEvent;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.time.Duration;
+import java.util.Arrays;
 
 import static Hooks.Base_Class.driver;
 import static Pages.Android.AdminPage.*;
 import static Pages.Android.UpdateProliePage.*;
 import static Pages.HeadOfficePages.OnBoardApprovalHeadOfficePage.Phone_No;
+import static Step_Definitions.AddEmployerSteps.IbanNo;
 import static Step_Definitions.Employeessteps.companyTittle;
 import static Step_Definitions.Employeessteps.randomNumbers;
+import static Step_Definitions.EndOfServicesSteps.filePath;
 import static Step_Definitions.ProcessSalariesDepositSlipSteps.actualamount;
 import static Step_Definitions.SignUpSteps.companyName;
 import static Step_Definitions_Head_Ofiice.BrachesStepsHeadOffice.branch;
@@ -43,35 +54,8 @@ public class adminsteps {
 
     @Then("[Admin Page] Open the admin tab {string}")
     public void adminPageOpenTheAdminTab(String admintabURL) throws AWTException, InterruptedException, MalformedURLException {
-
-        //wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(admin_Tab)));
-        //AdminPage.get_Admin_Tab().click();
-        driver.navigate().to(admintabURL);
-       // Thread.sleep(10000);
-
-/*        Robot rb = new Robot();
-        rb.keyPress(KeyEvent.VK_CONTROL);
-        rb.keyPress(KeyEvent.VK_T);
         driver.navigate().to(admintabURL);
 
-        Thread.sleep(4000);
-
-          /*  String currentURL  = driver.getCurrentUrl();
-            driver.navigate().to();
-            Thread.sleep(10000);
-
-       /* //System.setProperty("webdriver.chrome.whitelistedIps", "");
-        URL url = new URL("http://10.40.5.43:49653");
-        driver.navigate().to(url);
-
-        ArrayList<String> tabs = new ArrayList<String>(driver.getWindowHandles());
-
-        driver.switchTo().window(tabs.get(1));
-        driver.get(admintabURL);
-
-        Thread.sleep(3000);
-
-       */
     }
 
     @And("[Update Profile] User enter the month of joining  {string}")
@@ -110,7 +94,7 @@ public class adminsteps {
 
     @And("[Admin Page] User tap on view button")
     public void adminPageUserTapOnViewButton() {
-        wait.until(ExpectedConditions.elementToBeClickable(By.xpath(View)));
+        wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(View)));
         AdminPage.get_View().click();
     }
 
@@ -121,8 +105,8 @@ public class adminsteps {
 
     @Then("[Admin Page] User enter the company name")
     public void adminPageUserEnterTheCompanyName() throws InterruptedException {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(Company_Client)));
-        AdminPage.get_Company_Client().sendKeys(companyName+Keys.ENTER);
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath(Company_Client)));
+        AdminPage.get_Company_Client().sendKeys(companyName + Keys.ENTER);
         System.out.println(companyTittle);
         System.out.println(companyName);
         //Thread.sleep(5000);
@@ -134,14 +118,14 @@ public class adminsteps {
         //wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(Company_Client)));
         //AdminPage.get_Company_Client().click();
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(Company_Client)));
-        AdminPage.get_Company_Client().sendKeys(company_Name+Keys.ENTER);
+        AdminPage.get_Company_Client().sendKeys(company_Name + Keys.ENTER);
     }
 
     @Then("[Admin Page] User validate the toast message {string}")
     public void adminPageUserValidateTheToastMessage(String actual) throws InterruptedException {
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(Action_Successfully)));
         String expect = AdminPage.get_Action_Successfully().getText();
-        Assert.assertEquals(actual,expect);
+        Assert.assertEquals(actual, expect);
     }
 
 
@@ -151,7 +135,7 @@ public class adminsteps {
         //wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(Approval_Ok)));
         Thread.sleep(3000);
         AdminPage.get_Approval_Ok().click();
-       // AdminPage.get_Admin_Approval_Ok().click();
+        // AdminPage.get_Admin_Approval_Ok().click();
     }
 
     @Then("[Admin Page] User Tap om the browse button")
@@ -161,7 +145,7 @@ public class adminsteps {
 
 
         Robot rb = new Robot();
-        StringSelection str = new StringSelection("D:\\Hrcms\\src\\test\\java\\document\\"+randomNumbers+".xlsx");
+        StringSelection str = new StringSelection("D:\\Hrcms\\src\\test\\java\\document\\" + randomNumbers + ".xlsx");
         Toolkit.getDefaultToolkit().getSystemClipboard().setContents(str, null);
         // press Contol+V for pasting
         rb.keyPress(KeyEvent.VK_CONTROL);
@@ -181,8 +165,8 @@ public class adminsteps {
     @Then("[Admin Page] User select the card type {string}")
     public void adminPageUserSelectTheCardType(String card) {
         //AdminPage.get_Card_Button().click();
-        AdminPage.get_Card_Button().sendKeys(card,Keys.ENTER);
-       // AdminPage.get_Card_Tpye(card).click();
+        AdminPage.get_Card_Button().sendKeys(card, Keys.ENTER);
+        // AdminPage.get_Card_Tpye(card).click();
     }
 
     @And("[Admin Page] User Tap on the approve button")
@@ -201,14 +185,14 @@ public class adminsteps {
     public void adminPageUserSelectTheExchangeHouse(String arg0) throws InterruptedException {
         Thread.sleep(5000);
         System.out.println(exchangeHouseTittle);
-       // AdminPage.get_Select_Exchange_House().click();
-        AdminPage.get_Select_Exchange_House().sendKeys(exchangeHouseTittle,Keys.ENTER);
+        // AdminPage.get_Select_Exchange_House().click();
+        AdminPage.get_Select_Exchange_House().sendKeys(exchangeHouseTittle, Keys.ENTER);
         Thread.sleep(5000);
     }
 
     @Then("[Admin Page] Admin verification the branch and then approve")
     public void adminPageAdminVerificationTheBranchAndThenApprove() throws InterruptedException {
-        if (phno== OnBoardApprovalHeadOfficePage.get_Phone_No_admin_Side().getText())
+        if (phno == OnBoardApprovalHeadOfficePage.get_Phone_No_admin_Side().getText())
             AdminPage.get_Approve_Button().click();
         //        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(Approval_Ok)));
         AdminPage.get_Approve_Button().click();
@@ -232,16 +216,16 @@ public class adminsteps {
     public void adminPageUserVerifyTheNotificationMessage(String after) throws InterruptedException {
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(Action_Successfully)));
         String actual = AdminPage.get_Action_Successfully().getText();
-        System.out.println("Actual MSG"+actual);
-        Assert.assertEquals(actual,after);
+        System.out.println("Actual MSG" + actual);
+        Assert.assertEquals(actual, after);
     }
 
     @When("[Admin Page] User tap on Exchange house client Approvals")
     public void adminPageUserTapOnExchangeHouseClientApprovals() throws InterruptedException {
         AdminPage.get_ExchangeHouse_Client_Approvals_Button().click();
-        ManageEmployeesHeadOfficePage.get_Manage_Branch().sendKeys(exchangeHouseTittle+ Keys.ENTER);
+        ManageEmployeesHeadOfficePage.get_Manage_Branch().sendKeys(exchangeHouseTittle + Keys.ENTER);
         Thread.sleep(5000);
-        AdminPage.get_Admin_Branch_Name().sendKeys(branch+Keys.ENTER);
+        AdminPage.get_Admin_Branch_Name().sendKeys(branch + Keys.ENTER);
     }
 
     @Then("[Admin Page] User Tap om the exchange house browse button")
@@ -251,7 +235,7 @@ public class adminsteps {
 
 
         Robot rb = new Robot();
-        StringSelection str = new StringSelection("D:\\Hrcms\\src\\test\\java\\document\\"+randomNumbers+".xlsx");
+        StringSelection str = new StringSelection("D:\\Hrcms\\src\\test\\java\\document\\" + randomNumbers + ".xlsx");
         Toolkit.getDefaultToolkit().getSystemClipboard().setContents(str, null);
         // press Contol+V for pasting
         rb.keyPress(KeyEvent.VK_CONTROL);
@@ -307,7 +291,7 @@ public class adminsteps {
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(Approval_Msg(beforemsg))));
         String actualmsg = UpdateProliePage.get_Approval_Msg(beforemsg).getText();
         System.out.println("Admin approval msg" + actualmsg);
-        Assert.assertEquals(actualmsg,beforemsg);
+        Assert.assertEquals(actualmsg, beforemsg);
     }
 
     @Then("[Admin Page] User tap on employer")
@@ -320,6 +304,153 @@ public class adminsteps {
         wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(Admin_Add_Employer_Button)));
         AdminPage.get_Admin_Add_Employer_Button().click();
     }
+
+    @And("[Admin Employer Page] Upload end of service file on the admin portal")
+    public void adminEmployerPageUploadEndOfServiceFileOnTheAdminPortal() throws AWTException, InterruptedException {
+        AdminPage.get_Upload_EOS_Button().click();
+        Thread.sleep(3000);
+
+
+        Robot rb = new Robot();
+        StringSelection str = new StringSelection(filePath);
+        Toolkit.getDefaultToolkit().getSystemClipboard().setContents(str, null);
+        // press Contol+V for pasting
+        rb.keyPress(KeyEvent.VK_CONTROL);
+        rb.keyPress(KeyEvent.VK_V);
+
+        // release Contol+V for pasting
+        rb.keyRelease(KeyEvent.VK_CONTROL);
+        rb.keyRelease(KeyEvent.VK_V);
+
+        // for pressing and releasing Enter
+        rb.keyPress(KeyEvent.VK_ENTER);
+        rb.keyRelease(KeyEvent.VK_ENTER);
+        //ScrollVertical(get_Add_Emplyer_Button());
+        Thread.sleep(5000);
+    }
+
+    public String downloadFileName;
+
+    @And("[Admin Employer Page] User tap on DOS Template button and download file then  create a user data")
+    public void adminEmployerPageUserTapOnDOSTemplateButtonAndDownloadFileThenCreateAUserData() throws IOException, InterruptedException {
+        /*AdminPage.get_Eos_Template().click();
+        // Get the latest downloaded file from the download directory
+        File downloadDir = new File("D:\\Hrcms\\src\\test\\java\\document"); // Replace with the actual download directory path
+        File[] files = downloadDir.listFiles();
+        System.out.println(files);
+        File latestFile = null;
+        long lastModifiedTime = Long.MIN_VALUE;
+        for (File file : files) {
+            if (file.lastModified() > lastModifiedTime) {
+                lastModifiedTime = file.lastModified();
+                latestFile = file;
+            }
+        }
+
+//        File latestFile = null;
+        Sheet sheet = null;
+        if (latestFile != null) {
+            String downloadedFileName = latestFile.getName();
+            System.out.println("Downloaded file name: " + downloadedFileName);
+            System.out.println("Downloaded file name: " + latestFile);
+            // Read the contents of the downloaded XLSX file
+            FileInputStream fileInputStream = new FileInputStream(latestFile);
+            Workbook workbook = new XSSFWorkbook(fileInputStream);
+            sheet = workbook.getSheetAt(0);
+            System.out.println(sheet);
+        }
+        int rowIndex = 0;
+       // Random random = new Random();
+        for (Row row : sheet) {
+            if (rowIndex > 0) {
+                Cell firstCell = row.createCell(1);
+
+               // int randomValue = random.nextInt(10000); // Generate a random number between 0 and 99
+                firstCell.setCellValue(IbanNo);
+                System.out.println(firstCell);
+
+                Thread.sleep(1);
+            }
+            rowIndex++;
+        }
+*/
+
+
+        AdminPage.get_Eos_Template().click();
+
+        // Replace with the actual download directory path
+        File downloadDir = new File("D:\\Hrcms\\src\\test\\java\\document");
+
+        // Ensure downloadDir is a directory and files array is not null
+        if (downloadDir.isDirectory()) {
+            File[] files = downloadDir.listFiles();
+            if (files != null) {
+                File latestFile = null;
+                long lastModifiedTime = Long.MIN_VALUE;
+
+                // Find the latest modified file
+                for (File file : files) {
+                    if (file.isFile() && file.getName().endsWith(".xlsx") && file.lastModified() > lastModifiedTime) {
+                        lastModifiedTime = file.lastModified();
+                        latestFile = file;
+                    }
+                }
+
+                if (latestFile != null) {
+                    String downloadedFileName = latestFile.getName();
+                    System.out.println("Downloaded file name: " + downloadedFileName);
+                    System.out.println("Downloaded file name: " + latestFile);
+
+                    // Read the contents of the downloaded XLSX file
+                    Sheet sheet;
+                    try (FileInputStream fileInputStream = new FileInputStream(latestFile)) {
+                        Workbook workbook = new XSSFWorkbook(fileInputStream);
+                        sheet = workbook.getSheetAt(0);
+                        Object[][] data = {{IbanNo, "EOS"}};
+                        int rowIndex = 0;
+                        for (Row row : sheet) {
+                            if (rowIndex > 0) {
+                                Cell firstCell = row.createCell(1);
+                                firstCell.setCellValue(Arrays.deepToString(data));
+                                System.out.println("empibanNo" + IbanNo);
+                                System.out.println(firstCell);
+                            }
+                            rowIndex++;
+                        }
+
+                    }
+                        /*
+                        // Make sure IbanNo is defined and initialized before using it here
+                        int rowIndex = 0;
+                        for (Row row : sheet) {
+                            if (rowIndex > 0) {
+                                Cell firstCell = row.createCell(1);
+                                firstCell.setCellValue(Arrays.deepToString(data));
+                                System.out.println("empibanNo" + IbanNo);
+                                System.out.println(firstCell);
+                            }
+                            rowIndex++;
+                        }*/
+
+                    // Save the modified data back to the file (optional)
+//                    try (FileOutputStream fileOutputStream = new FileOutputStream(latestFile)) {
+//                        workbook.write(fileOutputStream);
+//                    }
+//                } catch(IOException e){
+//                    e.printStackTrace();
+//                    // Handle the exception as needed
+//                }
+//            } else {
+//                System.out.println("No XLSX files found in the download directory.");
+//            }
+//        }
+//    } else
+//
+//    {
+//        System.out.println("Invalid download directory path or directory does not exist.");
+//    }
+                }
+            }
+        }
+    }
 }
-
-

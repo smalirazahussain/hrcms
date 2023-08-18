@@ -1,13 +1,2 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<testsuite errors="0" failures="0" name="io.cucumber.core.plugin.JUnitFormatter" skipped="0" tests="1" time="23.022">
-    <testcase classname="HealthFocus Tests" name="Connect to a garmin app" time="22.823">
-        <system-out><![CDATA[Given Click the create account button.......................................passed
-When Click the garmin.......................................................passed
-When Go to the connect window...............................................passed
-When Click the skip button your health focus................................passed
-Then Click the push notification next button................................passed
-And Click the email varification next button................................passed
-Then Click the congratulation next button...................................passed
-]]></system-out>
-    </testcase>
-</testsuite>
+<testsuite errors="0" failures="0" name="io.cucumber.core.plugin.JUnitFormatter" skipped="0" time="0.064"/>

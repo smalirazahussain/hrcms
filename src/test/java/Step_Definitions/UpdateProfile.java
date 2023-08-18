@@ -10,10 +10,7 @@ import Pages.Android.UpdateProliePage;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.TimeoutException;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
@@ -43,39 +40,39 @@ public class UpdateProfile {
     @And("[Update Profile] User the address {string}")
     public void updateProfileUserTheAddress(String add) {
         long first14 = (long) (Math.random() * 100000000L);
-        UpdateProliePage.getAddress().sendKeys(add+first14);
+        UpdateProliePage.getAddress().sendKeys(add + first14);
 
     }
 
 
     public static long first14;
+
     @Then("[Update Profile] User enter the establishment id {string}")
     public void updateProfileUserEnterTheEstablishmentId(String eid) {
-         first14 = (long) (Math.random() * 10000000000000000L);
-        UpdateProliePage.getEstablishmentId().sendKeys(first14+eid);
+        first14 = (long) (Math.random() * 10000000000000000L);
+        UpdateProliePage.getEstablishmentId().sendKeys(first14 + eid);
 
 
     }
 
     @And("[Update Profile] Select the state {string}")
     public void updateProfileSelectTheState(String name) throws InterruptedException {
-      //  wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(name)));
+        //  wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(name)));
         UpdateProliePage.getState().click();
         //        driver.findElement(By.xpath("div[title='Dubai'] div[class='ant-select-item-option-content']"));
         //UpdateProliePage.getStateDubai().click();
-       // UpdateProliePage.getState().sendKeys(name);
-       // UpdateProliePage.getState().sendKeys(Keys.ENTER);
+        // UpdateProliePage.getState().sendKeys(name);
+        // UpdateProliePage.getState().sendKeys(Keys.ENTER);
         UpdateProliePage.getStateName(name).click();
 //        UpdateProliePage.getStateName(name).sendKeys(Keys.ENTER);
         //Select sel = new Select();
-
 
 
     }
 
     @Then("[Update Profile] User enter the document name {string}")
     public void updateProfileUserEnterTheDocumentName(String docnamentName) throws InterruptedException {
-       // wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(docnamentName)));
+        // wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(docnamentName)));
         UpdateProliePage.getDocument().click();
         UpdateProliePage.getDocumentName(docnamentName).click();
 
@@ -105,7 +102,7 @@ public class UpdateProfile {
     public void updateProfileUserEnterTheExpireDate(String expdate) throws InterruptedException, AWTException {
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.name(expireDate)));
         UpdateProliePage.getExpireDate().sendKeys(expdate);
-        UpdateProliePage.getExpireDate().click();
+        //UpdateProliePage.getExpireDate().click();
         Thread.sleep(5000);
     }
 
@@ -136,7 +133,6 @@ public class UpdateProfile {
     }
 
 
-
     @And("[Update Profile] User enter the submit button")
     public void updateProfileUserEnterTheSubmitButton() throws InterruptedException {
         //wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"root\"]/div/div/div[2]/div[2]")));
@@ -151,9 +147,7 @@ public class UpdateProfile {
 
         if (current_month == moth) {
 
-        }
-
-        else {
+        } else {
             get_secondmonth_select(current_month).click();
 //             get_month_select(current_month).click();
 //             UpdateProliePage.get_month(current_month).click();
@@ -163,18 +157,17 @@ public class UpdateProfile {
     }
 
 
-
     @Then("[Update Profile] Validate the establishment id error {string}")
     public void updateProfileValidateTheEstablishmentIdError(String esterror) {
         UpdateProliePage.getEstablishmentIdError().isDisplayed();
-        Assert.assertEquals(esterror,"Please enter establishment Id");
+        Assert.assertEquals(esterror, "Please enter establishment Id");
 
     }
 
     @Then("[Update Profile] Validate the address error {string}")
     public void updateProfileValidateTheAddressError(String adderror) {
         UpdateProliePage.getAddress().isDisplayed();
-        Assert.assertEquals(adderror,"Please enter address 1");
+        Assert.assertEquals(adderror, "Please enter address 1");
     }
 
     @Then("[Update Profile] User enter the year {int}")
@@ -182,12 +175,12 @@ public class UpdateProfile {
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(issueDate)));
         UpdateProliePage.getIssueDate().click();
 
-       // wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(clickYear_xpath)));
+        // wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(clickYear_xpath)));
         String year = currentYear();
         int year1 = Integer.parseInt(year);
         year1 = year1 - isYear;
 
-        for(int i=0; i<year1; i++) {
+        for (int i = 0; i < year1; i++) {
             get_year_arrow_xpath().click();
 
         }
@@ -223,7 +216,7 @@ public class UpdateProfile {
         int year1 = Integer.parseInt(year);
         year1 = expyear - year1;
 
-        for(int i=0; i<year1; i++) {
+        for (int i = 0; i < year1; i++) {
             UpdateProliePage.getExpYearArrow().click();
 
         }
@@ -239,26 +232,26 @@ public class UpdateProfile {
     @Then("[Update Profile] Validate the state error {string}")
     public void updateProfileValidateTheStateError(String stateerror) {
         UpdateProliePage.get_State_Error().isDisplayed();
-        Assert.assertEquals(stateerror,"Please enter state");
+        Assert.assertEquals(stateerror, "Please enter state");
     }
 
     @Then("[Update Profile] user try to login and validate the city  error {string}")
     public void updateProfileUserTryToLoginAndValidateTheCityError(String city) {
         UpdateProliePage.get_City_Error().isDisplayed();
-        Assert.assertEquals(city,"Please enter city");
+        Assert.assertEquals(city, "Please enter city");
     }
 
     @Then("[Update Profile] user try to login and validate the document no  error {string}")
     public void updateProfileUserTryToLoginAndValidateTheDocumentNoError(String errordocumentno) {
         UpdateProliePage.get_Document_No_Error().isDisplayed();
-        Assert.assertEquals(errordocumentno,"Please enter Document Title");
+        Assert.assertEquals(errordocumentno, "Please enter Document Title");
     }
 
 
     @Then("[Update Profile] User try to login and validate the document name  error {string}")
     public void updateProfileUserTryToLoginAndValidateTheDocumentNameError(String errordocumentname) {
         UpdateProliePage.get_Document_Name_Error().isDisplayed();
-        Assert.assertEquals(errordocumentname,"Please enter name");
+        Assert.assertEquals(errordocumentname, "Please enter name");
     }
 
     @When("[Update Profile] User tap on the issue date")
@@ -270,13 +263,13 @@ public class UpdateProfile {
     @Then("[Update Profile] User try to login and validate the issue date  error {string}")
     public void updateProfileUserTryToLoginAndValidateTheIssueDateError(String issuedateerror) {
         UpdateProliePage.get_Issue_Date_Error().isDisplayed();
-        Assert.assertEquals(issuedateerror,"Please enter issue date");
+        Assert.assertEquals(issuedateerror, "Please enter issue date");
     }
 
     @And("[Update Profile] User try to login and validate the expire date  error {string}")
     public void updateProfileUserTryToLoginAndValidateTheExpireDateError(String expdateerror) {
         UpdateProliePage.get_expire_Date_Error().isDisplayed();
-        Assert.assertEquals(expdateerror,"Please enter expiry date");
+        Assert.assertEquals(expdateerror, "Please enter expiry date");
     }
 
     @And("[Update Profile] User tap on the add more document")
@@ -306,7 +299,7 @@ public class UpdateProfile {
         int year1 = Integer.parseInt(year);
         year1 = year1 - secissuedate;
 
-        for(int i=0; i<year1; i++) {
+        for (int i = 0; i < year1; i++) {
             get_Second_Issue_arrow_xpath().click();
 
         }
@@ -324,9 +317,7 @@ public class UpdateProfile {
         String current_month = currentMonth();
 
         if (current_month == secondissuemonth) {
-        }
-
-        else {
+        } else {
             get_secondmonth_select(current_month).click();
             wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(user_month(secondissuemonth))));
             get_user_month(secondissuemonth).click();
@@ -357,9 +348,7 @@ public class UpdateProfile {
 
         if (current_month == secexpmonth) {
 
-        }
-
-        else {
+        } else {
             get_user_secondmonth(current_month).click();
             wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(user_month(secexpmonth))));
             get_user_month(secexpmonth).click();
@@ -391,12 +380,11 @@ public class UpdateProfile {
 
     @Then("[Update Profile] User enter the building no {string}")
     public void updateProfileUserEhterTheBuildingNo(String BNO) throws InterruptedException {
-        long buildingno = (long) (Math.random()*100000000L);
-        UpdateProliePage.get_Building_No().sendKeys(buildingno+BNO);
+        long buildingno = (long) (Math.random() * 100000000L);
+        UpdateProliePage.get_Building_No().sendKeys(buildingno + BNO);
 
 
     }
-
 
 
     @Then("[Update Profile] User select the Payroll type{string}")
@@ -416,12 +404,13 @@ public class UpdateProfile {
         UpdateProliePage.get_Migrated().click();
     }
 
-    public static String tradeno ;
+    public static String tradeno;
+
     @Then("[Update Profile] User enter the Trade License Number {string}")
     public void updateProfileUserEnterTheTradeLicenseNumber(String TBL) {
-        long Trade_License = (long)(Math.random()*1000000000000L);
-        UpdateProliePage.get_Trade_License().sendKeys(TBL+Trade_License);
-         tradeno = TBL + Trade_License;
+        long Trade_License = (long) (Math.random() * 1000000000000L);
+        UpdateProliePage.get_Trade_License().sendKeys(TBL + Trade_License);
+        tradeno = TBL + Trade_License;
     }
 
     @When("[Update Profile] User enter the Sponsor Document year {string}")
@@ -434,7 +423,7 @@ public class UpdateProfile {
         int year1 = Integer.parseInt(year);
         year1 = year1 - Integer.parseInt(isyear);
 
-        for(int i=0; i<year1; i++) {
+        for (int i = 0; i < year1; i++) {
             UpdateProliePage.get_Sponsor_year_arrow_xpath().click();
 
         }
@@ -447,9 +436,7 @@ public class UpdateProfile {
 
         if (current_month == moth) {
 
-        }
-
-        else {
+        } else {
             get_month_select(current_month).click();
             wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(user_month(moth))));
             get_user_month(moth).click();
@@ -458,7 +445,7 @@ public class UpdateProfile {
 
     @Then("[Update Profile] User enter the Sponsor day {string}")
     public void updateProfileUserEnterTheSponsorDay(String isDay) throws InterruptedException {
-       // wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(date_select(isDay))));
+        // wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(date_select(isDay))));
         UpdateProliePage.get_Sponsor_date_select(isDay).click();
         //Thread.sleep(5000);
     }
@@ -470,7 +457,7 @@ public class UpdateProfile {
         int year1 = Integer.parseInt(year);
         year1 = expyear - year1;
 
-        for(int i=0; i<year1; i++) {
+        for (int i = 0; i < year1; i++) {
             UpdateProliePage.getSponsorExpYearArrow().click();
 
         }
@@ -483,9 +470,7 @@ public class UpdateProfile {
 
         if (current_month == expmonth) {
 
-        }
-
-        else {
+        } else {
             get_month_select(current_month).click();
             wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(user_month(expmonth))));
             get_user_month(expmonth).click();
@@ -496,12 +481,14 @@ public class UpdateProfile {
     public void updateProfileUserEnterTheSponsorExpireDay(String expDay) {
         UpdateProliePage.get_Sponsor_Expire_Date_Select(expDay).click();
     }
-    public static String  SponsorDocNo;
+
+    public static String SponsorDocNo;
+
     @And("[Update Profile] User enter the Sponsor document number {string}")
     public void updateProfileUserEnterTheSponsorDocumentNumber(String SD) {
-        long Sponsor_Document = (long)(Math.random()*1000000000000L);
-        UpdateProliePage.get_Sponsor_Document_No().sendKeys(SD+Sponsor_Document);
-         SponsorDocNo = SD + Sponsor_Document;
+        long Sponsor_Document = (long) (Math.random() * 1000000000000L);
+        UpdateProliePage.get_Sponsor_Document_No().sendKeys(SD + Sponsor_Document);
+        SponsorDocNo = SD + Sponsor_Document;
 
 
     }
@@ -559,7 +546,7 @@ public class UpdateProfile {
             Assert.fail("An error occurred: " + e.getMessage());
         }
     }
-        //        try {
+    //        try {
 //            // Perform actions that may cause undefined errors
 //            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(Approval_Msg)));
 //            String actualmsg = UpdateProliePage.get_Approval_Msg().getText();
@@ -577,14 +564,13 @@ public class UpdateProfile {
 //        }
 
 
-
     @Then("[Admin Page] User verify establishment id and approve by admin")
     public void adminPageUserVerifyEstablishmentIdAndApproveByAdmin() throws InterruptedException {
 
-        if(first14 == Long.parseLong(AdminPage.get_Establishmentid().getText())
+        if (first14 == Long.parseLong(AdminPage.get_Establishmentid().getText())
                 && AdminPage.get_company_Name().getText().equals(companyName)
                 && AdminPage.get_Trade_No().getText().equals(tradeno)
-                && AdminPage.get_Sponsor_No().getText().equals(SponsorDocNo)){
+                && AdminPage.get_Sponsor_No().getText().equals(SponsorDocNo)) {
         }
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath(Approve_Button)));
         AdminPage.get_Approve_Button().click();
@@ -604,9 +590,7 @@ public class UpdateProfile {
 
         if (current_month == expmonth) {
 
-        }
-
-        else {
+        } else {
             AddEmployerPages.get_Passport_month_select(current_month).click();
             wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(user_month(expmonth))));
             get_user_month(expmonth).click();
@@ -619,18 +603,78 @@ public class UpdateProfile {
 
         if (current_month == moth) {
 
-        }
-
-        else {
-             get_secondmonth_select(current_month).click();
+        } else {
+            get_secondmonth_select(current_month).click();
 //             get_month_select(current_month).click();
-                UpdateProliePage.get_month(current_month).click();
+            UpdateProliePage.get_month(current_month).click();
             wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(user_month(moth))));
             get_user_month(moth).click();
         }
     }
 
+    @Then("[Update Profile] User tap on browse file and upload eid single  picture")
+    public void updateProfileUserTapOnBrowseFileAndUploadEidSinglePicture() throws AWTException, InterruptedException {
+        Robot rb = new Robot();
+        String[] filePaths = {
+                "D:\\Hrcms\\src\\test\\java\\document\\EidPicture1.png",
+                "D:\\Hrcms\\src\\test\\java\\document\\EidPicture2.png"
+                // Add more file paths here if needed
+        };
+
+        for (String filePath : filePaths )
+
+        {
+
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(browseFile)));
+            UpdateProliePage.getBrowseFile().click();
+            Thread.sleep(3000);
+            System.out.println("Uploading File: " + filePath);
+
+            StringSelection str = new StringSelection(filePath);
+            Toolkit.getDefaultToolkit().getSystemClipboard().setContents(str, null);
+
+            // Press Control+V for pasting
+            rb.keyPress(KeyEvent.VK_CONTROL);
+            rb.keyPress(KeyEvent.VK_V);
+            //rb.keyRelease(KeyEvent.VK_V);
+            rb.keyRelease(KeyEvent.VK_CONTROL);
+            rb.keyRelease(KeyEvent.VK_V);
+
+            // Add a delay to allow the paste action to complete
+
+            // For pressing and releasing Enter
+            rb.keyPress(KeyEvent.VK_ENTER);
+            rb.keyRelease(KeyEvent.VK_ENTER);
+
+            wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector("uploading-progress-selector")));
+             // Wait for the upload to complete
+        }
+    }
+
 }
+
+
+//        Robot rb = new Robot();
+//        StringSelection str = new StringSelection("D:\\Hrcms\\src\\test\\java\\document\\EidPicture1.png"+ "\n" +"D:\\Hrcms\\src\\test\\java\\document\\EidPicture2.png");
+//        Toolkit.getDefaultToolkit().getSystemClipboard().setContents(str, null);
+//        // press Contol+V for pasting
+//        rb.keyPress(KeyEvent.VK_CONTROL);
+//        rb.keyPress(KeyEvent.VK_V);
+//
+//        // release Contol+V for pasting
+//        rb.keyRelease(KeyEvent.VK_CONTROL);
+//        rb.keyRelease(KeyEvent.VK_V);
+//
+//        // for pressing and releasing Enter
+//        rb.keyPress(KeyEvent.VK_ENTER);
+//        rb.keyRelease(KeyEvent.VK_ENTER);
+//        //ScrollVertical(get_Add_Emplyer_Button());
+//        Thread.sleep(5000);
+//
+//
+//        }
+
+
 
 
 

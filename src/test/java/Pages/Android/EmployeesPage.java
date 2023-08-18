@@ -8,8 +8,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
-import static Hooks.Base_Class.driver;
-
 
 public class EmployeesPage {
 
@@ -20,8 +18,13 @@ public class EmployeesPage {
     public static String employees = "(//li[@class='side-menu-list-item']//child::a)[3]";
     public static String Upload_Excel = "uploadExcel";
     public static String Template_Button = "button[title='Template'] span:nth-child(1)";
+    public static String Employee_Search = "ant-input";
+    public static String Add_Employer_Button = "button[title='Add Employee']";
+    public static String Employee_Eye_Button = "//div[@class='inner-data no-wrap']//*[name()='svg']";
+
 
     public static WebElement get_Employees() {
+
         return Base_Class.driver.findElement(By.xpath(employees));
     }
     public static WebElement get_Upload_Excel() {
@@ -30,5 +33,17 @@ public class EmployeesPage {
 
     public static WebElement get_Template_Button() {
         return Base_Class.driver.findElement(By.cssSelector(Template_Button));
+    }
+
+    public static WebElement get_Employee_Search() {
+
+        return Base_Class.driver.findElement(By.className(Employee_Search));
+    }
+    public static WebElement get_Add_Emplyer_Button() {
+        return Base_Class.driver.findElement(By.cssSelector(Add_Employer_Button));
+    }
+
+    public static WebElement get_Employee_Eye_Button() {
+        return Base_Class.driver.findElement(By.xpath(Employee_Eye_Button));
     }
 }

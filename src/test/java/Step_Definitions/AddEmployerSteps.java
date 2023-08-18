@@ -1,6 +1,7 @@
 package Step_Definitions;
 
 import Pages.Android.AddEmployerPages;
+import Pages.Android.EmployeesPage;
 import Pages.Android.UpdateProliePage;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
@@ -215,7 +216,8 @@ public class AddEmployerSteps<Save_mol> {
 
     @And("[Add Employer] user tap on the add employer")
     public void addEmployerUserTapOnTheAddEmployer() throws InterruptedException {
-        AddEmployerPages.get_Add_Emplyer_Button().click();
+        EmployeesPage.get_Add_Emplyer_Button().sendKeys(EmpMol);
+        EmployeesPage.get_Add_Emplyer_Button().click();
 
 
     }
@@ -461,6 +463,7 @@ public class AddEmployerSteps<Save_mol> {
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(Notification_Message)));
         String actual = AddEmployerPages.get_Notification_Message().getText();
         Assert.assertEquals(actual, msg);
+        System.out.println("actualMsg"+actual);
     }
 
     @When("[Add Employer] User tap on the add document")

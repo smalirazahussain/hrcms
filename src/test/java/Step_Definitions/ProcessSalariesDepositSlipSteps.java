@@ -624,11 +624,13 @@ public class ProcessSalariesDepositSlipSteps {
       public static String  downloadedFileName;
 @When("[Process Salaries DepositSlip Page] User enter company name and download the salary template")
 public void processSalariesDepositSlipPageUserEnterCompanyNameAndDownloadTheSalaryTemplate() throws InterruptedException, IOException, AWTException {
-    ProcessSalariesDepositSlipPages.get_Company_Name().sendKeys(companyTittle + Keys.ENTER);
-    wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector("div.loading")));
-    wait.until(ExpectedConditions.elementToBeClickable(By.xpath(Download_Button)));
-    ProcessSalariesDepositSlipPages.get_Download_Button().click();
-    //Thread.sleep(10000);
+
+        ProcessSalariesDepositSlipPages.get_Company_Name().sendKeys(companyTittle + Keys.ENTER);
+    Thread.sleep(5000);
+        //wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector("div.loading")));
+       // wait.until(ExpectedConditions.elementToBeClickable(By.xpath(Download_Button)));
+        ProcessSalariesDepositSlipPages.get_Download_Button().click();
+    Thread.sleep(20000);
 
     // Get the latest downloaded file from the download directory
     File downloadDir = new File("D:\\Hrcms\\src\\test\\java\\document"); // Replace with the actual download directory path

@@ -1,13 +1,15 @@
 package Step_Definitions;
 
 import Pages.Android.AddEmployerPages;
-import Pages.Android.EmployeesPage;;
+import Pages.Android.EmployeesPage;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.openqa.selenium.By;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
@@ -23,8 +25,12 @@ import java.util.Arrays;
 import java.util.Random;
 
 import static Hooks.Base_Class.driver;
+import static Pages.Android.AddEmployerPages.Company_Tittle;
+import static Step_Definitions.AddEmployerSteps.EmpMol;
 import static Step_Definitions.SignUpSteps.companyName;
 import static Step_Definitions_Head_Ofiice.EstablishmentsStepsHeadOffice.branchEstablishmentId;
+
+;
 
 
 public class Employeessteps {
@@ -49,6 +55,7 @@ public class Employeessteps {
 
     @Then("[Employees Page] User tap on employees button")
     public void employeesPageUserTapOnEmployeesButton() throws InterruptedException {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(Company_Tittle)));
         companyTittle = AddEmployerPages.get_Company_Tittle().getText();
         companyName = companyTittle;
         System.out.println("CompanyName"+companyName);
@@ -169,12 +176,12 @@ public class Employeessteps {
 //            String branchEstablishmentId = establishmentsStepsHeadOffice.branchEstablishmentId;
 
         //System.out.println(branchEstablishmentId);
-        for (int j = 0; j < 100; j++) {
+        for (int j = 0; j < 10; j++) {
             int randomNumber = random.nextInt(1000000000);
 
 
             raws = new String[]{molNo + randomNumber, empCode + randomNumber, firstName, lastName, displayName + randomNumber, dob, gender.trim(), nationality.trim().replaceAll("^\\s+", ""), joiningDate, "user" + randomNumber + email, mobile + randomNumber, altenatePhone + randomNumber, homeAddress + randomNumber, homeState, homePostCode, workAddress, workState, workPostCode, PassportNo + randomNumber, passportExpiry, eid + randomNumber, eidExpiry, branchEstablishmentId + est};
-            System.out.println(branchEstablishmentId);
+            //System.out.println(branchEstablishmentId);
             //System.out.println(raws[j]);
             // Create data rows and populate cells
             HSSFRow dataRow = sheet.createRow(j + 1);
@@ -182,10 +189,11 @@ public class Employeessteps {
                 //raws[i] = raws[i].trim();
                 HSSFCell cell = dataRow.createCell(i);
                 cell.setCellValue(raws[i]);
+                System.out.println(Arrays.toString(raws));
             }
         }
         System.out.println(Arrays.toString(headers));
-        System.out.println(Arrays.toString(raws));
+
         randomNumbers = random.nextInt(10000);
 
 
@@ -221,6 +229,7 @@ public class Employeessteps {
 
 
             raws = new String[]{molNo + randomNumber, empCode + randomNumber, firstName, lastName, displayName + randomNumber, dob, gender.trim(), nationality.trim().replaceAll("^\\s+", ""), joiningDate, "user" + randomNumber + email, mobile + randomNumber, altenatePhone + randomNumber, homeAddress + randomNumber, homeState, homePostCode, workAddress, workState, workPostCode, PassportNo + randomNumber, passportExpiry, eid + randomNumber, eidExpiry, est};
+            System.out.println(Arrays.toString(raws));
             System.out.println(branchEstablishmentId);
             //System.out.println(raws[j]);
             // Create data rows and populate cells
@@ -249,6 +258,14 @@ public class Employeessteps {
 
         }
         System.out.println(randomNumbers);
+    }
+
+    @Then("[Employees Page] User enter MOL no then click on the eye button {string}")
+    public void employeesPageUserEnterMOLNoThenClickOnTheEyeButton(String arg0) throws InterruptedException {
+        EmployeesPage.get_Employee_Search().sendKeys(EmpMol);
+       Thread.sleep(5000);
+        // wait.until(ExpectedConditions.visibilityOfElementLocated(By.className(Employee_Eye_Button)));
+        EmployeesPage.get_Employee_Eye_Button().click(); Thread.sleep(5000);
     }
 }
 
