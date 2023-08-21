@@ -8,6 +8,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.io.File;
 import java.net.URL;
 import java.time.Duration;
 import java.util.HashMap;
@@ -83,6 +84,10 @@ public class Base_Class {
             Duration timeout = Duration.ofSeconds(30);
             wait = new WebDriverWait(driver, timeout);
             URL url = new URL("http://employer.getthelingo.com/");
+            //String projectpath = System.getProperty("user.dir");
+            File f = new File("apps");
+            File fs = new File(f, "app.apk");
+            String finalpath = projectpath + File.separator + fs.getName();
 
             driver.navigate().to(url);
 

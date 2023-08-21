@@ -71,7 +71,7 @@ Feature: SwitchToOtherBank
     Then    [Admin Page] User enter the company name
     And     [Admin Page] User tap on view button
     And     [Request Page] User tap on the Approve button
-    Then    [Admin Page] User validate the toast message "Action Successfully"
+    Then    [Admin Page] User validate the toast message "Action Successfully" and bank are some in the approval
 
   @Mol @SmokeEid1
   Scenario: Add new employee and edit Phone No for the employee

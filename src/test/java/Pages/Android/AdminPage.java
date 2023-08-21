@@ -54,6 +54,9 @@ public class AdminPage {
     public static String Upload_EOS_Button = "div:nth-child(4) button:nth-child(1) span:nth-child(2)";
     public static String Eos_Template = "button[title='EOS Template']";
     public static String Select_Exchange_House = "client";
+    private static String Admin_Bank_Name(String randomBankName) {
+        return "//span[text()='"+randomBankName+"']";
+    }
     public static WebElement get_Admin_Tab(){
         return Base_Class.driver.findElement(By.xpath(admin_Tab));
     }
@@ -199,4 +202,10 @@ public class AdminPage {
     public static WebElement get_Eos_Template() {
         return Base_Class.driver.findElement(By.cssSelector(Eos_Template));
     }
+
+    public static WebElement get_Admin_Bank_Name(String randomBankName) {
+        return Base_Class.driver.findElement(By.xpath(Admin_Bank_Name(randomBankName)));
+    }
+
+
 }

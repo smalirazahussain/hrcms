@@ -40,6 +40,7 @@ import static Step_Definitions.Employeessteps.randomNumbers;
 import static Step_Definitions.EndOfServicesSteps.filePath;
 import static Step_Definitions.ProcessSalariesDepositSlipSteps.actualamount;
 import static Step_Definitions.SignUpSteps.companyName;
+import static Step_Definitions.SwitchToOtherBanksteps.randomBankName;
 import static Step_Definitions_Head_Ofiice.BrachesStepsHeadOffice.branch;
 import static Step_Definitions_Head_Ofiice.BrachesStepsHeadOffice.phno;
 import static Step_Definitions_Head_Ofiice.DashBoardStepsHeadOffice.exchangeHouseTittle;
@@ -123,12 +124,11 @@ public class adminsteps {
 
     @Then("[Admin Page] User validate the toast message {string}")
     public void adminPageUserValidateTheToastMessage(String actual) throws InterruptedException {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(Action_Successfully)));
-        String expect = AdminPage.get_Action_Successfully().getText();
-        Assert.assertEquals(actual, expect);
-    }
 
-
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(Action_Successfully)));
+            String expect = AdminPage.get_Action_Successfully().getText();
+            Assert.assertEquals(actual, expect);
+        }
     @Then("[Admin Page] User tap on approve button")
     public void adminPageUserTapOnApproveButton() throws InterruptedException {
         AdminPage.get_Approve_Button().click();
@@ -452,5 +452,17 @@ public class adminsteps {
                 }
             }
         }
+    }
+
+    @Then("[Admin Page] User validate the toast message {string} and bank are some in the approval")
+    public void adminPageUserValidateTheToastMessageAndBankAreSomeInTheApproval(String actual) {
+        if (AdminPage.get_Admin_Bank_Name(randomBankName).getText().equals(randomBankName)) {
+            System.out.println(get_Admin_Bank_Name(randomBankName));
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(Action_Successfully)));
+            String expect = AdminPage.get_Action_Successfully().getText();
+            Assert.assertEquals(actual, expect);
+
+        }
+
     }
 }
