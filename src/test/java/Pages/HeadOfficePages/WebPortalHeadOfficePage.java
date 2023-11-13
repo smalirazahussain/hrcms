@@ -33,8 +33,8 @@ public class WebPortalHeadOfficePage {
     public static String Web_Add_Button = "input[value='Add']";
     public static String Web_User_Name = "#mat-input-0";
     public static String Web_User_Password = "#mat-input-1";
-    public static String Web_Company_Name = "(//input[@aria-label='Filter cell'])[1]";
-    public static String Web_Edit_Button = "//i[@class='material-icons']";
+    public static String Web_Company_Name = "(//input[@aria-label='Filter cell'])[2]";
+    public static String Web_Edit_Button = "//mat-icon[@class='mat-icon notranslate text-primary font-medium material-icons mat-icon-no-color']";
     public static String Employer_Product = "//div[contains(text(),'Add Prodcut')]";
 
 

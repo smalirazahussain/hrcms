@@ -40,7 +40,7 @@ import static Step_Definitions.Employeessteps.randomNumbers;
 import static Step_Definitions.EndOfServicesSteps.filePath;
 import static Step_Definitions.ProcessSalariesDepositSlipSteps.actualamount;
 import static Step_Definitions.SignUpSteps.companyName;
-import static Step_Definitions.SwitchToOtherBanksteps.randomBankName;
+import static Step_Definitions.UpdateProfile.*;
 import static Step_Definitions_Head_Ofiice.BrachesStepsHeadOffice.branch;
 import static Step_Definitions_Head_Ofiice.BrachesStepsHeadOffice.phno;
 import static Step_Definitions_Head_Ofiice.DashBoardStepsHeadOffice.exchangeHouseTittle;
@@ -51,11 +51,13 @@ public class adminsteps {
     WebDriverWait wait = new WebDriverWait(driver, timeout);
     //create a soft-assertion object
     SoftAssert softAssert = new SoftAssert();
+    //public static By spinnerLocator;
 
 
     @Then("[Admin Page] Open the admin tab {string}")
     public void adminPageOpenTheAdminTab(String admintabURL) throws AWTException, InterruptedException, MalformedURLException {
         driver.navigate().to(admintabURL);
+
 
     }
 
@@ -92,10 +94,12 @@ public class adminsteps {
     public void adminPageUserTapOnOnboardApprovals() {
         AdminPage.get_Onboard_Approvals().click();
     }
-
+    //public static By spinnerLocator;
     @And("[Admin Page] User tap on view button")
     public void adminPageUserTapOnViewButton() {
-        wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(View)));
+        By spinnerLocator = By.cssSelector(".ant-spin.ant-spin-spinning.css-qgg3xn");
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(spinnerLocator));
+        //wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(View)));
         AdminPage.get_View().click();
     }
 
@@ -214,7 +218,9 @@ public class adminsteps {
 
     @Then("[Admin Page] User verify the notification message {string}")
     public void adminPageUserVerifyTheNotificationMessage(String after) throws InterruptedException {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(Action_Successfully)));
+        By spinnerLocator = By.cssSelector(".ant-spin.ant-spin-spinning.css-qgg3xn");
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(spinnerLocator));
+       // wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(Action_Successfully)));
         String actual = AdminPage.get_Action_Successfully().getText();
         System.out.println("Actual MSG" + actual);
         Assert.assertEquals(actual, after);
@@ -453,16 +459,57 @@ public class adminsteps {
             }
         }
     }
-
+    ;
     @Then("[Admin Page] User validate the toast message {string} and bank are some in the approval")
     public void adminPageUserValidateTheToastMessageAndBankAreSomeInTheApproval(String actual) {
-        if (AdminPage.get_Admin_Bank_Name(randomBankName).getText().equals(randomBankName)) {
-            System.out.println(get_Admin_Bank_Name(randomBankName));
             wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(Action_Successfully)));
-            String expect = AdminPage.get_Action_Successfully().getText();
+            String expect = get_Action_Successfully().getText();
             Assert.assertEquals(actual, expect);
+            System.out.println(expect);
+    }
 
+    @Then("[Admin Page] User tap on Exchange House Clients")
+    public void adminPageUserTapOnExchangeHouseClients() throws InterruptedException {
+        Thread.sleep(5000);
+        AdminPage.get_Exchange_House_Clients_Button().click();
+    }
+
+    @Then("[Admin Page] User verify establishment id for the branch company and approve by admin")
+    public void adminPageUserVerifyEstablishmentIdForTheBranchCompanyAndApproveByAdmin() throws InterruptedException {
+        System.out.println("ESTID;"+first14);
+        if (first14 == Long.parseLong(AdminPage.get_Establishmentid().getText())
+                && AdminPage.get_company_Name().getText().equals(companyName)
+                && AdminPage.get_Trade_No().getText().equals(tradeno)
+                && AdminPage.get_Sponsor_No().getText().equals(SponsorDocNo)) {
         }
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath(Approve_Button)));
+        AdminPage.get_Approve_Button().click();
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath(Approval_Ok)));
+        AdminPage.get_Approval_Ok().click();
+        System.out.println(companyName);
+        System.out.println(SponsorDocNo);
+        System.out.println(tradeno);
+        Thread.sleep(5000);
+    }
 
+    @Then("[Approval Page] User tap on exchange house")
+    public void approvalPageUserTapOnExchangeHouse() {
+        AdminPage.get_Exchange_House_Button().click();
+    }
+
+    @When("[ExchangeHouse Page] User search the exchangehouse {string}")
+    public void exchangehousePageUserSearchTheExchangehouse(String exchangeHouse) {
+        AdminPage.get_Search().sendKeys(exchangeHouse);
+    }
+
+    @Then("[ExchangeHouse Page] User tap on the add branch")
+    public void exchangehousePageUserTapOnTheAddBranch() {
+        AdminPage.get_Add_Branch().click();
+    }
+
+    @And("[Admin Page] User tap on establishment id view button")
+    public void adminPageUserTapOnEstablishmentIdViewButton() {
+        //wait.until(ExpectedConditions.elementToBeClickable(By.xpath(Est_Id_View)));
+        AdminPage.get_Est_Id_View().click();
     }
 }

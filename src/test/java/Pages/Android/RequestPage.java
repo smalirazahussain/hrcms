@@ -23,6 +23,9 @@ public class RequestPage {
     public static String Est_id = "li:nth-child(28) > span:nth-child(2)";
     public static String Admin_Est_id ="li:nth-child(23) > span:nth-child(2)";
     public static String Pending_Badge = ".ant-tag.ant-tag-success.activeTag";
+    public static String Est_Id(String establishmentNo) {
+        return "//span[text()='"+establishmentNo+"']";
+    }
 
 
 
@@ -57,4 +60,10 @@ public class RequestPage {
     public static WebElement get_Pending_Badge() {
         return Base_Class.driver.findElement(By.cssSelector(Pending_Badge));
     }
+
+    public static WebElement get_Est_Id(String establishmentNo) {
+        return Base_Class.driver.findElement(By.xpath(Est_Id(establishmentNo)));
+    }
+
+
 }

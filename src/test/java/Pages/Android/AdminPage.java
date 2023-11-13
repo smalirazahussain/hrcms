@@ -23,7 +23,7 @@ public class AdminPage {
     public static String Admin_Password = "#password";
     public static String Onboard_Approvals = "#onboardApprovals";
     //public static String Approve_Button = "div[role='dialog'] button[title='Approve']";
-    public static String Approve_Button ="//div[contains(@class,'btn-group')]//button[contains(@title,'Approve')]";
+    public static String Approve_Button = "//div[contains(@class,'btn-group')]//button[contains(@title,'Approve')]";
     public static String Establishmentid = "ul:nth-child(1) li:nth-child(2) span:nth-child(2)";
     public static String View = "button[title='View']:nth-child(1)";
     public static String company_Name = "//body//div//ul[2]";
@@ -31,33 +31,41 @@ public class AdminPage {
     public static String Approval_Ok = "//span[normalize-space()='OK']";
     public static String Client_Approval = "#approval";
     public static String Company_Client = "(//input[@id=\"client\"])[2]";
-    public static String Action_Successfully = "//span[normalize-space()='Action Successfully']";
+    public static String Action_Successfully = "//span[normalize-space()='Action Successful']";
     public static String Admin_Approval_Ok = "//button[@class='ant-btn css-dev-only-do-not-override-1vtf12y ant-btn-primary ant-btn-sm']";
 
     public static String Browse_Button = "div:nth-child(4) > button:nth-child(2)";
 
     public static String Card_Tpye(String card) {
-        return "//span[@title='"+card+"']";
+        return "//span[@title='" + card + "']";
     }
-    public static String  Approve_Bulk_Button = "//div[contains(@class,'ant-drawer-body')]//button[contains(@title,'Approve')]";
+
+    public static String Approve_Bulk_Button = "//div[contains(@class,'ant-drawer-body')]//button[contains(@title,'Approve')]";
     public static String Card_Button = "#cardType";
-    public static String  ExchangeHouseClientButton = " label:nth-child(2)";
+    public static String ExchangeHouseClientButton = " label:nth-child(2)";
     public static String No_Other_Bank_Employees = "isOtherBankEmployees";
     public static String message = "//*[@text='Action Successfully']";
     public static String ExchangeHouse_Client_Approvals_Button = "//a[@id='exchangeHouseApproval']";
     public static String Admin_Branch_Name = "(//input[@type='search'])[2]";
     public static String Exchange_House_Browse_Button = "button.ant-btn#uploadExcel.primary-outline-filled[title='Browse File'";
     public static String admin_Client_Salary = "div:first-child > ul:first-child > li:nth-child(32) > span:nth-child(2)";
-    public static  String Admin_Employer_Button = "#employer";
-    public static  String Admin_Add_Employer_Button = "button[title='Add Employer']";
+    public static String Admin_Employer_Button = "#employer";
+    public static String Admin_Add_Employer_Button = "button[title='Add Employer']";
     public static String Admin_Company_Name = "input[placeholder='Search']";
     public static String Upload_EOS_Button = "div:nth-child(4) button:nth-child(1) span:nth-child(2)";
     public static String Eos_Template = "button[title='EOS Template']";
-    public static String Select_Exchange_House = "client";
-    private static String Admin_Bank_Name(String randomBankName) {
-        return "//span[text()='"+randomBankName+"']";
+    public static String Select_Exchange_House = "#client";
+    public static String Exchange_House_Clients_Button = "//label[@class=\"ant-radio-button-wrapper ant-radio-button-wrapper-checked css-1wazalj\"]";
+    public static String Exchange_House_Button = "a[href='/exchangeHouseApproval']";
+    public static String Search = "input[placeholder=\"Search\"]";
+    public static String Add_Branch = "button[title=\"Add Branch\"]";
+    public static String Est_Id_View = "(//button[@title='View'])[2]";
+
+    public static String Admin_Bank_Name(String randomBankName) {
+        return "//span[text()='" + randomBankName + "']";
     }
-    public static WebElement get_Admin_Tab(){
+
+    public static WebElement get_Admin_Tab() {
         return Base_Class.driver.findElement(By.xpath(admin_Tab));
     }
 
@@ -66,7 +74,6 @@ public class AdminPage {
         return Base_Class.driver.findElement(By.cssSelector(Login));
 
     }
-
 
 
     public static WebElement get_Email() {
@@ -85,6 +92,7 @@ public class AdminPage {
     public static WebElement get_Approve_Button() {
         return Base_Class.driver.findElement(By.xpath(Approve_Button));
     }
+
     public static WebElement get_Establishmentid() {
         return Base_Class.driver.findElement(By.cssSelector(Establishmentid));
     }
@@ -153,7 +161,7 @@ public class AdminPage {
 
     public static WebElement get_Select_Exchange_House() {
 
-        return Base_Class.driver.findElement(By.id(Select_Exchange_House));
+        return Base_Class.driver.findElement(By.cssSelector(Select_Exchange_House));
     }
 
     public static WebElement get_No_Other_Bank_Employees() {
@@ -207,5 +215,26 @@ public class AdminPage {
         return Base_Class.driver.findElement(By.xpath(Admin_Bank_Name(randomBankName)));
     }
 
+
+    public static WebElement get_Exchange_House_Clients_Button() {
+
+        return Base_Class.driver.findElement(By.xpath(Exchange_House_Clients_Button));
+    }
+
+    public static WebElement get_Exchange_House_Button() {
+        return Base_Class.driver.findElement(By.xpath(Exchange_House_Button));
+    }
+
+    public static WebElement get_Search() {
+        return Base_Class.driver.findElement(By.xpath(Search));
+    }
+
+    public static WebElement get_Add_Branch() {
+        return Base_Class.driver.findElement(By.xpath(Add_Branch));
+    }
+
+    public static WebElement get_Est_Id_View() {
+        return Base_Class.driver.findElement(By.xpath(Est_Id_View));
+    }
 
 }

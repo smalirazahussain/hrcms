@@ -6,11 +6,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import javax.swing.*;
-import java.awt.*;
 import java.time.Duration;
-
-import static Hooks.Base_Class.driver;
 
 
 public class OnBoardApprovalHeadOfficePage {
@@ -24,6 +20,8 @@ public class OnBoardApprovalHeadOfficePage {
     public static String  Onboard_Approval = "onBoardApprovals";
     public static String Phone_No = "ul:nth-child(3) > li:nth-child(7) > span:nth-child(2)";
     public static String Phone_No_admin_Side = "ul:nth-child(1) li:nth-child(6) span:nth-child(2)";
+    public static String Clients_OnBoard_Button = "//label[@class=\"ant-radio-button-wrapper css-1wazalj\"]";
+    public static String Head_office_Search_Branch = "(//input[@role=\"combobox\"])[2]";
 
 
     //return function
@@ -42,6 +40,14 @@ public class OnBoardApprovalHeadOfficePage {
 
     public static WebElement get_Phone_No_admin_Side() {
         return Base_Class.driver.findElement(By.cssSelector(Phone_No_admin_Side));
+    }
+
+    public static WebElement get_Clients_OnBoard_Button() {
+        return Base_Class.driver.findElement(By.xpath(Clients_OnBoard_Button));
+    }
+
+    public static WebElement get_Head_office_Search_Branch() {
+        return Base_Class.driver.findElement(By.xpath(Head_office_Search_Branch));
     }
 }
 

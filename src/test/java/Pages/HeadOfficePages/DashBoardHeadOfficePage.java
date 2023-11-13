@@ -8,8 +8,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
-import static Hooks.Base_Class.driver;
-
 
 public class DashBoardHeadOfficePage {
 
@@ -20,13 +18,12 @@ public class DashBoardHeadOfficePage {
     //locator
     public static String create_Account_Button = "//*[@text='Create account']";
 
-
-
     //return function
     public static String Head_office_Email = "email";
     public static String Head_office_Password = "password";
     public static String Head_office_Login_Button = "button:nth-child(1) span:nth-child(2)";
     public static String Branches_Button = "//a[@id='branches']";
+    public static String Employers_Onboard_Button = "#employer";
 
     public static String toast_message(String message) {
         return "";
@@ -57,5 +54,9 @@ public class DashBoardHeadOfficePage {
 
     public static WebElement get_Branches_Button() {
         return Base_Class.driver.findElement(By.xpath(Branches_Button));
+    }
+
+    public static WebElement get_Employers_Onboard_Button() {
+        return Base_Class.driver.findElement(By.cssSelector(Employers_Onboard_Button));
     }
 }

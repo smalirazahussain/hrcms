@@ -1,5 +1,5 @@
 @UpdateProfile
-Feature: Update Profile
+Feature: Admin
 
   Scenario: User approve by admin
     Given   [Sign Up] User tap on Sign up button
@@ -33,10 +33,10 @@ Feature: Update Profile
     Then    [Approval Page] User tap on approval
     And     [Approval Page] User create a new company and also approve by admin "11282"
 
+  Scenario: Admin create a branch and approve his self
+    Then    [Admin Page] Open the admin tab "http://admin.getthelingo.com"
+    And     [Admin Page] User tap on login page
+    Then    [Approval Page] User tap on exchange house
+    When    [ExchangeHouse Page] User search the exchangehouse "DUBAI EXCHANG"
+    Then    [ExchangeHouse Page] User tap on the add branch
 
-
-    Scenario: abd
-      Then    [Admin Page] Open the admin tab "http://10.40.5.62:52684"
-      And     [Admin Page] User tap on login page
-      Then    [Approval Page] User tap on approval
-      And     [Approval Page] User cearte a new company and also approve by admin "11282"

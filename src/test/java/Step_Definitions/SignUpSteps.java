@@ -69,7 +69,8 @@ public class SignUpSteps {
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(signUpUserEnterTheEmail)));
         Random randomGenerator = new Random();
         int randomInt = randomGenerator.nextInt(10000);
-        SignUpPage.signUpUserEnterTheEmail().sendKeys(email+randomInt+"@mailinator.com");
+        SignUpPage.signUpUserEnterTheEmail().sendKeys(email + randomInt + "@mailinator.com");
+        System.out.println(email+randomInt+"@mailinator.com");
     }
 
     @And("[Sign Up] User tap the drop down button")
@@ -200,6 +201,7 @@ public class SignUpSteps {
 
     @Then("[Sign Up] User enter the otp code {string}")
     public void signUpUserEnterTheOtpCode(String oc) throws InterruptedException {
+        Thread.sleep(10000);
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(otpCode)));
         SignUpPage.otpCode().sendKeys(oc);
 
@@ -249,4 +251,13 @@ public class SignUpSteps {
     }
 
 
+    @Then("[Sign Up] User enter the branch employer phone no {string}")
+    public void signUpUserEnterTheBranchEmployerPhoneNo(String arg0) {
+        //wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(signUpUserEnterThePhoneNo)));
+        Random randomGenerator = new Random();
+        int randomno = randomGenerator.nextInt(999999999);
+        System.out.println(randomno);
+        SignUpPage.get_Branch_Employer_Phone_No().click();
+        SignUpPage.get_Branch_Employer_Phone_No().sendKeys(String.valueOf(randomno));
+    }
 }

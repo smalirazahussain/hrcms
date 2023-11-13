@@ -1,24 +1,13 @@
 package Step_Definitions_Head_Ofiice;
 
-import Pages.Android.LoginPage;
 import Pages.HeadOfficePages.HeadOfficeLoginPage;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import org.openqa.selenium.By;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 
-import java.time.Duration;
-import java.time.Instant;
-
 import static Hooks.Base_Class.driver;
-import static Pages.Android.LoginPage.Enter_Email_Id;
-import static Pages.Android.LoginPage.Enter_Password;
-import static Pages.HeadOfficePages.HeadOfficeLoginPage.Head_office_Email;
 //import static Pages.Android.LoginPage.create_Account_Button;
 //import static Tests.Useful_functions.getRandomNumberLowerAndUpperBound;
 
@@ -34,6 +23,7 @@ public class LoginStepsHeadOffice {
     @Given("[Login Head Office Page] User enter the URL {string}")
     public void loginHeadOfficePageUserEnterTheURL(String headOfficeURL) throws InterruptedException {
         driver.navigate().to(headOfficeURL);
+        Thread.sleep(10000);
     }
 
     @When("[Login Head Office Page] User enter email id {string}")

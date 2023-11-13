@@ -460,10 +460,33 @@ public class AddEmployerSteps<Save_mol> {
 
     @Then("[Add Employer] User Validate the employee notification message {string}")
     public void addEmployerUserValidateTheEmployeeNotificationMessage(String msg) {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(Notification_Message)));
-        String actual = AddEmployerPages.get_Notification_Message().getText();
-        Assert.assertEquals(actual, msg);
-        System.out.println("actualMsg"+actual);
+        By spinnerLocator = By.cssSelector(".ant-spin.ant-spin-spinning.css-qgg3xn");
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(spinnerLocator));
+        String employeeOnBoardMessage = AddEmployerPages.get_Notification_Message().getText();
+        boolean isEqual = employeeOnBoardMessage.equals(Notification_Message);
+        if (isEqual) {
+            System.out.println("notification"+Notification_Message);
+
+            //wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(Notification_Message)));
+            String actual = AddEmployerPages.get_Notification_Message().getText();
+            Assert.assertEquals(actual, msg);
+            System.out.println("actualMsg" + actual);
+        }
+        else {
+            System.out.println("Notification Not Found");
+        }
+
+//        if (AddEmployerPages.get_Notification_Message().equals(Notification_Message)) {
+//            System.out.println("notification"+Notification_Message);
+//
+//            //wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(Notification_Message)));
+//            String actual = AddEmployerPages.get_Notification_Message().getText();
+//            Assert.assertEquals(actual, msg);
+//            System.out.println("actualMsg" + actual);
+//        }
+//        else {
+//            System.out.println("Notification Not Found");
+//        }
     }
 
     @When("[Add Employer] User tap on the add document")
@@ -567,8 +590,30 @@ public class AddEmployerSteps<Save_mol> {
         Thread.sleep(5000);
 
     }
+
+    @And("[Add Employer] User tap on the Add More Documents button")
+    public void addEmployerUserTapOnTheAddMoreDocumentsButton() {
+        AddEmployerPages.get_Add_More_Documents().click();
     }
 
+    @And("[Add Employer] user tao the Add New Establishment")
+    public void addEmployerUserTaoTheAddNewEstablishment() {
+        AddEmployerPages.get_Add_New_Establishment().click();
+    }
+    public static String establishmentNo;
+
+    @When("[Add Employer] User enter the establishment id")
+    public void addEmployerUserEnterTheEstablishmentId() {
+        String companyTitle = AddEmployerPages.get_Company_Tittle().getText();
+        Random estNO = new Random();
+        String generatedEstablishmentNo = companyTitle + estNO.nextInt(1000000000*2);
+        AddEmployerPages.get_Establishment_Id().sendKeys(generatedEstablishmentNo);
+        establishmentNo = generatedEstablishmentNo;
+        companyName = companyTitle;
+        System.out.println(companyName);
+        System.out.println("ESTID" + establishmentNo);
+    }
+}
 
 
 

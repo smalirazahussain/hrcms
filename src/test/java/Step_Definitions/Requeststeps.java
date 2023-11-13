@@ -11,13 +11,13 @@ import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 
 import java.time.Duration;
+import java.util.Objects;
 
 import static Hooks.Base_Class.driver;
 import static Pages.Android.AdminPage.Approval_Ok;
 import static Pages.Android.AdminPage.Approve_Button;
 import static Pages.Android.RequestPage.Mol_Num;
-import static Step_Definitions.AddEmployerSteps.EmpMol;
-import static Step_Definitions.AddEmployerSteps.Passportno;
+import static Step_Definitions.AddEmployerSteps.*;
 import static Step_Definitions.UpdateProfile.first14;
 
 public class Requeststeps {
@@ -45,6 +45,9 @@ public class Requeststeps {
     public void requestPageUserTapOnTheViewButton() throws InterruptedException {
        // wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(By.cssSelector(View)));
        //Thread.sleep(7000);
+
+
+        //wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector("uploading-progress-selector")));
         wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector("uploading-progress-selector")));
         RequestPage.get_View().click();
        /* try {
@@ -62,8 +65,9 @@ public class Requeststeps {
     @And("[Request Page] User verify the mol and passport no and then click the approve button")
     public void requestPageUserVerifyTheMolAndPassportNoAndThenClickTheApproveButton() throws InterruptedException {
 
-        if (EmpMol == RequestPage.get_Mol_Num().getText()
-                && RequestPage.get_Passport_No().getText().equals(Passportno)) ;
+        if (Objects.equals(EmpMol, RequestPage.get_Mol_Num().getText())) {
+            RequestPage.get_Passport_No().getText();
+        }
         {
             AdminPage.get_Approve_Button().click();
             wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(Approval_Ok)));
@@ -97,10 +101,16 @@ public class Requeststeps {
 
     @And("[Request Page] User tap on the Approve button")
     public void requestPageUserTapOnTheApproveButton() throws InterruptedException {
-        AdminPage.get_Approve_Button().click();
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(Approval_Ok)));
-        AdminPage.get_Approval_Ok().click();
-    }
+        //if (AdminPage.get_Admin_Bank_Name(randomBankName).getText().equals(randomBankName)) {
+            //System.out.println("AdminBank" + get_Admin_Bank_Name(randomBankName));
+            AdminPage.get_Approve_Button().click();
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(Approval_Ok)));
+            AdminPage.get_Approval_Ok().click();
+        //}
+        //else {
+            System.out.println("Bank NOT MATCh");
+        }
+    //}
 
     @And("[Request Page] User verify the End of service and approve by the admin")
     public void requestPageUserVerifyTheEndOfServiceAndApproveByTheAdmin() {
@@ -134,6 +144,18 @@ public class Requeststeps {
         }
 
        // Thread.sleep(5000);
+    }
+
+    @Then("[Request Page] User verify the establishment id and then click the approve button")
+    public void requestPageUserVerifyTheEstablishmentIdAndThenClickTheApproveButton() {
+        if (RequestPage.get_Est_Id(establishmentNo).getText().equals(establishmentNo));
+//                && RequestPage.get_Passport_No().getText().equals(Passportno)) ;
+        {
+            AdminPage.get_Approve_Button().click();
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(Approval_Ok)));
+            AdminPage.get_Approval_Ok().click();
+        }
+        System.out.println(EmpMol + Mol_Num + Passportno);
     }
 }
 

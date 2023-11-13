@@ -3,6 +3,7 @@ package Hooks;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -83,7 +84,8 @@ public class Base_Class {
             //System.setProperty("webdriver.chrome.whitelistedIps", "");
             Duration timeout = Duration.ofSeconds(30);
             wait = new WebDriverWait(driver, timeout);
-            URL url = new URL("http://employer.getthelingo.com/");
+            By.cssSelector(".ant-spin.ant-spin-spinning.css-qgg3xn");
+            URL url = new URL("https://employer.getthelingo.com");
             //String projectpath = System.getProperty("user.dir");
             File f = new File("apps");
             File fs = new File(f, "app.apk");

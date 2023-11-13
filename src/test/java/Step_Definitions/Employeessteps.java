@@ -176,11 +176,13 @@ public class Employeessteps {
 //            String branchEstablishmentId = establishmentsStepsHeadOffice.branchEstablishmentId;
 
         //System.out.println(branchEstablishmentId);
-        for (int j = 0; j < 10; j++) {
+        for (int j = 0; j < 5; j++) {
+            System.out.println(j);
             int randomNumber = random.nextInt(1000000000);
 
 
-            raws = new String[]{molNo + randomNumber, empCode + randomNumber, firstName, lastName, displayName + randomNumber, dob, gender.trim(), nationality.trim().replaceAll("^\\s+", ""), joiningDate, "user" + randomNumber + email, mobile + randomNumber, altenatePhone + randomNumber, homeAddress + randomNumber, homeState, homePostCode, workAddress, workState, workPostCode, PassportNo + randomNumber, passportExpiry, eid + randomNumber, eidExpiry, branchEstablishmentId + est};
+            raws = new String[]{molNo + randomNumber, empCode + randomNumber, firstName, lastName, displayName + randomNumber, dob, gender.trim(), nationality.trim().replaceAll("^\\s+", ""), joiningDate, "user" + randomNumber + email, mobile + randomNumber, altenatePhone + randomNumber, homeAddress + randomNumber, homeState, homePostCode, workAddress, workState, workPostCode, PassportNo + randomNumber, passportExpiry, eid + randomNumber, eidExpiry, /*branchEstablishmentId +*/ est};
+            System.out.println("BranchESTID;"+branchEstablishmentId);
             //System.out.println(branchEstablishmentId);
             //System.out.println(raws[j]);
             // Create data rows and populate cells
@@ -189,7 +191,7 @@ public class Employeessteps {
                 //raws[i] = raws[i].trim();
                 HSSFCell cell = dataRow.createCell(i);
                 cell.setCellValue(raws[i]);
-                System.out.println(Arrays.toString(raws));
+                System.out.println(Arrays.toString(new String[]{"RAWS" + Arrays.toString(raws)}));
             }
         }
         System.out.println(Arrays.toString(headers));
@@ -266,6 +268,127 @@ public class Employeessteps {
        Thread.sleep(5000);
         // wait.until(ExpectedConditions.visibilityOfElementLocated(By.className(Employee_Eye_Button)));
         EmployeesPage.get_Employee_Eye_Button().click(); Thread.sleep(5000);
+    }
+
+    @And("[Employees Page] User create a multiple data for the employer and check duplication  {string} {string} {string} {string} {string} {string} {string}   {string} {string}   {string} {string}   {string} {string} {string} {string}  {string} {string} {string} {string}     {string} {string} {string} {string}")
+    public void employeesPageUserCreateAMultipleDataForTheEmployerAndCheckDuplication(String molNo, String empCode, String firstName, String lastName, String displayName, String dob, String gender, String nationality, String joiningDate, String email, String mobile, String altenatePhone, String homeAddress, String homeState, String homePostCode, String workAddress, String workState, String workPostCode, String PassportNo, String passportExpiry, String eid, String eidExpiry, String est) throws IOException {
+        String[] headers = {"Mol No", "Emp Code", "First Name", "Last Name", "Display Name", "Date of Birth", "Gender(M/F)".trim(), "Nationality".trim().replaceAll("^\\s+", ""), "Date of Joining", "Email", "Mobile", "Alternate Phone", "Home Address", "Home State", "Home Post Code", "Work Address", "Work State", "Work Post Code", "Passport Number", "Passport Expiry", "EID", "EID Expiry", "Establishment Id"};
+        Random random = new Random();
+        HSSFWorkbook workbook = new HSSFWorkbook();
+        HSSFSheet sheet = workbook.createSheet("Bulk employees");
+        HSSFRow headerRow = sheet.createRow(0);
+        for (int i = 0; i < headers.length; i++) {
+            HSSFCell cell = headerRow.createCell(i);
+            cell.setCellValue(headers[i].trim());
+        }
+        String[] raws = new String[0];
+        for (int j = 0; j < 5; j++) {
+            int randomNumber = random.nextInt(1000000000);
+
+
+            raws = new String[]{molNo /*+ randomNumber*/, empCode + randomNumber, firstName, lastName, displayName + randomNumber, dob, gender.trim(), nationality.trim().replaceAll("^\\s+", ""), joiningDate, "user" + randomNumber + email, mobile + randomNumber, altenatePhone + randomNumber, homeAddress + randomNumber, homeState, homePostCode, workAddress, workState, workPostCode, PassportNo + randomNumber, passportExpiry, eid + randomNumber, eidExpiry, est};
+            System.out.println(Arrays.toString(raws));
+            System.out.println(branchEstablishmentId);
+            //System.out.println(raws[j]);
+            // Create data rows and populate cells
+            HSSFRow dataRow = sheet.createRow(j + 1);
+            for (int i = 0; i < raws.length; i++) {
+                //raws[i] = raws[i].trim();
+                HSSFCell cell = dataRow.createCell(i);
+                cell.setCellValue(raws[i]);
+                System.out.println(Arrays.toString(raws));
+            }
+        }
+        //System.out.println(Arrays.toString(headers));
+        //System.out.println(Arrays.toString(raws));
+        randomNumbers = random.nextInt(10000);
+
+
+        // Write the workbook to an output stream
+        filePath = "D:\\Hrcms\\src\\test\\java\\document\\" + randomNumbers + ".xlsx";
+        System.out.println(filePath);
+        try (FileOutputStream fileOut = new FileOutputStream(filePath)) {
+            workbook.write(fileOut);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            workbook.close();
+            //Thread.sleep(5000);
+
+        }
+        System.out.println(randomNumbers);
+    }
+
+    @And("[Employees Page] User create a multiple data with non WPS process for the employer {string}{string}{string}{string}{string}{string}{string}{string}{string}{string}{string}{string}{string}{string}{string}{string}{string}{string}{string}{string}{string}{string}{string}")
+    public void employeesPageUserCreateAMultipleDataWithNonWPSProcessForTheEmployer(String molNo, String empCode, String firstName, String lastName, String displayName, String dob, String gender, String nationality, String joiningDate, String email, String mobile, String altenatePhone, String homeAddress, String homeState, String homePostCode, String workAddress, String workState, String workPostCode, String PassportNo, String passportExpiry, String eid, String eidExpiry, String est) throws IOException {
+        //System.out.println(branchEstablishmentId);
+        String[] headers = {"Mol No", "Emp Code", "First Name", "Last Name", "Display Name", "Date of Birth", "Gender(M/F)".trim(), "Nationality".trim().replaceAll("^\\s+", ""), "Date of Joining", "Email", "Mobile", "Alternate Phone", "Home Address", "Home State", "Home Post Code", "Work Address", "Work State", "Work Post Code", "Passport Number", "Passport Expiry", "EID", "EID Expiry", "Establishment Id"};
+        Random random = new Random();
+        //int randomNumber = random.nextInt(100000);
+        //String[] raws = {molNo+randomNumber,empCode+randomNumber,firstName, lastName, displayName+randomNumber, dob, gender,nationality,joiningDate,"user"+randomNumber+email, mobile, altenatePhone, homeAddress,homeState,homePostCode, workAddress, workState,workPostCode,PassportNo+randomNumber,passportExpiry,eid+randomNumber,eidExpiry,estId};
+        HSSFWorkbook workbook = new HSSFWorkbook();
+        // XSSFWorkbook workbook = new XSSFWorkbook();
+        HSSFSheet sheet = workbook.createSheet("Bulk employees");
+        System.out.println("File Name:"+workbook);
+        // XSSFSheet sheet = workbook.createSheet("Bulk employees");
+//        EstablishmentsStepsHeadOffice establishmentsStepsHeadOffice = new EstablishmentsStepsHeadOffice();
+//        String branchEstablishmentId = establishmentsStepsHeadOffice.branchEstablishmentId;
+        //System.out.println(establishmentsStepsHeadOffice);
+        //System.out.println(branchEstablishmentId);
+        //String estidValue = estid(branchEstablishmentId); // Call estid() method with branchEstablishmentId
+
+        //System.out.println(branchEstablishmentId);
+
+        // Create header row and cells
+        HSSFRow headerRow = sheet.createRow(0);
+        for (int i = 0; i < headers.length; i++) {
+            HSSFCell cell = headerRow.createCell(i);
+            cell.setCellValue(headers[i].trim());
+        }
+        String[] raws = new String[0];
+//            EstablishmentsStepsHeadOffice establishmentsStepsHeadOffice = new EstablishmentsStepsHeadOffice();
+//            String branchEstablishmentId = establishmentsStepsHeadOffice.branchEstablishmentId;
+
+        //System.out.println(branchEstablishmentId);
+        int j;
+        for (j = 0; j < 5; j++) {
+
+            //System.out.println(j);
+            int randomNumber = random.nextInt(1000000000);
+
+
+            raws = new String[]{molNo, empCode, firstName, lastName, displayName + randomNumber, dob, gender.trim(), nationality.trim().replaceAll("^\\s+", ""), joiningDate, "user" + randomNumber + email, mobile + randomNumber, altenatePhone + randomNumber, homeAddress + randomNumber, homeState, homePostCode, workAddress, workState, workPostCode, PassportNo + randomNumber, passportExpiry, eid + randomNumber, eidExpiry, /*branchEstablishmentId +*/ est};
+            System.out.println("BranchESTID;" + branchEstablishmentId);
+            //System.out.println(branchEstablishmentId);
+            //System.out.println(raws[j]);
+            // Create data rows and populate cells
+            HSSFRow dataRow = sheet.createRow(j + 1);
+            for (int i = 0; i < raws.length; i++) {
+                //raws[i] = raws[i].trim();
+                HSSFCell cell = dataRow.createCell(i);
+                cell.setCellValue(raws[i]);
+                System.out.println(Arrays.toString(new String[]{"RAWS" + Arrays.toString(raws)}));
+            }
+        }
+        System.out.println(Arrays.toString(headers));
+        //System.out.println(j);
+
+        randomNumbers = random.nextInt(10000);
+
+
+        // Write the workbook to an output stream
+        filePath = "D:\\Hrcms\\src\\test\\java\\document\\" + randomNumbers + ".csv";
+        System.out.println(filePath);
+        try (FileOutputStream fileOut = new FileOutputStream(filePath)) {
+            workbook.write(fileOut);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            workbook.close();
+            //Thread.sleep(5000);
+
+        }
+        System.out.println(randomNumbers);
     }
 }
 

@@ -8,8 +8,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
-import static Hooks.Base_Class.driver;
-
 
 public class SignUpPage {
 
@@ -36,6 +34,7 @@ public class SignUpPage {
     public static String confirmPasswordErrorMessage = "//div[normalize-space()='Confirm Password is required']";
     public static String otpCode = "//input[@aria-label='Please enter verification code. Character 1']";
     public static String verifyButton = " button span:nth-child(2)";
+    public static String Branch_Employer_Phone_No = "//input[@placeholder='phone number']";
 
     public SignUpPage() {
     }
@@ -110,5 +109,9 @@ public class SignUpPage {
     }
     public static WebElement verifyButton(){
         return Base_Class.driver.findElement(By.cssSelector(verifyButton));
+    }
+
+    public static WebElement get_Branch_Employer_Phone_No() {
+        return Base_Class.driver.findElement(By.xpath(Branch_Employer_Phone_No));
     }
 }

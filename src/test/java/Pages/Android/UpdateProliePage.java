@@ -64,6 +64,7 @@ public class UpdateProliePage {
         return "//div//button[normalize-space()='" + current_month + "']";
 //        return "//div[@class='ant-picker-header-view']//button[normalize-space()='"+current_month+"']";
     }
+    public static String Branch_State = "(//*[@title='State *'])[1]";
 
     public static String month_select(String mon) {
         return "(//button[normalize-space()='" + mon + "'])";
@@ -126,11 +127,6 @@ public class UpdateProliePage {
     public static String Second_Brows_Button = "(//*[@id=\"uploadExcel\"])[2]";
     public static String year_arrow_doj_xpath = "(//*[@class='ant-picker-header-super-prev-btn'])[2]";
     public static String document = "documentTitle0";
-
-
-    public UpdateProliePage() {
-    }
-
     //return function
 
     public static WebElement getEstablishmentId() {
@@ -370,4 +366,7 @@ public class UpdateProliePage {
     }
 
 
+    public static WebElement get_Branch_State() {
+        return Base_Class.driver.findElement(By.xpath(Branch_State));
+    }
 }

@@ -41,7 +41,8 @@ public class WebPortalHeadOfficeSteps {
     }
 
     @When("[Web Portal Page] User tap on the side manu {string}")
-    public void webPortalPageUserTapOnTheSideManu(String manu) {
+    public void webPortalPageUserTapOnTheSideManu(String manu) throws InterruptedException {
+        Thread.sleep(3000);
         WebPortalHeadOfficePage.get_Side_Manu(manu).click();
 
     }

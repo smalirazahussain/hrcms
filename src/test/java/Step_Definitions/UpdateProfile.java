@@ -51,6 +51,7 @@ public class UpdateProfile {
     public void updateProfileUserEnterTheEstablishmentId(String eid) {
         first14 = (long) (Math.random() * 10000000000000000L);
         UpdateProliePage.getEstablishmentId().sendKeys(first14 + eid);
+        System.out.println("Company Est Id:"+first14);
 
 
     }
@@ -59,13 +60,8 @@ public class UpdateProfile {
     public void updateProfileSelectTheState(String name) throws InterruptedException {
         //  wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(name)));
         UpdateProliePage.getState().click();
-        //        driver.findElement(By.xpath("div[title='Dubai'] div[class='ant-select-item-option-content']"));
-        //UpdateProliePage.getStateDubai().click();
-        // UpdateProliePage.getState().sendKeys(name);
-        // UpdateProliePage.getState().sendKeys(Keys.ENTER);
+        Thread.sleep(5000);
         UpdateProliePage.getStateName(name).click();
-//        UpdateProliePage.getStateName(name).sendKeys(Keys.ENTER);
-        //Select sel = new Select();
 
 
     }
@@ -566,7 +562,7 @@ public class UpdateProfile {
 
     @Then("[Admin Page] User verify establishment id and approve by admin")
     public void adminPageUserVerifyEstablishmentIdAndApproveByAdmin() throws InterruptedException {
-
+        System.out.println("ESTID;"+first14);
         if (first14 == Long.parseLong(AdminPage.get_Establishmentid().getText())
                 && AdminPage.get_company_Name().getText().equals(companyName)
                 && AdminPage.get_Trade_No().getText().equals(tradeno)
@@ -651,6 +647,12 @@ public class UpdateProfile {
         }
     }
 
+    @And("[Update Profile] Select the branch state {string}")
+    public void updateProfileSelectTheBranchState(String name) {
+        UpdateProliePage.get_Branch_State().click();
+
+        UpdateProliePage.getStateName(name).click();
+    }
 }
 
 

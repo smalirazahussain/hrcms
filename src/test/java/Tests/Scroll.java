@@ -178,7 +178,7 @@ import static Hooks.Base_Class.driver;
 //
 //
 //}
-public class Scroll
+public class  Scroll
 {
     public static void ScrollVertical(WebElement Element){
         JavascriptExecutor js = (JavascriptExecutor) driver;

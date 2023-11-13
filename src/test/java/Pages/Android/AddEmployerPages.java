@@ -135,6 +135,8 @@ public class AddEmployerPages {
     public static String  Add_Document = "div[class='inline-form col'] button:nth-child(1) span:nth-child(2)";
     public static String Check = "//*[@id=\"root\"]/div/div/div[2]/div[2]/div[1]/div/div[2]/div/ul/li[3]/span[2]";
     public static String uploadExcel = "//*[@id=\"uploadExcel\"]";
+    public static String Add_More_Documents = "button[title='Add More Documents']";
+    public static String Add_New_Establishment = "#isNewEstablishment";
 
     public static WebElement get_Country(String country) {
         return Base_Class.driver.findElement(By.xpath(Country(country)));
@@ -303,5 +305,13 @@ public class AddEmployerPages {
     public static WebElement get_uploadExcel() {
         return Base_Class.driver.findElement(By.xpath(uploadExcel));
 
+    }
+
+    public static WebElement get_Add_More_Documents() {
+        return Base_Class.driver.findElement(By.cssSelector(Add_More_Documents));
+    }
+
+    public static WebElement get_Add_New_Establishment() {
+        return Base_Class.driver.findElement(By.cssSelector(Add_New_Establishment));
     }
 }

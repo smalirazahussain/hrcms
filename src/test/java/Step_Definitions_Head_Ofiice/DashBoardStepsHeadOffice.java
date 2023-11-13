@@ -2,11 +2,8 @@ package Step_Definitions_Head_Ofiice;
 
 import Pages.Android.AddEmployerPages;
 import Pages.HeadOfficePages.DashBoardHeadOfficePage;
-import Pages.HeadOfficePages.HeadOfficeLoginPage;
 import io.cucumber.java.en.And;
-import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
-import io.cucumber.java.en.When;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.asserts.SoftAssert;
 
@@ -34,6 +31,11 @@ public class DashBoardStepsHeadOffice {
     public void dashboardHeadOfficePageUserTapOnTheBranchesButton() {
         exchangeHouseTittle = AddEmployerPages.get_Company_Tittle().getText();
         DashBoardHeadOfficePage.get_Branches_Button().click();
+    }
+
+    @Then("[Dashboard Head Office Page] User tap on employers onboard button")
+    public void dashboardHeadOfficePageUserTapOnEmployersOnboardButton() {
+        DashBoardHeadOfficePage.get_Employers_Onboard_Button().click();
     }
 }
 
