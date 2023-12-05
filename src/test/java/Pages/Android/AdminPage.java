@@ -46,7 +46,7 @@ public class AdminPage {
     public static String No_Other_Bank_Employees = "isOtherBankEmployees";
     public static String message = "//*[@text='Action Successfully']";
     public static String ExchangeHouse_Client_Approvals_Button = "//a[@id='exchangeHouseApproval']";
-    public static String Admin_Branch_Name = "(//input[@type='search'])[2]";
+    public static String Admin_Branch_Name = "(//input[@type='search'])[3]";
     public static String Exchange_House_Browse_Button = "button.ant-btn#uploadExcel.primary-outline-filled[title='Browse File'";
     public static String admin_Client_Salary = "div:first-child > ul:first-child > li:nth-child(32) > span:nth-child(2)";
     public static String Admin_Employer_Button = "#employer";
@@ -60,6 +60,8 @@ public class AdminPage {
     public static String Search = "input[placeholder=\"Search\"]";
     public static String Add_Branch = "button[title=\"Add Branch\"]";
     public static String Est_Id_View = "(//button[@title='View'])[2]";
+    public static String Enter_Branch_Name = "(//input[@aria-haspopup=\"listbox\"])[2]";
+    public static String Arrow_Drop_Down = "(//span[@class='ant-select-arrow'])[1]";
 
     public static String Admin_Bank_Name(String randomBankName) {
         return "//span[text()='" + randomBankName + "']";
@@ -237,4 +239,11 @@ public class AdminPage {
         return Base_Class.driver.findElement(By.xpath(Est_Id_View));
     }
 
+    public static WebElement get_Enter_Branch_Name() {
+        return Base_Class.driver.findElement(By.xpath(Enter_Branch_Name));
+    }
+
+    public static WebElement get_Arrow_Drop_Down() {
+        return Base_Class.driver.findElement(By.xpath(Arrow_Drop_Down));
+    }
 }

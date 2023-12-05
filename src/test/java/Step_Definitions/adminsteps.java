@@ -98,7 +98,7 @@ public class adminsteps {
     @And("[Admin Page] User tap on view button")
     public void adminPageUserTapOnViewButton() {
         By spinnerLocator = By.cssSelector(".ant-spin.ant-spin-spinning.css-qgg3xn");
-        wait.until(ExpectedConditions.invisibilityOfElementLocated(spinnerLocator));
+        //wait.until(ExpectedConditions.invisibilityOfElementLocated(spinnerLocator));
         //wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(View)));
         AdminPage.get_View().click();
     }
@@ -187,12 +187,19 @@ public class adminsteps {
 
     @Then("[Admin Page] User select the exchange house {string}")
     public void adminPageUserSelectTheExchangeHouse(String arg0) throws InterruptedException {
-        Thread.sleep(5000);
-        System.out.println(exchangeHouseTittle);
-        // AdminPage.get_Select_Exchange_House().click();
-        AdminPage.get_Select_Exchange_House().sendKeys(exchangeHouseTittle, Keys.ENTER);
-        Thread.sleep(5000);
+        //Thread.sleep(5000);
+        try {
+            System.out.println(exchangeHouseTittle);
+            // AdminPage.get_Select_Exchange_House().click();
+            wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("loadingSpinner")));
+           // wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(Arrow_Drop_Down)));
+            AdminPage.get_Select_Exchange_House().sendKeys(exchangeHouseTittle, Keys.ENTER);
+            //Thread.sleep(5000);
+        } catch (Exception elementnotinteractable){
+            System.out.println("Loading Issue");
+        }
     }
+
 
     @Then("[Admin Page] Admin verification the branch and then approve")
     public void adminPageAdminVerificationTheBranchAndThenApprove() throws InterruptedException {
@@ -218,20 +225,26 @@ public class adminsteps {
 
     @Then("[Admin Page] User verify the notification message {string}")
     public void adminPageUserVerifyTheNotificationMessage(String after) throws InterruptedException {
-        By spinnerLocator = By.cssSelector(".ant-spin.ant-spin-spinning.css-qgg3xn");
-        wait.until(ExpectedConditions.invisibilityOfElementLocated(spinnerLocator));
-       // wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(Action_Successfully)));
+       // By spinnerLocator = By.cssSelector(".ant-spin.ant-spin-spinning.css-qgg3xn");
+       // wait.until(ExpectedConditions.visibilityOfElementLocated(spinnerLocator));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(Action_Successfully)));
         String actual = AdminPage.get_Action_Successfully().getText();
         System.out.println("Actual MSG" + actual);
         Assert.assertEquals(actual, after);
     }
+    //arrow = ("//span[@class='ant-select-arrow']");
+
 
     @When("[Admin Page] User tap on Exchange house client Approvals")
     public void adminPageUserTapOnExchangeHouseClientApprovals() throws InterruptedException {
         AdminPage.get_ExchangeHouse_Client_Approvals_Button().click();
         ManageEmployeesHeadOfficePage.get_Manage_Branch().sendKeys(exchangeHouseTittle + Keys.ENTER);
-        Thread.sleep(5000);
-        AdminPage.get_Admin_Branch_Name().sendKeys(branch + Keys.ENTER);
+
+        if(get_Admin_Branch_Name().isDisplayed()) {
+            wait.until(ExpectedConditions.elementToBeClickable(By.xpath(Admin_Branch_Name)));
+            //Thread.sleep(9000);
+            AdminPage.get_Admin_Branch_Name().sendKeys(branch + Keys.ENTER);
+        }
     }
 
     @Then("[Admin Page] User Tap om the exchange house browse button")
@@ -511,5 +524,11 @@ public class adminsteps {
     public void adminPageUserTapOnEstablishmentIdViewButton() {
         //wait.until(ExpectedConditions.elementToBeClickable(By.xpath(Est_Id_View)));
         AdminPage.get_Est_Id_View().click();
+    }
+
+    @And("[Admin Page] User select the branch {string}")
+    public void adminPageUserSelectTheBranch(String arg0) {
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath(Enter_Branch_Name)));
+        AdminPage.get_Enter_Branch_Name().sendKeys(branch+ Keys.ENTER);
     }
 }

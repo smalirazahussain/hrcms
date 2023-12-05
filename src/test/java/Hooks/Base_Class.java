@@ -22,15 +22,28 @@ public class Base_Class {
     //public static AppiumDriver<AndroidElement> driver;
     public static WebDriver driver = null;
     public static WebDriverWait wait ;
+    public static final String USERNAME = "aliraza_7ulipE"; // Update with your BrowserStack credentials
+    public static final String ACCESS_KEY = "qEyu4qURtfsmUQjeENsE";
+    public static final String BROWSERSTACK_URL = "https://" + USERNAME + ":" + ACCESS_KEY + "@hub-cloud.browserstack.com/wd/hub";
+
 
 
     @Before
     public void setup() {
 
-        
-
-
         try {
+            //Browser Stack Capabilities
+//            DesiredCapabilities caps = new DesiredCapabilities();
+//            caps.setCapability("os", "Windows");
+//            caps.setCapability("os_version", "10");
+//            caps.setCapability("browser", "Chrome");
+//            caps.setCapability("browser_version", "118.0");
+//            caps.setCapability("browserstack.local", "false");
+//            caps.setCapability("browserstack.selenium_version", "3.14.0");
+//
+//
+//            driver = new RemoteWebDriver(new URL(BROWSERSTACK_URL),caps);
+            //Mobile app capabilities
             /*DesiredCapabilities caps = new DesiredCapabilities();
 
             //System.out.println(caps);
@@ -79,7 +92,7 @@ public class Base_Class {
             driver = new ChromeDriver(options);
 
             //driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
             driver.manage().window().maximize();
             //System.setProperty("webdriver.chrome.whitelistedIps", "");
             Duration timeout = Duration.ofSeconds(30);
@@ -108,7 +121,9 @@ public class Base_Class {
 
 
     }
-
+    public void navigateToURL(String url) {
+        driver.get(url);
+    }
 
 //    @Test
 //    public void SampleTest(){
@@ -127,5 +142,6 @@ public class Base_Class {
 
         driver.quit();
     }
+
 
 }

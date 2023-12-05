@@ -1,0 +1,9 @@
+userName: aliraza_7ulipE
+accessKey: qEyu4qURtfsmUQjeENsE
+projectName: "Hrcms"
+buildName: "1"
+framework: cucumber-testng
+accessibility: true
+testObservability: true
+
+source: cucumber-testng:sdk-archetype-integrate:v1.0

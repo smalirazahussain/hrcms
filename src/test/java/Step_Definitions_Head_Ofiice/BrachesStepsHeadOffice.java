@@ -2,6 +2,7 @@ package Step_Definitions_Head_Ofiice;
 
 import Pages.Android.AdminPage;
 import Pages.HeadOfficePages.BranchesHeadOfficePage;
+import Pages.HeadOfficePages.EstablishmentsHeadOfficePage;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -48,11 +49,13 @@ public class BrachesStepsHeadOffice {
     public void branchHeadOfficePageUserEnterTheBranchLocation(String location) {
         BranchesHeadOfficePage.get_Branch_Location().sendKeys(location);
     }
-
+    public static String branchEmail;
     @Then("[Branch Head Office Page] User enter the email address {string}")
-    public void branchHeadOfficePageUserEnterTheEmailAddress(String email) {
+    public String branchHeadOfficePageUserEnterTheEmailAddress(String email) {
         int randomempno = (int) ((Math.random()*100000));
-        BranchesHeadOfficePage.get_Branch_Email().sendKeys(email+randomempno+"@mailinator.com");
+        branchEmail= email+randomempno+"@mailinator.com";
+        BranchesHeadOfficePage.get_Branch_Email().sendKeys(branchEmail);
+        return branchEmail;
     }
 
     @And("[Branch Head Office Page] User enter the Password {string}")
@@ -172,6 +175,11 @@ public class BrachesStepsHeadOffice {
         wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(Admin_Add_Employer_Button)));
         AdminPage.get_Admin_Add_Employer_Button().click();
         Thread.sleep(10000);
+    }
+
+    @Then("[Exchange House Establishments Page] User enter branch name when they are creates")
+    public void exchangeHouseEstablishmentsPageUserEnterBranchNameWhenTheyAreCreates() {
+        EstablishmentsHeadOfficePage.get_Establishment_Branch_Name().sendKeys(branch+ Keys.ENTER);
     }
 }
 

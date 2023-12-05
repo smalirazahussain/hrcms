@@ -3,7 +3,7 @@ Feature: AddEmployer
 
   @Update @UpdateProfile1
   Scenario: Add new employee
-    Given   [Login Page] User enter the email "12643"
+    Given   [Login Page] User enter the email "11834"
     When    [Login Page] User enter the password "Password1"
     Then    [Login page] User tap on login button
     Then    [Employees Page] User tap on employees button
@@ -21,7 +21,7 @@ Feature: AddEmployer
     Then    [Update Profile] User enter the day "3"
     #And     [Add Employer] user enter the passport no ""
     Then    [Add Employer] user tao the nationality
-    And     [Add Employer] user tao the Add New Establishment
+    #And     [Add Employer] user tao the Add New Establishment
    # Then    [Add Employer] user select the nationality "Afghanistan"
     And     [Add Employer] user enter the Mol no ""
     Then    [Add Employer] user enter the Employer code ""
@@ -59,7 +59,7 @@ Feature: AddEmployer
     Then    [Admin Page] User validate the toast message "Action Successful"
 
   Scenario: Add new employer with Centiv Card
-    Given   [Login Page] User enter the email "12643"
+    Given   [Login Page] User enter the email "12651"
     When    [Login Page] User enter the password "Password1"
     Then    [Login page] User tap on login button
     Then    [Employees Page] User tap on employees button
@@ -112,7 +112,7 @@ Feature: AddEmployer
     Then    [Admin Page] User validate the toast message "Action Successfully"
 
   Scenario: Add new employer with other bank
-    Given   [Login Page] User enter the email "12643"
+    Given   [Login Page] User enter the email "12434"
     When    [Login Page] User enter the password "Password1"
     Then    [Login page] User tap on login button
     Then    [Employees Page] User tap on employees button
@@ -1190,7 +1190,7 @@ Feature: AddEmployer
      | User     | 098765456789oiuytrt | 2123    | 1    | User1            | 05/05/1978 | M      | PK          | 05/05/1978    | user1@gmail.com| 97100011111 | 97100011111    | Address1    | State1    | 00001        | WorkAddress1 | State2    | 00002        | PassportNumber1  | 10/05/2029     | EIDNumber1       | 10/05/2029     | 8711258059247301               |
 
   Scenario Outline: Create multiple Employee
-    Given   [Login Page] User enter the email "12643"
+    Given   [Login Page] User enter the email "12651"
     When    [Login Page] User enter the password "Password1"
     Then    [Login page] User tap on login button
     Then    [Employees Page] User tap on employees button
@@ -1209,7 +1209,7 @@ Feature: AddEmployer
     And     [Admin Page] User tap on view button
     Then    [Admin Page] User tap on approve button
     Then    [Admin Page] User Tap om the browse button
-    Then    [Admin Page] User select the card type "PayD"
+    Then    [Admin Page] User select the card type "Centiv"
     Then    [Admin Page] User tap No other bank employees in given file
     And     [Admin Page] User Tap on the approve button
     Then    [Admin Page] User verify the notification message "Action Successfully"
@@ -1219,7 +1219,7 @@ Feature: AddEmployer
       |User|Mol12345|1|1|User|05/05/1978|M|BD|05/05/1978|@mailinator.com|971|971|Address|1|00001|2|2|2|Passport|10/05/2029|10000000000|10/05/2029|0000000000000|
 
   Scenario Outline: Create multiple Employee with non wps process
-    Given   [Login Page] User enter the email "12742"
+    Given   [Login Page] User enter the email "12434"
     When    [Login Page] User enter the password "Password1"
     Then    [Login page] User tap on login button
     Then    [Employees Page] User tap on employees button

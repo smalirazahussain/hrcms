@@ -1,0 +1,48 @@
+# Created at 2023-12-05T16:00:02.602
+SLF4J: No SLF4J providers were found.
+
+# Created at 2023-12-05T16:00:02.602
+SLF4J: Defaulting to no-operation (NOP) logger implementation
+
+# Created at 2023-12-05T16:00:02.602
+SLF4J: See https://www.slf4j.org/codes.html#noProviders for further details.
+
+# Created at 2023-12-05T16:00:02.603
+SLF4J: Class path contains SLF4J bindings targeting slf4j-api versions 1.7.x or earlier.
+
+# Created at 2023-12-05T16:00:02.603
+SLF4J: Ignoring binding found at [jar:file:/C:/Users/Ali%20Raza/.m2/repository/com/browserstack/browserstack-java-sdk/1.5.2/browserstack-java-sdk-1.5.2.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+
+# Created at 2023-12-05T16:00:02.603
+SLF4J: See https://www.slf4j.org/codes.html#ignoredBindings for an explanation.
+
+# Created at 2023-12-05T16:00:02.825
+com.browserstack.utils.BrowserStackSDKException: Empty userName or accessKey
+
+# Created at 2023-12-05T16:00:02.825
+	at com.browserstack.BrowserStackJavaAgent.a(Unknown Source)
+
+# Created at 2023-12-05T16:00:02.826
+	at com.browserstack.BrowserStackJavaAgent.a(Unknown Source)
+
+# Created at 2023-12-05T16:00:02.826
+	at com.browserstack.BrowserStackJavaAgent.premain(Unknown Source)
+
+# Created at 2023-12-05T16:00:02.826
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+
+# Created at 2023-12-05T16:00:02.826
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+
+# Created at 2023-12-05T16:00:02.826
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+
+# Created at 2023-12-05T16:00:02.826
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+
+# Created at 2023-12-05T16:00:02.827
+	at java.instrument/sun.instrument.InstrumentationImpl.loadClassAndStartAgent(InstrumentationImpl.java:491)
+
+# Created at 2023-12-05T16:00:02.827
+	at java.instrument/sun.instrument.InstrumentationImpl.loadClassAndCallPremain(InstrumentationImpl.java:503)
+

@@ -8,6 +8,8 @@ import io.cucumber.java.en.When;
 import org.testng.asserts.SoftAssert;
 
 import static Hooks.Base_Class.driver;
+import static Pages.HeadOfficePages.HeadOfficeLoginPage.Head_office_Email;
+import static Step_Definitions_Head_Ofiice.BrachesStepsHeadOffice.branchEmail;
 //import static Pages.Android.LoginPage.create_Account_Button;
 //import static Tests.Useful_functions.getRandomNumberLowerAndUpperBound;
 
@@ -23,13 +25,19 @@ public class LoginStepsHeadOffice {
     @Given("[Login Head Office Page] User enter the URL {string}")
     public void loginHeadOfficePageUserEnterTheURL(String headOfficeURL) throws InterruptedException {
         driver.navigate().to(headOfficeURL);
-        Thread.sleep(10000);
+        //Thread.sleep(10000);
     }
 
     @When("[Login Head Office Page] User enter email id {string}")
-    public void loginHeadOfficePageUserEnterEmailId(String email) {
+    public void loginHeadOfficePageUserEnterEmailId(String email) throws InterruptedException {
        // wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(Head_office_Email)));
-        HeadOfficeLoginPage.get_Head_office_Email().sendKeys(email);
+        if(Head_office_Email!=null){
+            HeadOfficeLoginPage.get_Head_office_Email().sendKeys(email);
+       }
+       // Thread.sleep(5000);
+        if(branchEmail!=null){
+            HeadOfficeLoginPage.get_Head_office_Email().sendKeys(branchEmail);
+        }
     }
 
 
@@ -43,6 +51,20 @@ public class LoginStepsHeadOffice {
 
         HeadOfficeLoginPage.get_Head_office_Login_Button().click();
         Thread.sleep(5000);
+    }
+
+    @And("[Login Head Office Page] User tap on the logout button")
+    public void loginHeadOfficePageUserTapOnTheLogoutButton() {
+        HeadOfficeLoginPage.get_Log_Out_Button().click();
+    }
+
+    @When("[Login Head Office Page] User select the role {string}")
+    public void loginHeadOfficePageUserSelectTheRole(String role) throws InterruptedException {
+        //Thread.sleep(5000);
+        //HeadOfficeLoginPage.get_User_Role().click();
+        Thread.sleep(5000);
+        HeadOfficeLoginPage.get_User_Select_Role().click();
+        HeadOfficeLoginPage.get_User_Role(role).click();
     }
 }
 

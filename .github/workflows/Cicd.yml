@@ -1,0 +1,37 @@
+name: Selenium BDD Tests
+
+on:
+  push:
+    branches:
+      - main  # Adjust according to your branch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Java
+        uses: actions/setup-java@v2
+        with:
+          java-version: '11'  # Adjust the Java version as needed
+
+      - name: Install dependencies
+        run: |
+          # Commands to install dependencies (e.g., Selenium, BDD frameworks)
+
+      - name: Run Selenium BDD tests
+        run: |
+          # Commands to execute your Selenium BDD tests
+          # For example:
+          # mvn clean test -Dtest=YourTestClassName
+          # or
+          # npm test
+
+      - name: Generate Test Reports
+        run: |
+          # Commands to generate test reports (if applicable)
+          # For example, generating reports using Allure or other reporting tools
+

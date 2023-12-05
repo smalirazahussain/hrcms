@@ -168,6 +168,7 @@ public class AddEmployerSteps<Save_mol> {
         AddEmployerPages.get_Mol_No().sendKeys(first14 + Molno);
         EmpMol = first14 + Molno;
         System.out.println("MOL NO WHICH IS SAving.....: " + Save_mol);
+
     }
 
 
@@ -444,7 +445,7 @@ public class AddEmployerSteps<Save_mol> {
     public static String companyName;
 
     @When("[Add Employer] User select the establishment id")
-    public void addEmployerUserSelectTheEstablishmentId() {
+    public void addEmployerUserSelectTheEstablishmentId() throws InterruptedException {
         String companyTittle = AddEmployerPages.get_Company_Tittle().getText();
         AddEmployerPages.get_Establishment_Id().sendKeys(companyTittle + Keys.ENTER);
         companyName = companyTittle;
@@ -460,8 +461,8 @@ public class AddEmployerSteps<Save_mol> {
 
     @Then("[Add Employer] User Validate the employee notification message {string}")
     public void addEmployerUserValidateTheEmployeeNotificationMessage(String msg) {
-        By spinnerLocator = By.cssSelector(".ant-spin.ant-spin-spinning.css-qgg3xn");
-        wait.until(ExpectedConditions.invisibilityOfElementLocated(spinnerLocator));
+//        By spinnerLocator = By.cssSelector(".ant-spin.ant-spin-spinning.css-qgg3xn");
+//        wait.until(ExpectedConditions.visibilityOfElementLocated(spinnerLocator));
         String employeeOnBoardMessage = AddEmployerPages.get_Notification_Message().getText();
         boolean isEqual = employeeOnBoardMessage.equals(Notification_Message);
         if (isEqual) {

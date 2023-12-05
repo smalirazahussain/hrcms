@@ -77,6 +77,8 @@ package Tests;//package Tests;//package Tests;
 //
 //
 //}
+import org.jetbrains.annotations.NotNull;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Random;
@@ -84,7 +86,7 @@ import java.util.Locale;
 
 public class Generate_Random_Date {
 
-    public String generateFormattedRandomDate() {
+    public static String generateFormattedRandomDate() {
         Random random = new Random();
 
         // Generate random year between a certain range (e.g., 1970 and 2023)
@@ -111,11 +113,11 @@ public class Generate_Random_Date {
         LocalDate randomDate = LocalDate.of(year, month, day);
 
         // Format the LocalDate using the desired format "dd-MMM-yyyy" with English month abbreviation
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MMM-yyyy", Locale.ENGLISH);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.ENGLISH);
         return randomDate.format(formatter);
     }
 
-    public static String generateFormattedRandomFutureDate() {
+    public static @NotNull String generateFormattedRandomFutureDate() {
         Random random = new Random();
 
         // Get the current date

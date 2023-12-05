@@ -31,7 +31,12 @@ public class Requeststeps {
     @And("[Request Page] User tap on the request button")
     public void requestPageUserTapOnTheRequestButton() throws InterruptedException {
        try {
-           wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("ant-spin-spinning")));
+           By spinnerLocator = By.cssSelector(".loading-spinner-class"); // Replace with your spinner's CSS selector
+           wait.until(ExpectedConditions.invisibilityOfElementLocated(spinnerLocator));
+
+//// Wait for the spinner to disappear or become invisible
+//           wait.until(ExpectedConditions.invisibilityOfElementLocated(spinnerLocator));
+//           wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("ant-spin-spinning")));
            //wait.until(ExpectedConditions.elementToBeClickable(By.id(Request)));
            RequestPage.get_Request().click();
        }

@@ -15,8 +15,9 @@ import org.testng.asserts.SoftAssert;
 import java.time.Duration;
 
 import static Hooks.Base_Class.driver;
+import static Pages.Android.AdminPage.Approval_Ok;
+import static Pages.Android.AdminPage.get_Approval_Ok;
 import static Pages.HeadOfficePages.OnBoardApprovalHeadOfficePage.Onboard_Approval;
-import static Pages.HeadOfficePages.OnBoardApprovalHeadOfficePage.Phone_No;
 import static Step_Definitions_Head_Ofiice.BrachesStepsHeadOffice.branch;
 //import static Pages.Android.LoginPage.create_Account_Button;
 //import static Tests.Useful_functions.getRandomNumberLowerAndUpperBound;
@@ -46,15 +47,17 @@ public class OnBoardApprovalStepsHeadOffice {
 //            AdminPage.get_Approve_Button().click();
             //        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(Approval_Ok)));
         AdminPage.get_Approve_Button().click();
-        Thread.sleep(5000);
-        AdminPage.get_Approval_Ok().click();
+        //Thread.sleep(5000);
+        if (Approval_Ok!=null) {
+            Thread.sleep(3000);
+            get_Approval_Ok().click();
 //        JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;
 //        jsExecutor.executeScript("arguments[0].click();", driver.findElement(By.cssSelector(Approval_Ok)));
-       // AdminPage.get_Approval_Ok().click();
-        Thread.sleep(5000);
-        System.out.println(Phone_No);
-        Thread.sleep(5000);
-
+            // AdminPage.get_Approval_Ok().click();
+            //Thread.sleep(5000);
+           // System.out.println(Phone_No);
+            //Thread.sleep(5000);
+        }
     }
 
     @Then("[OnBoard Approval Head Office Page] User tap onboard approval for statement request")
@@ -67,7 +70,7 @@ public class OnBoardApprovalStepsHeadOffice {
         Thread.sleep(5000);
         AdminPage.get_Approve_Button().click();
 
-        AdminPage.get_Approval_Ok().click();
+        get_Approval_Ok().click();
     }
 
     @Then("[OnBoard Approval Head Office Page] User tap Clients OnBoard")
