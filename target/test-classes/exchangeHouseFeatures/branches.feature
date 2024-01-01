@@ -1,7 +1,7 @@
 @Branches
 Feature: Branches
 
-  @Branches @Branches1
+  @Branches @Branches10
   Scenario: User add new branch to the Head office add approve by itself and admin
     Given  [Login Head Office Page] User enter the URL "https://exchangehouse.getthelingo.com/"
     When   [Login Head Office Page] User enter email id "dubaiexchange@mailinator.com"
@@ -59,7 +59,7 @@ Feature: Branches
     And    [Admin Page] User tap on view button
     #And    [OnBoard Approval Head Office Page] User tap on view button
     Then   [Admin Page] Admin verification the branch and then approve
-    Given  [Login Head Office Page] User enter the URL "http://10.10.5.100:8004/"
+    Given  [Login Head Office Page] User enter the URL "http://10.10.5.100:8004"
     Then   [Web Portal Page] User enter the user name "admin"
     Then   [Web Portal Page] User enter the Password "admin"
     Then   [Web Portal Page] User tap on the login button
@@ -128,7 +128,7 @@ Feature: Branches
 
   Scenario: ExchangeHouse creates a new employer, then the request is approved and further approved by the admin
     Given  [Login Head Office Page] User enter the URL "https://exchangehouse.getthelingo.com/"
-    When   [Login Head Office Page] User enter email id "dubaiexchange@kamelpay.com"
+    When   [Login Head Office Page] User enter email id "dubaiexchange@mailinator.com"
     Then   [Login Head Office Page] User enter the Password "Password1"
     And    [Login Head Office Page] User tap on the login button
     #Then   [Dashboard Head Office Page] User verify to toast message to "Successfully Login"

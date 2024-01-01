@@ -11,7 +11,9 @@ import java.time.Duration;
 
 public class AdminPage {
 
-
+    public AdminPage(){
+        String admin_Tab = "//div[@class='body-container scroll-y']";
+    }
     private WebDriver driver;
     Duration timeout = Duration.ofSeconds(30);
     WebDriverWait wait = new WebDriverWait(driver, timeout);
@@ -31,7 +33,11 @@ public class AdminPage {
     public static String Approval_Ok = "//span[normalize-space()='OK']";
     public static String Client_Approval = "#approval";
     public static String Company_Client = "(//input[@id=\"client\"])[2]";
-    public static String Action_Successfully = "//span[normalize-space()='Action Successful']";
+    public static String Admin_Action_Successfully = "//span[normalize-space()='Action Successful']";
+    public static String Action_Successfully(String actual){
+        return "//span[normalize-space()='"+actual+"']";
+    }//span[normalize-space()='Company product not found']
+
     public static String Admin_Approval_Ok = "//button[@class='ant-btn css-dev-only-do-not-override-1vtf12y ant-btn-primary ant-btn-sm']";
 
     public static String Browse_Button = "div:nth-child(4) > button:nth-child(2)";
@@ -128,8 +134,8 @@ public class AdminPage {
         return Base_Class.driver.findElement(By.xpath(Company_Client));
     }
 
-    public static WebElement get_Action_Successfully() {
-        return Base_Class.driver.findElement(By.xpath(Action_Successfully));
+    public static WebElement get_Action_Successfully(String actual) {
+        return Base_Class.driver.findElement(By.xpath(Action_Successfully(actual)));
     }
 
     public static WebElement get_Admin_Approval_Ok() {
@@ -237,4 +243,7 @@ public class AdminPage {
         return Base_Class.driver.findElement(By.xpath(Est_Id_View));
     }
 
+    public static WebElement get_Admin_Action_Successfully() {
+        return Base_Class.driver.findElement(By.xpath(Admin_Action_Successfully));
+    }
 }

@@ -60,7 +60,7 @@ public class UpdateProfile {
     public void updateProfileSelectTheState(String name) throws InterruptedException {
         //  wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(name)));
         UpdateProliePage.getState().click();
-        Thread.sleep(5000);
+        //Thread.sleep(5000);
         UpdateProliePage.getStateName(name).click();
 
 

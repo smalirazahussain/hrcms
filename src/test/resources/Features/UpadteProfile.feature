@@ -330,7 +330,7 @@ Feature: Update Profile
      Then    [Update Profile] Validate the onboard approval message "On Board request has been sent to admin"
 
 
-  Scenario: User sends an approval, but the admin rejects it and provides the user with a rejection message.
+  Scenario: User sends an approval, but the admin rejects it and provides the user with a rejection messages.
     Given   [Sign Up] User tap on Sign up button
     When    [Sign Up] User enter the name "Company"
     Then    [Sign Up] User enter the email "email"
@@ -380,7 +380,7 @@ Feature: Update Profile
     And     [Admin Page] User tap on view button
     Then    [Admin Page] User verify establishment id and approve by admin
 
-  Scenario: User sends an approval, but the admin rejects it and provides the user with a rejection message.
+  Scenario: User sends an approval, but the admin rejects it and provides the user with a rejection message
     Given   [Sign Up] User tap on Sign up button
     When    [Sign Up] User enter the name "Company"
     Then    [Sign Up] User enter the email "email"
@@ -407,7 +407,7 @@ Feature: Update Profile
     And     [Update Profile] User enter the month "Dec"
     Then    [Update Profile] User enter the day "3"
     And     [Update Profile] User enter the expire year 2030
-    Then    [Update Profile] User enter the expire month "Oct"
+    Then    [Update Profile] User enter the expire month "Dec"
     And     [Update Profile] User enter the expire day "31"
     Then    [Update Profile] User enter the Trade License Number "TLNO"
     Then    [Update Profile] User tap on browse file

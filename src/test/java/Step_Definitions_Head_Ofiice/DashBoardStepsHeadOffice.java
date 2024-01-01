@@ -37,6 +37,11 @@ public class DashBoardStepsHeadOffice {
     public void dashboardHeadOfficePageUserTapOnEmployersOnboardButton() {
         DashBoardHeadOfficePage.get_Employers_Onboard_Button().click();
     }
+
+    @Then("[DesHBoard Page] User tap on the logout from dashboard")
+    public void deshboardPageUserTapOnTheLogoutFromDashboard() {
+        DashBoardHeadOfficePage.get_Logout_From_Dashboard().click();
+    }
 }
 
 

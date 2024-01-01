@@ -129,9 +129,9 @@ public class adminsteps {
     @Then("[Admin Page] User validate the toast message {string}")
     public void adminPageUserValidateTheToastMessage(String actual) throws InterruptedException {
 
-            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(Action_Successfully)));
-            String expect = AdminPage.get_Action_Successfully().getText();
-            Assert.assertEquals(actual, expect);
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(Action_Successfully(actual))));
+            String expect = AdminPage.get_Action_Successfully(actual).getText();
+            Assert.assertEquals(expect,actual);
         }
     @Then("[Admin Page] User tap on approve button")
     public void adminPageUserTapOnApproveButton() throws InterruptedException {
@@ -163,7 +163,6 @@ public class adminsteps {
         rb.keyPress(KeyEvent.VK_ENTER);
         rb.keyRelease(KeyEvent.VK_ENTER);
         //ScrollVertical(get_Add_Emplyer_Button());
-        Thread.sleep(5000);
     }
 
     @Then("[Admin Page] User select the card type {string}")
@@ -218,12 +217,16 @@ public class adminsteps {
 
     @Then("[Admin Page] User verify the notification message {string}")
     public void adminPageUserVerifyTheNotificationMessage(String after) throws InterruptedException {
-        By spinnerLocator = By.cssSelector(".ant-spin.ant-spin-spinning.css-qgg3xn");
-        wait.until(ExpectedConditions.invisibilityOfElementLocated(spinnerLocator));
+//        By spinnerLocator = By.cssSelector(".ant-spin.ant-spin-spinning.css-qgg3xn");
+        //wait.until(ExpectedConditions.visibilityOfElementLocated((By) get_Action_Successfully(after));
        // wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(Action_Successfully)));
-        String actual = AdminPage.get_Action_Successfully().getText();
-        System.out.println("Actual MSG" + actual);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(Admin_Action_Successfully)));
+        String actual = AdminPage.get_Admin_Action_Successfully().getText();
+        //String actual = AdminPage.get_Action_Successfully(after).getText();
+        System.out.println("Actual MSG: " + actual);
+        System.out.println(after);
         Assert.assertEquals(actual, after);
+
     }
 
     @When("[Admin Page] User tap on Exchange house client Approvals")
@@ -462,8 +465,8 @@ public class adminsteps {
     ;
     @Then("[Admin Page] User validate the toast message {string} and bank are some in the approval")
     public void adminPageUserValidateTheToastMessageAndBankAreSomeInTheApproval(String actual) {
-            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(Action_Successfully)));
-            String expect = get_Action_Successfully().getText();
+            //wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(Action_Successfully)));
+            String expect = get_Action_Successfully(actual).getText();
             Assert.assertEquals(actual, expect);
             System.out.println(expect);
     }

@@ -52,11 +52,13 @@ public class Employeessteps {
 
 
     public static String companyTittle;
+    public static String companyID;
 
     @Then("[Employees Page] User tap on employees button")
     public void employeesPageUserTapOnEmployeesButton() throws InterruptedException {
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(Company_Tittle)));
         companyTittle = AddEmployerPages.get_Company_Tittle().getText();
+        companyID = AddEmployerPages.get_Company_Id().getText();
         companyName = companyTittle;
         System.out.println("CompanyName"+companyName);
         EmployeesPage.get_Employees().click();
@@ -176,12 +178,12 @@ public class Employeessteps {
 //            String branchEstablishmentId = establishmentsStepsHeadOffice.branchEstablishmentId;
 
         //System.out.println(branchEstablishmentId);
-        for (int j = 0; j < 5; j++) {
+        for (int j = 0; j < 1000; j++) {
             System.out.println(j);
             int randomNumber = random.nextInt(1000000000);
 
 
-            raws = new String[]{molNo + randomNumber, empCode + randomNumber, firstName, lastName, displayName + randomNumber, dob, gender.trim(), nationality.trim().replaceAll("^\\s+", ""), joiningDate, "user" + randomNumber + email, mobile + randomNumber, altenatePhone + randomNumber, homeAddress + randomNumber, homeState, homePostCode, workAddress, workState, workPostCode, PassportNo + randomNumber, passportExpiry, eid + randomNumber, eidExpiry, /*branchEstablishmentId +*/ est};
+            raws = new String[]{molNo + randomNumber, empCode + randomNumber, firstName, lastName+ randomNumber, displayName, dob, gender.trim(), nationality.trim().replaceAll("^\\s+", ""), joiningDate, "user" + randomNumber + email, mobile + randomNumber, altenatePhone + randomNumber, homeAddress + randomNumber, homeState, homePostCode, workAddress, workState, workPostCode, PassportNo + randomNumber, passportExpiry, eid + randomNumber, eidExpiry, /*branchEstablishmentId +*/ est};
             System.out.println("BranchESTID;"+branchEstablishmentId);
             //System.out.println(branchEstablishmentId);
             //System.out.println(raws[j]);
@@ -191,10 +193,11 @@ public class Employeessteps {
                 //raws[i] = raws[i].trim();
                 HSSFCell cell = dataRow.createCell(i);
                 cell.setCellValue(raws[i]);
-                System.out.println(Arrays.toString(new String[]{"RAWS" + Arrays.toString(raws)}));
+
             }
         }
         System.out.println(Arrays.toString(headers));
+        System.out.println(Arrays.toString(new String[]{"RAWS" + Arrays.toString(raws)}));
 
         randomNumbers = random.nextInt(10000);
 
@@ -351,13 +354,13 @@ public class Employeessteps {
 
         //System.out.println(branchEstablishmentId);
         int j;
-        for (j = 0; j < 5; j++) {
+        for (j = 0; j < 10; j++) {
 
             //System.out.println(j);
             int randomNumber = random.nextInt(1000000000);
 
 
-            raws = new String[]{molNo, empCode, firstName, lastName, displayName + randomNumber, dob, gender.trim(), nationality.trim().replaceAll("^\\s+", ""), joiningDate, "user" + randomNumber + email, mobile + randomNumber, altenatePhone + randomNumber, homeAddress + randomNumber, homeState, homePostCode, workAddress, workState, workPostCode, PassportNo + randomNumber, passportExpiry, eid + randomNumber, eidExpiry, /*branchEstablishmentId +*/ est};
+            raws = new String[]{molNo, empCode, firstName, lastName+randomNumber, displayName , dob, gender.trim(), nationality.trim().replaceAll("^\\s+", ""), joiningDate, "user" + randomNumber + email, mobile + randomNumber, altenatePhone + randomNumber, homeAddress + randomNumber, homeState, homePostCode, workAddress, workState, workPostCode, PassportNo + randomNumber, passportExpiry, eid + randomNumber, eidExpiry, /*branchEstablishmentId +*/ est};
             System.out.println("BranchESTID;" + branchEstablishmentId);
             //System.out.println(branchEstablishmentId);
             //System.out.println(raws[j]);
@@ -377,7 +380,7 @@ public class Employeessteps {
 
 
         // Write the workbook to an output stream
-        filePath = "D:\\Hrcms\\src\\test\\java\\document\\" + randomNumbers + ".csv";
+        filePath = "D:\\Hrcms\\src\\test\\java\\document\\" + randomNumbers + ".xlsx";
         System.out.println(filePath);
         try (FileOutputStream fileOut = new FileOutputStream(filePath)) {
             workbook.write(fileOut);

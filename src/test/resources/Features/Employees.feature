@@ -42,7 +42,7 @@ Feature: Update Profile
     And     [Add Employer] user tap on the add employer
 
   Scenario Outline: Create multiple Employees for any employer
-    Given   [Login Page] User enter the email "12205"
+    Given   [Login Page] User enter the email "1205"
     When    [Login Page] User enter the password "Password2"
     Then    [Login page] User tap on login button
     Then    [Employees Page] User tap on employees button

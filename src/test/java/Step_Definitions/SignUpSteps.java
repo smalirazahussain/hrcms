@@ -231,7 +231,7 @@ public class SignUpSteps {
     public void updateProfileUserEnterTheExpireMonth(String expmonth) throws InterruptedException {
         String current_month = currentMonth();
 
-        if (current_month == expmonth) {
+        if (current_month.equals(expmonth)) {
 
         }
 

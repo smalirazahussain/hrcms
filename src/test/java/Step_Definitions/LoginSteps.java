@@ -1,12 +1,10 @@
 package Step_Definitions;
 
 import Pages.Android.LoginPage;
-import Pages.Android.SignUpPage;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import io.cucumber.java8.Th;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -14,11 +12,10 @@ import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 
 import java.time.Duration;
-import java.util.Random;
 
 import static Hooks.Base_Class.driver;
-import static Pages.Android.LoginPage.*;
-import static Pages.Android.SignUpPage.*;
+import static Pages.Android.LoginPage.Enter_Email_Id;
+import static Pages.Android.LoginPage.Enter_Password;
 //import static Pages.Android.LoginPage.create_Account_Button;
 //import static Tests.Useful_functions.getRandomNumberLowerAndUpperBound;
 
@@ -33,7 +30,7 @@ public class LoginSteps {
 
     @Given("[Login Page] User enter the email {string}")
     public void loginPageUserEnterTheEmail(String email) {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.name(Enter_Email_Id)));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(Enter_Email_Id)));
         // Random randomGenerator = new Random();
         // int randomInt = randomGenerator.nextInt(1000);
         // LoginPage.get_Enter_Email_Id().sendKeys(email+randomInt+"@mailinator.com");

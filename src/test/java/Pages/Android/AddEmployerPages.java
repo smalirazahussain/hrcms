@@ -137,6 +137,7 @@ public class AddEmployerPages {
     public static String uploadExcel = "//*[@id=\"uploadExcel\"]";
     public static String Add_More_Documents = "button[title='Add More Documents']";
     public static String Add_New_Establishment = "#isNewEstablishment";
+    public static String Company_Id = "h5";
 
     public static WebElement get_Country(String country) {
         return Base_Class.driver.findElement(By.xpath(Country(country)));
@@ -313,5 +314,9 @@ public class AddEmployerPages {
 
     public static WebElement get_Add_New_Establishment() {
         return Base_Class.driver.findElement(By.cssSelector(Add_New_Establishment));
+    }
+
+    public static WebElement get_Company_Id() {
+        return Base_Class.driver.findElement(By.cssSelector(Company_Id));
     }
 }

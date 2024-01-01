@@ -17,6 +17,7 @@ public class RequestPage {
     Duration timeout = Duration.ofSeconds(30);
     WebDriverWait wait = new WebDriverWait(driver, timeout);
 
+
     public static String Request = "/requests";
     public static String Mol_Num = "(//span[.='MOL Number'])[1]//following-sibling::*";
     public static String Passport_No = "(//span[.=\"Passport Number\"])[1]//following-sibling::*";
@@ -26,7 +27,10 @@ public class RequestPage {
     public static String Est_Id(String establishmentNo) {
         return "//span[text()='"+establishmentNo+"']";
     }
-
+    private static String Approval_Types(String description) {
+        return "//div[normalize-space()='"+description+"']";
+    }
+    public static String Loading ="div[class='ant-spin ant-spin-lg ant-spin-spinning']";
 
 
     public static WebElement get_Request() {
@@ -66,4 +70,13 @@ public class RequestPage {
     }
 
 
+    public static WebElement get_Approval_Types(String description) {
+        return Base_Class.driver.findElement(By.xpath(Approval_Types(description)));
+    }
+
+
+    public static WebElement get_Loading() {
+
+        return Base_Class.driver.findElement(By.cssSelector(Loading));
+    }
 }

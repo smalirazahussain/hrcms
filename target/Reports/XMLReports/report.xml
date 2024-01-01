@@ -1,2 +1,256 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<testsuite errors="0" failures="0" name="io.cucumber.core.plugin.JUnitFormatter" skipped="0" time="0.064"/>
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="Cucumber" time="186.17" tests="4" skipped="0" failures="4" errors="0">
+<testcase classname="Branches" name="User add new branch to the Head office add approve by itself and admin" time="58.613">
+<failure/>
+<system-out><![CDATA[
+Given [Login Head Office Page] User enter the URL "https://exchangehouse.getthelingo.com/".passed
+When [Login Head Office Page] User enter email id "dubaiexchange@mailinator.com".passed
+Then [Login Head Office Page] User enter the Password "Password1"...........passed
+And [Login Head Office Page] User tap on the login button...................passed
+And [Dashboard Head Office Page] User tap on the branches button............passed
+Then [Branch Head Office Page] User tap on the add branch button............passed
+When [Branch Head Office Page] User enter branch name "Branch"..............passed
+When [Branch Head Office Page] User enter the branch location "dubai".......passed
+Then [Branch Head Office Page] User enter the email address "UKbranch"......passed
+And [Branch Head Office Page] User enter the Password "Password1"...........passed
+When [Branch Head Office Page] User enter the confirm Password "Password1"..passed
+And [Branch Head Office Page] User enter branch phone no "971"..............passed
+Then [Branch Head Office Page] User tap on add branch button................passed
+And [Branch Head Office Page] User validate toast message "Branch has been created and has been sent for further approval.".passed
+Then [OnBoard Approval Head Office Page] User tap onboard approval..........passed
+And [OnBoard Approval Head Office Page] User tap on view button.............passed
+Then [Admin Page] Open the admin tab "https://admin.getthelingo.com"........undefined
+Then [Admin Page] User enter the  email "admin@admin.com"...................skipped
+When [Admin Page] User enter the Password "12345678"........................skipped
+And [Admin Page] User tap on login page.....................................skipped
+When [Admin Page] User tap on onboard Approvals.............................skipped
+Then [Admin Page] User tap on Exchange House Clients button.................skipped
+Then [Admin Page] User select the exchange house "".........................skipped
+And [Admin Page] User tap on view button....................................skipped
+Then [Admin Page] Admin verification the branch and then approve............skipped
+]]></system-out>
+</testcase>
+<testcase classname="Branches" name="Exchange house create a branch and then create multiple Employee in exchange house branch - Example #1.1" time="61.058">
+<failure/>
+<system-out><![CDATA[
+Given [Login Head Office Page] User enter the URL "https://exchangehouse.getthelingo.com/".skipped
+When [Login Head Office Page] User enter email id "dubaiexchange@mailinator.com".passed
+Then [Login Head Office Page] User enter the Password "Password1"...........passed
+And [Login Head Office Page] User tap on the login button...................passed
+And [Dashboard Head Office Page] User tap on the branches button............passed
+Then [Branch Head Office Page] User tap on the add branch button............passed
+When [Branch Head Office Page] User enter branch name "Branch"..............passed
+When [Branch Head Office Page] User enter the branch location "dubai".......passed
+Then [Branch Head Office Page] User enter the email address "UKbranch"......passed
+And [Branch Head Office Page] User enter the Password "Password1"...........passed
+When [Branch Head Office Page] User enter the confirm Password "Password1"..passed
+And [Branch Head Office Page] User enter branch phone no "971"..............passed
+Then [Branch Head Office Page] User tap on add branch button................passed
+And [Branch Head Office Page] User validate toast message "Branch has been created and has been sent for further approval.".passed
+Then [OnBoard Approval Head Office Page] User tap onboard approval..........passed
+And [OnBoard Approval Head Office Page] User tap on view button.............passed
+Then [Admin Page] Open the admin tab "https://admin.getthelingo.com"........undefined
+Then [Admin Page] User enter the  email "admin@admin.com"...................skipped
+When [Admin Page] User enter the Password "12345678"........................skipped
+And [Admin Page] User tap on login page.....................................skipped
+When [Admin Page] User tap on onboard Approvals.............................skipped
+Then [Admin Page] User tap on Exchange House Clients button.................skipped
+Then [Admin Page] User select the exchange house "".........................skipped
+And [Admin Page] User tap on view button....................................skipped
+Then [Admin Page] Admin verification the branch and then approve............skipped
+Given [Login Head Office Page] User enter the URL "http://10.10.5.100:8004".skipped
+Then [Web Portal Page] User enter the user name "admin".....................skipped
+Then [Web Portal Page] User enter the Password "admin"......................skipped
+Then [Web Portal Page] User tap on the login button.........................skipped
+When [Web Portal Page] User tap on the side manu "Corporate"................skipped
+When [Web Portal Page] User tap on the side manu "Manage Company"...........skipped
+When [Web Portal Page] User enter the branch name ""........................skipped
+Then [Web Portal Page] User tap edit button.................................skipped
+When [Web Portal Page] User tap on the employer product.....................skipped
+Then [Web Portal Page] User select the product ""...........................skipped
+Then [Web Portal Page] User select the effective from date "01052022".......skipped
+Then [Web Portal Page] User select the effective to date "01052026".........skipped
+Then [Web Portal Page] User tap on add button...............................skipped
+Then [Web Portal Page] User tap on Update employer button...................skipped
+Then [Exchange House Establishments Page] User tap on establishments module.skipped
+Then [Exchange House Establishments Page] User enter branch name............skipped
+Then [Exchange House Manage Employees Page] User tap on Manage employees button.skipped
+And [Employees Page] User create a multiple data for the employer "Mol12345""1""User""1""User""05/05/1978"" M "" BD""05/05/1978""@mailinator.com""971""971""Address""1""00001""2""2""2""Passport""10/05/2029""10000000000""10/05/2029""".skipped
+And [Employees Page] User upload a bulk employees file ""...................skipped
+Then [Request Page] User tap on the view button.............................skipped
+And [Request Page] User tap on the Approve button...........................skipped
+Then [Admin Page] Open the admin tab "https://admin.getthelingo.com/".......skipped
+When [Admin Page] User tap on Exchange house client Approvals...............skipped
+Then [Admin Page] User tap on approve button................................skipped
+Then [Admin Page] User Tap om the exchange house browse button..............skipped
+And [Admin Page] User Tap on the approve button.............................skipped
+Then [Admin Page] User verify the notification message "Action Successfully".skipped
+]]></system-out>
+</testcase>
+<testcase classname="Branches" name="ExchangeHouse creates a statement request for approval by the branch employee, then the request is approved and further approved by the admin" time="33.52">
+<failure type="org.openqa.selenium.NoSuchElementException" message="no such element: Unable to locate element: {&quot;method&quot;:&quot;css selector&quot;,&quot;selector&quot;:&quot;div[class='user-detail'] h3&quot;}
+  (Session info: chrome=119.0.6045.200)
+For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
+Build info: version: '4.15.0', revision: '1d14b5521b'
+System info: os.name: 'Windows 10', os.arch: 'amd64', os.version: '10.0', java.version: '17.0.4.1'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Command: [69e17c8d2c655648edfff89860ef42e6, findElement {using=css selector, value=div[class='user-detail'] h3}]
+Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 119.0.6045.200, chrome: {chromedriverVersion: 119.0.6045.105 (38c72552c5e..., userDataDir: C:\Users\ALIRAZ~1\AppData\L...}, fedcm:accounts: true, goog:chromeOptions: {debuggerAddress: localhost:57471}, networkConnectionEnabled: false, pageLoadStrategy: normal, platformName: windows, proxy: Proxy(), se:cdp: ws://localhost:57471/devtoo..., se:cdpVersion: 119.0.6045.200, setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:extension:minPinLength: true, webauthn:extension:prf: true, webauthn:virtualAuthenticators: true}
+Session ID: 69e17c8d2c655648edfff89860ef42e6">
+<![CDATA[org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element: {"method":"css selector","selector":"div[class='user-detail'] h3"}
+  (Session info: chrome=119.0.6045.200)
+For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
+Build info: version: '4.15.0', revision: '1d14b5521b'
+System info: os.name: 'Windows 10', os.arch: 'amd64', os.version: '10.0', java.version: '17.0.4.1'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Command: [69e17c8d2c655648edfff89860ef42e6, findElement {using=css selector, value=div[class='user-detail'] h3}]
+Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 119.0.6045.200, chrome: {chromedriverVersion: 119.0.6045.105 (38c72552c5e..., userDataDir: C:\Users\ALIRAZ~1\AppData\L...}, fedcm:accounts: true, goog:chromeOptions: {debuggerAddress: localhost:57471}, networkConnectionEnabled: false, pageLoadStrategy: normal, platformName: windows, proxy: Proxy(), se:cdp: ws://localhost:57471/devtoo..., se:cdpVersion: 119.0.6045.200, setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:extension:minPinLength: true, webauthn:extension:prf: true, webauthn:virtualAuthenticators: true}
+Session ID: 69e17c8d2c655648edfff89860ef42e6
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:499)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:480)
+	at org.openqa.selenium.remote.codec.w3c.W3CHttpResponseCodec.createException(W3CHttpResponseCodec.java:200)
+	at org.openqa.selenium.remote.codec.w3c.W3CHttpResponseCodec.decode(W3CHttpResponseCodec.java:133)
+	at org.openqa.selenium.remote.codec.w3c.W3CHttpResponseCodec.decode(W3CHttpResponseCodec.java:52)
+	at org.openqa.selenium.remote.HttpCommandExecutor.execute(HttpCommandExecutor.java:191)
+	at org.openqa.selenium.remote.service.DriverCommandExecutor.invokeExecute(DriverCommandExecutor.java:200)
+	at org.openqa.selenium.remote.service.DriverCommandExecutor.execute(DriverCommandExecutor.java:175)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:607)
+	at org.openqa.selenium.remote.ElementLocation$ElementFinder$2.findElement(ElementLocation.java:165)
+	at org.openqa.selenium.remote.ElementLocation.findElement(ElementLocation.java:59)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:364)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:358)
+	at Pages.Android.AddEmployerPages.get_Company_Tittle(AddEmployerPages.java:273)
+	at Step_Definitions_Head_Ofiice.DashBoardStepsHeadOffice.dashboardHeadOfficePageUserTapOnTheBranchesButton(DashBoardStepsHeadOffice.java:32)
+	at ✽.[Dashboard Head Office Page] User tap on the branches button(file:///D:/Hrcms/src/test/resources/exchangeHouseFeatures/branches.feature:107)
+]]>
+</failure>
+<system-out><![CDATA[
+Given [Login Head Office Page] User enter the URL "https://exchangehouse.getthelingo.com/".passed
+When [Login Head Office Page] User enter email id "dubaiexchange@kamelpay.com".passed
+Then [Login Head Office Page] User enter the Password "Password1"...........passed
+And [Login Head Office Page] User tap on the login button...................passed
+And [Dashboard Head Office Page] User tap on the branches button............failed
+When [Branch Head Office Page] User search the branch "Branch90107".........skipped
+Then [Branch Head Office Page] User tap on the view employees button........skipped
+Then [Branch Head Office Page] User tap on the eye button...................skipped
+When [Branch Head Office Page] User tap on the statement request button.....skipped
+And [Branch Head Office Page] User validate the message "This statement request has 15 AED charges, do you want to continue?" abd click ont the continue button.skipped
+Then [Branch Head Office Page] User validate the top-up message "Approval is processed for further actions".skipped
+Then [OnBoard Approval Head Office Page] User tap onboard approval..........skipped
+Then [OnBoard Approval Head Office Page] User tap onboard approval for statement request.skipped
+And [OnBoard Approval Head Office Page] User tap on view button and approve by exchangeHouse.skipped
+Then [Admin Page] Open the admin tab "https://admin.getthelingo.com"........skipped
+Then [Admin Page] User enter the  email "admin@admin.com"...................skipped
+When [Admin Page] User enter the Password "12345678"........................skipped
+And [Admin Page] User tap on login page.....................................skipped
+When [Admin Page] User tap on onboard Approvals.............................skipped
+Then [Admin Page] User tap on Exchange House Clients button.................skipped
+Then [Admin Page] User select the exchange house "".........................skipped
+And [Admin Page] User tap on view button....................................skipped
+Then [Admin Page] Admin verification the branch and then approve............skipped
+]]></system-out>
+</testcase>
+<testcase classname="Branches" name="ExchangeHouse creates a new employer, then the request is approved and further approved by the admin" time="32.717">
+<failure type="org.openqa.selenium.NoSuchElementException" message="no such element: Unable to locate element: {&quot;method&quot;:&quot;css selector&quot;,&quot;selector&quot;:&quot;div[class='user-detail'] h3&quot;}
+  (Session info: chrome=119.0.6045.200)
+For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
+Build info: version: '4.15.0', revision: '1d14b5521b'
+System info: os.name: 'Windows 10', os.arch: 'amd64', os.version: '10.0', java.version: '17.0.4.1'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Command: [98104d88c5b9b01862eb16dd5375577d, findElement {using=css selector, value=div[class='user-detail'] h3}]
+Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 119.0.6045.200, chrome: {chromedriverVersion: 119.0.6045.105 (38c72552c5e..., userDataDir: C:\Users\ALIRAZ~1\AppData\L...}, fedcm:accounts: true, goog:chromeOptions: {debuggerAddress: localhost:57495}, networkConnectionEnabled: false, pageLoadStrategy: normal, platformName: windows, proxy: Proxy(), se:cdp: ws://localhost:57495/devtoo..., se:cdpVersion: 119.0.6045.200, setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:extension:minPinLength: true, webauthn:extension:prf: true, webauthn:virtualAuthenticators: true}
+Session ID: 98104d88c5b9b01862eb16dd5375577d">
+<![CDATA[org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element: {"method":"css selector","selector":"div[class='user-detail'] h3"}
+  (Session info: chrome=119.0.6045.200)
+For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
+Build info: version: '4.15.0', revision: '1d14b5521b'
+System info: os.name: 'Windows 10', os.arch: 'amd64', os.version: '10.0', java.version: '17.0.4.1'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Command: [98104d88c5b9b01862eb16dd5375577d, findElement {using=css selector, value=div[class='user-detail'] h3}]
+Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 119.0.6045.200, chrome: {chromedriverVersion: 119.0.6045.105 (38c72552c5e..., userDataDir: C:\Users\ALIRAZ~1\AppData\L...}, fedcm:accounts: true, goog:chromeOptions: {debuggerAddress: localhost:57495}, networkConnectionEnabled: false, pageLoadStrategy: normal, platformName: windows, proxy: Proxy(), se:cdp: ws://localhost:57495/devtoo..., se:cdpVersion: 119.0.6045.200, setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:extension:minPinLength: true, webauthn:extension:prf: true, webauthn:virtualAuthenticators: true}
+Session ID: 98104d88c5b9b01862eb16dd5375577d
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:499)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:480)
+	at org.openqa.selenium.remote.codec.w3c.W3CHttpResponseCodec.createException(W3CHttpResponseCodec.java:200)
+	at org.openqa.selenium.remote.codec.w3c.W3CHttpResponseCodec.decode(W3CHttpResponseCodec.java:133)
+	at org.openqa.selenium.remote.codec.w3c.W3CHttpResponseCodec.decode(W3CHttpResponseCodec.java:52)
+	at org.openqa.selenium.remote.HttpCommandExecutor.execute(HttpCommandExecutor.java:191)
+	at org.openqa.selenium.remote.service.DriverCommandExecutor.invokeExecute(DriverCommandExecutor.java:200)
+	at org.openqa.selenium.remote.service.DriverCommandExecutor.execute(DriverCommandExecutor.java:175)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:607)
+	at org.openqa.selenium.remote.ElementLocation$ElementFinder$2.findElement(ElementLocation.java:165)
+	at org.openqa.selenium.remote.ElementLocation.findElement(ElementLocation.java:59)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:364)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:358)
+	at Pages.Android.AddEmployerPages.get_Company_Tittle(AddEmployerPages.java:273)
+	at Step_Definitions_Head_Ofiice.DashBoardStepsHeadOffice.dashboardHeadOfficePageUserTapOnTheBranchesButton(DashBoardStepsHeadOffice.java:32)
+	at ✽.[Dashboard Head Office Page] User tap on the branches button(file:///D:/Hrcms/src/test/resources/exchangeHouseFeatures/branches.feature:135)
+]]>
+</failure>
+<system-out><![CDATA[
+Given [Login Head Office Page] User enter the URL "https://exchangehouse.getthelingo.com/".skipped
+When [Login Head Office Page] User enter email id "dubaiexchange@kamelpay.com".passed
+Then [Login Head Office Page] User enter the Password "Password1"...........passed
+And [Login Head Office Page] User tap on the login button...................passed
+And [Dashboard Head Office Page] User tap on the branches button............failed
+Then [Branch Head Office Page] User tap on the add branch button............skipped
+When [Branch Head Office Page] User enter branch name "Branch"..............skipped
+When [Branch Head Office Page] User enter the branch location "dubai".......skipped
+Then [Branch Head Office Page] User enter the email address "UKbranch"......skipped
+And [Branch Head Office Page] User enter the Password "Password1"...........skipped
+When [Branch Head Office Page] User enter the confirm Password "Password1"..skipped
+And [Branch Head Office Page] User enter branch phone no "971"..............skipped
+Then [Branch Head Office Page] User tap on add branch button................skipped
+And [Branch Head Office Page] User validate toast message "Branch has been created and has been sent for further approval.".skipped
+Then [OnBoard Approval Head Office Page] User tap onboard approval..........skipped
+And [OnBoard Approval Head Office Page] User tap on view button.............skipped
+Then [Admin Page] Open the admin tab "https://admin.getthelingo.com"........skipped
+Then [Admin Page] User enter the  email "admin@admin.com"...................skipped
+When [Admin Page] User enter the Password "12345678"........................skipped
+And [Admin Page] User tap on login page.....................................skipped
+When [Admin Page] User tap on onboard Approvals.............................skipped
+Then [Admin Page] User tap on Exchange House Clients button.................skipped
+Then [Admin Page] User select the exchange house "".........................skipped
+And [Admin Page] User tap on view button....................................skipped
+Then [Admin Page] Admin verification the branch and then approve............skipped
+Then [Dashboard Head Office Page] User tap on employers onboard button......skipped
+When [Branch Head Office Page] User search the branch they are created ""...skipped
+Then [Branch Head Office Page] User tap on the add employer button..........skipped
+When [Sign Up] User enter the name "dubaicompany"...........................skipped
+Then [Sign Up] User enter the email "email".................................skipped
+Then [Sign Up] User enter the branch employer phone no "12345678"...........skipped
+When [Login Page] User enter the password "Password1".......................skipped
+Then [Sign Up] User enter the confirm password "Password1"..................skipped
+Then [Update Profile] User enter the establishment id ""....................skipped
+And [Update Profile] User the address "Company Address "....................skipped
+Then [Update Profile] User enter the building no "".........................skipped
+And [Update Profile] Select the branch state "Dubai"........................skipped
+When [Update Profile] User enter the city "Dubai"...........................skipped
+Then [Update Profile] User select the Payroll type"WPS".....................skipped
+And [Update Profile] User select the FreeZone...............................skipped
+And [Update Profile] User tap on the add more document......................skipped
+Then [Update Profile] User enter the document name "Trade License"..........skipped
+Then [Update Profile] User enter the year 2017..............................skipped
+And [Update Profile] User enter the month "Dec".............................skipped
+Then [Update Profile] User enter the day "3"................................skipped
+And [Update Profile] User enter the expire year 2030........................skipped
+Then [Update Profile] User enter the expire month "Oct".....................skipped
+And [Update Profile] User enter the expire day "31".........................skipped
+Then [Update Profile] User enter the Trade License Number "TLNO"............skipped
+Then [Update Profile] User tap on browse file...............................skipped
+And [Update Profile] User enter the submit button...........................skipped
+Then [Update Profile] Validate the onboard approval message "On Board request has been sent for further approval".skipped
+Then [OnBoard Approval Head Office Page] User tap Clients OnBoard...........skipped
+When [Branch Head Office Page] User search the branch  ""...................skipped
+Then [Admin Page] Open the admin tab "http://admin.getthelingo.com".........skipped
+Then [Admin Page] User verify establishment id for the branch company and approve by admin.skipped
+And [Admin Page] User verify the employer approve by the admin "Action Successfully".skipped
+]]></system-out>
+</testcase>
+</testsuite>

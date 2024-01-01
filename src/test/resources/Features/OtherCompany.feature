@@ -3,7 +3,7 @@ Feature: OtherCompany
 
   @Update @UpdateProfile1
   Scenario: Add new employer
-    Given   [Login Page] User enter the email "12718"
+    Given   [Login Page] User enter the email "12965"
     When    [Login Page] User enter the password "Password1"
     Then    [Login page] User tap on login button
     Then    [Other Company] User tap on my other companies

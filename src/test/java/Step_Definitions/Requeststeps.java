@@ -5,6 +5,8 @@ import Pages.Android.RequestPage;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
@@ -14,9 +16,8 @@ import java.time.Duration;
 import java.util.Objects;
 
 import static Hooks.Base_Class.driver;
-import static Pages.Android.AdminPage.Approval_Ok;
-import static Pages.Android.AdminPage.Approve_Button;
-import static Pages.Android.RequestPage.Mol_Num;
+import static Pages.Android.AdminPage.*;
+import static Pages.Android.RequestPage.*;
 import static Step_Definitions.AddEmployerSteps.*;
 import static Step_Definitions.UpdateProfile.first14;
 
@@ -31,8 +32,8 @@ public class Requeststeps {
     @And("[Request Page] User tap on the request button")
     public void requestPageUserTapOnTheRequestButton() throws InterruptedException {
        try {
-           wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("ant-spin-spinning")));
-           //wait.until(ExpectedConditions.elementToBeClickable(By.id(Request)));
+           //wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("ant-spin-spinning")));
+           wait.until(ExpectedConditions.elementToBeClickable(By.id(Request)));
            RequestPage.get_Request().click();
        }
        catch(Exception e) {
@@ -47,9 +48,14 @@ public class Requeststeps {
        //Thread.sleep(7000);
 
 
-        //wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector("uploading-progress-selector")));
-        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector("uploading-progress-selector")));
-        RequestPage.get_View().click();
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(Loading)));
+        WebElement viewButton = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(View)));
+//        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", viewButton);
+//        viewButton.click();
+        Actions actions = new Actions(driver);
+        actions.moveToElement(viewButton).click().perform();
+        //RequestPage.get_View().click();
+
        /* try {
             //wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(View)));
             //Thread.sleep(10000);
@@ -156,6 +162,36 @@ public class Requeststeps {
             AdminPage.get_Approval_Ok().click();
         }
         System.out.println(EmpMol + Mol_Num + Passportno);
+    }
+
+    @Then("[Request Page] User verify the approval description topic {string}")
+    public void requestPageUserVerifyTheApprovalDescriptionTopic(String description) {
+        String actualDescription = RequestPage.get_Approval_Types(description).getText();
+        Assert.assertEquals(actualDescription,description);
+        System.out.println("Description:"+actualDescription);
+    }
+
+    @And("[Request Page] User verify the approval status topic {string}")
+    public void requestPageUserVerifyTheApprovalStatusTopic(String approvalStatus) {
+        String actualApprovalStatus = RequestPage.get_Approval_Types(approvalStatus).getText();
+        Assert.assertEquals(actualApprovalStatus,approvalStatus);
+        System.out.println("Approval Status:"+actualApprovalStatus);
+    }
+
+    @And("[Request Page] User verify the approval sent to the admin{string}")
+    public void requestPageUserVerifyTheApprovalSentToTheAdmin(String approvalStatus) {
+        String actualApprovalStatus = RequestPage.get_Approval_Types(approvalStatus).getText();
+        Assert.assertEquals(actualApprovalStatus,approvalStatus);
+        System.out.println("Approval Status:"+actualApprovalStatus);
+    }
+
+    @And("[Employees Page] User verify the message {string}")
+    public void employeesPageUserVerifyTheMessage(String after) {
+
+        String actual = AdminPage.get_Action_Successfully(after).getText();
+        System.out.println("Actual MSG: " + actual);
+        System.out.println(after);
+        Assert.assertEquals(actual, after);
     }
 }
 

@@ -1,17 +1,13 @@
 package Pages.Android;
 
 import Hooks.Base_Class;
-import io.cucumber.java8.Bs;
-import org.codehaus.jackson.map.MapperConfig;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
-import java.util.BitSet;
-
-import static Hooks.Base_Class.driver;
+import java.util.List;
 
 
 public class SubAdminPages {
@@ -34,10 +30,20 @@ public class SubAdminPages {
         return "input[value='"+role+"']";
     }
     public static String Add_Sub_Admin = "button[title='Add Team Member'][type='submit']";
-    public static String Submit = "div[class='ant-row ant-form-item mb-0'] span:nth-child(2)";
+    public static String Submit = "button[type='submit']";
+    public static String Confirm_Password ="confirmPassword";
+    public static String User_Manage_Access = "//h1[text()='Manage Access']";
+    public static String All_Check_Boxes="input.ant-checkbox-input";
+    public static String Team_Member_Search = "input[placeholder=\"Search\"]";
+    public static  String Manage_Access_Button = "button[title=\"Manage Access\"]";
+    public static String Module_List = ".form-container > .c-section > .list > .list-item  > .text.flex02";
     public static String Error_Email(String error){
         return "//div[normalize-space()='"+error+"']";
     }
+    public static String I_Am_Not_The_Primary_User ="div:nth-child(1) > p";
+    public static String Login_Company_Id = "#userId";
+    public static String Team_Member_Module_List = ".side-menu-list-item";
+    public static String Employees_Creations = "#add-appointment-form_EMPLOYEES > label";
 
 
     public static WebElement get_Sub_Admin_Button(){
@@ -76,5 +82,45 @@ public class SubAdminPages {
 
     public static WebElement get_Error_Email(String error) {
         return Base_Class.driver.findElement(By.xpath(Error_Email(error)));
+    }
+
+    public static WebElement get_Confirm_Password() {
+        return Base_Class.driver.findElement(By.name(Confirm_Password));
+    }
+
+    public static WebElement get_User_Manage_Access() {
+        return Base_Class.driver.findElement(By.xpath(User_Manage_Access));
+    }
+
+    public static List<WebElement> get_All_Check_Boxes() {
+        return Base_Class.driver.findElements(By.cssSelector(All_Check_Boxes));
+    }
+
+    public static WebElement get_Team_Member_Search() {
+        return Base_Class.driver.findElement(By.cssSelector(Team_Member_Search));
+    }
+
+    public static WebElement get_Manage_Access_Button() {
+        return Base_Class.driver.findElement(By.cssSelector(Manage_Access_Button));
+    }
+
+    public static List<WebElement> get_Module_List() {
+        return Base_Class.driver.findElements(By.cssSelector(Module_List));
+    }
+
+    public static WebElement get_I_Am_Not_The_Primary_User() {
+        return Base_Class.driver.findElement(By.cssSelector(I_Am_Not_The_Primary_User));
+    }
+
+    public static WebElement get_Login_Company_Id() {
+        return Base_Class.driver.findElement(By.cssSelector(Login_Company_Id));
+    }
+
+    public static List<WebElement> get_Team_Member_Module_List() {
+        return Base_Class.driver.findElements(By.cssSelector(Team_Member_Module_List));
+    }
+
+    public static List<WebElement> get_Employees_Creations() {
+        return Base_Class.driver.findElements(By.cssSelector(Employees_Creations));
     }
 }
