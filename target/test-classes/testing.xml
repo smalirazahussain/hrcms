@@ -1,0 +1,8 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Hrcms" parallel="tests">
+    <test name="Test">
+        <classes>
+            <class name="cucumberTestRunner"/>
+        </classes>
+    </test>
+</suite>

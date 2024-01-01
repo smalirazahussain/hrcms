@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="Cucumber" time="99.666" tests="1" skipped="0" failures="1" errors="0">
+<testcase classname="AddEmployer" name="Create multiple Employee - Example #1.1" time="99.431">
+<failure type="org.openqa.selenium.ElementNotInteractableException" message="element not interactable
+  (Session info: chrome=120.0.6099.71)
+Build info: version: '4.15.0', revision: '1d14b5521b'
+System info: os.name: 'Windows 10', os.arch: 'amd64', os.version: '10.0', java.version: '17.0.4.1'
+Driver info: org.openqa.selenium.remote.RemoteWebDriver
+Command: [b324bc08972bc7ed3ce887bbdf2f20d2, clickElement {id=6B3B8943CE3F589F9DF9C8D84F867D7D_element_315}]
+Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 120.0.6099.71, chrome: {chromedriverVersion: 120.0.6099.71 (9729082fe617..., userDataDir: C:\Users\ALIRAZ~1\AppData\L...}, fedcm:accounts: true, goog:chromeOptions: {debuggerAddress: localhost:62361}, networkConnectionEnabled: false, pageLoadStrategy: normal, platformName: windows, proxy: Proxy(), se:bidiEnabled: false, se:cdp: ws://192.168.105.10:4444/se..., se:cdpVersion: 120.0.6099.71, setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:extension:minPinLength: true, webauthn:extension:prf: true, webauthn:virtualAuthenticators: true}
+Element: [[RemoteWebDriver: chrome on windows (b324bc08972bc7ed3ce887bbdf2f20d2)] -&gt; xpath: //div[contains(@class,'btn-group')]//button[contains(@title,'Approve')]]
+Session ID: b324bc08972bc7ed3ce887bbdf2f20d2">
+<![CDATA[org.openqa.selenium.ElementNotInteractableException: element not interactable
+  (Session info: chrome=120.0.6099.71)
+Build info: version: '4.15.0', revision: '1d14b5521b'
+System info: os.name: 'Windows 10', os.arch: 'amd64', os.version: '10.0', java.version: '17.0.4.1'
+Driver info: org.openqa.selenium.remote.RemoteWebDriver
+Command: [b324bc08972bc7ed3ce887bbdf2f20d2, clickElement {id=6B3B8943CE3F589F9DF9C8D84F867D7D_element_315}]
+Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 120.0.6099.71, chrome: {chromedriverVersion: 120.0.6099.71 (9729082fe617..., userDataDir: C:\Users\ALIRAZ~1\AppData\L...}, fedcm:accounts: true, goog:chromeOptions: {debuggerAddress: localhost:62361}, networkConnectionEnabled: false, pageLoadStrategy: normal, platformName: windows, proxy: Proxy(), se:bidiEnabled: false, se:cdp: ws://192.168.105.10:4444/se..., se:cdpVersion: 120.0.6099.71, setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:extension:minPinLength: true, webauthn:extension:prf: true, webauthn:virtualAuthenticators: true}
+Element: [[RemoteWebDriver: chrome on windows (b324bc08972bc7ed3ce887bbdf2f20d2)] -> xpath: //div[contains(@class,'btn-group')]//button[contains(@title,'Approve')]]
+Session ID: b324bc08972bc7ed3ce887bbdf2f20d2
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:499)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:480)
+	at org.openqa.selenium.remote.codec.w3c.W3CHttpResponseCodec.createException(W3CHttpResponseCodec.java:200)
+	at org.openqa.selenium.remote.codec.w3c.W3CHttpResponseCodec.decode(W3CHttpResponseCodec.java:133)
+	at org.openqa.selenium.remote.codec.w3c.W3CHttpResponseCodec.decode(W3CHttpResponseCodec.java:52)
+	at org.openqa.selenium.remote.HttpCommandExecutor.execute(HttpCommandExecutor.java:191)
+	at org.openqa.selenium.remote.TracedCommandExecutor.execute(TracedCommandExecutor.java:51)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:607)
+	at org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:224)
+	at org.openqa.selenium.remote.RemoteWebElement.click(RemoteWebElement.java:77)
+	at Step_Definitions.adminsteps.adminPageUserTapOnApproveButton(adminsteps.java:138)
+	at ✽.[Admin Page] User tap on approve button(file:///D:/Hrcms/src/test/resources/Features/Addemployer.feature:1210)
+]]>
+</failure>
+<system-out><![CDATA[
+Given [Login Page] User enter the email "12982".............................passed
+When [Login Page] User enter the password "Password1".......................passed
+Then [Login page] User tap on login button..................................passed
+Then [Employees Page] User tap on employees button..........................passed
+And [Employees Page] User create a multiple data for the employer "Mol12345""1""User""1""User""05/05/1978"" M "" BD""05/05/1978""@mailinator.com""971""971""Address""1""00001""2""2""2""Passport""10/05/2029""10000000000""10/05/2029""12345654323456543".passed
+And [Employees Page] User upload a bulk employees file ""...................passed
+And [Request Page] User tap on the request button...........................passed
+Then [Request Page] User tap on the view button.............................passed
+And [Request Page] User tap on the Approve button...........................passed
+Then [Admin Page] Open the admin tab "https://admin.getthelingo.com/".......passed
+And [Admin Page] User tap on login page.....................................passed
+Then [Admin Page] User enter the  email "admin@admin.com"...................passed
+When [Admin Page] User enter the Password "12345678"........................passed
+When [Admin Page] User tap on client Approvals..............................passed
+Then [Admin Page] User enter the company name...............................passed
+And [Admin Page] User tap on view button....................................passed
+Then [Admin Page] User tap on approve button................................failed
+Then [Admin Page] User Tap om the browse button.............................skipped
+Then [Admin Page] User select the card type "PayD"..........................skipped
+Then [Admin Page] User tap No other bank employees in given file............skipped
+And [Admin Page] User Tap on the approve button.............................skipped
+Then [Admin Page] User verify the notification message "Action Successfully".skipped
+]]></system-out>
+</testcase>
+</testsuite>
