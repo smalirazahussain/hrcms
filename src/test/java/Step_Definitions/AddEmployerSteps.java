@@ -202,16 +202,18 @@ public class AddEmployerSteps<Save_mol> {
         //wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(date_select(isDay))));
         AddEmployerPages.get_date_of_joining_select(isDay).click();
     }
-
+    public static String employeePhoneNO;
     @And("[Add Employer] user enter mobile no {string}")
     public void addEmployerUserEnterMobileNo(String mobcode) {
-        long mobno = (long) ((Math.random() * 90000000000L));
+        long mobno = (long) ((Math.random() * 9000000L));
         AddEmployerPages.get_Mobile_No().sendKeys(mobcode + mobno);
+        employeePhoneNO= mobcode + mobno;
+        System.out.println("User Phone No:"+employeePhoneNO);
     }
 
     @Then("[Add Employer] user enter  alternate mobile no {string}")
     public void addEmployerUserEnterAlternateMobileNo(String altermobno) throws InterruptedException {
-        AddEmployerPages.get_Alternate_Mobile_No().sendKeys(altermobno);
+        AddEmployerPages.get_Alternate_Mobile_No().sendKeys(employeePhoneNO);
     }
 
     @And("[Add Employer] user tap on the add employer")

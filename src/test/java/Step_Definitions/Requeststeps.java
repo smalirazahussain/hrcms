@@ -189,6 +189,7 @@ public class Requeststeps {
     public void employeesPageUserVerifyTheMessage(String after) {
 
         String actual = AdminPage.get_Action_Successfully(after).getText();
+        //wait.until(ExpectedConditions.elementToBeClickable(actual));
         System.out.println("Actual MSG: " + actual);
         System.out.println(after);
         Assert.assertEquals(actual, after);

@@ -44,6 +44,7 @@ public class SubAdminPages {
     public static String Login_Company_Id = "#userId";
     public static String Team_Member_Module_List = ".side-menu-list-item";
     public static String Employees_Creations = "#add-appointment-form_EMPLOYEES > label";
+    public static String Employee_Module="div:nth-child(3) >ul >li >div:nth-child(1)";
 
 
     public static WebElement get_Sub_Admin_Button(){
@@ -122,5 +123,9 @@ public class SubAdminPages {
 
     public static List<WebElement> get_Employees_Creations() {
         return Base_Class.driver.findElements(By.cssSelector(Employees_Creations));
+    }
+
+    public static WebElement get_Employee_Module() {
+        return Base_Class.driver.findElement(By.cssSelector(Employee_Module));
     }
 }

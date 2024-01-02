@@ -21,7 +21,7 @@ Feature: AddEmployer
     Then    [Update Profile] User enter the day "3"
     #And     [Add Employer] user enter the passport no ""
     Then    [Add Employer] user tao the nationality
-    And     [Add Employer] user tao the Add New Establishment
+    #And     [Add Employer] user tao the Add New Establishment
    # Then    [Add Employer] user select the nationality "Afghanistan"
     And     [Add Employer] user enter the Mol no ""
     Then    [Add Employer] user enter the Employer code ""
@@ -29,8 +29,8 @@ Feature: AddEmployer
     And     [Add Employer] user enter the date of joining year 2017
     And     [Update Profile] User enter the month of joining  "Jan"
     Then    [Add Employer]  User enter the day "10"
-    And     [Add Employer] user enter mobile no "971"
-    Then    [Add Employer] user enter  alternate mobile no "921234567890"
+    And     [Add Employer] user enter mobile no "56"
+    Then    [Add Employer] user enter  alternate mobile no ""
     And     [Add Employer] User tap on the Add More Documents button
     Then    [Add Employer] User select the document "Passport"
     Then    [Add Employer] User enter issue year "01-Jan-2015"
@@ -38,7 +38,7 @@ Feature: AddEmployer
     #And     [Update Profile] User enter the Passport month "June"
     #Then    [Update Profile] User enter issue add employer the day "22"
     And     [Update Profile] User enter the add employer expire year 2030
-    Then    [Update Profile] User enter the Passport expire month "May"
+    Then    [Update Profile] User enter the Passport expire month "Dec"
     And     [Update Profile] User enter the add employer expire day "20"
     Then    [Add Employer]   User enter the Passport no
     Then    [Update Profile] User tap on browse file

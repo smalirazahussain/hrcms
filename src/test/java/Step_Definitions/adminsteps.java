@@ -110,6 +110,7 @@ public class adminsteps {
 
     @Then("[Admin Page] User enter the company name")
     public void adminPageUserEnterTheCompanyName() throws InterruptedException {
+
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath(Company_Client)));
         AdminPage.get_Company_Client().sendKeys(companyName + Keys.ENTER);
         System.out.println(companyTittle);

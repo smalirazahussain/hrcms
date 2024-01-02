@@ -22,6 +22,7 @@ import java.awt.event.KeyEvent;
 import java.time.Duration;
 
 import static Hooks.Base_Class.driver;
+import static Pages.Android.AddEmployerPages.Passport_month_select;
 import static Pages.Android.AdminPage.Approval_Ok;
 import static Pages.Android.AdminPage.Approve_Button;
 import static Pages.Android.UpdateProliePage.*;
@@ -584,9 +585,10 @@ public class UpdateProfile {
         //wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(user_month(expmonth))));
         String current_month = currentMonth();
 
-        if (current_month == expmonth) {
+        if (current_month.equals(expmonth)) {
 
         } else {
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(Passport_month_select(current_month))));
             AddEmployerPages.get_Passport_month_select(current_month).click();
             wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(user_month(expmonth))));
             get_user_month(expmonth).click();

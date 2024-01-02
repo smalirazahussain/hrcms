@@ -15,7 +15,7 @@ public class EmployeesPage {
     Duration timeout = Duration.ofSeconds(30);
     WebDriverWait wait = new WebDriverWait(driver, timeout);
     //locator
-    public static String employees = "(//li[@class='side-menu-list-item']//child::a)[3]";
+    public static String employees = "#employee";
     public static String Upload_Excel = "uploadExcel";
     public static String Template_Button = "button[title='Template'] span:nth-child(1)";
     public static String Employee_Search = "ant-input";
@@ -25,7 +25,7 @@ public class EmployeesPage {
 
     public static WebElement get_Employees() {
 
-        return Base_Class.driver.findElement(By.xpath(employees));
+        return Base_Class.driver.findElement(By.cssSelector(employees));
     }
     public static WebElement get_Upload_Excel() {
         return Base_Class.driver.findElement(By.id(Upload_Excel));

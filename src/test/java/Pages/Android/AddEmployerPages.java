@@ -121,7 +121,7 @@ public class AddEmployerPages {
         return "//span[normalize-space()='"+bank+"']";
     }
     public static String Passport_month_select(String current_month) {
-        return "//button[normalize-space()='"+ current_month +"']";
+        return "(//button[normalize-space()='"+ current_month +"'])[2]";
     }
     public static String PassPort_no = "#documentNumber0";
     public static String Company_Tittle = "div[class='user-detail'] h3";

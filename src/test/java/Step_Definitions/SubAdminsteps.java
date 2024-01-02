@@ -1,6 +1,7 @@
 package Step_Definitions;
 
 import Pages.Android.AddEmployerPages;
+import Pages.Android.AdminPage;
 import Pages.Android.SignUpPage;
 import Pages.Android.SubAdminPages;
 import io.cucumber.java.en.And;
@@ -8,6 +9,7 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -18,9 +20,11 @@ import java.time.Duration;
 import java.util.*;
 
 import static Hooks.Base_Class.driver;
+import static Pages.Android.AdminPage.Company_Client;
 import static Pages.Android.SignUpPage.signUpUserEnterTheEmail;
 import static Pages.Android.SubAdminPages.*;
 import static Step_Definitions.Employeessteps.companyID;
+import static Step_Definitions.SignUpSteps.companyName;
 
 public class SubAdminsteps {
 
@@ -29,9 +33,10 @@ public class SubAdminsteps {
     //create a soft-assertion object
     SoftAssert softAssert = new SoftAssert();
 
-
+    public static String companyTittle;
     @Given("[Sub Admin] User tap on the sub admin button")
     public void subAdminUserTapOnTheSubAdminButton() {
+        companyTittle= AddEmployerPages.get_Company_Tittle().getText();
         companyID = AddEmployerPages.get_Company_Id().getText();
         String perfix = "Client ID: ";
         if (companyID.startsWith(perfix)) {
@@ -66,7 +71,7 @@ public class SubAdminsteps {
     @Then("[Sub Admin] User enter the email address {string}")
     public void subAdminUserEnterTheEmailAddress(String email) {
         Random randomGenerator = new Random();
-        int randomInt = randomGenerator.nextInt(1000);
+        int randomInt = randomGenerator.nextInt(100000);
         SubAdminPages.get_Email().sendKeys(email + randomInt + "@mailinator.com");
         userEmail = email + randomInt + "@mailinator.com";
         System.out.println("User Email:" + userEmail);
@@ -198,9 +203,8 @@ public class SubAdminsteps {
     }
 
     @And("[Sub Admin] Use enter the team member password")
-    public void subAdminUseEnterTheTeamMemberPassword() {
+    public void subAdminUseEnterTheTeamMemberPassword() throws InterruptedException {
         SubAdminPages.get_Password().sendKeys(userPassword);
-
     }
     public static List<String> teamMemberModuleListTexts;
     @Then("[Sub Admin] User verify all the module are shown on the side bar")
@@ -225,16 +229,22 @@ public class SubAdminsteps {
 
     }
     public static int Employee_Selected_Check_Boxes;
+//    public static String Employee;
+    public static String[] employeesModule;
     @Then("[Sub Admin] Employer give him access to sub admin to creates single, multiple employees,Deactivate Employees,Download Employees and Request Checker")
     public void subAdminEmployerGiveHimAccessToSubAdminToCreatesSingleMultipleEmployeesDeactivateEmployeesDownloadEmployeesAndRequestChecker() throws InterruptedException {
-         Employee_Selected_Check_Boxes = SubAdminPages.get_Employees_Creations().size();
-        System.out.println(Employee_Selected_Check_Boxes);
+        String Employee = get_Employee_Module().getText().toLowerCase();
+        System.out.println("Value"+Employee);
+        Employee_Selected_Check_Boxes = SubAdminPages.get_Employees_Creations().size();
+         System.out.println(Employee_Selected_Check_Boxes);
         List<WebElement> Employees_Creations = SubAdminPages.get_Employees_Creations();
-        for (WebElement Employees_Creations_List :Employees_Creations ){
-              Employees_Creations_List.click();
-
+        if(Objects.equals(Employee, "employees :")) {
+            for (WebElement Employees_Creations_List : Employees_Creations) {
+                Employees_Creations_List.click();
+            }
         }
-
+        employeesModule = Employee.split(" :");
+        System.out.println(Arrays.toString(employeesModule));
     }
 
     @Then("[Sub Admin] User verify check boxes they are selected")
@@ -252,6 +262,36 @@ public class SubAdminsteps {
         System.out.println("Checkbox is selected: " + allChecked);
 
         Assert.assertEquals(Employee_Selected_Check_Boxes,allChecked);
+    }
+
+    @Then("[Sub Admin] User verify the module are shown on the side bar")
+    public void subAdminUserVerifyTheModuleAreShownOnTheSideBar() {
+        List<WebElement> teamMemberModuleList = SubAdminPages.get_Team_Member_Module_List();
+        teamMemberModuleListTexts = new ArrayList<>();
+        for (WebElement teamMemberModuleListElement : teamMemberModuleList) {
+            String teamMemberModuleListText = teamMemberModuleListElement.getText().toLowerCase().split(" ")[0];
+            if (!Objects.equals(teamMemberModuleListText, "profile")) {
+                if (Objects.equals(teamMemberModuleListText, "establishments")) {
+                    teamMemberModuleListTexts.add("establishment");
+                } else {
+                    teamMemberModuleListTexts.add(teamMemberModuleListText);
+                }
+            }
+
+        }
+        Collections.sort(teamMemberModuleListTexts);
+        System.out.println("TeamMember Module List:"+teamMemberModuleListTexts);
+
+        Assert.assertEquals(Arrays.asList(employeesModule),teamMemberModuleListTexts);
+
+    }
+
+    @Then("[Admin Page] Sub admin enter the company")
+    public void adminPageSubAdminEnterTheCompany() {
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath(Company_Client)));
+        AdminPage.get_Company_Client().sendKeys(companyTittle + Keys.ENTER);
+        System.out.println(companyTittle);
+        System.out.println(companyName);
     }
 }
 

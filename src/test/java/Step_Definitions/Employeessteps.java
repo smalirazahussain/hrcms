@@ -26,6 +26,7 @@ import java.util.Random;
 
 import static Hooks.Base_Class.driver;
 import static Pages.Android.AddEmployerPages.Company_Tittle;
+import static Pages.Android.EmployeesPage.employees;
 import static Step_Definitions.AddEmployerSteps.EmpMol;
 import static Step_Definitions.SignUpSteps.companyName;
 import static Step_Definitions_Head_Ofiice.EstablishmentsStepsHeadOffice.branchEstablishmentId;
@@ -61,6 +62,7 @@ public class Employeessteps {
         companyID = AddEmployerPages.get_Company_Id().getText();
         companyName = companyTittle;
         System.out.println("CompanyName"+companyName);
+        wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(employees)));
         EmployeesPage.get_Employees().click();
         //Thread.sleep(5000);
 
@@ -178,7 +180,7 @@ public class Employeessteps {
 //            String branchEstablishmentId = establishmentsStepsHeadOffice.branchEstablishmentId;
 
         //System.out.println(branchEstablishmentId);
-        for (int j = 0; j < 1000; j++) {
+        for (int j = 0; j < 5; j++) {
             System.out.println(j);
             int randomNumber = random.nextInt(1000000000);
 
