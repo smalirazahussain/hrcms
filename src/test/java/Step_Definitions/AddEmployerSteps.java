@@ -152,19 +152,16 @@ public class AddEmployerSteps<Save_mol> {
         // Scroll.ScrollVertical(driver.findElement(By.xpath("//div[@class='rc-virtual-list-scrollbar rc-virtual-list-scrollbar-show']//div[@class='rc-virtual-list-scrollbar-thumb']")));
     }
 
-    long first14 = (long) (Math.random() * 100000000000000L);
+    public static long first14;
     long Save_mol = first14;
     public static String EmpMol;
 
     @And("[Add Employer] user enter the Mol no {string}")
     public void addEmployerUserEnterTheMolNo(String Molno) throws InterruptedException {
-        //  AddEmployerPages.get_Mol_No().sendKeys((Math.random()+Molno);
-//        Random random = new Random();
-//           long randomLong = random.nextLong();
-//        long  min = 100000000000000L;
-        //       long  max = 900000000000000L;
-        //      long randomLong = min + (long) (random.nextDouble() * (max - min));
-
+        Random random = new Random();
+        long min = 100000000000000L;
+        long max = 999999999999999L;
+        first14 = min + ((long) (random.nextDouble() * (max - min)));
         AddEmployerPages.get_Mol_No().sendKeys(first14 + Molno);
         EmpMol = first14 + Molno;
         System.out.println("MOL NO WHICH IS SAving.....: " + Save_mol);
@@ -205,9 +202,11 @@ public class AddEmployerSteps<Save_mol> {
     public static String employeePhoneNO;
     @And("[Add Employer] user enter mobile no {string}")
     public void addEmployerUserEnterMobileNo(String mobcode) {
-        long mobno = (long) ((Math.random() * 9000000L));
-        AddEmployerPages.get_Mobile_No().sendKeys(mobcode + mobno);
-        employeePhoneNO= mobcode + mobno;
+        Random random = new Random();
+        int employeePhoneNo = 1000000 + random.nextInt(9000000);
+        System.out.println(employeePhoneNo);
+        AddEmployerPages.get_Mobile_No().sendKeys(mobcode + employeePhoneNo);
+        employeePhoneNO= mobcode + employeePhoneNo;
         System.out.println("User Phone No:"+employeePhoneNO);
     }
 

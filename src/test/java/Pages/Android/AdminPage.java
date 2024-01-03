@@ -34,8 +34,8 @@ public class AdminPage {
     public static String Client_Approval = "#approval";
     public static String Company_Client = "(//input[@id=\"client\"])[2]";
     public static String Admin_Action_Successfully = "//span[normalize-space()='Action Successful']";
-    public static String Action_Successfully(String actual){
-        return "//span[normalize-space()='"+actual+"']";
+    public static String Action_Successfully(String after){
+        return "//span[normalize-space()='"+after+"']";
     }//span[normalize-space()='Company product not found']
 
     public static String Admin_Approval_Ok = "//button[@class='ant-btn css-dev-only-do-not-override-1vtf12y ant-btn-primary ant-btn-sm']";
@@ -134,8 +134,8 @@ public class AdminPage {
         return Base_Class.driver.findElement(By.xpath(Company_Client));
     }
 
-    public static WebElement get_Action_Successfully(String actual) {
-        return Base_Class.driver.findElement(By.xpath(Action_Successfully(actual)));
+    public static WebElement get_Action_Successfully(String after) {
+        return Base_Class.driver.findElement(By.xpath(Action_Successfully(after)));
     }
 
     public static WebElement get_Admin_Approval_Ok() {

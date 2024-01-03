@@ -90,8 +90,10 @@ public class SubAdminsteps {
     @Then("[Sub Admin] Use enter the phone no {string}")
     public void subAdminUseEnterThePhoneNo(String phone) throws InterruptedException {
         long first11 = (long) (Math.random() * 10000000L);
-        SubAdminPages.get_Phone().sendKeys(phone + first11);
-        userPhoneNo = phone + first11;
+        Random random = new Random();
+        int phoneNo = 1000000 + random.nextInt(9000000);
+        SubAdminPages.get_Phone().sendKeys(phone + phoneNo);
+        userPhoneNo = phone + phoneNo;
         System.out.println("User Phone No:" + userPhoneNo);
 
     }
@@ -293,5 +295,22 @@ public class SubAdminsteps {
         System.out.println(companyTittle);
         System.out.println(companyName);
     }
-}
+
+    @Then("[Sub Admin] User employee is active then click on eye button")
+    public void subAdminUserEmployeeIsActiveThenClickOnEyeButton() {
+        List<WebElement> activeStatus = get_Employee_Active_Status();
+        int activeEmployee = activeStatus.size();
+            for(WebElement employee :activeStatus){
+                System.out.println(employee);
+            if(activeEmployee!=0){
+                SubAdminPages.get_Employee_Eye_Button().click();
+                System.out.println("USer Active");
+                    break;
+
+                }
+
+
+            }
+        }
+    }
 

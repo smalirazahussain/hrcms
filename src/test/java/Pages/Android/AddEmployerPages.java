@@ -138,6 +138,7 @@ public class AddEmployerPages {
     public static String Add_More_Documents = "button[title='Add More Documents']";
     public static String Add_New_Establishment = "#isNewEstablishment";
     public static String Company_Id = "h5";
+    public static String Sub_Admin_Company_Tittle = "div h5:nth-child(3)";
 
     public static WebElement get_Country(String country) {
         return Base_Class.driver.findElement(By.xpath(Country(country)));
@@ -318,5 +319,9 @@ public class AddEmployerPages {
 
     public static WebElement get_Company_Id() {
         return Base_Class.driver.findElement(By.cssSelector(Company_Id));
+    }
+
+    public static WebElement get_Sub_Admin_Company_Tittle() {
+        return Base_Class.driver.findElement(By.cssSelector(Sub_Admin_Company_Tittle));
     }
 }

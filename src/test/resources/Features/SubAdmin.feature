@@ -196,13 +196,10 @@ Feature: SubAdmin
     Then    [Add Employer] User enter the year 2017
     And     [Update Profile] User enter the month "Dec"
     Then    [Update Profile] User enter the day "3"
-    #And     [Add Employer] user enter the passport no ""
     Then    [Add Employer] user tao the nationality
-    #And     [Add Employer] user tao the Add New Establishment
-   # Then    [Add Employer] user select the nationality "Afghanistan"
     And     [Add Employer] user enter the Mol no ""
     Then    [Add Employer] user enter the Employer code ""
-    When    [Add Employer] User select the establishment id
+    When    [Add Employer] Sub admin select the establishment id
     And     [Add Employer] user enter the date of joining year 2017
     And     [Update Profile] User enter the month of joining  "Jan"
     Then    [Add Employer]  User enter the day "10"
@@ -221,7 +218,6 @@ Feature: SubAdmin
     Then    [Update Profile] User tap on browse file
     And     [Add Employer] user tap on the add employer
     Then    [Add Employer] User Validate the employee notification message "New employee added successfully, Please wait for approval"
-    #And     [Employees Page] User verify the message "Successfully Employees File Uploaded"
     Then    [DesHBoard Page] User tap on the logout from dashboard
     Then    [Admin Page] Open the admin tab "https://employer.getthelingo.com"
     Given   [Login Page] User enter the email "12742"
@@ -231,11 +227,6 @@ Feature: SubAdmin
     Then    [Request Page] User verify the approval description topic "Employees File Upload"
     And     [Request Page] User verify the approval status topic "Waiting For Your Approval"
     Then    [Request Page] User tap on the view button
-    And     [Request Page] User tap on the Approve button
-    #And     [Request Page] User verify the approval sent to the admin"Request sent to admin for further approval"
-#    And     [Request Page] User verify the approval status topic "Waiting For Your Approval"
-#    Then    [Request Page] User tap on the view button
-#    And     [Request Page] User tap on the Approve button
     And     [Request Page] User verify the mol and passport no and then click the approve button
     Then    [Admin Page] Open the admin tab "http://admin.getthelingo.com"
     And     [Admin Page] User tap on login page
@@ -247,6 +238,35 @@ Feature: SubAdmin
     And     [Admin Page] User tap on view button
     And     [Request Page] User verify the mol and passport no and then click the approve button
     Then    [Admin Page] User validate the toast message "Action Successful"
+
+  Scenario: User create a Sub Admin and give him access only to creates employees and update phone No
+    Given   [Login Page] User enter the email "12742"
+    When    [Login Page] User enter the password "Password1"
+    Then    [Login page] User tap on login button
+    Given   [Sub Admin] User tap on the sub admin button
+    Then    [Sub Admin] User tap on the add sub button
+    When    [Sub Admin] User enter name "User"
+    Then    [Sub Admin] User enter the email address "user"
+    And     [Sub Admin] User enter the password "Password1"
+    And     [Sub Admin] User enter the Confirm password ""
+    Then    [Sub Admin] Use enter the phone no "56"
+    And     [Sub Admin] User tap on the submit button
+    Then    [Sub Admin] User land on the "Manage Access" page
+    Then    [Sub Admin] Employer give him access to sub admin to creates single, multiple employees,Deactivate Employees,Download Employees and Request Checker
+    And     [Sub Admin] User tap on the submit button
+    Then    [Admin Page] User validate the toast message "Admin Updated Successfully"
+    And     [Sub Admin] User search the sub admin
+    Then    [Sub Admin] User tap on manage access button
+    Then    [Sub Admin] User verify check boxes they are selected
+    Then    [DesHBoard Page] User tap on the logout from dashboard
+    And     [Sub Admin] Use tap on the I am not the Primary User? button
+    And     [Sub Admin] Use enter the the company id ""
+    And     [Sub Admin] Use enter the team member email
+    And     [Sub Admin] Use enter the team member password
+    Then    [Login page] User tap on login button
+    Then    [Sub Admin] User verify the module are shown on the side bar
+    Then    [Employees Page] User tap on employees button
+    Then    [Sub Admin] User employee is active then click on eye button
 
 
 

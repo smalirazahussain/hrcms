@@ -76,7 +76,8 @@ public class Requeststeps {
         }
         {
             AdminPage.get_Approve_Button().click();
-            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(Approval_Ok)));
+            wait.until(ExpectedConditions.elementToBeClickable(By.xpath(Approval_Ok)));
+            Thread.sleep(5000);
             AdminPage.get_Approval_Ok().click();
         }
         System.out.println(EmpMol + Mol_Num + Passportno);
@@ -187,7 +188,7 @@ public class Requeststeps {
 
     @And("[Employees Page] User verify the message {string}")
     public void employeesPageUserVerifyTheMessage(String after) {
-
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(Action_Successfully(after))));
         String actual = AdminPage.get_Action_Successfully(after).getText();
         //wait.until(ExpectedConditions.elementToBeClickable(actual));
         System.out.println("Actual MSG: " + actual);

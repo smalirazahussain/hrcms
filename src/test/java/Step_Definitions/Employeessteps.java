@@ -4,11 +4,13 @@ import Pages.Android.AddEmployerPages;
 import Pages.Android.EmployeesPage;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
@@ -394,6 +396,14 @@ public class Employeessteps {
 
         }
         System.out.println(randomNumbers);
+    }
+
+    @When("[Add Employer] Sub admin select the establishment id")
+    public void addEmployerSubAdminSelectTheEstablishmentId() {
+        String companyTittle = AddEmployerPages.get_Sub_Admin_Company_Tittle().getText().split("Client: ")[1];
+        AddEmployerPages.get_Establishment_Id().sendKeys(companyTittle + Keys.ENTER);
+        companyName = companyTittle;
+        System.out.println("Sub Amin Company:"+companyName);
     }
 }
 

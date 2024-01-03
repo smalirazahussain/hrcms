@@ -45,6 +45,8 @@ public class SubAdminPages {
     public static String Team_Member_Module_List = ".side-menu-list-item";
     public static String Employees_Creations = "#add-appointment-form_EMPLOYEES > label";
     public static String Employee_Module="div:nth-child(3) >ul >li >div:nth-child(1)";
+    public static String Employee_Active_Status = "span[class='ant-tag ant-tag-green']";
+    public static String Sub_Admin_Employee_Eye_Button = "svg[class='c-icon large']";
 
 
     public static WebElement get_Sub_Admin_Button(){
@@ -127,5 +129,13 @@ public class SubAdminPages {
 
     public static WebElement get_Employee_Module() {
         return Base_Class.driver.findElement(By.cssSelector(Employee_Module));
+    }
+    public static  List<WebElement> get_Employee_Active_Status() {
+        return  Base_Class.driver.findElements(By.cssSelector(Employee_Active_Status));
+
+    }
+
+    public static WebElement get_Employee_Eye_Button() {
+        return Base_Class.driver.findElement(By.cssSelector(Sub_Admin_Employee_Eye_Button));
     }
 }
