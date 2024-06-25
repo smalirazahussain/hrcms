@@ -1,10 +1,13 @@
 package Step_Definitions;
 
 import Pages.Android.LoginPage;
+import config.properties.ConfigReader;
+import config.properties.user_data.SaveUserDataToJsonFile;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.json.JSONObject;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -22,7 +25,7 @@ import static Pages.Android.LoginPage.Enter_Password;
 
 
 public class LoginSteps {
-
+    ConfigReader configReader = new ConfigReader();
     Duration timeout = Duration.ofSeconds(30);
     WebDriverWait wait = new WebDriverWait(driver, timeout);
     //create a soft-assertion object
@@ -34,15 +37,35 @@ public class LoginSteps {
         // Random randomGenerator = new Random();
         // int randomInt = randomGenerator.nextInt(1000);
         // LoginPage.get_Enter_Email_Id().sendKeys(email+randomInt+"@mailinator.com");
-        LoginPage.get_Enter_Email_Id().sendKeys(email);
+        LoginPage.get_Enter_Email_Id().sendKeys(configReader.getProperty("username"));
 
+        JSONObject userDataJson = SaveUserDataToJsonFile.readJsonFile();
 
+        if (userDataJson != null && userDataJson.has("user_data")) {
+            // Access individual fields from the JSON data
+//            String zipCode = userDataJson.getJSONArray("user_data").getJSONObject(0).getString("zipCode");
+//            String password = userDataJson.getJSONArray("user_data").getJSONObject(0).getString("password");
+//            String phoneNumber = userDataJson.getJSONArray("user_data").getJSONObject(0).getString("phoneNumber");
+//
+//            // ... (access other fields as needed)
+//
+//            // Print or use the retrieved data in your step
+//            System.out.println("Zip Code: " + zipCode);
+//            System.out.println("Password: " + password);
+//            System.out.println("Phone Number: " + phoneNumber);
+
+            // ... (print or use other fields as needed)
+        } else {
+            // Handle the case where "user_data" is not found
+            throw new RuntimeException("Error: 'user_data' not found in the JSON file");
+        }
     }
 
     @When("[Login Page] User enter the password {string}")
     public void loginPageUserEnterThePassword(String password) throws InterruptedException {
         //wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(Enter_Password)));
-        LoginPage.get_Enter_Password().sendKeys(password);
+        LoginPage.get_Enter_Password().sendKeys(configReader.getProperty("password"));
+
 
     }
 

@@ -33,8 +33,8 @@ public class BranchesHeadOfficePage {
     public static String View_Employees = "button[title=\"View Employees\"]";
     public static String Statemnet_Request ="button[title=\"Statement Request\"]";
     public static String Statement_Message = "div.ant-popconfirm-title";
-    public static String Continue_Button = "button.ant-btn.css-1wazalj.ant-btn-primary.ant-btn-sm";
-    public static String Top_Up_Message = "//span[text()=\"Approval is processed for further actions\"]";
+    public static String Continue_Button = "button[class='ant-btn css-zl9ks2 ant-btn-primary ant-btn-sm'] span";
+    public static String Top_Up_Message = "div[class='ant-message ant-message-top css-zl9ks2']";
     public static String Statement_Message_Already_Submitted = ".ant-message-custom-content.ant-message-error";
     public static String Branch_Search = "input.ant-select-selection-search-input[role='combobox'][id='branch']";
 
@@ -112,7 +112,7 @@ public class BranchesHeadOfficePage {
     }
 
     public static WebElement get_Top_Up_Message() {
-        return Base_Class.driver.findElement(By.xpath(Top_Up_Message));
+        return Base_Class.driver.findElement(By.cssSelector(Top_Up_Message));
     }
 
     public static WebElement get_Statement_Message_Already_Submitted() {

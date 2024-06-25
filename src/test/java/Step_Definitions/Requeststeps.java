@@ -110,8 +110,9 @@ public class Requeststeps {
     public void requestPageUserTapOnTheApproveButton() throws InterruptedException {
         //if (AdminPage.get_Admin_Bank_Name(randomBankName).getText().equals(randomBankName)) {
             //System.out.println("AdminBank" + get_Admin_Bank_Name(randomBankName));
-            AdminPage.get_Approve_Button().click();
-            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(Approval_Ok)));
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath(Approve_Button)));
+        AdminPage.get_Approve_Button().click();
+            wait.until(ExpectedConditions.elementToBeClickable(By.xpath(Approval_Ok)));
             AdminPage.get_Approval_Ok().click();
         //}
         //else {
@@ -194,6 +195,26 @@ public class Requeststeps {
         System.out.println("Actual MSG: " + actual);
         System.out.println(after);
         Assert.assertEquals(actual, after);
+    }
+
+    @And("[Request Page] User tap on the Approve Status button")
+    public void requestPageUserTapOnTheApproveStatusButton() {
+        wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(Employer_Approval_Status)));
+        RequestPage.get_Employer_Approval_Status().click();
+    }
+
+    @Then("[Request Page] User tap on the Reset button")
+    public void requestPageUserTapOnTheResetButton() {
+        wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(Reset_Button)));
+        RequestPage.get_Reset_Button().click();
+    }
+
+    @Then("[Request Page] User verify the approval Description {string}")
+    public void requestPageUserVerifyTheApprovalDescription(String expectedRequestDescription) {
+        wait.until(ExpectedConditions.visibilityOfElementLocated((By.xpath(Approval_Description))));
+        String actualRequestDescription = RequestPage.get_Approval_Description().getText();
+        System.out.println("Description"+actualRequestDescription);
+        Assert.assertEquals(actualRequestDescription,expectedRequestDescription);
     }
 }
 

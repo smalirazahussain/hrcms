@@ -34,13 +34,14 @@ public class AdminPage {
     public static String Client_Approval = "#approval";
     public static String Company_Client = "(//input[@id=\"client\"])[2]";
     public static String Admin_Action_Successfully = "//span[normalize-space()='Action Successful']";
+    public static String msg = "div[class='ant-message'] span:nth-child(2)";
     public static String Action_Successfully(String after){
         return "//span[normalize-space()='"+after+"']";
     }//span[normalize-space()='Company product not found']
 
     public static String Admin_Approval_Ok = "//button[@class='ant-btn css-dev-only-do-not-override-1vtf12y ant-btn-primary ant-btn-sm']";
 
-    public static String Browse_Button = "div:nth-child(4) > button:nth-child(2)";
+    public static String Browse_Button = "#uploadExcel";
 
     public static String Card_Tpye(String card) {
         return "//span[@title='" + card + "']";
@@ -49,10 +50,10 @@ public class AdminPage {
     public static String Approve_Bulk_Button = "//div[contains(@class,'ant-drawer-body')]//button[contains(@title,'Approve')]";
     public static String Card_Button = "#cardType";
     public static String ExchangeHouseClientButton = " label:nth-child(2)";
-    public static String No_Other_Bank_Employees = "isOtherBankEmployees";
+    public static String No_Other_Bank_Employees = "label:nth-child(2) > span:nth-child(2)";
     public static String message = "//*[@text='Action Successfully']";
     public static String ExchangeHouse_Client_Approvals_Button = "//a[@id='exchangeHouseApproval']";
-    public static String Admin_Branch_Name = "(//input[@type='search'])[2]";
+    public static String Admin_Branch_Name = "(//input[@type='search'])[3]";
     public static String Exchange_House_Browse_Button = "button.ant-btn#uploadExcel.primary-outline-filled[title='Browse File'";
     public static String admin_Client_Salary = "div:first-child > ul:first-child > li:nth-child(32) > span:nth-child(2)";
     public static String Admin_Employer_Button = "#employer";
@@ -171,7 +172,7 @@ public class AdminPage {
     }
 
     public static WebElement get_No_Other_Bank_Employees() {
-        return Base_Class.driver.findElement(By.id(No_Other_Bank_Employees));
+        return Base_Class.driver.findElement(By.cssSelector(No_Other_Bank_Employees));
     }
 
     public static WebElement get_message() {
@@ -245,5 +246,10 @@ public class AdminPage {
 
     public static WebElement get_Admin_Action_Successfully() {
         return Base_Class.driver.findElement(By.xpath(Admin_Action_Successfully));
+    }
+
+    public static WebElement get_msg() {
+
+        return Base_Class.driver.findElement(By.cssSelector(msg));
     }
 }

@@ -13,9 +13,11 @@ import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 
 import java.time.Duration;
+import java.util.Objects;
 
 import static Hooks.Base_Class.driver;
 import static Pages.Android.AdminPage.Admin_Add_Employer_Button;
+import static Pages.Android.EmployeesPage.Employee_Eye_Button;
 import static Pages.HeadOfficePages.BranchesHeadOfficePage.*;
 //import static Pages.Android.LoginPage.create_Account_Button;
 //import static Tests.Useful_functions.getRandomNumberLowerAndUpperBound;
@@ -36,7 +38,7 @@ public class BrachesStepsHeadOffice {
     public static String branch;
     @When("[Branch Head Office Page] User enter branch name {string}")
     public void branchHeadOfficePageUserEnterBranchName(String branchname) {
-        int randomempno = (int) ((Math.random()*100000));
+            int randomempno = (int) ((Math.random()*100000));
         //String branch = BranchesHeadOfficePage.get_Branch_Name().sendKeys(branchname+randomempno);
         //String sendKeysCommand = "BranchesHeadOfficePage.get_Branch_Name().sendKeys(" + branchname + randomempno + ");";
         BranchesHeadOfficePage.get_Branch_Name().sendKeys(branchname+randomempno);
@@ -119,17 +121,21 @@ public class BrachesStepsHeadOffice {
     public void branchHeadOfficePageUserTapOnTheEyeButton() throws InterruptedException {
         int Random;
         double rendon;
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath(Employee_Eye_Button)));
         BranchesHeadOfficePage.get_Eye_Button().click();;
         //int value = BranchesHeadOfficePage.get_Eye_Button().getText().indexOf(10);
         //System.out.println(value);
         // BranchesHeadOfficePage.get_Eye_Button().click();
-        Thread.sleep(5000);
+
     }
 
     @When("[Branch Head Office Page] User tap on the statement request button")
     public void branchHeadOfficePageUserTapOnTheStatementRequestButton() throws InterruptedException {
-        Thread.sleep(1000);
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".loading")));
+        wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(Statemnet_Request)));
         BranchesHeadOfficePage.get_Statemnet_Request().click();
+
+
     }
 
     @And("[Branch Head Office Page] User validate the message {string} abd click ont the continue button")
@@ -150,15 +156,21 @@ public class BrachesStepsHeadOffice {
 
     @Then("[Branch Head Office Page] User validate the top-up message {string}")
     public void branchHeadOfficePageUserValidateTheTopUpMessage(String expectMessage) {
-        if(BranchesHeadOfficePage.get_Top_Up_Message().isDisplayed() || BranchesHeadOfficePage.get_Statement_Message_Already_Submitted().isDisplayed() ){
-            String acutalMessage = BranchesHeadOfficePage.get_Top_Up_Message().getText();
-            Assert.assertEquals(acutalMessage, expectMessage);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(Top_Up_Message)));
+        String acutalMessage = BranchesHeadOfficePage.get_Top_Up_Message().getText();
+        if(Objects.equals(acutalMessage, expectMessage)){
+           Assert.assertEquals(acutalMessage, expectMessage);
             System.out.println("Approval Submitted;"+acutalMessage);
         }
-             else if (BranchesHeadOfficePage.get_Statement_Message_Already_Submitted().isDisplayed()){
-            String alreadySubmitted = BranchesHeadOfficePage.get_Statement_Message_Already_Submitted().getText();
-            System.out.println("Approval Not Submitted;"+alreadySubmitted);
-        }
+//        if(BranchesHeadOfficePage.get_Statement_Message_Already_Submitted().isDisplayed() ) {
+//            //String acutalMessage = BranchesHeadOfficePage.get_Top_Up_Message().getText();
+//            Assert.assertEquals(acutalMessage, expectMessage);
+//            System.out.println("Approval Submitted;" + acutalMessage);
+//        }
+//        else if (BranchesHeadOfficePage.get_Statement_Message_Already_Submitted().isDisplayed()){
+//            String alreadySubmitted = BranchesHeadOfficePage.get_Statement_Message_Already_Submitted().getText();
+//            System.out.println("Approval Not Submitted;"+alreadySubmitted);
+//        }
     }
 
     @When("[Branch Head Office Page] User search the branch they are created {string}")

@@ -1,24 +1,21 @@
 package Hooks;
 
-import Utils.ScreenshotUtility;
+import config.properties.ConfigReader;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.Scenario;
 import io.github.bonigarcia.wdm.WebDriverManager;
-import org.openqa.selenium.By;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
-import org.openqa.selenium.WebDriver;
+import org.jetbrains.annotations.NotNull;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.io.FileHandler;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.util.Date;
@@ -32,12 +29,13 @@ public class Base_Class {
     //public static AppiumDriver<AndroidElement> driver;
     public static WebDriver driver = null;
     public static WebDriverWait wait ;
+    ConfigReader configReader = new ConfigReader();
 
 
     @Before
-    public void setup() {
+    public void     setup() {
 
-        
+
 
 
         try {
@@ -66,9 +64,17 @@ public class Base_Class {
 
             // Set ChromeOptions
             ChromeOptions options = new ChromeOptions();
+//            options.addArguments("--headless");
+//            options.addArguments("--disable-gpu");
+//            options.addArguments("--window-size=1920,1080");
             Map<String, Object> prefs = new HashMap<>();
             prefs.put("download.default_directory", "D:\\Hrcms\\src\\test\\java\\document");
             options.setExperimentalOption("prefs", prefs);
+            if (isSpecialPageOrScenario()) {
+                options.setPageLoadStrategy(PageLoadStrategy.EAGER);
+            } else {
+                options.setPageLoadStrategy(PageLoadStrategy.NORMAL);
+            }
             WebDriverManager.chromedriver().setup();
             // Set ChromeDriver path
             //System.setProperty("webdriver.chrome.driver", "C:\\path\\to\\chromedriver.exe"); // Replace with your actual path to chromedriver.exe
@@ -101,8 +107,8 @@ public class Base_Class {
             Duration timeout = Duration.ofSeconds(30);
             wait = new WebDriverWait(driver, timeout);
             By.cssSelector(".ant-spin.ant-spin-spinning.css-qgg3xn");
-            //driver.get("https://employer.getthelingo.com/");
-            URL url = new URL("https://employer.getthelingo.com/");
+           // driver.get("https://employer.getthelingo.com/");
+            URL url = new URL(configReader.getProperty("employerurl"));
             //String projectpath = System.getProperty("user.dir");
             File f = new File("apps");
             File fs = new File(f, "app.apk");
@@ -127,82 +133,154 @@ public class Base_Class {
 
     }
 
-
-//    @Test
-//    public void SampleTest(){
-//        //DesiredCapabilities caps = new DesiredCapabilities();
-//        System.out.println(driver);
-//
-//    }
-
-    public static void main(String[] args) {
-        String projectpath = System.getProperty("user.dir");
-        System.out.println(projectpath);
+    private boolean isSpecialPageOrScenario() {
+        try {
+            // Check if the driver is not null and the current URL contains a special keyword
+            return driver != null && driver.getCurrentUrl().contains("Statement Request");
+        } catch (Exception e) {
+            // Handle any exception, log it, and return false
+            System.out.println("Exception in isSpecialPageOrScenario: " + e.getMessage());
+            return false;
+        }
     }
 
-    @After
-//    public void teardown(Scenario scenario) throws IOException {
-////        if (sc.isFailed()) {
-////            int screenShotNo = (int) ((Math.random()*100000));
-////            String fileScreenShot = "D://Hrcms//src//test//java//ScreenShot//failedScreenShoot"+screenShotNo+".png";
-////            TakesScreenshot screenshot = ((TakesScreenshot) driver);
-////            File ScrFile = screenshot.getScreenshotAs(OutputType.FILE);
-////            File DestFile = new File(fileScreenShot);
+//
+////    @Test
+////    public void SampleTest(){
+////        //DesiredCapabilities caps = new DesiredCapabilities();
+////        System.out.println(driver);
+////
+////    }
+//
+//    public static void main(String[] args) {
+//        String projectpath = System.getProperty("user.dir");
+//        System.out.println(projectpath);
+//    }
+//
+//    @After
+////    public void teardown(Scenario scenario) throws IOException {
+//////        if (sc.isFailed()) {
+//////            int screenShotNo = (int) ((Math.random()*100000));
+//////            String fileScreenShot = "D://Hrcms//src//test//java//ScreenShot//failedScreenShoot"+screenShotNo+".png";
+//////            TakesScreenshot screenshot = ((TakesScreenshot) driver);
+//////            File ScrFile = screenshot.getScreenshotAs(OutputType.FILE);
+//////            File DestFile = new File(fileScreenShot);
+//////            try {
+//////                FileUtils.copyFile(ScrFile, DestFile);
+//////            } catch (IOException e) {
+//////                e.printStackTrace();
+//////            }
+////        if (scenario.isFailed()) {
 ////            try {
-////                FileUtils.copyFile(ScrFile, DestFile);
+////                int scenarioLine = ScenarioSteps.getScenarioLineNumber();
+////
+////                // Generate timestamp
+////                String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+////
+////                // Construct the filename for the screenshot
+////                String fileScreenShot = "D:\\Hrcms\\src\\test\\java\\ScreenShot\\failedScenario_" + scenarioLine + "_" + timeStamp + ".png";
+////
+////                // Capture and save the screenshot
+////                TakesScreenshot screenshot = ((TakesScreenshot) driver);
+////                File scrFile = screenshot.getScreenshotAs(OutputType.FILE);
+////                File destFile = new File(fileScreenShot);
+////                FileUtils.copyFile(scrFile, destFile);
 ////            } catch (IOException e) {
 ////                e.printStackTrace();
 ////            }
+////        }
+////        driver.quit();
+////    }
+//
+//        public void tearDown(@NotNull Scenario scenario) {
 //        if (scenario.isFailed()) {
-//            try {
-//                int scenarioLine = ScenarioSteps.getScenarioLineNumber();
-//
-//                // Generate timestamp
-//                String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-//
-//                // Construct the filename for the screenshot
-//                String fileScreenShot = "D:\\Hrcms\\src\\test\\java\\ScreenShot\\failedScenario_" + scenarioLine + "_" + timeStamp + ".png";
-//
-//                // Capture and save the screenshot
-//                TakesScreenshot screenshot = ((TakesScreenshot) driver);
-//                File scrFile = screenshot.getScreenshotAs(OutputType.FILE);
-//                File destFile = new File(fileScreenShot);
-//                FileUtils.copyFile(scrFile, destFile);
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
+//            String failedStepInfo = extractFailedStepInfo(scenario);
+//            ScreenshotUtility.captureScreenshotWithStep(scenario, failedStepInfo);
 //        }
+//
+//        //}
+//
+////        if (scenario.isFailed()) {
+////            captureScreenshot(scenario);
+////        }
 //        driver.quit();
 //    }
+//
+////    private void captureScreenshot(Scenario scenario) {
+////    }
+//
+//    private String extractFailedStepInfo(Scenario scenario) {
+//        return scenario.getName();
+////    private String extractFailedStepInfo(Scenario scenario) {
+////        try {
+////            TakesScreenshot screenshot = (TakesScreenshot) driver;
+////            File sourceFile = screenshot.getScreenshotAs(OutputType.FILE);
+////
+////            String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+////            String scenarioName = scenario.getName().replaceAll("[^a-zA-Z0-9.-]", "_");
+////
+////            String screenshotFileName = "failedScenario_" + scenarioName + "_" + timeStamp + ".png";
+////            String screenshotDirectory = "D:\\Hrcms\\src\\test\\java\\ScreenShot\\";
+////
+////            Path destinationPath = Paths.get(screenshotDirectory, screenshotFileName);
+////            File destFile = new File(destinationPath.toString());
+////
+////            FileHandler.copy(sourceFile, destFile);
+////        } catch (IOException e) {
+////            e.printStackTrace();
+////        }
+////        return scenario.getName();
+//    }
+//}
 
-        public void tearDown(Scenario scenario) {
-        //if (scenario.isFailed()) {
-            String failedStepInfo = extractFailedStepInfo(scenario);
-            ScreenshotUtility.captureScreenshotWithStep(scenario, failedStepInfo);
-        //}
-//        if (scenario.isFailed()) {
-//            captureScreenshot(scenario);
-//        }
-        driver.quit();
-    }
-    private String extractFailedStepInfo(Scenario scenario) {
+
+            //neew code for screen shot
+
+    public static void captureScreenshot(Scenario scenario) {
         try {
             TakesScreenshot screenshot = (TakesScreenshot) driver;
             File sourceFile = screenshot.getScreenshotAs(OutputType.FILE);
-
-            String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-            String scenarioName = scenario.getName().replaceAll("[^a-zA-Z0-9.-]", "_");
-
-            String screenshotFileName = "failedScenario_" + scenarioName + "_" + timeStamp + ".png";
-            String screenshotDirectory = "D:\\Hrcms\\src\\test\\java\\ScreenShot\\";
-
-            Path destinationPath = Paths.get(screenshotDirectory, screenshotFileName);
-            File destFile = new File(destinationPath.toString());
-
-            FileHandler.copy(sourceFile, destFile);
-        } catch (IOException e) {
+            saveScreenshot(scenario, sourceFile);
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        return scenario.getName();
+    }
+
+    private static void saveScreenshot(Scenario scenario, File sourceFile) {
+        try {
+            String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+            String scenarioName = scenario.getName().replaceAll("[^a-zA-Z0-9.-]", "_");
+            String screenshotFileName = "failedScenario_" + scenarioName + "_" + timeStamp + ".png";
+            String screenshotDirectory = "D:\\Hrcms\\src\\test\\java\\ScreenShot\\";
+            File destinationDir = new File(screenshotDirectory);
+
+            if (!destinationDir.exists()) {
+                destinationDir.mkdirs(); // Create directory if it doesn't exist
+            }
+
+            String destinationFilePath = "D:\\Hrcms\\src\\test\\java\\ScreenShot\\" + screenshotFileName;
+            File destinationFile = new File(destinationFilePath);
+
+            try (FileInputStream fis = new FileInputStream(sourceFile);
+                 FileOutputStream fos = new FileOutputStream(destinationFile)) {
+                byte[] buffer = new byte[1024];
+                int length;
+                while ((length = fis.read(buffer)) > 0) {
+                    fos.write(buffer, 0, length);
+                }
+            }
+            System.out.println("Screenshot saved to: " + destinationFilePath);
+        } catch (IOException e) {
+            System.out.println("Failed to save screenshot: " + e.getMessage());
+        }
+    }
+//    }
+
+    @After
+    public void tearDown(@NotNull Scenario scenario) {
+        //if (scenario.isFailed()) {
+            captureScreenshot(scenario);
+        //}
+        driver.quit();
     }
 }

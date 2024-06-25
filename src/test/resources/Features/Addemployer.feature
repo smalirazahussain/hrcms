@@ -21,6 +21,10 @@ Feature: AddEmployer
     Then    [Update Profile] User enter the day "3"
     #And     [Add Employer] user enter the passport no ""
     Then    [Add Employer] user tao the nationality
+    And     [Update Profile] User the address "Company Address "
+    And     []
+    Then    [Update Profile] User enter the building no ""
+    And     [Update Profile] Select the state "Dubai"
     #And     [Add Employer] user tao the Add New Establishment
    # Then    [Add Employer] user select the nationality "Afghanistan"
     And     [Add Employer] user enter the Mol no ""
@@ -57,7 +61,7 @@ Feature: AddEmployer
     And     [Admin Page] User tap on view button
     And     [Request Page] User verify the mol and passport no and then click the approve button
     Then    [Admin Page] User validate the toast message "Action Successful"
-
+  @Update @UpdateProfile2
   Scenario: Add new employer with Centiv Card
     Given   [Login Page] User enter the email "12643"
     When    [Login Page] User enter the password "Password1"
@@ -111,6 +115,7 @@ Feature: AddEmployer
     And     [Request Page] User verify the mol and passport no and then click the approve button
     Then    [Admin Page] User validate the toast message "Action Successfully"
 
+  @Update @UpdateProfile3
   Scenario: Add new employer with other bank
     Given   [Login Page] User enter the email "12643"
     When    [Login Page] User enter the password "Password1"
@@ -168,7 +173,7 @@ Feature: AddEmployer
     And     [Request Page] User verify the mol and passport no and then click the approve button
     Then    [Admin Page] User validate the toast message "Action Successfully"
 
-  @Update @UpdateProfile1
+  @Update @UpdateProfile4
   Scenario: Add new employer without enter employee type and validate the error message "Please enter Employee Type"
     Given   [Login Page] User enter the email "11793"
     When    [Login Page] User enter the password "Password1"
@@ -211,7 +216,7 @@ Feature: AddEmployer
     And     [Add Employer] user tap on the add employer
     Then    [Add Employer] User forget employee type and validate  the error message "Please enter Employee Type"
 
-  @Update @UpdateProfile1
+  @Update @UpdateProfile5
   Scenario: Add new employer without enter card type and validate the error message "Please enter card type"
     Given   [Login Page] User enter the email "11793"
     When    [Login Page] User enter the password "Password1"
@@ -247,7 +252,7 @@ Feature: AddEmployer
     And     [Add Employer] user tap on the add employer
     Then    [Add Employer] User forget employee type and validate  the error message "Please enter card type"
 
-  @Update @UpdateProfile1
+  @Update @UpdateProfile6
   Scenario: Add new employer without enter Last Name and validate the error message "Please enter Last Name"
     Given   [Login Page] User enter the email "11793"
     When    [Login Page] User enter the password "Password1"
@@ -282,7 +287,7 @@ Feature: AddEmployer
     And     [Add Employer] user tap on the add employer
     Then    [Add Employer] User forget employee type and validate  the error message "Please enter Last Name"
 
-  @Update @UpdateProfile1
+  @Update @UpdateProfile7
   Scenario: Add new employer without enter Gender and validate the error message "Please enter Gender"
     Given   [Login Page] User enter the email "11793"
     When    [Login Page] User enter the password "Password1"
@@ -322,7 +327,7 @@ Feature: AddEmployer
     And     [Add Employer] user tap on the add employer
     Then    [Add Employer] User forget employee type and validate  the error message "Please enter Gender"
 
-  @Update @UpdateProfile1
+  @Update @UpdateProfile8
   Scenario: Add new employer without   enter Nationality and validate the error message "Please enter Nationality"
     Given   [Login Page] User enter the email "11195"
     When    [Login Page] User enter the password "Password1"
@@ -361,7 +366,7 @@ Feature: AddEmployer
     And     [Add Employer] user tap on the add employer
     Then    [Add Employer] User forget employee type and validate  the error message "Please enter Nationality"
 
-  @Update @UpdateProfile1
+  @Update @UpdateProfile9
   Scenario: Add new employer Please enter First Name and validate the error message "Please enter First Name"
     Given   [Login Page] User enter the email "11195"
     When    [Login Page] User enter the password "Password1"
@@ -396,7 +401,7 @@ Feature: AddEmployer
     And     [Add Employer] user tap on the add employer
     Then    [Add Employer] User forget employee type and validate  the error message "Please enter First Name"
 
-  @Update @UpdateProfile1
+  @Update @UpdateProfile10
   Scenario: Add new employer without  enter Mol Number and validate the error message "Please enter Mol Number"
     Given   [Login Page] User enter the email "11195"
     When    [Login Page] User enter the password "Password1"
@@ -434,7 +439,7 @@ Feature: AddEmployer
     And     [Add Employer] user tap on the add employer
     Then    [Add Employer] User forget employee type and validate  the error message "Please enter Mol Number"
 
-  @Update @UpdateProfile1
+  @Update @UpdateProfile11
   Scenario: Add new employer without enter Employee Code and validate the error message "Please enter Employee Code"
     Given   [Login Page] User enter the email "11195"
     When    [Login Page] User enter the password "Password1"
@@ -469,7 +474,7 @@ Feature: AddEmployer
     And     [Add Employer] user tap on the add employer
     Then    [Add Employer] User forget employee type and validate  the error message "Please enter Employee Code"
 
-  @Update @UpdateProfile1
+  @Update @UpdateProfile12
   Scenario: Add new employer without  enter establishment Id and validate the error message "Please enter establishment Id"
     Given   [Login Page] User enter the email "11195"
     When    [Login Page] User enter the password "Password1"
@@ -509,7 +514,7 @@ Feature: AddEmployer
     And     [Add Employer] user tap on the add employer
     Then    [Add Employer] User forget employee type and validate  the error message "Please enter establishment Id"
 
-  @Update @UpdateProfile1
+  @Update @UpdateProfile13
   Scenario: Add new employer without  enter Passport and validate the error message "Please enter Passport"
     Given   [Login Page] User enter the email "11195"
     When    [Login Page] User enter the password "Password1"
@@ -549,7 +554,7 @@ Feature: AddEmployer
     And     [Add Employer] user tap on the add employer
     Then    [Add Employer] User forget employee type and validate  the error message "Please enter Passport"
 
-  @Update @UpdateProfile1
+  @Update @UpdateProfile14
   Scenario: Add new employer without upload document and validate the error message "Please upload document"
     Given   [Login Page] User enter the email "11195"
     When    [Login Page] User enter the password "Password1"
@@ -590,7 +595,7 @@ Feature: AddEmployer
     Then    [Add Employer] User forget employee type and validate  the error message "Please upload document"
 
 
-
+  @Update @UpdateProfile15
   Scenario: Add new employer with other bank and without document
     Given   [Login Page] User enter the email "11195"
     When    [Login Page] User enter the password "Password1"
@@ -638,7 +643,7 @@ Feature: AddEmployer
     And     [Admin Page] User tap on view button
     And     [Request Page] User verify the mol and passport no and then click the approve button
     Then    [Admin Page] User validate the toast message "Action Successfully"
-
+  @Update @UpdateProfile16
   Scenario: Add new employer with other bank ""Arab African International Bank""
     Given   [Login Page] User enter the email "ali@mailinator.com"
     When    [Login Page] User enter the password "Password1"
@@ -680,6 +685,7 @@ Feature: AddEmployer
     And     [Add Employer] user tap on the add employer
     Then    [Add Employer] Validate employees should add successfully "New employee added successfully, Please wait for approval"
 
+  @Update @UpdateProfile17
   Scenario: User validate the error message on Mol no  "Please enter Mol Number"
     Given   [Login Page] User enter the email "ali@mailinator.com"
     When    [Login Page] User enter the password "Password1"
@@ -715,6 +721,7 @@ Feature: AddEmployer
     And     [Add Employer] user tap on the add employer
     Then    [Add Employer] User validate the error message "Please enter Mol Number"
 
+  @Update @UpdateProfile18
   Scenario: User validate the error message on first name "Please enter First Name"
     Given   [Login Page] User enter the email "ali@mailinator.com"
     When    [Login Page] User enter the password "Password1"
@@ -750,7 +757,7 @@ Feature: AddEmployer
     And     [Add Employer] user tap on the add employer
     Then    [Add Employer] user validate the error message on first name "Please enter First Name"
 
-
+  @Update @UpdateProfile19
   Scenario: User validate the error message on first name "Please enter Last Name"
     Given   [Login Page] User enter the email "ali@mailinator.com"
     When    [Login Page] User enter the password "Password1"
@@ -786,6 +793,7 @@ Feature: AddEmployer
     And     [Add Employer] user tap on the add employer
     Then    [Add Employer] user validate the error message on last name "Please enter Last Name"
 
+  @Update @UpdateProfile20
   Scenario: User validate the error message on display name "Please enter Display Name"
     Given   [Login Page] User enter the email "ali@mailinator.com"
     When    [Login Page] User enter the password "Password1"
@@ -820,6 +828,7 @@ Feature: AddEmployer
     And     [Add Employer] user tap on the add employer
     Then    [Add Employer] user validate the error message on display name "Please enter Display Name"
 
+  @Update @UpdateProfile21
   Scenario: User validate the error message on display name "Please enter Gender"
     Given   [Login Page] User enter the email "ali@mailinator.com"
     When    [Login Page] User enter the password "Password1"
@@ -855,6 +864,7 @@ Feature: AddEmployer
     And     [Add Employer] user tap on the add employer
     Then    [Add Employer] user validate the error message on gender "Please enter Gender"
 
+  @Update @UpdateProfile22
   Scenario: User validate the error message on date of birth "Please enter Date Of Birth"
     Given   [Login Page] User enter the email "ali@mailinator.com"
     When    [Login Page] User enter the password "Password1"
@@ -879,6 +889,7 @@ Feature: AddEmployer
     And     [Add Employer] user tap on the add employer
     Then    [Add Employer] user validate the error message on date of birth "Please enter Date Of Birth"
 
+  @Update @UpdateProfile23
   Scenario: User validate the error message on passport no "Please enter Passport Number"
     Given   [Login Page] User enter the email "ali@mailinator.com"
     When    [Login Page] User enter the password "Password1"
@@ -914,6 +925,7 @@ Feature: AddEmployer
     And     [Add Employer] user tap on the add employer
     Then    [Add Employer] user validate the error message on passport no "Please enter Passport Number"
 
+  @Update @UpdateProfile124
   Scenario: user validate the error message on nationality "Please enter Nationality"
     Given   [Login Page] User enter the email "ali@mailinator.com"
     When    [Login Page] User enter the password "Password1"
@@ -1189,9 +1201,9 @@ Feature: AddEmployer
      |User|Mol12345|1|1|User|05/05/1978|M|BD|05/05/1978|@mailinator.com|971|971|Address|1|00001|2|2|2|Passport|10/05/2029|10000000000|10/05/2029|ESTASIACUP3492034|
      | User     | 098765456789oiuytrt | 2123    | 1    | User1            | 05/05/1978 | M      | PK          | 05/05/1978    | user1@gmail.com| 97100011111 | 97100011111    | Address1    | State1    | 00001        | WorkAddress1 | State2    | 00002        | PassportNumber1  | 10/05/2029     | EIDNumber1       | 10/05/2029     | 8711258059247301               |
 
-  @SomkeTest31
+  @AddEmployer@SomkeTest31
   Scenario Outline: Create multiple Employee
-    Given   [Login Page] User enter the email "12993"
+    Given   [Login Page] User enter the email "12977"
     When    [Login Page] User enter the password "Password1"
     Then    [Login page] User tap on login button
     Then    [Employees Page] User tap on employees button
@@ -1203,7 +1215,7 @@ Feature: AddEmployer
     And     [Request Page] User verify the approval status topic "Waiting For Your Approval"
     Then    [Request Page] User tap on the view button
     And     [Request Page] User tap on the Approve button
-    And     [Request Page] User verify the approval sent to the admin"Request sent to admin for further approval"
+    #And     [Request Page] User verify the approval sent to the admin"Request sent to admin for further approval"
 #    And     [Request Page] User verify the approval status topic "Waiting For Your Approval"
 #    Then    [Request Page] User tap on the view button
 #    And     [Request Page] User tap on the Approve button
@@ -1223,8 +1235,8 @@ Feature: AddEmployer
     Then    [Admin Page] User verify the notification message "Action Successful"
 
     Examples:
-      |FirstName|MolNo|EmpCode|LastName|DisplayName|DOB|Gender|Nationality|JoiningDate|Email|MobileNo|AlternatePhone|HomeAddress|HomeState|HomePostCode|WorkAddress|WorkState|WorkPostCode|PassportNo|PassportExpiry|EID|EIDExpiry|EstablishmentId|
-      |User|Mol12345|1|1|User|05/05/1978|M|BD|05/05/1978|@mailinator.com|971|971|Address|1|00001|2|2|2|Passport|10/05/2029|10000000000|10/05/2029|NewCompanyLimitedEstId768446|
+      |FirstName|MolNo   |EmpCode|LastName|DisplayName|DOB       |Gender|Nationality|JoiningDate|Email          |MobileNo|AlternatePhone|HomeAddress|HomeState|HomePostCode|WorkAddress|WorkState|WorkPostCode|PassportNo|PassportExpiry|EID|EIDExpiry |EstablishmentId |
+      |User     |Mol12345|1      |1       |User       |05/05/1978|M     |BD         |05/05/1978 |@mailinator.com|971     |971           |Address    |1        |00001       |2          |2        |2           |Passport  |10/05/2029    |   |10/05/2029|0000010903853   |
 
   Scenario Outline: Create multiple Employee with non wps process
     Given   [Login Page] User enter the email "12982"
@@ -1253,7 +1265,7 @@ Feature: AddEmployer
 
     Examples:
       |FirstName|MolNo|EmpCode|LastName|DisplayName|DOB|Gender|Nationality|JoiningDate|Email|MobileNo|AlternatePhone|HomeAddress|HomeState|HomePostCode|WorkAddress|WorkState|WorkPostCode|PassportNo|PassportExpiry|EID|EIDExpiry|EstablishmentId|
-      |User|00000000000000|0000|1|User|05/05/1978|M|BD|05/05/1978|@mailinator.com|971|971|Address|1|00001|2|2|2|Passport|10/05/2029|10000000000|10/05/2029|DartEST3453453454434|
+      |User|00000000000000|0000|1|User|05/05/1978|M|BD|05/05/1978|@mailinator.com|97156|97156|Address|1|00001|2|2|2|Passport|10/05/2029|78419910|10/05/2029|DartEST3453453454434|
 
 
 

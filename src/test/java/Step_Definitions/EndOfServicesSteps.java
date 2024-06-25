@@ -15,7 +15,8 @@ import java.time.Duration;
 
 import static Hooks.Base_Class.driver;
 import static Step_Definitions.AddEmployerSteps.IbanNo;
-import static Step_Definitions.AddEmployerSteps.companyName;
+import static Step_Definitions.SignUpSteps.companyName;
+//import static Step_Definitions.AddEmployerSteps.companyName;
 
 public class EndOfServicesSteps<Save_mol> {
 

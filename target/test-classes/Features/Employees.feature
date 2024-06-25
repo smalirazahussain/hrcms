@@ -19,7 +19,7 @@ Feature: Update Profile
     Then    [Add Employer] User enter the year 2017
     And     [Update Profile] User enter the month "Dec"
     Then    [Update Profile] User enter the day "3"
-    And     [Add Employer] user enter the passport no ""
+    #And     [Add Employer] user enter the passport no ""
     Then    [Add Employer] user tao the nationality
    # Then    [Add Employer] user select the nationality "Afghanistan"
     And     [Add Employer] user enter the Mol no ""

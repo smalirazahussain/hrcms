@@ -1,6 +1,7 @@
 package Step_Definitions;
 
 import Pages.Android.AdminPage;
+import Pages.Android.MolPages;
 import Pages.Android.UpdateProliePage;
 import Pages.HeadOfficePages.ManageEmployeesHeadOfficePage;
 import Pages.HeadOfficePages.OnBoardApprovalHeadOfficePage;
@@ -29,9 +30,12 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.time.Duration;
 import java.util.Arrays;
+import java.util.Objects;
 
 import static Hooks.Base_Class.driver;
 import static Pages.Android.AdminPage.*;
+import static Pages.Android.MolPages.Mol_Cross_Button;
+import static Pages.Android.RequestPage.Loading;
 import static Pages.Android.UpdateProliePage.*;
 import static Pages.HeadOfficePages.OnBoardApprovalHeadOfficePage.Phone_No;
 import static Step_Definitions.AddEmployerSteps.IbanNo;
@@ -40,6 +44,7 @@ import static Step_Definitions.Employeessteps.randomNumbers;
 import static Step_Definitions.EndOfServicesSteps.filePath;
 import static Step_Definitions.ProcessSalariesDepositSlipSteps.actualamount;
 import static Step_Definitions.SignUpSteps.companyName;
+import static Step_Definitions.SubAdminsteps.subadmincompanyTittle;
 import static Step_Definitions.UpdateProfile.*;
 import static Step_Definitions_Head_Ofiice.BrachesStepsHeadOffice.branch;
 import static Step_Definitions_Head_Ofiice.BrachesStepsHeadOffice.phno;
@@ -47,6 +52,7 @@ import static Step_Definitions_Head_Ofiice.DashBoardStepsHeadOffice.exchangeHous
 import static Tests.Current_Date.currentMonth;
 
 public class adminsteps {
+
     Duration timeout = Duration.ofSeconds(30);
     WebDriverWait wait = new WebDriverWait(driver, timeout);
     //create a soft-assertion object
@@ -105,6 +111,7 @@ public class adminsteps {
 
     @When("[Admin Page] User tap on client Approvals")
     public void adminPageUserTapOnClientApprovals() {
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(Loading)));
         AdminPage.get_Client_Approval().click();
     }
 
@@ -129,11 +136,22 @@ public class adminsteps {
 
     @Then("[Admin Page] User validate the toast message {string}")
     public void adminPageUserValidateTheToastMessage(String actual) throws InterruptedException {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(Action_Successfully(actual))));
+        String expect = AdminPage.get_Action_Successfully(actual).getText();
+        Assert.assertEquals(expect,actual);
+    }
 
-            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(Action_Successfully(actual))));
-            String expect = AdminPage.get_Action_Successfully(actual).getText();
-            Assert.assertEquals(expect,actual);
+    private boolean waitForToastMessage(String expectedToastMessage) {
+        try {
+            String xpath = "//div[contains(text(), '" + expectedToastMessage + "')]";
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpath)));
+            return true;
+        } catch (Exception e) {
+            return false;
         }
+    }
+
+
     @Then("[Admin Page] User tap on approve button")
     public void adminPageUserTapOnApproveButton() throws InterruptedException {
         AdminPage.get_Approve_Button().click();
@@ -145,6 +163,7 @@ public class adminsteps {
 
     @Then("[Admin Page] User Tap om the browse button")
     public void adminPageUserTapOmTheBrowseButton() throws AWTException, InterruptedException {
+        wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(Browse_Button)));
         AdminPage.get_Browse_Button().click();
         Thread.sleep(3000);
 
@@ -306,6 +325,7 @@ public class adminsteps {
 
     @Then("[Admin Page] User tap on employer")
     public void adminPageUserTapOnEmployer() {
+        wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(Admin_Employer_Button)));
         AdminPage.get_Admin_Employer_Button().click();
     }
 
@@ -515,5 +535,35 @@ public class adminsteps {
     public void adminPageUserTapOnEstablishmentIdViewButton() {
         //wait.until(ExpectedConditions.elementToBeClickable(By.xpath(Est_Id_View)));
         AdminPage.get_Est_Id_View().click();
+    }
+
+    @Then("[Admin Page] User validate the subadmin toast message {string}")
+    public void adminPageUserValidateTheSubadminToastMessage(String actual) {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(msg)));
+        String approvalAlreadySubmitted = "You already submitted for approval. Please be patient";
+        String expect = AdminPage.get_msg().getText();
+        if (Objects.equals(expect, "Request generated successfully")) {
+            System.out.println(expect);
+            Assert.assertEquals(expect, actual);
+        }
+        if (Objects.equals(expect, "You already submitted for approval. Please be patient")) {
+            System.out.println(expect);
+            Assert.assertEquals(expect, approvalAlreadySubmitted);
+            wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(msg)));
+            wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(Mol_Cross_Button)));
+            //Thread.sleep(5000);
+            MolPages.get_Mol_Cross_Button().click();
+        }
+        else {
+            System.out.println("Can Not Read");
+        }
+    }
+
+
+    @Then("[Admin Page] Sub admin enter the company in admin portal")
+    public void adminPageSubAdminEnterTheCompanyInAdminPortal() {
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath(Company_Client)));
+        AdminPage.get_Company_Client().sendKeys(subadmincompanyTittle + Keys.ENTER);
+        System.out.println(subadmincompanyTittle);
     }
 }

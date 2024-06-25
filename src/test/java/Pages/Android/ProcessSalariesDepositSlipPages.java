@@ -7,6 +7,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.List;
 
 
 public class ProcessSalariesDepositSlipPages {
@@ -23,6 +24,7 @@ public class ProcessSalariesDepositSlipPages {
     public static String Salary_Submit_Button = "div:nth-child(7) > button:nth-child(1)";
     public static String Cross_Button = ".ant-modal-close-x";
     public static String Salary_Amount = "//div[@class='ant-modal-body']//span[1]//span[1]";
+    public static String Emp_Codes = ":is(table > tr) td:nth-child(1)";
 
     public static WebElement get_Process_Salaries_Deposit_Slip() {
 
@@ -55,6 +57,11 @@ public class ProcessSalariesDepositSlipPages {
 
     public static WebElement get_Salary_Amount() {
         return Base_Class.driver.findElement(By.xpath(Salary_Amount));
+    }
+
+    public static List<WebElement> get_Emp_Codes() {
+
+        return Base_Class.driver.findElements(By.cssSelector(Emp_Codes));
     }
 
     //locator

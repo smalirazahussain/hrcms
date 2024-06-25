@@ -2,7 +2,7 @@
 <suite name="Hrcms" parallel="tests">
     <test name="Test">
         <classes>
-            <class name="cucumberTestRunner"/>
+            <class name="cucumbertestrunner"/>
         </classes>
     </test>
 </suite>

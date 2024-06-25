@@ -289,7 +289,7 @@ Feature: Update Profile
      And     [Admin Page] User tap on login page
      Then    [Admin Page] User tap on employer
      And     [Admin Page] User tap on Add employer
-     When    [Sign Up] User enter the name "dubaicompany"
+     When    [Sign Up] User enter the name "Company Api"
      Then    [Sign Up] User enter the email "email"
     #Then    [Sign Up] Enter the Phone code "971"
      #Then    [Sign Up] User enter the phone no "12345678"

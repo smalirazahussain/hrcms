@@ -9,6 +9,7 @@ import io.cucumber.java.en.When;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.asserts.SoftAssert;
 
@@ -32,6 +33,7 @@ public class OnBoardApprovalStepsHeadOffice {
 
     @Then("[OnBoard Approval Head Office Page] User tap onboard approval")
     public void onboardApprovalHeadOfficePageUserTapOnboardApproval() {
+        wait.until(ExpectedConditions.elementToBeClickable(By.id(Onboard_Approval)));
         OnBoardApprovalHeadOfficePage.get_Onboard_Approval().click();
         OnBoardApprovalHeadOfficePage.get_Onboard_Approval().click();
         Actions actions = new Actions(driver);

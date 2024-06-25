@@ -14,7 +14,6 @@ D:\Hrcms\src\test\java\Step_Definitions_Head_Ofiice\LoginStepsHeadOffice.java
 D:\Hrcms\src\test\java\Pages\Android\RequestPage.java
 D:\Hrcms\src\test\java\Pages\Android\SwitchToOtherBankPages.java
 D:\Hrcms\src\test\java\Step_Definitions\SwitchToOtherBanksteps.java
-D:\Hrcms\src\test\java\Runner.java
 D:\Hrcms\src\test\java\Step_Definitions\Employeessteps.java
 D:\Hrcms\src\test\java\Pages\HeadOfficePages\ManageEmployeesHeadOfficePage.java
 D:\Hrcms\src\test\java\Step_Definitions\adminsteps.java
@@ -29,6 +28,7 @@ D:\Hrcms\src\test\java\Pages\Android\EidPages.java
 D:\Hrcms\src\test\java\Pages\HeadOfficePages\WebPortalHeadOfficePage.java
 D:\Hrcms\src\test\java\Pages\Android\OtherCompaniesPage.java
 D:\Hrcms\src\test\java\Step_Definitions\Eidsteps.java
+D:\Hrcms\src\test\java\Utils\ScreenshotUtility.java
 D:\Hrcms\src\test\java\Step_Definitions\EndOfServicesSteps.java
 D:\Hrcms\src\test\java\Pages\Android\ProfilePage.java
 D:\Hrcms\src\test\java\Step_Definitions_Head_Ofiice\BrachesStepsHeadOffice.java
@@ -50,9 +50,12 @@ D:\Hrcms\src\test\java\Pages\HeadOfficePages\HeadOfficeLoginPage.java
 D:\Hrcms\src\test\java\Step_Definitions_Head_Ofiice\OnBoardApprovalStepsHeadOffice.java
 D:\Hrcms\src\test\java\Pages\Android\AddEmployerPages.java
 D:\Hrcms\src\test\java\Step_Definitions_Head_Ofiice\EstablishmentsStepsHeadOffice.java
+D:\Hrcms\src\test\java\config\properties\MainClass.java
 D:\Hrcms\src\test\java\Step_Definitions\ProcessSalariesDepositSlipSteps.java
 D:\Hrcms\src\test\java\Step_Definitions\LinkEstablishmentIdSteps.java
 D:\Hrcms\src\test\java\Pages\Android\ApprovalPage.java
 D:\Hrcms\src\test\java\Pages\Android\EndOfServiesPages.java
 D:\Hrcms\src\test\java\Pages\HeadOfficePages\DashBoardHeadOfficePage.java
+D:\Hrcms\src\test\java\cucumbertestrunner.java
 D:\Hrcms\src\test\java\Pages\Android\SubAdminPages.java
+D:\Hrcms\src\test\java\config\properties\ConfigReader.java

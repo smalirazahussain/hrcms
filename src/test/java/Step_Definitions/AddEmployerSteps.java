@@ -3,6 +3,7 @@ package Step_Definitions;
 import Pages.Android.AddEmployerPages;
 import Pages.Android.EmployeesPage;
 import Pages.Android.UpdateProliePage;
+import config.properties.ConfigReader;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -31,6 +32,7 @@ import static Pages.Android.AddEmployerPages.*;
 import static Pages.Android.UpdateProliePage.get_year_arrow_xpath;
 import static Pages.Android.UpdateProliePage.issueDate;
 import static Step_Definitions.Employeessteps.randomNumbers;
+import static Step_Definitions.SignUpSteps.companyName;
 import static Tests.Current_Date.currentYear;
 
 public class AddEmployerSteps<Save_mol> {
@@ -39,12 +41,12 @@ public class AddEmployerSteps<Save_mol> {
     WebDriverWait wait = new WebDriverWait(driver, timeout);
     //create a soft-assertion object
     SoftAssert softAssert = new SoftAssert();
-
+    ConfigReader configReader = new ConfigReader();
 
 
     @Given("[Add Employer] user tap on new employer button")
     public void addEmployerUserTapOnNewEmployerButton() throws InterruptedException {
-        Thread.sleep(3000);
+        //Thread.sleep(3000);
 //        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(Add_New_Emplyer)));
 //        wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(Add_New_Emplyer)));
 //        AddEmployerPages.get_Add_New_Emplyer().click();
@@ -59,15 +61,16 @@ public class AddEmployerSteps<Save_mol> {
 //        addEmployerButton.click();
 //        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(Add_New_Emplyer)));
 //        WebElement addEmployerButton = driver.findElement(By.cssSelector(Add_New_Emplyer));
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector("span[class='ant-spin-dot ant-spin-dot-spin']")));
         wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(Add_New_Emplyer)));
         AddEmployerPages.get_Add_New_Emplyer().click();
-        try {
-            wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(Add_New_Emplyer)));
-            wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(Add_New_Emplyer)));
-            AddEmployerPages.get_Add_New_Emplyer().click();
-        } catch (Exception e) {
-            System.out.println("Error occurred while clicking on the element: " + e.getMessage());
-        }
+//        try {
+//            wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(Add_New_Emplyer)));
+//            wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(Add_New_Emplyer)));
+//            AddEmployerPages.get_Add_New_Emplyer().click();
+//        } catch (Exception e) {
+//            System.out.println("Error occurred while clicking on the element: " + e.getMessage());
+//        }
     }
 
 
@@ -165,6 +168,7 @@ public class AddEmployerSteps<Save_mol> {
         AddEmployerPages.get_Mol_No().sendKeys(first14 + Molno);
         EmpMol = first14 + Molno;
         System.out.println("MOL NO WHICH IS SAving.....: " + Save_mol);
+        
     }
 
 
@@ -217,7 +221,7 @@ public class AddEmployerSteps<Save_mol> {
 
     @And("[Add Employer] user tap on the add employer")
     public void addEmployerUserTapOnTheAddEmployer() throws InterruptedException {
-        EmployeesPage.get_Add_Emplyer_Button().sendKeys(EmpMol);
+       // EmployeesPage.get_Add_Emplyer_Button().sendKeys(EmpMol);
         EmployeesPage.get_Add_Emplyer_Button().click();
 
 
@@ -442,13 +446,11 @@ public class AddEmployerSteps<Save_mol> {
         Passportno = "Pk" + randomint;
     }
 
-    public static String companyName;
 
     @When("[Add Employer] User select the establishment id")
     public void addEmployerUserSelectTheEstablishmentId() {
-        String companyTittle = AddEmployerPages.get_Company_Tittle().getText();
-        AddEmployerPages.get_Establishment_Id().sendKeys(companyTittle + Keys.ENTER);
-        companyName = companyTittle;
+        //String companyTittle = AddEmployerPages.get_Company_Tittle().getText();
+        AddEmployerPages.get_Establishment_Id().sendKeys(companyName + Keys.ENTER);
         System.out.println(companyName);
 
     }
@@ -613,6 +615,11 @@ public class AddEmployerSteps<Save_mol> {
         companyName = companyTitle;
         System.out.println(companyName);
         System.out.println("ESTID" + establishmentNo);
+    }
+
+    @Then("[Add Employer] User navigate to the employer portal")
+    public void addEmployerUserNavigateToTheEmployerPortal() {
+        driver.navigate().to(configReader.getProperty("employerurl"));
     }
 }
 

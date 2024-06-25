@@ -2,15 +2,14 @@ package Step_Definitions;
 
 import Pages.Android.AddEmployerPages;
 import Pages.Android.EmployeesPage;
+import Pages.Android.SubAdminPages;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
-import io.cucumber.java.en.When;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
@@ -28,6 +27,7 @@ import java.util.Random;
 
 import static Hooks.Base_Class.driver;
 import static Pages.Android.AddEmployerPages.Company_Tittle;
+import static Pages.Android.EmployeesPage.Employee_Type;
 import static Pages.Android.EmployeesPage.employees;
 import static Step_Definitions.AddEmployerSteps.EmpMol;
 import static Step_Definitions.SignUpSteps.companyName;
@@ -64,9 +64,11 @@ public class Employeessteps {
         companyID = AddEmployerPages.get_Company_Id().getText();
         companyName = companyTittle;
         System.out.println("CompanyName"+companyName);
+        System.out.println("Company ID:"+companyID);
         wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(employees)));
         EmployeesPage.get_Employees().click();
-        //Thread.sleep(5000);
+
+
 
 
     }
@@ -153,7 +155,8 @@ public class Employeessteps {
     //    EstablishmentsStepsHeadOffice establishmentsStepsHeadOffice = new EstablishmentsStepsHeadOffice();
 //    String branchEstablishmentId = establishmentsStepsHeadOffice.branchEstablishmentId;
     @And("[Employees Page] User create a multiple data for the employer {string}{string}{string}{string}{string}{string}{string}{string}{string}{string}{string}{string}{string}{string}{string}{string}{string}{string}{string}{string}{string}{string}{string}")
-    public void employeesPageUserCreateAMultipleDataForTheEmployer(String molNo, String empCode, String firstName, String lastName, String displayName, String dob, String gender, String nationality, String joiningDate, String email, String mobile, String altenatePhone, String homeAddress, String homeState, String homePostCode, String workAddress, String workState, String workPostCode, String PassportNo, String passportExpiry, String eid, String eidExpiry, String est) throws IOException, InterruptedException {
+    public void
+    employeesPageUserCreateAMultipleDataForTheEmployer(String molNo, String empCode, String firstName, String lastName, String displayName, String dob, String gender, String nationality, String joiningDate, String email, String mobile, String altenatePhone, String homeAddress, String homeState, String homePostCode, String workAddress, String workState, String workPostCode, String PassportNo, String passportExpiry, String eid, String eidExpiry, String est) throws IOException, InterruptedException {
         //System.out.println(branchEstablishmentId);
         String[] headers = {"Mol No", "Emp Code", "First Name", "Last Name", "Display Name", "Date of Birth", "Gender(M/F)".trim(), "Nationality".trim().replaceAll("^\\s+", ""), "Date of Joining", "Email", "Mobile", "Alternate Phone", "Home Address", "Home State", "Home Post Code", "Work Address", "Work State", "Work Post Code", "Passport Number", "Passport Expiry", "EID", "EID Expiry", "Establishment Id"};
         Random random = new Random();
@@ -182,12 +185,13 @@ public class Employeessteps {
 //            String branchEstablishmentId = establishmentsStepsHeadOffice.branchEstablishmentId;
 
         //System.out.println(branchEstablishmentId);
-        for (int j = 0; j < 5; j++) {
+        for (int j = 0; j < 20000; j++) {
             System.out.println(j);
             int randomNumber = random.nextInt(1000000000);
+            //int eidNumber = random.nextInt(1000000000000000);
+            long random16DigitNumber = (long) (Math.random() * 9_000_000_000_000_000L) + 1_000_000_000_000_000L;
 
-
-            raws = new String[]{molNo + randomNumber, empCode + randomNumber, firstName, lastName+ randomNumber, displayName, dob, gender.trim(), nationality.trim().replaceAll("^\\s+", ""), joiningDate, "user" + randomNumber + email, mobile + randomNumber, altenatePhone + randomNumber, homeAddress + randomNumber, homeState, homePostCode, workAddress, workState, workPostCode, PassportNo + randomNumber, passportExpiry, eid + randomNumber, eidExpiry, /*branchEstablishmentId +*/ est};
+            raws = new String[]{molNo + randomNumber, empCode + randomNumber, firstName, lastName+ randomNumber, displayName, dob, gender.trim(), nationality.trim().replaceAll("^\\s+", ""), joiningDate, "user" + randomNumber + email, mobile + randomNumber, altenatePhone + randomNumber, homeAddress + randomNumber, homeState, homePostCode, workAddress, workState, workPostCode, PassportNo + randomNumber, passportExpiry, eid + random16DigitNumber, eidExpiry,/*branchEstablishmentId +*/ est};
             System.out.println("BranchESTID;"+branchEstablishmentId);
             //System.out.println(branchEstablishmentId);
             //System.out.println(raws[j]);
@@ -208,7 +212,7 @@ public class Employeessteps {
 
         // Write the workbook to an output stream
         filePath = "D:\\Hrcms\\src\\test\\java\\document\\" + randomNumbers + ".xlsx";
-        System.out.println(filePath);
+        System.out.println("File No:"+filePath);
         try (FileOutputStream fileOut = new FileOutputStream(filePath)) {
             workbook.write(fileOut);
         } catch (IOException e) {
@@ -358,12 +362,12 @@ public class Employeessteps {
 
         //System.out.println(branchEstablishmentId);
         int j;
-        for (j = 0; j < 10; j++) {
-
-            //System.out.println(j);
-            int randomNumber = random.nextInt(1000000000);
-
-
+        for (j = 0; j < 20000; j++) {
+            Random r = new Random();
+            int start = 1000000;
+            int end = 9999999;
+            int randomNumber = r.nextInt(end-start) + start;
+            System.out.println("randomNumber"+randomNumber);
             raws = new String[]{molNo, empCode, firstName, lastName+randomNumber, displayName , dob, gender.trim(), nationality.trim().replaceAll("^\\s+", ""), joiningDate, "user" + randomNumber + email, mobile + randomNumber, altenatePhone + randomNumber, homeAddress + randomNumber, homeState, homePostCode, workAddress, workState, workPostCode, PassportNo + randomNumber, passportExpiry, eid + randomNumber, eidExpiry, /*branchEstablishmentId +*/ est};
             System.out.println("BranchESTID;" + branchEstablishmentId);
             //System.out.println(branchEstablishmentId);
@@ -376,6 +380,7 @@ public class Employeessteps {
                 cell.setCellValue(raws[i]);
                 System.out.println(Arrays.toString(new String[]{"RAWS" + Arrays.toString(raws)}));
             }
+
         }
         System.out.println(Arrays.toString(headers));
         //System.out.println(j);
@@ -398,12 +403,67 @@ public class Employeessteps {
         System.out.println(randomNumbers);
     }
 
-    @When("[Add Employer] Sub admin select the establishment id")
-    public void addEmployerSubAdminSelectTheEstablishmentId() {
-        String companyTittle = AddEmployerPages.get_Sub_Admin_Company_Tittle().getText().split("Client: ")[1];
-        AddEmployerPages.get_Establishment_Id().sendKeys(companyTittle + Keys.ENTER);
-        companyName = companyTittle;
-        System.out.println("Sub Amin Company:"+companyName);
+
+
+    @And("[Employees Page] User create a multiple data for the other bank employer {string}{string}{string}{string}{string}{string}{string}{string}{string}{string}")
+    public void employeesPageUserCreateAMultipleDataForTheOtherBankEmployer(String empId, String empName, String empDesignation, String employerWPSEstId, String empIBAN, String empBankName, String empWPSPersonId, String empPassPortNo, String empNationality, String empLabourCard) throws IOException {
+        String[] headers = {"Employee ID","Name","Designation","WPS Establishment ID","IBAN","Bank Name","WPS Person ID","Passport Number","Nationality","Labor card"};
+        Random random = new Random();
+        HSSFWorkbook workbook = new HSSFWorkbook();
+        HSSFSheet sheet = workbook.createSheet("Bulk employees");
+
+        HSSFRow headerRow = sheet.createRow(0);
+        for (int i = 0; i < headers.length; i++) {
+            HSSFCell cell = headerRow.createCell(i);
+            cell.setCellValue(headers[i].trim());
+        }
+        String[] raws = new String[0];
+
+        for (int j = 0; j < 5; j++) {
+            System.out.println(j);
+            int randomNumber = random.nextInt(1000000000);
+
+
+
+            raws = new String[]{empId+randomNumber, empName+randomNumber, empDesignation, employerWPSEstId, empIBAN+randomNumber, empBankName, empWPSPersonId+randomNumber, empPassPortNo+randomNumber, empNationality, empLabourCard+randomNumber};
+
+            HSSFRow dataRow = sheet.createRow(j + 1);
+            for (int i = 0; i < raws.length; i++) {
+                HSSFCell cell = dataRow.createCell(i);
+                cell.setCellValue(raws[i]);
+
+            }
+        }
+        System.out.println(Arrays.toString(headers));
+        System.out.println(Arrays.toString(new String[]{"" + Arrays.toString(raws)}));
+
+        randomNumbers = random.nextInt(10000);
+
+
+        // Write the workbook to an output stream
+        filePath = "D:\\Hrcms\\src\\test\\java\\document\\" + randomNumbers + ".xlsx";
+        System.out.println(filePath);
+        try (FileOutputStream fileOut = new FileOutputStream(filePath)) {
+            workbook.write(fileOut);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            workbook.close();
+            //Thread.sleep(5000);
+
+        }
+        System.out.println(randomNumbers);
+    }
+
+    @And("[Employees Page] User tap on the employee type")
+    public void employeesPageUserTapOnTheEmployeeType() {
+        //wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(Employee_Type)));
+        //driver.navigate().refresh();
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector("span[class='ant-spin-dot ant-spin-dot-spin']")));
+        wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(Employee_Type)));
+        EmployeesPage.get_Employee_Type().click();
+        EmployeesPage.get_Payd_Card().click();
+        SubAdminPages.get_Search_Button().click();
     }
 }
 

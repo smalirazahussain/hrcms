@@ -10,7 +10,10 @@ import Pages.Android.UpdateProliePage;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import org.openqa.selenium.*;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
@@ -102,17 +105,19 @@ public class UpdateProfile {
         //UpdateProliePage.getExpireDate().click();
         Thread.sleep(5000);
     }
-
+//    public static StringSelection str;
     @Then("[Update Profile] User tap on browse file")
     public void updateProfileUserTapOnBrowseFile() throws InterruptedException, AWTException {
 
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(browseFile)));
-        UpdateProliePage.getBrowseFile().click();
+//        String file = new File("D:\\Hrcms\\src\\test\\java\\document\\Trade doc.pdf").getAbsolutePath();
+//        getBrowseFile().sendKeys(file);
+        getBrowseFile().click();
         Thread.sleep(3000);
-
 
         Robot rb = new Robot();
         StringSelection str = new StringSelection("D:\\Hrcms\\src\\test\\java\\document\\Trade doc.pdf");
+
         Toolkit.getDefaultToolkit().getSystemClipboard().setContents(str, null);
         // press Contol+V for pasting
         rb.keyPress(KeyEvent.VK_CONTROL);
@@ -126,13 +131,14 @@ public class UpdateProfile {
         rb.keyPress(KeyEvent.VK_ENTER);
         rb.keyRelease(KeyEvent.VK_ENTER);
         //ScrollVertical(get_Add_Emplyer_Button());
-        Thread.sleep(5000);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div[class='preview flex0']")));
+        //Thread.sleep(5000);
     }
 
 
     @And("[Update Profile] User enter the submit button")
     public void updateProfileUserEnterTheSubmitButton() throws InterruptedException {
-        //wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"root\"]/div/div/div[2]/div[2]")));
+        wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(submitButton)));
         UpdateProliePage.getSubmitButton().click();
 
     }

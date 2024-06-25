@@ -61,7 +61,7 @@ Feature: Branches
     Then   [Admin Page] Admin verification the branch and then approve
     Given  [Login Head Office Page] User enter the URL "http://10.10.5.100:8004"
     Then   [Web Portal Page] User enter the user name "admin"
-    Then   [Web Portal Page] User enter the Password "admin"
+    Then   [Web Portal Page] User enter the Password "Password1"
     Then   [Web Portal Page] User tap on the login button
     When   [Web Portal Page] User tap on the side manu "Corporate"
     When   [Web Portal Page] User tap on the side manu "Manage Company"
@@ -100,7 +100,7 @@ Feature: Branches
 
   Scenario: ExchangeHouse creates a statement request for approval by the branch employee, then the request is approved and further approved by the admin
     Given  [Login Head Office Page] User enter the URL "https://exchangehouse.getthelingo.com/"
-    When   [Login Head Office Page] User enter email id "dubaiexchange@kamelpay.com"
+    When   [Login Head Office Page] User enter email id "dubaiexchange@mailinator.com"
     Then   [Login Head Office Page] User enter the Password "Password1"
     And    [Login Head Office Page] User tap on the login button
     #Then   [Dashboard Head Office Page] User verify to toast message to "Successfully Login"
@@ -109,7 +109,8 @@ Feature: Branches
     Then   [Branch Head Office Page] User tap on the view employees button
     Then   [Branch Head Office Page] User tap on the eye button
     When   [Branch Head Office Page] User tap on the statement request button
-    And    [Branch Head Office Page] User validate the message "This statement request has 15 AED charges, do you want to continue?" abd click ont the continue button
+    And     [Update Profile] User enter the submit button
+    And    [Branch Head Office Page] User validate the message "This statement request will be charged to the cardholder, do you want to continue?" abd click ont the continue button
     Then   [Branch Head Office Page] User validate the top-up message "Approval is processed for further actions"
     Then   [OnBoard Approval Head Office Page] User tap onboard approval
     Then   [OnBoard Approval Head Office Page] User tap onboard approval for statement request

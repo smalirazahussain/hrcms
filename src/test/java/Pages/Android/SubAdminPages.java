@@ -46,7 +46,21 @@ public class SubAdminPages {
     public static String Employees_Creations = "#add-appointment-form_EMPLOYEES > label";
     public static String Employee_Module="div:nth-child(3) >ul >li >div:nth-child(1)";
     public static String Employee_Active_Status = "span[class='ant-tag ant-tag-green']";
-    public static String Sub_Admin_Employee_Eye_Button = "svg[class='c-icon large']";
+    public static String Sub_Admin_Employee_Eye_Button = "tr:nth-child(2) > td:nth-child(2) div svg";
+    public static String Is_User_Active_Drop_Down = "tr th:nth-child(5) div span:nth-child(2)";
+    public static String Active_Button = "input[value='ACTIVE']";
+    public static String Search_Button = "(//button[@title='Search'])[1]";
+    public static String Deactivate_Button = "button[title=Deactivate]";
+    public static String Employee_Creations ="#add-appointment-form_EMPLOYEE > label";
+    public static String Deactivate_Message ="";
+    public static String Is_User_Active_Search_Button =" (//button[@title='Search'])[2]";
+    public static String Edit_Phone_Number ="button[title='Edit Phone Number']";
+    public static String Updated_Phone_No = "li:nth-child(7) li:nth-child(1) span:nth-child(2)";
+    public static String Edit_Mol_Est_Id = "button[title='Edit Mol/Est Id']";
+    public static String Employee_Mol_No = "molNo";
+    public static String Employer_Establishment_Id = "#establishmentId";
+    public static String Sub_Search_Button = ".search-view input.ant-input";
+
 
 
     public static WebElement get_Sub_Admin_Button(){
@@ -137,5 +151,57 @@ public class SubAdminPages {
 
     public static WebElement get_Employee_Eye_Button() {
         return Base_Class.driver.findElement(By.cssSelector(Sub_Admin_Employee_Eye_Button));
+    }
+
+    public static WebElement get_Is_User_Active_Drop_Down() {
+        return Base_Class.driver.findElement(By.cssSelector(Is_User_Active_Drop_Down));
+    }
+
+    public static WebElement get_Active_Button() {
+        return Base_Class.driver.findElement(By.cssSelector(Active_Button));
+    }
+
+    public static WebElement get_Search_Button() {
+        return Base_Class.driver.findElement(By.xpath(Search_Button));
+    }
+
+    public static WebElement get_Deactivate_Button() {
+        return Base_Class.driver.findElement(By.cssSelector(Deactivate_Button));
+    }
+
+    public static List<WebElement> get_Employee_Creations() {
+        return Base_Class.driver.findElements(By.cssSelector(Employee_Creations));
+    }
+
+    public static WebElement get_Deactivate_Message() {
+        return Base_Class.driver.findElement(By.cssSelector(Deactivate_Message));
+    }
+
+    public static WebElement get_Is_User_Active_Search_Button() {
+        return Base_Class.driver.findElement(By.xpath(Is_User_Active_Search_Button));
+    }
+
+    public static WebElement get_Edit_Phone_Number() {
+        return Base_Class.driver.findElement(By.cssSelector(Edit_Phone_Number));
+    }
+
+    public static WebElement get_Updated_Phone_No() {
+        return Base_Class.driver.findElement(By.cssSelector(Updated_Phone_No));
+    }
+
+    public static WebElement get_Edit_Mol_Est_Id() {
+        return Base_Class.driver.findElement(By.cssSelector(Edit_Mol_Est_Id));
+    }
+
+    public static WebElement get_Employee_Mol_No() {
+        return Base_Class.driver.findElement(By.id(Employee_Mol_No));
+    }
+
+    public static WebElement get_Employer_Establishment_Id() {
+        return Base_Class.driver.findElement(By.cssSelector(Employer_Establishment_Id));
+    }
+
+    public static WebElement get_Sub_Search_Button() {
+        return Base_Class.driver.findElement(By.cssSelector(Sub_Search_Button));
     }
 }

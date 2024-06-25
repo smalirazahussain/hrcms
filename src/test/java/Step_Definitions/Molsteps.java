@@ -11,7 +11,7 @@ import org.testng.asserts.SoftAssert;
 
 import java.time.Duration;
 
-import static Step_Definitions.AddEmployerSteps.companyName;
+import static Step_Definitions.SignUpSteps.companyName;
 
 public class Molsteps {
 

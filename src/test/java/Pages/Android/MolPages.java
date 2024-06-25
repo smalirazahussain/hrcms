@@ -10,6 +10,7 @@ public class MolPages {
     public static String Mol_EST_Id_Button = "button[title='Edit Mol/Est Id']";
     public static String Phone_Number_Button = "button[title='Edit Phone Number']";
     public static String Phone_No = "phone";
+    public static String Mol_Cross_Button= "span[class='anticon anticon-close'";
     public static WebElement get_Edit_Personal_Details() {
         return Base_Class.driver.findElement(By.cssSelector(Edit_Personal_Details));
     }
@@ -26,6 +27,11 @@ public class MolPages {
     public static WebElement get_Phone_No() {
 
         return Base_Class.driver.findElement(By.id(Phone_No));
+    }
+
+    public static WebElement get_Mol_Cross_Button() {
+
+        return Base_Class.driver.findElement(By.cssSelector(Mol_Cross_Button));
     }
 }
 

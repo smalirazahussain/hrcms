@@ -31,6 +31,9 @@ public class RequestPage {
         return "//div[normalize-space()='"+description+"']";
     }
     public static String Loading ="div[class='ant-spin ant-spin-lg ant-spin-spinning']";
+    public static String Employer_Approval_Status = "th:nth-child(7) div:nth-child(1) span:nth-child(2) svg";
+    public static String Reset_Button = "button[title='Reset']";
+    public static String Approval_Description = "//td[contains(@class,'ant-table-cell ant-table-cell-row-hover')]//div[contains(@class,'bold-text')][normalize-space()='Employee Phone Update']";
 
 
     public static WebElement get_Request() {
@@ -78,5 +81,17 @@ public class RequestPage {
     public static WebElement get_Loading() {
 
         return Base_Class.driver.findElement(By.cssSelector(Loading));
+    }
+
+    public static WebElement get_Employer_Approval_Status() {
+        return Base_Class.driver.findElement(By.cssSelector(Employer_Approval_Status));
+    }
+
+    public static WebElement get_Reset_Button() {
+        return Base_Class.driver.findElement(By.cssSelector(Reset_Button));
+    }
+
+    public static WebElement get_Approval_Description() {
+        return Base_Class.driver.findElement(By.xpath(Approval_Description));
     }
 }

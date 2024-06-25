@@ -19,8 +19,10 @@ public class EmployeesPage {
     public static String Upload_Excel = "uploadExcel";
     public static String Template_Button = "button[title='Template'] span:nth-child(1)";
     public static String Employee_Search = "ant-input";
-    public static String Add_Employer_Button = "button[title='Add Employee']";
+    public static String Add_Employer_Button = "button[title='Add Employee ']";
     public static String Employee_Eye_Button = "//div[@class='inner-data no-wrap']//*[name()='svg']";
+    public static String Employee_Type = "tr th:nth-child(9) div span[class='ant-dropdown-trigger ant-table-filter-trigger'] svg";
+    public static String Payd_Card= "//span[text()='Payd card']";
 
 
     public static WebElement get_Employees() {
@@ -45,5 +47,13 @@ public class EmployeesPage {
 
     public static WebElement get_Employee_Eye_Button() {
         return Base_Class.driver.findElement(By.xpath(Employee_Eye_Button));
+    }
+
+    public static WebElement get_Employee_Type() {
+        return Base_Class.driver.findElement(By.cssSelector(Employee_Type));
+    }
+
+    public static WebElement get_Payd_Card() {
+        return Base_Class.driver.findElement(By.xpath(Payd_Card));
     }
 }
