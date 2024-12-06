@@ -83,16 +83,17 @@ Feature: Login Tests
   Scenario Outline: Multiple user
     Given   [Sign Up] User tap on Sign up button
     When    [Sign up] Enter the user name email id "<company>" and "<email>"
-    Then    [Sign Up] Enter the Phone code "92"
-    Then    [Sign Up] User enter the phone no "3451234567"
+    #Then    [Sign Up] Enter the Phone code "92"
+    Then    [Sign Up] User enter the phone no ""
     When    [Login Page] User enter the password "Password1"
     Then    [Sign Up] User enter the confirm password "Password1"
     And     [Sign Up] User tap on Sign up button on SignUp Page
-    Then    [Sign Up] User enter the otp code "1111"
+    Then    [Sign Up] User enter the otp code "111111"
     And     [Sign Up] User tap on verify button
     And     [Login page] Verified user land on update profile page "Update Profile"
+    Then    [Update Profile] User select the Payroll type ""
     Then    [Update Profile] User enter the establishment id ""
-    And     [Update Profile] User the address "asdfghjkl;1234567890"
+    #And     [Update Profile] User the address ""
     Then    [Update Profile] User tap on State
     And     [Update Profile] Select the state "Dubai"
     When    [Update Profile] User enter the city "Dubai"

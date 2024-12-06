@@ -282,7 +282,7 @@ Feature: Update Profile
     And     [Admin Page] User verify the employer approve by the admin "Action Successfully"
 
    Scenario: Employer create by the admin side and then approve him self
-     Then    [Admin Page] Open the admin tab "http://admin.getthelingo.com"
+     #Then    [Admin Page] Open the admin tab "http://admin.getthelingo.com"
      And     [Admin Page] User tap on login page
      Then    [Admin Page] User enter the  email "admin@admin.com"
      When    [Admin Page] User enter the Password "12345678"
@@ -389,7 +389,7 @@ Feature: Update Profile
     When    [Login Page] User enter the password "Password1"
     Then    [Sign Up] User enter the confirm password "Password1"
     And     [Sign Up] User tap on Sign up button on SignUp Page
-    Then    [Sign Up] User enter the otp code "1111"
+    Then    [Sign Up] User enter the otp code "111111"
     And     [Sign Up] User tap on verify button
     And     [Login page] Verified user land on update profile page "Update Profile"
     Then    [Update Profile] User enter the establishment id ""
@@ -426,6 +426,8 @@ Feature: Update Profile
     Then    [Admin Page] User enter the  email "admin@admin.com"
     When    [Admin Page] User enter the Password "12345678"
     And     [Admin Page] User tap on login page
+    Then    [Sign Up] User enter the otp code "111111"
+    And     [Sign Up] User tap on verify button
     When    [Admin Page] User tap on onboard Approvals
     And     [Admin Page] User tap on view button
     Then    [Admin Page] User verify establishment id and approve by admin

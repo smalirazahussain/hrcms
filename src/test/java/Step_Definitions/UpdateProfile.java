@@ -661,6 +661,11 @@ public class UpdateProfile {
 
         UpdateProliePage.getStateName(name).click();
     }
+
+
+//    @Then("[Update Profile] User select the Payroll type {string}")
+//    public void updateProfileUserSelectThePayrollType(String arg0) {
+//    }
 }
 
 

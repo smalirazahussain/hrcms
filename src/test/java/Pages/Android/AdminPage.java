@@ -2,11 +2,14 @@ package Pages.Android;
 
 import Hooks.Base_Class;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.List;
 
 
 public class AdminPage {
@@ -25,7 +28,7 @@ public class AdminPage {
     public static String Admin_Password = "#password";
     public static String Onboard_Approvals = "#onboardApprovals";
     //public static String Approve_Button = "div[role='dialog'] button[title='Approve']";
-    public static String Approve_Button = "//div[contains(@class,'btn-group')]//button[contains(@title,'Approve')]";
+    public static String Approve_Button = "(//div[contains(@class,'btn-group')]//button[contains(@title,'Approve')])[1]";
     public static String Establishmentid = "ul:nth-child(1) li:nth-child(2) span:nth-child(2)";
     public static String View = "button[title='View']:nth-child(1)";
     public static String company_Name = "//body//div//ul[2]";
@@ -35,6 +38,11 @@ public class AdminPage {
     public static String Company_Client = "(//input[@id=\"client\"])[2]";
     public static String Admin_Action_Successfully = "//span[normalize-space()='Action Successful']";
     public static String msg = "div[class='ant-message'] span:nth-child(2)";
+    public static String Employee_File_Header= ".ant-table-header th.ant-table-cell:not(.ant-table-selection-column)";
+    public static  String first_Topic = "//tr[2]/td[4]";
+    public static  String first_Approve_Button = "(//span[contains(text(),'Approve')])[1]";
+    public static String Process_File_Button = "button[title='Process File']";
+    public static String Select_All_Radio_Button = "input[type='checkbox']";
     public static String Action_Successfully(String after){
         return "//span[normalize-space()='"+after+"']";
     }//span[normalize-space()='Company product not found']
@@ -252,4 +260,33 @@ public class AdminPage {
 
         return Base_Class.driver.findElement(By.cssSelector(msg));
     }
+
+    public static List <WebElement> get_Employee_File_Header() {
+        WebDriverWait wait = new WebDriverWait(Base_Class.driver, Duration.ofSeconds(30));
+        List<WebElement> elements = wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.cssSelector(Employee_File_Header)));
+        JavascriptExecutor js = (JavascriptExecutor) Base_Class.driver;
+        for (WebElement element : elements) {
+            js.executeScript("arguments[0].scrollIntoView(true);", element);
+        }
+        return Base_Class.driver.findElements(By.cssSelector(Employee_File_Header));
+    }
+
+    public static WebElement get_first_Topic() {
+
+        return Base_Class.driver.findElement(By.xpath(first_Topic));
+    }
+
+    public static WebElement get_first_Approve_Button() {
+        return Base_Class.driver.findElement(By.xpath(first_Approve_Button));
+    }
+
+    public static WebElement get_Process_File_Button() {
+        return Base_Class.driver.findElement(By.cssSelector(Process_File_Button));
+    }
+
+    public static WebElement get_Select_All_Radio_Button() {
+        return Base_Class.driver.findElement(By.cssSelector(Select_All_Radio_Button));
+    }
 }
+
+

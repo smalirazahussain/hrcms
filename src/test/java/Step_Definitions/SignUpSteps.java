@@ -8,6 +8,7 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Credentials;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
@@ -21,6 +22,7 @@ import java.time.Duration;
 import java.util.Random;
 
 import static Hooks.Base_Class.driver;
+import static Hooks.Base_Class.enableNetworkLogging;
 import static Pages.Android.SignUpPage.*;
 import static Pages.Android.UpdateProliePage.*;
 import static Tests.Current_Date.currentMonth;
@@ -94,10 +96,11 @@ public class SignUpSteps {
     public void signUpUserEnterThePhoneNo(String phone_no) throws InterruptedException {
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(signUpUserEnterThePhoneNo)));
         Random randomGenerator = new Random();
-        int randomno = randomGenerator.nextInt(999999999);
+        int randomno = randomGenerator.nextInt(8999999) + 1000000; // Generates a 7-digit number
+        String fullPhoneNumber = "56" + randomno;
         System.out.println(randomno);
         SignUpPage.signUpUserEnterThePhoneNo().click();
-        SignUpPage.signUpUserEnterThePhoneNo().sendKeys(String.valueOf(randomno));
+        SignUpPage.signUpUserEnterThePhoneNo().sendKeys(fullPhoneNumber);
 
     }
 
@@ -201,9 +204,9 @@ public class SignUpSteps {
 
     @Then("[Sign Up] User enter the otp code {string}")
     public void signUpUserEnterTheOtpCode(String oc) throws InterruptedException {
-        Thread.sleep(10000);
+        enableNetworkLogging();
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(otpCode)));
-        SignUpPage.otpCode().sendKeys(oc);
+        SignUpPage.otpCode().sendKeys(oc+ Keys.ENTER);
 
 
     }

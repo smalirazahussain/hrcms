@@ -9,18 +9,21 @@ import org.jetbrains.annotations.NotNull;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.devtools.DevTools;
+import org.openqa.selenium.devtools.v120.log.Log;
+import org.openqa.selenium.devtools.v120.network.Network;
+import org.openqa.selenium.devtools.v120.network.model.Headers;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.net.URL;
+import java.io.*;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 
 public class Base_Class {
@@ -29,6 +32,7 @@ public class Base_Class {
     //public static AppiumDriver<AndroidElement> driver;
     public static WebDriver driver = null;
     public static WebDriverWait wait ;
+    public static DevTools devTools;
     ConfigReader configReader = new ConfigReader();
 
 
@@ -63,28 +67,30 @@ public class Base_Class {
             */
 
             // Set ChromeOptions
-            ChromeOptions options = new ChromeOptions();
+            if (driver == null) {
+                ChromeOptions options = new ChromeOptions();
+                options.setCapability("webSocketUrl", true);
 //            options.addArguments("--headless");
-//            options.addArguments("--disable-gpu");
+//                options.addArguments("--disable-gpu");
 //            options.addArguments("--window-size=1920,1080");
-            Map<String, Object> prefs = new HashMap<>();
-            prefs.put("download.default_directory", "D:\\Hrcms\\src\\test\\java\\document");
-            options.setExperimentalOption("prefs", prefs);
-            if (isSpecialPageOrScenario()) {
-                options.setPageLoadStrategy(PageLoadStrategy.EAGER);
-            } else {
+                Map<String, Object> prefs = new HashMap<>();
+                prefs.put("download.default_directory", "D:\\Hrcms\\src\\test\\java\\document");
+                options.setExperimentalOption("prefs", prefs);
+                //if (isSpecialPageOrScenario()) {
+                //   options.setPageLoadStrategy(PageLoadStrategy.EAGER);
+                //} else {
                 options.setPageLoadStrategy(PageLoadStrategy.NORMAL);
-            }
-            WebDriverManager.chromedriver().setup();
-            // Set ChromeDriver path
-            //System.setProperty("webdriver.chrome.driver", "C:\\path\\to\\chromedriver.exe"); // Replace with your actual path to chromedriver.exe
-           // System.setProperty("webdriver.chrome.driver", "D:\\Hrcms\\src\\test\\java\\document");
-            //System.setProperty("webdriver.chrome.driver", "apps/chromedriver.exe");
+                // }
+                WebDriverManager.chromedriver().setup();
+                // Set ChromeDriver path
+                //System.setProperty("webdriver.chrome.driver", "C:\\path\\to\\chromedriver.exe"); // Replace with your actual path to chromedriver.exe
+                // System.setProperty("webdriver.chrome.driver", "D:\\Hrcms\\src\\test\\java\\document");
+                //System.setProperty("webdriver.chrome.driver", "apps/chromedriver.exe");
 
-            // Launch Chrome browser with the desired options
+                // Launch Chrome browser with the desired options
 
 //            WebDriver driver = new ChromeDriver(options);
-            // Perform actions to trigger the file download
+                // Perform actions to trigger the file download
 //            driver.get("https://example.com/download");
 
 //            String projectpath = System.getProperty("user.dir");
@@ -97,28 +103,52 @@ public class Base_Class {
 //            capabilities.setPlatform(org.openqa.selenium.Platform.WINDOWS);
 //            URL gridUrl = new URL("http://192.168.105.10:4444");
 
-          //  System.setProperty("webdriver.chrome.driver", "apps/chromedriver.exe");
-            driver = new ChromeDriver(options);
-            //driver = new RemoteWebDriver(gridUrl, options.merge(capabilities));
-            //driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-            driver.manage().window().maximize();
-            //System.setProperty("webdriver.chrome.whitelistedIps", "");
-            Duration timeout = Duration.ofSeconds(30);
-            wait = new WebDriverWait(driver, timeout);
-            By.cssSelector(".ant-spin.ant-spin-spinning.css-qgg3xn");
-           // driver.get("https://employer.getthelingo.com/");
-            URL url = new URL(configReader.getProperty("employerurl"));
-            //String projectpath = System.getProperty("user.dir");
-            File f = new File("apps");
-            File fs = new File(f, "app.apk");
-           // String finalpath = projectpath + File.separator + fs.getName();
+                //  System.setProperty("webdriver.chrome.driver", "apps/chromedriver.exe");
+                try {
+                    driver = new ChromeDriver(options);
+                    //driver = new RemoteWebDriver(gridUrl, options.merge(capabilities));
+                    //driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+                    devTools = ((ChromeDriver) driver).getDevTools();
+                    devTools.createSession();
+                }
+                 catch (Exception e){
+                System.out.println("BIDI: "+e.getMessage());
+                     e.printStackTrace();
 
-            driver.navigate().to(url);
+            }
+//
+//                // Example: Enable Network logging
+//                enableNetworkLogging();
+//
+//                // Enable Console Log capturing
+//                enableConsoleLog();
+
+                //LogInspector LogInspector = new LogInspector(driver);
+
+                //driver = new ChromeDriver(options);
+                driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+                driver.manage().window().maximize();
+                System.out.println("maximize");
+                //System.setProperty("webdriver.chrome.whitelistedIps", "");
+                Duration timeout = Duration.ofSeconds(30);
+                wait = new WebDriverWait(driver, timeout);
+
+                By.cssSelector(".ant-spin.ant-spin-spinning.css-qgg3xn");
+                // driver.get("https://employer.getthelingo.com/");
+                //URL url = new URL(configReader.getProperty("stageEmployerUrl"));
+                driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+                String stageEmployerUrl = configReader.getProperty("stageEmployerUrl");
+                System.out.println("Navigating to URL: " + stageEmployerUrl);
+                driver.navigate().to(stageEmployerUrl);
+                //String projectpath = System.getProperty("user.dir");
+                File f = new File("apps");
+                File fs = new File(f, "app.apk");
+                // String finalpath = projectpath + File.separator + fs.getName();
+
+                // driver.navigate().to(url);
 
 
-
-
+            }
         }
 
 
@@ -143,7 +173,61 @@ public class Base_Class {
             return false;
         }
     }
+    public static void enableNetworkLogging() {
+        try {
+        devTools.send(Network.enable(Optional.empty(), Optional.empty(), Optional.empty()));
+        Map<String, Object> headersMap = new HashMap<>();
+        //headersMap.put("Authorization", "Bearer token");
+        devTools.send(Network.setExtraHTTPHeaders(new Headers(headersMap)));
+        devTools.addListener(Network.requestWillBeSent(), request -> {
+            System.out.println("Request URL: " + request.getRequest().getUrl());
+        });
+        devTools.addListener(Network.responseReceived(), response -> {
+            System.out.println("Response URL: " + response.getResponse().getUrl());
+            System.out.println("Response TIME: " + response.getResponse().getResponseTime());
+            System.out.println("Status: " + response.getResponse().getStatus());
+            Network.GetResponseBodyResponse responseBody = devTools.send(Network.getResponseBody(response.getRequestId()));
+            saveResponseToFile(response.getResponse().getUrl(), response.getResponse().getStatus(), responseBody.getBody());
 
+        });
+        } catch (Exception e) {
+            System.err.println("Error enabling network logging: " + e.getMessage());
+        }
+    }
+    public static void enableConsoleLog() {
+        try {
+        devTools.send(Log.enable());
+        devTools.addListener(Log.entryAdded(), entry -> {
+            System.out.println("Log: " + entry.getText());
+            System.out.println("Level: " + entry.getLevel());
+        });
+        } catch (Exception e) {
+            System.err.println("Error enabling console log: " + e.getMessage());
+        }
+    }
+    private static void saveResponseToFile(String url, int status,String body) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("network_responses.txt", true))) {
+            writer.write("[" + getCurrentTimestamp() + "] URL: " + url);
+            writer.newLine();
+            writer.write("Status: " + status);
+            writer.newLine();
+            writer.write("Body: " + body);
+            writer.newLine();
+            writer.write("----------");
+            writer.newLine();
+            System.out.println("URL: " + url);
+            System.out.println("Status: " + status);
+            System.out.println("Body: " + body);
+            System.out.println("----------");
+            writer.newLine();
+            System.out.println("[" + getCurrentTimestamp() + "] Saved response to file: " + url);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    private static String getCurrentTimestamp() {
+        return LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+    }
 //
 ////    @Test
 ////    public void SampleTest(){
@@ -249,16 +333,7 @@ public class Base_Class {
     private static void saveScreenshot(Scenario scenario, File sourceFile) {
         try {
             String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-            String scenarioName = scenario.getName().replaceAll("[^a-zA-Z0-9.-]", "_");
-            String screenshotFileName = "failedScenario_" + scenarioName + "_" + timeStamp + ".png";
-            String screenshotDirectory = "D:\\Hrcms\\src\\test\\java\\ScreenShot\\";
-            File destinationDir = new File(screenshotDirectory);
-
-            if (!destinationDir.exists()) {
-                destinationDir.mkdirs(); // Create directory if it doesn't exist
-            }
-
-            String destinationFilePath = "D:\\Hrcms\\src\\test\\java\\ScreenShot\\" + screenshotFileName;
+            String destinationFilePath = getString(scenario, timeStamp);
             File destinationFile = new File(destinationFilePath);
 
             try (FileInputStream fis = new FileInputStream(sourceFile);
@@ -273,6 +348,20 @@ public class Base_Class {
         } catch (IOException e) {
             System.out.println("Failed to save screenshot: " + e.getMessage());
         }
+    }
+
+    private static @NotNull String getString(Scenario scenario, String timeStamp) {
+        String scenarioName = scenario.getName().replaceAll("[^a-zA-Z0-9.-]", "_");
+        String screenshotFileName = "failedScenario_" + scenarioName + "_" + timeStamp + ".png";
+        String screenshotDirectory = "D:\\Hrcms\\src\\test\\java\\ScreenShot\\";
+        File destinationDir = new File(screenshotDirectory);
+
+        if (!destinationDir.exists()) {
+            destinationDir.mkdirs(); // Create directory if it doesn't exist
+        }
+
+        String destinationFilePath = "D:\\Hrcms\\src\\test\\java\\ScreenShot\\" + screenshotFileName;
+        return destinationFilePath;
     }
 //    }
 

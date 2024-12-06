@@ -1239,33 +1239,49 @@ Feature: AddEmployer
       |User     |Mol12345|1      |1       |User       |05/05/1978|M     |BD         |05/05/1978 |@mailinator.com|971     |971           |Address    |1        |00001       |2          |2        |2           |Passport  |10/05/2029    |   |10/05/2029|0000010903853   |
 
   Scenario Outline: Create multiple Employee with non wps process
-    Given   [Login Page] User enter the email "12982"
+    Given   [Login Page] User enter the email "11586"
     When    [Login Page] User enter the password "Password1"
     Then    [Login page] User tap on login button
+    #Then    [Login page] User verify toast msg "OTP Generated"
+    And     [Sub Admin] User tap on the submit button
+    #Then    [Login page] User verify toast msg "Two Factor Enabled"
+    Then    [Sign Up] User enter the otp code "111111"
+    #And     [Sign Up] User tap on verify button
     Then    [Employees Page] User tap on employees button
     And     [Employees Page] User create a multiple data with non WPS process for the employer "<MolNo>""<EmpCode>""<FirstName>""<LastName>""<DisplayName>""<DOB>"" <Gender> "" <Nationality>""<JoiningDate>""<Email>""<MobileNo>""<AlternatePhone>""<HomeAddress>""<HomeState>""<HomePostCode>""<WorkAddress>""<WorkState>""<WorkPostCode>""<PassportNo>""<PassportExpiry>""<EID>""<EIDExpiry>""<EstablishmentId>"
     And     [Employees Page] User upload a bulk employees file ""
     And     [Request Page] User tap on the request button
     Then    [Request Page] User tap on the view button
     And     [Request Page] User tap on the Approve button
-    Then    [Admin Page] Open the admin tab "https://admin.getthelingo.com/"
+    Then    [Sign Up] User enter the otp code "111111"
+    #Then    [Login page] User verify toast msg "Request sent to admin for further approval"
+    Then    [Request Page] User tap on the view button
+    And     [Request Page] User tap on the Approve button
+    Then    [Sign Up] User enter the otp code "111111"
+    #Then    [Login page] User verify toast msg "Request sent to admin for further approval"
+    Then    [Admin Page] Open the admin tab "https://stage-admin.getthelingo.com/"
     And     [Admin Page] User tap on login page
     Then    [Admin Page] User enter the  email "admin@admin.com"
     When    [Admin Page] User enter the Password "12345678"
     And     [Admin Page] User tap on login page
+    Then    [Sign Up] User enter the otp code "111111"
     When    [Admin Page] User tap on client Approvals
     Then    [Admin Page] User enter the company name
-    And     [Admin Page] User tap on view button
-    Then    [Admin Page] User tap on approve button
+    Then    [Admin Page] User tap pn the first approve button
+    #And     [Admin Page] User tap on view button
+    #Then    [Admin Page] User tap on approve button
     Then    [Admin Page] User Tap om the browse button
-    Then    [Admin Page] User select the card type "Centiv"
-    Then    [Admin Page] User tap No other bank employees in given file
+    Then    [Admin Page] User select the card type "PayD"
+    Then    [Admin Page] User Tap om the Process file button
+   # Then    [Admin Page] User tap No other bank employees in given file
+    Then    [Admin Page] User verify the all data they have creates on the file
+    And     [Admin Page] User tap on the select all radio button
     And     [Admin Page] User Tap on the approve button
     Then    [Admin Page] User verify the notification message "Action Successful"
 
     Examples:
       |FirstName|MolNo|EmpCode|LastName|DisplayName|DOB|Gender|Nationality|JoiningDate|Email|MobileNo|AlternatePhone|HomeAddress|HomeState|HomePostCode|WorkAddress|WorkState|WorkPostCode|PassportNo|PassportExpiry|EID|EIDExpiry|EstablishmentId|
-      |User|00000000000000|0000|1|User|05/05/1978|M|BD|05/05/1978|@mailinator.com|97156|97156|Address|1|00001|2|2|2|Passport|10/05/2029|78419910|10/05/2029|DartEST3453453454434|
+      |User|00000000000000|0000|1|User|05/05/1978|M|BD|05/05/1978|@mailinator.com|97156|97156|Address|1|00001|2|2|2|Passport|10/05/2029|78419910|10/05/2029|ABC12345678910|
 
 
 

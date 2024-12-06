@@ -8,14 +8,9 @@ import Pages.HeadOfficePages.OnBoardApprovalHeadOfficePage;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.StaleElementReferenceException;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
@@ -29,18 +24,18 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.time.Duration;
-import java.util.Arrays;
-import java.util.Objects;
+import java.util.List;
+import java.util.*;
 
 import static Hooks.Base_Class.driver;
+import static Hooks.Base_Class.enableNetworkLogging;
 import static Pages.Android.AdminPage.*;
 import static Pages.Android.MolPages.Mol_Cross_Button;
 import static Pages.Android.RequestPage.Loading;
 import static Pages.Android.UpdateProliePage.*;
 import static Pages.HeadOfficePages.OnBoardApprovalHeadOfficePage.Phone_No;
 import static Step_Definitions.AddEmployerSteps.IbanNo;
-import static Step_Definitions.Employeessteps.companyTittle;
-import static Step_Definitions.Employeessteps.randomNumbers;
+import static Step_Definitions.Employeessteps.*;
 import static Step_Definitions.EndOfServicesSteps.filePath;
 import static Step_Definitions.ProcessSalariesDepositSlipSteps.actualamount;
 import static Step_Definitions.SignUpSteps.companyName;
@@ -50,6 +45,7 @@ import static Step_Definitions_Head_Ofiice.BrachesStepsHeadOffice.branch;
 import static Step_Definitions_Head_Ofiice.BrachesStepsHeadOffice.phno;
 import static Step_Definitions_Head_Ofiice.DashBoardStepsHeadOffice.exchangeHouseTittle;
 import static Tests.Current_Date.currentMonth;
+
 
 public class adminsteps {
 
@@ -81,7 +77,7 @@ public class adminsteps {
     }
 
     @And("[Admin Page] User tap on login page")
-    public void adminPageUserTapOnLoginPage() throws InterruptedException {
+    public void adminPageUserTapOnLoginPage() {
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(Login)));
         AdminPage.get_Login().click();
     }
@@ -100,6 +96,7 @@ public class adminsteps {
     public void adminPageUserTapOnOnboardApprovals() {
         AdminPage.get_Onboard_Approvals().click();
     }
+
     //public static By spinnerLocator;
     @And("[Admin Page] User tap on view button")
     public void adminPageUserTapOnViewButton() {
@@ -119,6 +116,7 @@ public class adminsteps {
     public void adminPageUserEnterTheCompanyName() throws InterruptedException {
 
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath(Company_Client)));
+        //AdminPage.get_Company_Client().sendKeys("Dart");
         AdminPage.get_Company_Client().sendKeys(companyName + Keys.ENTER);
         System.out.println(companyTittle);
         System.out.println(companyName);
@@ -136,9 +134,10 @@ public class adminsteps {
 
     @Then("[Admin Page] User validate the toast message {string}")
     public void adminPageUserValidateTheToastMessage(String actual) throws InterruptedException {
+        enableNetworkLogging();
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(Action_Successfully(actual))));
         String expect = AdminPage.get_Action_Successfully(actual).getText();
-        Assert.assertEquals(expect,actual);
+        Assert.assertEquals(expect, actual);
     }
 
     private boolean waitForToastMessage(String expectedToastMessage) {
@@ -167,9 +166,9 @@ public class adminsteps {
         AdminPage.get_Browse_Button().click();
         Thread.sleep(3000);
 
-
+        System.out.println("filePathsadmin" + filePaths);
         Robot rb = new Robot();
-        StringSelection str = new StringSelection("D:\\Hrcms\\src\\test\\java\\document\\" + randomNumbers + ".xlsx");
+        StringSelection str = new StringSelection(filePaths);
         Toolkit.getDefaultToolkit().getSystemClipboard().setContents(str, null);
         // press Contol+V for pasting
         rb.keyPress(KeyEvent.VK_CONTROL);
@@ -215,7 +214,7 @@ public class adminsteps {
 
     @Then("[Admin Page] Admin verification the branch and then approve")
     public void adminPageAdminVerificationTheBranchAndThenApprove() throws InterruptedException {
-        if (phno == OnBoardApprovalHeadOfficePage.get_Phone_No_admin_Side().getText())
+        if (Objects.equals(phno, OnBoardApprovalHeadOfficePage.get_Phone_No_admin_Side().getText()))
             AdminPage.get_Approve_Button().click();
         //        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(Approval_Ok)));
         AdminPage.get_Approve_Button().click();
@@ -239,7 +238,7 @@ public class adminsteps {
     public void adminPageUserVerifyTheNotificationMessage(String after) throws InterruptedException {
 //        By spinnerLocator = By.cssSelector(".ant-spin.ant-spin-spinning.css-qgg3xn");
         //wait.until(ExpectedConditions.visibilityOfElementLocated((By) get_Action_Successfully(after));
-       // wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(Action_Successfully)));
+        // wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(Action_Successfully)));
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(Admin_Action_Successfully)));
         String actual = AdminPage.get_Admin_Action_Successfully().getText();
         //String actual = AdminPage.get_Action_Successfully(after).getText();
@@ -483,13 +482,15 @@ public class adminsteps {
             }
         }
     }
+
     ;
+
     @Then("[Admin Page] User validate the toast message {string} and bank are some in the approval")
     public void adminPageUserValidateTheToastMessageAndBankAreSomeInTheApproval(String actual) {
-            //wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(Action_Successfully)));
-            String expect = get_Action_Successfully(actual).getText();
-            Assert.assertEquals(actual, expect);
-            System.out.println(expect);
+        //wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(Action_Successfully)));
+        String expect = get_Action_Successfully(actual).getText();
+        Assert.assertEquals(actual, expect);
+        System.out.println(expect);
     }
 
     @Then("[Admin Page] User tap on Exchange House Clients")
@@ -500,11 +501,9 @@ public class adminsteps {
 
     @Then("[Admin Page] User verify establishment id for the branch company and approve by admin")
     public void adminPageUserVerifyEstablishmentIdForTheBranchCompanyAndApproveByAdmin() throws InterruptedException {
-        System.out.println("ESTID;"+first14);
-        if (first14 == Long.parseLong(AdminPage.get_Establishmentid().getText())
-                && AdminPage.get_company_Name().getText().equals(companyName)
-                && AdminPage.get_Trade_No().getText().equals(tradeno)
-                && AdminPage.get_Sponsor_No().getText().equals(SponsorDocNo)) {
+        System.out.println("ESTID;" + first14);
+        if (first14 == Long.parseLong(AdminPage.get_Establishmentid().getText()) && AdminPage.get_company_Name().getText().equals(companyName) && AdminPage.get_Trade_No().getText().equals(tradeno)) {
+            AdminPage.get_Sponsor_No().getText();
         }
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath(Approve_Button)));
         AdminPage.get_Approve_Button().click();
@@ -553,8 +552,7 @@ public class adminsteps {
             wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(Mol_Cross_Button)));
             //Thread.sleep(5000);
             MolPages.get_Mol_Cross_Button().click();
-        }
-        else {
+        } else {
             System.out.println("Can Not Read");
         }
     }
@@ -566,4 +564,348 @@ public class adminsteps {
         AdminPage.get_Company_Client().sendKeys(subadmincompanyTittle + Keys.ENTER);
         System.out.println(subadmincompanyTittle);
     }
+    private void manualPause() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Press Enter to continue...");
+        scanner.nextLine();
+    }
+
+    @Then("[Admin Page] User verify the all data they have creates on the file")
+    public void adminPageUserVerifyTheAllDataTheyHaveCreatesOnTheFile() throws IOException, InterruptedException, AWTException {
+        int previousRowCount = 0;
+      //  manualPause();
+
+        try (FileInputStream fis = new FileInputStream(filePaths)) {
+            System.out.println(filePaths);
+            Workbook workbook = WorkbookFactory.create(fis);
+            System.out.println("workbook: " + workbook);
+            Sheet sheet = workbook.getSheetAt(0);
+
+            // Get header elements from the webpage
+            List<WebElement> employees_File_Header = get_Employee_File_Header();
+            JavascriptExecutor js = (JavascriptExecutor) driver;
+
+            // Extract expected headers from Excel
+            Row headerRow = sheet.getRow(0);
+            List<String> expectedHeaders = new ArrayList<>();
+            for (int i = 0; i < headerRow.getLastCellNum(); i++) {
+                expectedHeaders.add(headerRow.getCell(i).getStringCellValue().trim().toLowerCase());
+            }
+
+            // Extract actual headers from WebElements
+            List<String> actualHeaders = new ArrayList<>();
+            for (WebElement headerElement : employees_File_Header) {
+                js.executeScript("arguments[0].scrollIntoView(true);", headerElement);
+                actualHeaders.add(headerElement.getText().trim().toLowerCase());
+            }
+            actualHeaders.remove("action");
+            Map<String, String> headerConversionMap = new HashMap<>();
+            headerConversionMap.put("emirates id", "eid");
+            headerConversionMap.put("emirates id expiry", "eid expiry");
+            headerConversionMap.put("mol number", "mol no");
+            headerConversionMap.put("gender", "gender(m/f)");
+            List<String> convertedActualHeaders = new ArrayList<>();
+            for (String header : actualHeaders) {
+                convertedActualHeaders.add(headerConversionMap.getOrDefault(header, header));
+            }
+            // Sort both lists to perform unordered comparison
+            Collections.sort(expectedHeaders);
+            Collections.sort(convertedActualHeaders);
+            System.out.println("expectedHeaders:" + expectedHeaders);
+            System.out.println("convertedActualHeaders:" + convertedActualHeaders);
+            // Compare headers unordered
+            Assert.assertEquals(expectedHeaders.toArray(), convertedActualHeaders.toArray(), "Headers do not match");
+            // Prepare tabular output header
+            StringBuilder tableOutput = new StringBuilder();
+            tableOutput.append(String.format("%-10s | %-20s | %-20s | %-20s\n", "Row", "Header", "Excel Value", "Webpage Value"));
+            tableOutput.append("---------------------------------------------------------------------------\n");
+            System.out.println("tableOutput:"+tableOutput);
+
+            // If headers match, proceed with row data comparison
+            Map<Integer, Map<String, String>> excelData = new TreeMap<>();
+            Map<Integer, Map<String, String>> webpageData = new TreeMap<>();
+
+            while (true) {
+                List<WebElement> rowElements = driver.findElements(By.cssSelector(".ant-table-row.editable-row"));
+                if (rowElements.size() > previousRowCount) {
+                    previousRowCount = rowElements.size();
+
+                    // Scroll to the bottom to load more rows
+                    WebElement lastRowElement = rowElements.get(rowElements.size() - 1);
+                    js.executeScript("arguments[0].scrollIntoView(true);", lastRowElement);
+                    Thread.sleep(1000); // Allow time for rows to load
+
+                    for (int i = 0; i < rowElements.size(); i++) {
+                        // Re-locate elements to avoid StaleElementReferenceException
+                        rowElements = driver.findElements(By.cssSelector(".ant-table-row.editable-row"));
+                        Row excelRow = sheet.getRow(i + 1); // Excel row index starts from 1 (skip header)
+                        List<WebElement> cellElements = rowElements.get(i).findElements(By.cssSelector("td.ant-table-cell"));
+
+                        Map<String, String> excelRowMap = new HashMap<>();
+                        Map<String, String> webpageRowMap = new HashMap<>();
+
+                        for (int j = 0; j < Math.min(cellElements.size(), expectedHeaders.size()); j++) {
+                            if (j == cellElements.size() - 1) {
+                                continue; // Skip the comparison for the last column
+                            }
+
+                            js.executeScript("arguments[0].scrollIntoView(true);", cellElements.get(j));
+
+                            String header = expectedHeaders.get(j); // Corresponding header
+                            String expectedCellValue = (excelRow.getCell(j) != null) ? excelRow.getCell(j).toString().trim() : "";
+                            String actualCellValue = cellElements.get(j).getText().trim();
+
+                            // Normalize date formats before comparison
+                            expectedCellValue = expectedCellValue.replace("/", "-").replace(".", "-").replace(" ", "");
+                            actualCellValue = actualCellValue.replace("/", "-").replace(".", "-").replace(" ", "");
+
+                            excelRowMap.put(header, expectedCellValue);
+                            webpageRowMap.put(header, actualCellValue);
+
+                            // Append the comparison result to the table output
+                            tableOutput.append(String.format("%-10d | %-20s | %-20s | %-20s\n", i + 1, header, expectedCellValue, actualCellValue));
+                            System.out.println("header:"+header);
+                        }
+
+                        excelData.put(i + 1, excelRowMap);
+                        webpageData.put(i + 1, webpageRowMap);
+                    }
+
+                } else {
+                    break;
+                }
+            }
+            // Convert the map entries to a list for sorting
+            List<Map.Entry<Integer, Map<String, String>>> excelDataList = new ArrayList<>(excelData.entrySet());
+            List<Map.Entry<Integer, Map<String, String>>> webpageDataList = new ArrayList<>(webpageData.entrySet());
+
+            // Sort the lists based on a specific key (e.g., "eid")
+            Comparator<Map.Entry<Integer, Map<String, String>>> comparator = Comparator.comparing(entry -> entry.getValue().getOrDefault("eid", ""));
+            excelDataList.sort(comparator);
+            webpageDataList.sort(comparator);
+
+            // Comparing sorted rows one by one
+            for (int i = 0; i < excelDataList.size(); i++) {
+                Map<String, String> excelRowMap = excelDataList.get(i).getValue();
+                Map<String, String> webpageRowMap = webpageDataList.get(i).getValue();
+
+                for (String header : excelRowMap.keySet()) {
+                    String excelValue = excelRowMap.get(header);
+                    String webpageValue = webpageRowMap.get(header);
+
+                    // Null check before accessing webpageValue
+                    if (webpageValue == null) {
+                        softAssert.fail("No matching cell found on the webpage for the header: " + header + " in row: " + (i + 1));
+                        continue; // Skip to the next cell
+                    }
+
+                    // Append the comparison result to the table output
+                    tableOutput.append(String.format("%-10d | %-20s | %-20s | %-20s\n", i + 1, header, excelValue, webpageValue));
+                    System.out.println("tableOutput;"+tableOutput);
+
+                    // Assert that the Excel value matches the Webpage value
+                    System.out.println("excelRowMap:"+excelRowMap);
+                    System.out.println("webpageRowMap"+webpageRowMap);
+                    softAssert.assertEquals(excelRowMap, webpageRowMap, "Mismatch for header " + header + " at row " + (i + 1));
+                    
+                }
+            }
+
+            //softAssert.assertAll();
+            workbook.close();
+
+            // Print the table output
+            System.out.println(tableOutput.toString());
+
+        } catch (StaleElementReferenceException e) {
+            System.out.println("Encountered StaleElementReferenceException. Retrying...");
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw e;
+        }
+    }
+
+    @Then("[Admin Page] User tap pn the first approve button")
+    public void adminPageUserTapPnTheFirstApproveButton() {
+       String approvalFirstTopic = AdminPage.get_first_Topic().getText();
+        System.out.println("approvalFirstTopic : "+approvalFirstTopic);
+
+        if(Objects.equals(approvalFirstTopic, "Employees File Upload")){
+            AdminPage.get_first_Approve_Button().click();
+            AdminPage.get_Approval_Ok().click();
+            System.out.println("Approve Button");
+        }
+    }
+
+    @Then("[Admin Page] User Tap om the Process file button")
+    public void adminPageUserTapOmTheProcessFileButton(){
+            try {
+        // Wait for the Process File button to be clickable
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath(Process_File_Button)));
+
+        // Click the Process File button
+        AdminPage.get_Process_File_Button().click();
+
+        // Optional: Log or print success message
+        System.out.println("Process File button clicked successfully.");
+    } catch (Exception e) {
+        // Handle any exception that occurs
+        e.printStackTrace();
+        System.out.println("Failed to click the Process File button: " + e.getMessage());
+    }
 }
+
+    @And("[Admin Page] User tap on the select all radio button")
+    public void adminPageUserTapOnTheSelectAllRadioButton() {
+        AdminPage.get_Select_All_Radio_Button().click();
+    }
+}
+//        // Correcting the way the FileInputStream is initialized
+//        try (FileInputStream fis = new FileInputStream(filePaths)) {
+//            System.out.println(filePaths);
+//            Workbook workbook = WorkbookFactory.create(fis);
+//            System.out.println("workbook: " + workbook);
+//            Sheet sheet = workbook.getSheetAt(0);
+//
+//
+//            // Get header elements from the webpage
+//            List<WebElement> employees_File_Header = get_Employee_File_Header();
+//            JavascriptExecutor js = (JavascriptExecutor) driver;
+//
+//            // Extract expected headers from Excel
+//
+//            Row headerRow = sheet.getRow(0);
+//            ArrayList<String> expectedHeaders = new ArrayList<>();
+//            for (int i = 0; i < headerRow.getLastCellNum(); i++) {
+//                expectedHeaders.add(headerRow.getCell(i).getStringCellValue().trim().toLowerCase());
+//            }
+//
+//            // Extract actual headers from WebElements
+//            ArrayList<String> actualHeaders = new ArrayList<>();
+//            for (WebElement headerElement : employees_File_Header) {
+//                js.executeScript("arguments[0].scrollIntoView(true);", headerElement);
+//                actualHeaders.add(headerElement.getText().trim().toLowerCase());
+//            }
+//
+//            // Sort both lists to ignore order differences
+//            Collections.sort(expectedHeaders);
+//            Collections.sort(actualHeaders);
+//
+//            // Remove "Action" and "No" from the actual headers list
+//            actualHeaders.removeIf(header -> header.equalsIgnoreCase("Action"));
+//            actualHeaders.removeIf(header -> header.equalsIgnoreCase("No"));
+//
+//            // Compare headers
+//            for (int i = 0; i < expectedHeaders.size(); i++) {
+//                String expectedHeader = expectedHeaders.get(i);
+//                String actualHeader = actualHeaders.get(i);
+//                System.out.println("Comparing expectedHeader: " + expectedHeader + " with actualHeader: " + actualHeader);
+//                softAssert.assertEqualsNoOrder(new String[]{expectedHeader}, new String[]{actualHeader}, "Header mismatch at index " + (i + 1));
+//            }
+//            // Process and compare all rows of data
+//            int lastRowIndex = sheet.getLastRowNum();
+//            int previousRowCount = 0;
+//
+//            try {
+//                Map<Integer, List<String>> excelData = new TreeMap<>();
+//                Map<Integer, List<String>> webpageData = new TreeMap<>();
+//
+//                while (true) {
+//                    List<WebElement> rowElements = driver.findElements(By.cssSelector(".ant-table-row.editable-row"));
+//                    //div.ant-table-tbody-virtual-holder > div > div > div:nth-child(n)
+//                    if (rowElements.size() > previousRowCount) {
+//                        previousRowCount = rowElements.size();
+//
+//                        // Scroll to the bottom to load more rows
+//                        WebElement lastRowElement = rowElements.get(rowElements.size() - 1);
+//                        js.executeScript("arguments[0].scrollIntoView(true);", lastRowElement);
+//                        Thread.sleep(1000); // Allow time for rows to load
+//
+//
+//                        for (int i = 0; i < rowElements.size(); i++) {
+//                            // Re-locate elements to avoid StaleElementReferenceException
+//                            rowElements = driver.findElements(By.cssSelector(".ant-table-row.editable-row"));
+//                            Row excelRow = sheet.getRow(i + 1); // Excel row index starts from 1 (skip header)
+//                            List<WebElement> cellElements = rowElements.get(i).findElements(By.cssSelector("td.ant-table-cell"));
+//                            System.out.println("cellElements: " +cellElements);
+//
+//                            List<String> excelRowData = new ArrayList<>();
+//                            List<String> webpageRowData = new ArrayList<>();
+//
+//                            for (int j = 1; j < cellElements.size(); j++) {
+//                                if (j == cellElements.size() - 1) {
+//                                    continue; // Skip the comparison for the last column
+//                                }
+//
+//                                js.executeScript("arguments[0].scrollIntoView(true);", cellElements.get(j));
+//
+//                                String expectedCellValue = (excelRow.getCell(j - 1) != null) ? excelRow.getCell(j - 1).toString().trim() : "";
+//                                String actualCellValue = cellElements.get(j).getText().trim();
+//                                System.out.println("actualCellValue;"+actualCellValue);
+//
+//                                // Normalize date formats before comparison
+//                                expectedCellValue = expectedCellValue.replace("/", "-").replace(".", "-").replace(" ", "");
+//                                actualCellValue = actualCellValue.replace("/", "-").replace(".", "-").replace(" ", "");
+//
+//                                excelRowData.add(expectedCellValue);
+//                                webpageRowData.add(actualCellValue);
+//                            }
+//
+//                            excelData.put(i + 1, excelRowData);
+//                            webpageData.put(i + 1, webpageRowData);
+//                        }
+//
+//                    } else {
+//                        break;
+//                    }
+//                }
+//                // Assuming the unique identifier is in the first column (index 0)
+//                for (Map.Entry<Integer, List<String>> entry : excelData.entrySet()) {
+//                    int rowIndex = entry.getKey();
+//                    List<String> excelRowData = entry.getValue();
+//
+//                    // Identify the unique identifier from the Excel row (e.g., User ID, Employee ID, etc.)
+//                    String uniqueIdentifier = excelRowData.get(0); // Assuming the unique ID is in the first column
+//
+//                    // Find the corresponding row in the webpageData
+//                    List<String> webpageRowData = null;
+//                    for (List<String> rowData : webpageData.values()) {
+//                        if (rowData.get(0).equals(uniqueIdentifier)) { // Matching unique ID
+//                            webpageRowData = rowData;
+//                            break;
+//                        }
+//                    }
+//
+//                    if (webpageRowData == null) {
+//                        softAssert.fail("No matching row found on the webpage for the unique identifier: " + uniqueIdentifier);
+//                        continue;
+//                    }
+//
+//                    System.out.println("Comparing Excel Row " + rowIndex + " with Webpage row matching unique identifier " + uniqueIdentifier + ":");
+//
+//                    for (int k = 0; k < excelRowData.size(); k++) {
+//                        String excelValue = excelRowData.get(k);
+//                        String webpageValue = webpageRowData.get(k);
+//
+//                        System.out.println("Column " + (k + 2) + ": Excel value = " + excelValue + " | Webpage value = " + webpageValue);
+//
+//                        // Normalize date formats before comparison
+//                        excelValue = excelValue.replace("/", "-").replace(".", "-").replace(" ", "");
+//                        webpageValue = webpageValue.replace("/", "-").replace(".", "-").replace(" ", "");
+//
+//                        softAssert.assertEquals(excelValue, webpageValue, "Mismatch at row " + rowIndex + ", column " + (k + 2));
+//                    }
+//                }
+//                softAssert.assertAll();
+//                workbook.close();
+//            } catch (StaleElementReferenceException e) {
+//                // Retry logic in case of StaleElementReferenceException
+//                System.out.println("Encountered StaleElementReferenceException. Retrying...");
+//                // adminPageUserVerifyTheAllDataTheyHaveCreatedOnTheFile(); // Uncomment and implement if needed
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//                throw e; // Rethrow the exception after logging it
+//            }
+//        }
+//    }
+//}

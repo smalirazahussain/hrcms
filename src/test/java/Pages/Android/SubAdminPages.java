@@ -60,6 +60,8 @@ public class SubAdminPages {
     public static String Employee_Mol_No = "molNo";
     public static String Employer_Establishment_Id = "#establishmentId";
     public static String Sub_Search_Button = ".search-view input.ant-input";
+    public static String team_Member_Email_Id = "tr:nth-child(2) td:nth-child(3)";
+    public static String Employee_Button = "#employee";
 
 
 
@@ -203,5 +205,13 @@ public class SubAdminPages {
 
     public static WebElement get_Sub_Search_Button() {
         return Base_Class.driver.findElement(By.cssSelector(Sub_Search_Button));
+    }
+
+    public static WebElement get_team_Member_Email_Id() {
+        return Base_Class.driver.findElement(By.cssSelector(team_Member_Email_Id));
+    }
+
+    public static WebElement get_Employee_Button() {
+        return Base_Class.driver.findElement(By.cssSelector(Employee_Button));
     }
 }

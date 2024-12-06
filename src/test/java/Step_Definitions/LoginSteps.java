@@ -17,6 +17,7 @@ import org.testng.asserts.SoftAssert;
 import java.time.Duration;
 
 import static Hooks.Base_Class.driver;
+import static Hooks.Base_Class.enableNetworkLogging;
 import static Pages.Android.LoginPage.Enter_Email_Id;
 import static Pages.Android.LoginPage.Enter_Password;
 //import static Pages.Android.LoginPage.create_Account_Button;
@@ -37,7 +38,7 @@ public class LoginSteps {
         // Random randomGenerator = new Random();
         // int randomInt = randomGenerator.nextInt(1000);
         // LoginPage.get_Enter_Email_Id().sendKeys(email+randomInt+"@mailinator.com");
-        LoginPage.get_Enter_Email_Id().sendKeys(configReader.getProperty("username"));
+        LoginPage.get_Enter_Email_Id().sendKeys(configReader.getProperty("stageUserName"));
 
         JSONObject userDataJson = SaveUserDataToJsonFile.readJsonFile();
 
@@ -64,7 +65,7 @@ public class LoginSteps {
     @When("[Login Page] User enter the password {string}")
     public void loginPageUserEnterThePassword(String password) throws InterruptedException {
         //wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(Enter_Password)));
-        LoginPage.get_Enter_Password().sendKeys(configReader.getProperty("password"));
+        LoginPage.get_Enter_Password().sendKeys(configReader.getProperty("stageUserPassword"));
 
 
     }
@@ -134,6 +135,14 @@ public class LoginSteps {
     public static void main(String[] num) {
         long first16 = (long) (Math.random() * 10000000000000000L);
         System.out.println(first16);
+    }
+
+    @Then("[Login page] User verify toast msg {string}")
+    public void loginPageUserVerifyToastMsg(String expected_Toast_Msg) {
+        enableNetworkLogging();
+        String actual_Toast_Msg = LoginPage.get_Toast_Msg().getText();
+        System.out.println("actual_Toast_Msg:"+actual_Toast_Msg);
+        Assert.assertEquals(actual_Toast_Msg,expected_Toast_Msg);
     }
 }
 

@@ -10,6 +10,8 @@ public class MainClass {
         String exchangeHouseUrl = configReader.getProperty("exchangeHouseUrl");
         String stageEmployerUrl = configReader.getProperty("stageEmployerUrl");
         String stageAminUrl = configReader.getProperty("stageAminUrl");
+        String stageUserName = configReader.getProperty("stageUserName");
+        String stageUserPassword = configReader.getProperty("stageUserPassword");
 
         System.out.println("URL: " + employerurl);
         System.out.println("Username: " + username);

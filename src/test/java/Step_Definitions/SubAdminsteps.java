@@ -21,6 +21,7 @@ import static Pages.Android.AddEmployerPages.Mol_No;
 import static Pages.Android.AdminPage.Company_Client;
 import static Pages.Android.EidPages.Update_Button;
 import static Pages.Android.MolPages.Edit_Personal_Details;
+import static Pages.Android.RequestPage.Loading;
 import static Pages.Android.SignUpPage.signUpUserEnterTheEmail;
 import static Pages.Android.SubAdminPages.*;
 import static Step_Definitions.SignUpSteps.companyName;
@@ -239,9 +240,19 @@ public class SubAdminsteps {
 //    public static String Employee;
     public static String[] employeesModule;
     public static int Employees_Creations_Check_Boxes;
+    public static String Employee;
+    public static String actualEmployee;
     @Then("[Sub Admin] Employer give him access to sub admin to creates single, multiple employees,Deactivate Employees,Download Employees and Request Checker")
     public void subAdminEmployerGiveHimAccessToSubAdminToCreatesSingleMultipleEmployeesDeactivateEmployeesDownloadEmployeesAndRequestChecker() throws InterruptedException {
-        String Employee = get_Employee_Module().getText().toLowerCase();
+        actualEmployee = get_Employee_Module().getText()
+                .toLowerCase()  // Convert to lower case
+                .replaceAll("[^a-zA-Z0-9]", "")  // Remove all non-alphanumeric characters
+                .replaceAll("\\s+$", "");  // Remove trailing spaces (though non-alphanumeric removal handles this)
+
+// Capitalize the first letter and keep the rest in lower case
+        actualEmployee = actualEmployee.substring(0, 1).toUpperCase() + actualEmployee.substring(1);
+        System.out.println("Employee value"+actualEmployee);
+        Employee = get_Employee_Module().getText().toLowerCase();
         System.out.println("Value:"+Employee);
         Employee_Selected_Check_Boxes = SubAdminPages.get_Employees_Creations().size();
          System.out.println(Employee_Selected_Check_Boxes);
@@ -443,16 +454,33 @@ public class SubAdminsteps {
         companyName = companyTittle;
         System.out.println(companyName);
     }
-
+    public static String teamMemberEmailId;
     @When("[Sub Admin] User tap on the search button")
     public void subAdminUserTapOnTheSearchButton() {
-        SubAdminPages.get_Sub_Search_Button().sendKeys("566710288");
+        SubAdminPages.get_Sub_Search_Button().sendKeys("565256598");
+        teamMemberEmailId = SubAdminPages.get_team_Member_Email_Id().getText();
+        System.out.println("Team Member Email id:"+teamMemberEmailId);
     }
 
     @When("[Sub Admin] User tap on the manage access button")
     public void subAdminUserTapOnTheManageAccessButton() {
-        wait.until(ExpectedConditions.elementToBeClickable((By.cssSelector(Manage_Access_Button))));
+       wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(Loading)));
+        //wait.until(ExpectedConditions.elementToBeClickable((By.cssSelector(Manage_Access_Button))));
         SubAdminPages.get_Manage_Access_Button().click();
+    }
+
+    @And("[Sub Admin] Use paste the team member email")
+    public void subAdminUsePasteTheTeamMemberEmail() {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(signUpUserEnterTheEmail)));
+        System.out.println("Team member Email:"+teamMemberEmailId);
+        SignUpPage.signUpUserEnterTheEmail().sendKeys(teamMemberEmailId);
+    }
+
+    @Then("[Sub Admin] User validate the button are present")
+    public void subAdminUserValidateTheButtonArePresent() {
+        String employee_Button = SubAdminPages.get_Employee_Button().getText();
+        System.out.println("employee_Button:"+employee_Button);
+        Assert.assertEquals(employee_Button,actualEmployee);
     }
 }
 

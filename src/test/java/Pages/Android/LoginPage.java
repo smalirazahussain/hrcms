@@ -25,6 +25,7 @@ public class LoginPage {
     public static String Error_Message_In_Password = ".error";
     public static String Eye_Button = "img[alt='icon']";
     //public static String .ant-input-suffix img
+    public static String Toast_Msg= "div[class='ant-message ant-message-top css-djtmh8'] span:nth-child(2)";
 
     public LoginPage() {
     }
@@ -63,4 +64,7 @@ public class LoginPage {
         return Base_Class.driver.findElement(By.cssSelector(Eye_Button));
     }
 
+    public static WebElement get_Toast_Msg() {
+        return Base_Class.driver.findElement(By.cssSelector(Toast_Msg));
+    }
 }

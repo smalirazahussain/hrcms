@@ -33,7 +33,7 @@ public class SignUpPage {
     public static String passwordErrorMessage = "//div[normalize-space()='Password is required']";
     public static String confirmPasswordErrorMessage = "//div[normalize-space()='Confirm Password is required']";
     public static String otpCode = "//input[@aria-label='Please enter verification code. Character 1']";
-    public static String verifyButton = " button span:nth-child(2)";
+    public static String verifyButton = "div button";
     public static String Branch_Employer_Phone_No = "//input[@placeholder='phone number']";
 
     public SignUpPage() {

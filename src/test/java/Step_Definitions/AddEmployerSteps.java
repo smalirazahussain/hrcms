@@ -31,7 +31,7 @@ import static Hooks.Base_Class.driver;
 import static Pages.Android.AddEmployerPages.*;
 import static Pages.Android.UpdateProliePage.get_year_arrow_xpath;
 import static Pages.Android.UpdateProliePage.issueDate;
-import static Step_Definitions.Employeessteps.randomNumbers;
+import static Step_Definitions.Employeessteps.filePaths;
 import static Step_Definitions.SignUpSteps.companyName;
 import static Tests.Current_Date.currentYear;
 
@@ -548,9 +548,11 @@ public class AddEmployerSteps<Save_mol> {
 
 
     @And("[Employees Page] User upload a bulk employees file {string}")
-    public void employeesPageUserUploadABulkEmployeesFile(String arg0) throws InterruptedException, AWTException {
+    public void
+    employeesPageUserUploadABulkEmployeesFile(String arg0) throws InterruptedException, AWTException {
         //wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(uploadExcel)));
         Thread.sleep(5000);
+        wait.until(ExpectedConditions.elementToBeClickable((By.xpath(uploadExcel))));
         AddEmployerPages.get_uploadExcel().click();
 
 //        Robot rb = new Robot();
@@ -576,7 +578,8 @@ public class AddEmployerSteps<Save_mol> {
 
 
         Robot rb = new Robot();
-        StringSelection str = new StringSelection("D:\\Hrcms\\src\\test\\java\\document\\"+randomNumbers+".xlsx");
+        StringSelection str = new StringSelection(filePaths);
+        System.out.println("str"+str);
         Toolkit.getDefaultToolkit().getSystemClipboard().setContents(str, null);
         // press Contol+V for pasting
         rb.keyPress(KeyEvent.VK_CONTROL);
@@ -590,6 +593,7 @@ public class AddEmployerSteps<Save_mol> {
         rb.keyPress(KeyEvent.VK_ENTER);
         rb.keyRelease(KeyEvent.VK_ENTER);
         //ScrollVertical(get_Add_Emplyer_Button());
+        //wait.until(ExpectedConditions.presenceOfElementLocated(By.id("uploadSuccessMessage"))); // Replace with actual success message locator
         Thread.sleep(5000);
 
     }
