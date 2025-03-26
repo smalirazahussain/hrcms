@@ -1,6 +1,5 @@
 package Step_Definitions;
 
-import Pages.Android.AddEmployerPages;
 import Pages.Android.UploadDocumentPages;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
@@ -13,8 +12,6 @@ import java.awt.event.KeyEvent;
 import java.time.Duration;
 
 import static Hooks.Base_Class.driver;
-import static Pages.Android.UpdateProliePage.getSubmitButton;
-import static Tests.Scroll.ScrollVertical;
 
 public class UpdateDocumentSteps {
 

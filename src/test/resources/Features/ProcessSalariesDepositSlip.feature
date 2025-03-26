@@ -75,7 +75,39 @@ Feature: ProcessSalariesDepositSlip
     And     [Process Salaries DepositSlip Page] User Tap on Process Salaries Deposit Slip
     When    [Process Salaries DepositSlip Page] User enter company name and download the salary template then enter the salary in total colomn
 
-
+  Scenario: Multiple approval
+    Given   [Login Page] User enter the email ""
+    When    [Login Page] User enter the password ""
+    Then    [Login page] User tap on login button
+    And     [Process Salaries DepositSlip Page] User Tap on Process Salaries Deposit Slip
+    When    [Process Salaries DepositSlip Page] User enter company name and download the salary template
+    Then    [Process Salaries DepositSlip Page] User select the month and then upload the process file "2012-04"
+    And     [Process Salaries DepositSlip Page] User tap on browse file and upload a salary process file
+    Then    [Process Salaries DepositSlip Page] User tap on submit button
+    Then    [Process Salaries DepositSlip Page] User select the month and then upload the process file "2012-04"
+    And     [Process Salaries DepositSlip Page] User tap on browse file and upload a salary process file
+    Then    [Process Salaries DepositSlip Page] User tap on submit button
+    Then    [Process Salaries DepositSlip Page] User select the month and then upload the process file "2012-04"
+    And     [Process Salaries DepositSlip Page] User tap on browse file and upload a salary process file
+    Then    [Process Salaries DepositSlip Page] User tap on submit button
+    Then    [Process Salaries DepositSlip Page] User select the month and then upload the process file "2012-04"
+    And     [Process Salaries DepositSlip Page] User tap on browse file and upload a salary process file
+    Then    [Process Salaries DepositSlip Page] User tap on submit button
+    Then    [Process Salaries DepositSlip Page] User select the month and then upload the process file "2012-04"
+    And     [Process Salaries DepositSlip Page] User tap on browse file and upload a salary process file
+    Then    [Process Salaries DepositSlip Page] User tap on submit button
+    Then    [Process Salaries DepositSlip Page] User select the month and then upload the process file "2012-04"
+    And     [Process Salaries DepositSlip Page] User tap on browse file and upload a salary process file
+    Then    [Process Salaries DepositSlip Page] User tap on submit button
+    Then    [Process Salaries DepositSlip Page] User select the month and then upload the process file "2012-04"
+    And     [Process Salaries DepositSlip Page] User tap on browse file and upload a salary process file
+    Then    [Process Salaries DepositSlip Page] User tap on submit button
+    Then    [Process Salaries DepositSlip Page] User select the month and then upload the process file "2012-04"
+    And     [Process Salaries DepositSlip Page] User tap on browse file and upload a salary process file
+    Then    [Process Salaries DepositSlip Page] User tap on submit button
+    Then    [Process Salaries DepositSlip Page] User select the month and then upload the process file "2012-04"
+    And     [Process Salaries DepositSlip Page] User tap on browse file and upload a salary process file
+    Then    [Process Salaries DepositSlip Page] User tap on submit button
 
 
 

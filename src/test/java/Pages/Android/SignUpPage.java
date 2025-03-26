@@ -25,7 +25,7 @@ public class SignUpPage {
     public static String confirmPassword = "[placeholder='Confirm Password']";
     public static String signUpPageSignUpButton = "button[title='Sign Up'] ";
     public static String errorMessageOnUser = "div[class='ant-message'] span:nth-child(1)";
-    public static String phoneCode = "ant-select-selection-search-input";
+    public static String phoneCode = "#phone";
     //".ant-select-selection-item";
     public static String dropDownButton = "//span[@role='img']";
     public static String countryCode = "//span[@class='ant-select-selection-search']";

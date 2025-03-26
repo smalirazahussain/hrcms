@@ -1,8 +1,23 @@
-<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Hrcms" parallel="tests">
-    <test name="Test">
+<!--<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">-->
+<!--&lt;!&ndash;<suite name="Hrcms" parallel="tests">&ndash;&gt;-->
+<!--<suite name="Hrcms" data-provider-thread-count="4">-->
+<!--    <test name="Test">-->
+<!--        <classes>-->
+<!--            <class name="cucumbertestrunner"/>-->
+<!--        </classes>-->
+<!--    </test>-->
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="CucumberParallelSuite" parallel="tests" thread-count="2">
+    <test name="Run AddEmployer">
+        <parameter name="cucumber.tags" value="@AddEmployer"/>
         <classes>
-            <class name="cucumbertestrunner"/>
+            <class name="cucumberTestNGRunner"/>
+        </classes>
+    </test>
+    <test name="Run AddEmployer1">
+        <parameter name="cucumber.tags" value="@AddEmployer1"/>
+        <classes>
+            <class name="cucumberTestNGRunner"/>
         </classes>
     </test>
 </suite>

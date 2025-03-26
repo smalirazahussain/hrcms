@@ -25,7 +25,8 @@ public class LoginPage {
     public static String Error_Message_In_Password = ".error";
     public static String Eye_Button = "img[alt='icon']";
     //public static String .ant-input-suffix img
-    public static String Toast_Msg= "div[class='ant-message ant-message-top css-djtmh8'] span:nth-child(2)";
+    public static String Toast_Msg= "div[class='ant-message ant-message-top css-nqoqt9'] span:nth-child(2)";
+
 
     public LoginPage() {
     }

@@ -7,7 +7,7 @@ import java.nio.file.Paths;
 import java.util.Properties;
 
 public class ConfigReader {
-    private final Properties properties;
+    private static Properties properties;
 
     public ConfigReader() {
         properties = new Properties();
@@ -20,7 +20,7 @@ public class ConfigReader {
         }
     }
 
-    public String getProperty(String key) {
+    public static String getProperty(String key) {
         return properties.getProperty(key);
     }
 }

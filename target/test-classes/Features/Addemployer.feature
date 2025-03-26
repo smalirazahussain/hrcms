@@ -1236,8 +1236,9 @@ Feature: AddEmployer
 
     Examples:
       |FirstName|MolNo   |EmpCode|LastName|DisplayName|DOB       |Gender|Nationality|JoiningDate|Email          |MobileNo|AlternatePhone|HomeAddress|HomeState|HomePostCode|WorkAddress|WorkState|WorkPostCode|PassportNo|PassportExpiry|EID|EIDExpiry |EstablishmentId |
-      |User     |Mol12345|1      |1       |User       |05/05/1978|M     |BD         |05/05/1978 |@mailinator.com|971     |971           |Address    |1        |00001       |2          |2        |2           |Passport  |10/05/2029    |   |10/05/2029|0000010903853   |
+      |User     |Mol12345|1      |1       |User       |05/05/1978|M     |BD         |05/05/1978 |@mailinator.com|971     |971           |Address    |1        |00001       |2          |2        |2           |Passport  |10/05/2029    |   |10/05/2029|PENDINGBADGE213   |
 
+  @AddEmployer @AddEmployer1
   Scenario Outline: Create multiple Employee with non wps process
     Given   [Login Page] User enter the email "11586"
     When    [Login Page] User enter the password "Password1"
@@ -1253,11 +1254,13 @@ Feature: AddEmployer
     And     [Request Page] User tap on the request button
     Then    [Request Page] User tap on the view button
     And     [Request Page] User tap on the Approve button
-    Then    [Sign Up] User enter the otp code "111111"
     #Then    [Login page] User verify toast msg "Request sent to admin for further approval"
-    Then    [Request Page] User tap on the view button
-    And     [Request Page] User tap on the Approve button
-    Then    [Sign Up] User enter the otp code "111111"
+    #Then    [Sign Up] User enter the otp code "111111"
+    #Then    [Login page] User verify toast msg "Request sent to admin for further approval"
+    #Then    [Request Page] User tap on the view button
+    #And     [Request Page] User tap on the Approve button
+    #Then    [Login page] User verify toast msg "Request sent to admin for further approval"
+    #Then    [Sign Up] User enter the otp code "111111"
     #Then    [Login page] User verify toast msg "Request sent to admin for further approval"
     Then    [Admin Page] Open the admin tab "https://stage-admin.getthelingo.com/"
     And     [Admin Page] User tap on login page
@@ -1276,12 +1279,13 @@ Feature: AddEmployer
    # Then    [Admin Page] User tap No other bank employees in given file
     Then    [Admin Page] User verify the all data they have creates on the file
     And     [Admin Page] User tap on the select all radio button
+
     And     [Admin Page] User Tap on the approve button
     Then    [Admin Page] User verify the notification message "Action Successful"
 
     Examples:
       |FirstName|MolNo|EmpCode|LastName|DisplayName|DOB|Gender|Nationality|JoiningDate|Email|MobileNo|AlternatePhone|HomeAddress|HomeState|HomePostCode|WorkAddress|WorkState|WorkPostCode|PassportNo|PassportExpiry|EID|EIDExpiry|EstablishmentId|
-      |User|00000000000000|0000|1|User|05/05/1978|M|BD|05/05/1978|@mailinator.com|97156|97156|Address|1|00001|2|2|2|Passport|10/05/2029|78419910|10/05/2029|ABC12345678910|
+      |User|00000000000000|0000|1|User|01/11/1978|M|BD|05/05/1978|@mailinator.com|97156|97156|Address|1|00001|2|2|2|Passport|10/05/2029|78419910|10/05/2029|FUNDFLEX31235|
 
 
 

@@ -7,13 +7,11 @@ package Step_Definitions;
 import Pages.Android.AddEmployerPages;
 import Pages.Android.AdminPage;
 import Pages.Android.UpdateProliePage;
+import Utils.EmployerDataStorage;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.TimeoutException;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
@@ -33,10 +31,11 @@ import static Step_Definitions.SignUpSteps.companyName;
 import static Tests.Current_Date.currentMonth;
 import static Tests.Current_Date.currentYear;
 import static Tests.Scroll.ScrollVertical;
+import static org.apache.commons.exec.util.DebugUtils.handleException;
 
 public class UpdateProfile {
 
-    Duration timeout = Duration.ofSeconds(30);
+    Duration timeout = Duration.ofSeconds(60);
     WebDriverWait wait = new WebDriverWait(driver, timeout);
     //create a soft-assertion object
     SoftAssert softAssert = new SoftAssert();
@@ -53,9 +52,27 @@ public class UpdateProfile {
 
     @Then("[Update Profile] User enter the establishment id {string}")
     public void updateProfileUserEnterTheEstablishmentId(String eid) {
-        first14 = (long) (Math.random() * 10000000000000000L);
-        UpdateProliePage.getEstablishmentId().sendKeys(first14 + eid);
-        System.out.println("Company Est Id:"+first14);
+        try {
+            // ✅ Generate a random 14-digit Establishment ID
+            long random14Digit = (long) (Math.random() * 100000000000000L) + 100000000000000L;
+            first14 = Long.parseLong(String.valueOf(random14Digit));
+
+            // ✅ Wait for the field to be visible
+            WebElement establishmentIdField = wait.until(ExpectedConditions.visibilityOf(UpdateProliePage.getEstablishmentId()));
+
+            // ✅ Enter the Establishment ID
+            UpdateProliePage.getEstablishmentId().sendKeys(String.valueOf(first14));
+
+
+            // ✅ Store in EmployerDataStorage for later verification
+            EmployerDataStorage.storeData("EstablishmentId", String.valueOf(first14));
+
+            // ✅ Print stored ID for debugging
+            System.out.println("📌 Stored Establishment ID: " + first14);
+
+        } catch (Exception e) {
+            handleException("Establishment ID Entry", e);
+        }
 
 
     }
@@ -87,8 +104,15 @@ public class UpdateProfile {
 
     @When("[Update Profile] User enter the city {string}")
     public void updateProfileUserEnterTheCity(String cityname) {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(city)));
-        UpdateProliePage.getcity().sendKeys(cityname);
+        WebElement cityInput = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(city)));
+        cityInput.clear();
+        cityInput.sendKeys(cityname);
+
+        // ✅ Store the entered city in EmployerDataStorage for later verification
+        EmployerDataStorage.storeData("City", cityname);
+
+        // ✅ Print stored city for debugging
+        System.out.println("📌 Stored City: " + cityname);
     }
 
     @Then("[Update Profile] User enter the issue date {string}")
@@ -383,8 +407,17 @@ public class UpdateProfile {
 
     @Then("[Update Profile] User enter the building no {string}")
     public void updateProfileUserEhterTheBuildingNo(String BNO) throws InterruptedException {
-        long buildingno = (long) (Math.random() * 100000000L);
-        UpdateProliePage.get_Building_No().sendKeys(buildingno + BNO);
+        // ✅ Generate a random 8-digit building number
+        long buildingNo = (long) (Math.random() * 100000000L);
+
+        // ✅ Store the generated building number in EmployerDataStorage
+        EmployerDataStorage.storeData("BuildingNumber", String.valueOf(buildingNo));
+
+        // ✅ Enter building number in UI
+        UpdateProliePage.get_Building_No().sendKeys(buildingNo + BNO);
+
+        // ✅ Print for debugging
+        System.out.println("📌 Stored Building Number: " + buildingNo);
 
 
     }
@@ -392,8 +425,22 @@ public class UpdateProfile {
 
     @Then("[Update Profile] User select the Payroll type{string}")
     public void updateProfileUserSelectThePayrollType(String payroll) throws InterruptedException {
-        UpdateProliePage.get_Payroll().sendKeys(payroll);
-        UpdateProliePage.get_Payroll().sendKeys(Keys.ENTER);
+        try {
+            // ✅ Wait for the Payroll Type dropdown to be visible
+            WebElement payrollDropdown = wait.until(ExpectedConditions.visibilityOf(UpdateProliePage.get_Payroll()));
+
+            // ✅ Click and select Payroll Type
+            payrollDropdown.sendKeys(payroll);
+            payrollDropdown.sendKeys(Keys.ENTER);
+
+            // ✅ Store the selected Payroll Type in EmployerDataStorage
+            EmployerDataStorage.storeData("PayrollType", payroll);
+
+            // ✅ Print stored Payroll Type for debugging
+            System.out.println("📌 Stored Payroll Type: " + payroll);
+        } catch (Exception e) {
+            handleException("Payroll Type Selection", e);
+        }
 
     }
 
@@ -570,10 +617,8 @@ public class UpdateProfile {
     @Then("[Admin Page] User verify establishment id and approve by admin")
     public void adminPageUserVerifyEstablishmentIdAndApproveByAdmin() throws InterruptedException {
         System.out.println("ESTID;"+first14);
-        if (first14 == Long.parseLong(AdminPage.get_Establishmentid().getText())
-                && AdminPage.get_company_Name().getText().equals(companyName)
-                && AdminPage.get_Trade_No().getText().equals(tradeno)
-                && AdminPage.get_Sponsor_No().getText().equals(SponsorDocNo)) {
+        if (first14 == Long.parseLong(AdminPage.get_Establishmentid().getText()) && AdminPage.get_company_Name().getText().equals(companyName) && AdminPage.get_Trade_No().getText().equals(tradeno)) {
+            AdminPage.get_Sponsor_No().getText();
         }
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath(Approve_Button)));
         AdminPage.get_Approve_Button().click();

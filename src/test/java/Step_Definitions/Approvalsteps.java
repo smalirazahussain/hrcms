@@ -1,24 +1,15 @@
 package Step_Definitions;
 
-import Pages.Android.AdminPage;
 import Pages.Android.ApprovalPage;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.asserts.SoftAssert;
 
-import java.awt.*;
-import java.net.MalformedURLException;
 import java.time.Duration;
 
-import static Hooks.Base_Class.driver;
-import static Pages.Android.AdminPage.admin_Tab;
 import static Pages.Android.ApprovalPage.*;
-import static Pages.Android.UpdateProliePage.*;
-import static Tests.Current_Date.currentMonth;
 
 public class Approvalsteps {
 

@@ -70,9 +70,12 @@ public class Base_Class {
             if (driver == null) {
                 ChromeOptions options = new ChromeOptions();
                 options.setCapability("webSocketUrl", true);
-//            options.addArguments("--headless");
+                options.addArguments("--start-maximized");
+                options.addArguments("--no-sandbox");
+                options.addArguments("--disable-dev-shm-usage");
+//                options.addArguments("--headless");
 //                options.addArguments("--disable-gpu");
-//            options.addArguments("--window-size=1920,1080");
+            options.addArguments("--window-size=1920,1080");
                 Map<String, Object> prefs = new HashMap<>();
                 prefs.put("download.default_directory", "D:\\Hrcms\\src\\test\\java\\document");
                 options.setExperimentalOption("prefs", prefs);

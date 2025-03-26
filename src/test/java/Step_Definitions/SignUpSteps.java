@@ -1,7 +1,10 @@
 package Step_Definitions;
 
 import Pages.Android.SignUpPage;
+import Pages.MasterAdmin.LoginMasterAdminPage;
+import Utils.EmployerDataStorage;
 import com.google.gson.Gson;
+import config.properties.ConfigReader;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -9,6 +12,7 @@ import io.cucumber.java.en.When;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Credentials;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
@@ -22,9 +26,9 @@ import java.time.Duration;
 import java.util.Random;
 
 import static Hooks.Base_Class.driver;
-import static Hooks.Base_Class.enableNetworkLogging;
 import static Pages.Android.SignUpPage.*;
 import static Pages.Android.UpdateProliePage.*;
+import static Pages.MasterAdmin.LoginMasterAdminPage.OTP_toast_message;
 import static Tests.Current_Date.currentMonth;
 //import static Pages.Android.LoginPage.create_Account_Button;
 //import static Tests.Useful_functions.getRandomNumberLowerAndUpperBound;
@@ -51,28 +55,89 @@ public class SignUpSteps {
 
 
     }
+//    public static int randomInt;
+//    public static String companyName;
+//    @When("[Sign Up] User enter the name {string}")
+//    public String signUpUserEnterTheName(String company_name) throws InterruptedException {
+//        String[] prefixes = {"Tech", "Inno", "Global", "NextGen", "Cyber", "Smart", "Future", "Blue", "Green", "Quantum",
+//                "AI", "Vision", "Cloud", "Neural", "Deep", "Ultra", "Hyper", "Secure", "Nexus", "Digital"};
+//
+//        String[] suffixes = {"Corp", "Solutions", "Industries", "Systems", "Tech", "Group", "Labs", "Enterprises", "Holdings",
+//                "Networks", "Innovations", "AI", "Services", "Data", "Dynamics", "Soft", "Edge", "Cloud", "Matrix", "Logics"};
+//
+//        Random random = new Random();
+//        //List<String> company_name = new ArrayList<>();
+//
+//        String prefix = prefixes[random.nextInt(prefixes.length)];
+//        String suffix = suffixes[random.nextInt(suffixes.length)];
+//
+//        wait.until(ExpectedConditions.visibilityOfElementLocated(By.name(signUpUserEnterTheName)));
+//        Random randomGenerator = new Random();
+//         randomInt = randomGenerator.nextInt(10000);
+//        SignUpPage.signUpUserEnterTheName().sendKeys(company_name+ prefix + suffix + randomInt);
+//        String abc = company_name+ prefix + suffix + randomInt;
+//        companyName = company_name+ prefix + suffix + randomInt;
+//        System.out.println("Company Name:"+companyName);
+//        return abc;
+//
+//    }
     public static int randomInt;
     public static String companyName;
+
     @When("[Sign Up] User enter the name {string}")
     public String signUpUserEnterTheName(String company_name) throws InterruptedException {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.name(signUpUserEnterTheName)));
-        Random randomGenerator = new Random();
-         randomInt = randomGenerator.nextInt(10000);
-        SignUpPage.signUpUserEnterTheName().sendKeys(company_name + randomInt);
-        String abc = company_name + randomInt;
-        companyName = company_name + randomInt;
-        return abc;
+        try {
+            String[] prefixes = {"Tech", "Inno", "Global", "NextGen", "Cyber", "Smart", "Future", "Blue", "Green", "Quantum",
+                    "AI", "Vision", "Cloud", "Neural", "Deep", "Ultra", "Hyper", "Secure", "Nexus", "Digital"};
+
+            String[] suffixes = {"Corp", "Solutions", "Industries", "Systems", "Tech", "Group", "Labs", "Enterprises", "Holdings",
+                    "Networks", "Innovations", "AI", "Services", "Data", "Dynamics", "Soft", "Edge", "Cloud", "Matrix", "Logics"};
+
+            Random random = new Random();
+            String prefix = prefixes[random.nextInt(prefixes.length)];
+            String suffix = suffixes[random.nextInt(suffixes.length)];
+
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.name(signUpUserEnterTheName)));
+            randomInt = random.nextInt(10000); // Generate unique number
+
+            // Construct the full company name
+            companyName = company_name + prefix + suffix + randomInt;
+
+            // Enter the company name in the UI field
+            SignUpPage.signUpUserEnterTheName().sendKeys(companyName);
+
+            // Store the company name in EmployerDataStorage
+            EmployerDataStorage.storeData("EmployerName", companyName);
+
+            System.out.println("✅ Company Name Entered & Stored: " + companyName);
+
+            return companyName;
+        } catch (Exception e) {
+            System.err.println("⚠️ Error: Unable to enter company name.");
+            e.printStackTrace();
+            Assert.fail("Company name entry failed due to an exception: " + e.getMessage());
+            return null;
         }
+    }
 
 
 
     @Then("[Sign Up] User enter the email {string}")
     public void signUpUserEnterTheEmail(String email) throws InterruptedException {
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(signUpUserEnterTheEmail)));
+        // Generate random email
         Random randomGenerator = new Random();
         int randomInt = randomGenerator.nextInt(10000);
-        SignUpPage.signUpUserEnterTheEmail().sendKeys(email + randomInt + "@mailinator.com");
-        System.out.println(email+randomInt+"@mailinator.com");
+        String generatedEmail = email + randomInt + "@mailinator.com";
+
+        // Enter email in the UI
+        SignUpPage.signUpUserEnterTheEmail().sendKeys(generatedEmail);
+
+        // Store email in EmployerDataStorage
+        EmployerDataStorage.storeData("Email", generatedEmail);
+
+        // Print email for debugging
+        System.out.println("📌 Stored Email: " + generatedEmail);
     }
 
     @And("[Sign Up] User tap the drop down button")
@@ -95,19 +160,28 @@ public class SignUpSteps {
     @Then("[Sign Up] User enter the phone no {string}")
     public void signUpUserEnterThePhoneNo(String phone_no) throws InterruptedException {
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(signUpUserEnterThePhoneNo)));
+
+        // ✅ Generate random 7-digit phone number
         Random randomGenerator = new Random();
-        int randomno = randomGenerator.nextInt(8999999) + 1000000; // Generates a 7-digit number
-        String fullPhoneNumber = "56" + randomno;
-        System.out.println(randomno);
+        int randomNo = randomGenerator.nextInt(8999999) + 1000000; // Generates a 7-digit number
+        String fullPhoneNumber = "56" + randomNo; // UAE number (example: 56XXXXXXX)
+
+        // ✅ Store the phone number in EmployerDataStorage
+        EmployerDataStorage.storeData("PhoneNumber", fullPhoneNumber);
+
+        // ✅ Enter phone number in the UI
         SignUpPage.signUpUserEnterThePhoneNo().click();
         SignUpPage.signUpUserEnterThePhoneNo().sendKeys(fullPhoneNumber);
+
+        // ✅ Print phone number for debugging
+        System.out.println("📌 Stored Phone Number: " + fullPhoneNumber);
 
     }
 
     @Then("[Sign Up] User enter the confirm password {string}")
     public void signUpUserEnterTheConfirmPassword(String confirm_password) {
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(confirmPassword)));
-        SignUpPage.confirmPassword().sendKeys(confirm_password);
+        SignUpPage.confirmPassword().sendKeys(ConfigReader.getProperty("stageUserPassword"));
 
     }
 
@@ -204,7 +278,24 @@ public class SignUpSteps {
 
     @Then("[Sign Up] User enter the otp code {string}")
     public void signUpUserEnterTheOtpCode(String oc) throws InterruptedException {
-        enableNetworkLogging();
+        //enableNetworkLogging();
+        WebElement toastElement = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(OTP_toast_message)));
+
+        // Wait for the text inside the toast to be non-empty
+        wait.until(ExpectedConditions.not(ExpectedConditions.textToBePresentInElement(toastElement, "")));
+        String actualOTPToastMessage = LoginMasterAdminPage.get_OTP_toast_message().getText();
+        String expectedOTPGenerated = "Resend";
+        System.out.println("✅ OTP Toast Message Displayed: " + actualOTPToastMessage);
+        Assert.assertEquals(expectedOTPGenerated, actualOTPToastMessage);
+//        boolean isToastInvisible = wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(OTP_toast_message)));
+//        System.out.println("Toast Msg:"+isToastInvisible);
+//        if (isToastInvisible) {
+//            System.out.println("✅ Toast message disappeared successfully!");
+//        } else {
+//            System.out.println("❌ Toast message is still visible!");
+//        }
+
+        //OTP Generated
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(otpCode)));
         SignUpPage.otpCode().sendKeys(oc+ Keys.ENTER);
 

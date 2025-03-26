@@ -17,9 +17,7 @@ import org.testng.asserts.SoftAssert;
 import java.time.Duration;
 
 import static Hooks.Base_Class.driver;
-import static Hooks.Base_Class.enableNetworkLogging;
-import static Pages.Android.LoginPage.Enter_Email_Id;
-import static Pages.Android.LoginPage.Enter_Password;
+import static Pages.Android.LoginPage.*;
 //import static Pages.Android.LoginPage.create_Account_Button;
 //import static Tests.Useful_functions.getRandomNumberLowerAndUpperBound;
 
@@ -38,7 +36,7 @@ public class LoginSteps {
         // Random randomGenerator = new Random();
         // int randomInt = randomGenerator.nextInt(1000);
         // LoginPage.get_Enter_Email_Id().sendKeys(email+randomInt+"@mailinator.com");
-        LoginPage.get_Enter_Email_Id().sendKeys(configReader.getProperty("stageUserName"));
+        LoginPage.get_Enter_Email_Id().sendKeys(ConfigReader.getProperty("stageUserName"));
 
         JSONObject userDataJson = SaveUserDataToJsonFile.readJsonFile();
 
@@ -65,7 +63,7 @@ public class LoginSteps {
     @When("[Login Page] User enter the password {string}")
     public void loginPageUserEnterThePassword(String password) throws InterruptedException {
         //wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(Enter_Password)));
-        LoginPage.get_Enter_Password().sendKeys(configReader.getProperty("stageUserPassword"));
+        LoginPage.get_Enter_Password().sendKeys(ConfigReader.getProperty("stageUserPassword"));
 
 
     }
@@ -74,7 +72,10 @@ public class LoginSteps {
     public void loginPageUserTapOnLoginButton() throws InterruptedException {
         // wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(Login_Button)));
         LoginPage.get_Login_Button().click();
+        String log=get_Login_Button().getAttribute("API");
+        System.out.println("log:"+log);
         Thread.sleep(5000);
+
     }
 
     @And("[Login page] Verified user land on update profile page {string}")
@@ -139,10 +140,11 @@ public class LoginSteps {
 
     @Then("[Login page] User verify toast msg {string}")
     public void loginPageUserVerifyToastMsg(String expected_Toast_Msg) {
-        enableNetworkLogging();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(Toast_Msg)));
         String actual_Toast_Msg = LoginPage.get_Toast_Msg().getText();
         System.out.println("actual_Toast_Msg:"+actual_Toast_Msg);
         Assert.assertEquals(actual_Toast_Msg,expected_Toast_Msg);
+
     }
 }
 

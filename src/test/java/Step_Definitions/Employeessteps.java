@@ -3,6 +3,7 @@ package Step_Definitions;
 import Pages.Android.AddEmployerPages;
 import Pages.Android.EmployeesPage;
 import Pages.Android.SubAdminPages;
+import Utils.RandomDateGenerator;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import org.apache.poi.hssf.usermodel.HSSFCell;
@@ -22,9 +23,10 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.Duration;
-import java.util.List;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 import static Hooks.Base_Class.driver;
@@ -377,13 +379,15 @@ public class Employeessteps {
             HSSFCell cell = headerRow.createCell(i);
             cell.setCellValue(headers[i]);
         }
+        LocalDate startDate = LocalDate.of(1950, 1, 1);
+        LocalDate endDate = LocalDate.of(2010, 12, 31);
         // Print headers
         System.out.println("Headers:");
         for (String header : headers) {
             System.out.print(header + "\t");
         }
         System.out.println();  // New line after headers
-        for (int j = 0; j < 10; j++) {
+        for (int j = 0; j < 2; j++) {
             int randomNumber = random.nextInt(8999999) + 1000000; // Generate random 7-digit number
             long randomMolNumber = (long) (random.nextDouble() * 9_000_000_000_000_00L) + 1_000_000_000_000_00L;
 
@@ -393,7 +397,7 @@ public class Employeessteps {
 
             // Merge first and last name into display name
             displayName = firstName + " " + lastName;
-
+            dob = RandomDateGenerator.generateRandomDate(startDate, endDate);
             String[] raws = {
                     String.valueOf(randomMolNumber), empCode,firstName , lastName ,
                     displayName, dob, gender.trim(), nationality.trim().replaceAll("^\\s+", ""),
@@ -462,7 +466,7 @@ public class Employeessteps {
         }
         String[] raws = new String[0];
 
-        for (int j = 0; j < 5; j++) {
+        for (int j = 0; j < 20; j++) {
             System.out.println(j);
             int randomNumber = random.nextInt(1000000000);
 

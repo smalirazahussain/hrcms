@@ -5,7 +5,7 @@ Feature: Login Tests
   Scenario: User Create a New User
     Given   [Sign Up] User tap on Sign up button
     When    [Sign Up] User enter the name "kardiya01"
-    Then    [Sign Up] User enter the email "kardiya01@mailinator.com"
+    Then    [Sign Up] User enter the email "user"
     Then    [Sign Up] Enter the Phone code "92"
     Then    [Sign Up] User enter the phone no "3451234567"
     When    [Login Page] User enter the password "Password1"

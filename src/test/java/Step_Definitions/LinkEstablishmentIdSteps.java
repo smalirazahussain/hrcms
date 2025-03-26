@@ -1,28 +1,20 @@
 package Step_Definitions;
 
 import Pages.Android.LinkEstablishmentIdPage;
-import Pages.Android.LoginPage;
 import Pages.Android.RequestPage;
 import Pages.Android.UpdateProliePage;
 import io.cucumber.java.en.And;
-import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
-import io.cucumber.java.en.When;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 
-import java.sql.SQLOutput;
 import java.time.Duration;
 
 import static Hooks.Base_Class.driver;
-import static Pages.Android.LinkEstablishmentIdPage.Est_Already_Submitted;
 import static Pages.Android.LinkEstablishmentIdPage.Est_Notification_Message;
-import static Pages.Android.LoginPage.Enter_Email_Id;
-import static Pages.Android.LoginPage.Enter_Password;
-import static Pages.Android.UpdateProliePage.Approval_Msg;
 import static Tests.Current_Date.currentYear;
 //import static Pages.Android.LoginPage.create_Account_Button;
 //import static Tests.Useful_functions.getRandomNumberLowerAndUpperBound;
