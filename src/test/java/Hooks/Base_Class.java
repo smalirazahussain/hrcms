@@ -73,9 +73,9 @@ public class Base_Class {
                 options.addArguments("--start-maximized");
                 options.addArguments("--no-sandbox");
                 options.addArguments("--disable-dev-shm-usage");
-//                options.addArguments("--headless");
-//                options.addArguments("--disable-gpu");
-            options.addArguments("--window-size=1920,1080");
+                options.addArguments("--headless");
+                options.addArguments("--disable-gpu");
+                options.addArguments("--window-size=1920,1080");
                 Map<String, Object> prefs = new HashMap<>();
                 prefs.put("download.default_directory", "D:\\Hrcms\\src\\test\\java\\document");
                 options.setExperimentalOption("prefs", prefs);
@@ -370,9 +370,18 @@ public class Base_Class {
 
     @After
     public void tearDown(@NotNull Scenario scenario) {
-        //if (scenario.isFailed()) {
+        if (scenario.isFailed()) {
+            // 📸 Capture and attach screenshot to report
+            try {
+                byte[] screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
+                scenario.attach(screenshot, "image/png", scenario.getName());  // attach to Cucumber report
+            } catch (Exception e) {
+                System.out.println("❌ Failed to capture screenshot for report: " + e.getMessage());
+            }
+
+            // 💾 Save screenshot to folder as backup (optional)
             captureScreenshot(scenario);
-        //}
         driver.quit();
     }
-}
+    }
+    }

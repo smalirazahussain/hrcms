@@ -1,6 +1,6 @@
 Hooks\Base_Class.class
 config\properties\MainClass.class
-Tests\Scroll.class
+Tests\Scroll.classre
 Pages\Android\OtherCompaniesPage.class
 Pages\Android\LinkEstablishmentIdPage.class
 Pages\HeadOfficePages\HeadOfficeLoginPage.class
