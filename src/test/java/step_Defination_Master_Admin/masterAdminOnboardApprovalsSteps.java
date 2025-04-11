@@ -1,8 +1,10 @@
 package step_Defination_Master_Admin;
 
+import Pages.Android.AdminPage;
 import Pages.MasterAdmin.MasterAdminDashboardPage;
 import Utils.EmployerDataStorage;
 import io.cucumber.java.en.Then;
+import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
@@ -11,6 +13,7 @@ import org.testng.asserts.SoftAssert;
 import java.time.Duration;
 
 import static Hooks.Base_Class.driver;
+import static Pages.Android.AdminPage.*;
 
 public class masterAdminOnboardApprovalsSteps {
     Duration timeout = Duration.ofSeconds(60);
@@ -44,5 +47,25 @@ public class masterAdminOnboardApprovalsSteps {
             e.printStackTrace();
             Assert.fail("Employer name verification failed due to an exception: " + e.getMessage());
         }
+    }
+
+    @Then("[Onboard Approvals] The user confirms the approval action")
+    public void onboardApprovalsTheUserConfirmsTheApprovalAction() {
+       // try {
+            // Wait and click "Approve" button
+            wait.until(ExpectedConditions.elementToBeClickable(By.xpath(Edit_Employer_Approve_Button)));
+            AdminPage.get_Edit_Employer_Approve_Button().click();
+            System.out.println("✅ Clicked on Approve button.");
+
+            // Wait and click "OK" in confirmation modal
+            wait.until(ExpectedConditions.elementToBeClickable(By.xpath(Approval_Ok)));
+            AdminPage.get_Approval_Ok().click();
+            System.out.println("✅ Clicked on OK to confirm approval.");
+
+        //} catch (Exception e) {
+          //  System.err.println("❌ Approval flow failed.");
+            //e.printStackTrace();
+          //  Assert.fail("Approval process interrupted: " + e.getMessage());
+        //}
     }
 }

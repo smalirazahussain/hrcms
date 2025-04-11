@@ -44,6 +44,7 @@ public class AdminPage {
     public static String Process_File_Button = "button[title='Process File']";
     public static String Select_All_Radio_Button = "input[type='checkbox']";
     public static String Bulk_Approval_Submit_Button = "button[class='ant-btn css-1htoz2s ant-btn-primary ant-btn-color-primary ant-btn-variant-solid'] span";
+    public static String Edit_Employer_Approve_Button= "//button[contains(@title,'Approve')]";
     public static String Action_Successfully(String after){
         return "//span[normalize-space()='"+after+"']";
     }//span[normalize-space()='Company product not found']
@@ -291,6 +292,10 @@ public class AdminPage {
 
     public static WebElement get_Bulk_Approval_Submit_Button() {
         return Base_Class.driver.findElement(By.cssSelector(Bulk_Approval_Submit_Button));
+    }
+
+    public static WebElement get_Edit_Employer_Approve_Button() {
+        return Base_Class.driver.findElement(By.xpath(Edit_Employer_Approve_Button));
     }
 }
 

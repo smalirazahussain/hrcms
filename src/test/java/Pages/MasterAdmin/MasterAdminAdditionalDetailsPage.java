@@ -12,14 +12,21 @@ public class MasterAdminAdditionalDetailsPage {
         return "//div[contains(text(),'" + source + "')]";
     }
     public static String Add_Product_Button="button[title='Add Product'] span";
-    public static String Product_Type_Dropdown = "button[title='Add Product'] span";
+    public static String Product_Type_Dropdown = "input[id='parentProductId']";
     public static String Select_Product_Type(String productType) {
         return "//div[contains(text(),'"+productType+"')]";
     }
     public static String Effect_From = "#from";
     public static String Effect_To = "#to";
-    public static String Pin_Mailer="";
-    public static String Four_Line_Printing="";
+    public static String Pin_Mailer="#PINMailerDefault";
+    public static String Four_Line_Printing="#isFourLine";
+    public static String Calender_Today_Button="a[class='ant-picker-now-btn']";
+    public static String Add_Edit_Additional_Details_Button = "button[title='Add/Edit Additional Details']";
+    public static String Company_Type = "#companyTypeCode";
+    public static String Sales_Agent = "#operationUserId";
+    public static String Enable_Cashback = "#isCashBack";
+    public static String Cash_Back_Amount="#cashBackAmount";
+    public static String Card_Per_Activation = "#cardPreactivationId";
 
     public static WebElement get_Additional_DetailsTab() {
         return Base_Class.driver.findElement(By.cssSelector(Additional_DetailsTab));
@@ -65,5 +72,35 @@ public class MasterAdminAdditionalDetailsPage {
 
     public static WebElement get_Four_Line_Printing() {
         return Base_Class.driver.findElement(By.cssSelector(Four_Line_Printing));
+    }
+
+    public static WebElement get_Calender_Today_Button() {
+        return Base_Class.driver.findElement(By.cssSelector(Calender_Today_Button));
+    }
+
+    public static WebElement get_Add_Edit_Additional_Details_Button() {
+
+        return Base_Class.driver.findElement(By.cssSelector(Add_Edit_Additional_Details_Button));
+    }
+
+    public static WebElement get_Company_Type() {
+
+        return Base_Class.driver.findElement(By.cssSelector(Company_Type));
+    }
+
+    public static WebElement get_Sales_Agent() {
+        return Base_Class.driver.findElement(By.cssSelector(Sales_Agent));
+    }
+
+    public static WebElement get_Enable_Cashback() {
+        return Base_Class.driver.findElement(By.cssSelector(Enable_Cashback));
+    }
+
+    public static WebElement get_Cash_Back_Amount() {
+        return Base_Class.driver.findElement(By.cssSelector(Cash_Back_Amount));
+    }
+
+    public static WebElement get_Card_Per_Activation() {
+        return Base_Class.driver.findElement(By.cssSelector(Card_Per_Activation));
     }
 }

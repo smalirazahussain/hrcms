@@ -1,5 +1,6 @@
 package Step_Definitions;
 
+import Hooks.Base_Class;
 import Pages.Android.AdminPage;
 import Pages.Android.MolPages;
 import Pages.Android.UpdateProliePage;
@@ -98,9 +99,10 @@ public class adminsteps {
     }
 
     //public static By spinnerLocator;
+    public static By spinnerLocator;
     @And("[Admin Page] User tap on view button")
     public void adminPageUserTapOnViewButton() {
-        By spinnerLocator = By.cssSelector(".ant-spin.ant-spin-spinning.css-qgg3xn");
+        spinnerLocator = By.cssSelector(".ant-spin.ant-spin-spinning.css-qgg3xn");
         wait.until(ExpectedConditions.invisibilityOfElementLocated(spinnerLocator));
         //wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(View)));
         AdminPage.get_View().click();
@@ -761,6 +763,24 @@ public class adminsteps {
         wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(Bulk_Approval_Submit_Button)));
         AdminPage.get_Bulk_Approval_Submit_Button().click();
         
+    }
+
+    @Then("[Admin Page] The user verifies the approval toast message {string}")
+    public void adminPageTheUserVerifiesTheApprovalToastMessage(String expectedMessage) {
+        try {
+            By toastLocator = By.xpath("//span[normalize-space()='Request is ready for further approval']");
+            WebDriverWait wait = new WebDriverWait(Base_Class.driver, Duration.ofSeconds(20));
+
+            WebElement toast = wait.until(ExpectedConditions.visibilityOfElementLocated(toastLocator));
+            String actualMessage = toast.getText();
+
+            Assert.assertEquals(actualMessage.trim(), expectedMessage.trim());
+            System.out.println("✅ Verified toast message: " + actualMessage);
+        } catch (TimeoutException e) {
+            Assert.fail("❌ Toast message not visible in time.");
+        } catch (Exception e) {
+            Assert.fail("❌ Failed to verify toast message: " + e.getMessage());
+        }
     }
 }
 //        // Correcting the way the FileInputStream is initialized

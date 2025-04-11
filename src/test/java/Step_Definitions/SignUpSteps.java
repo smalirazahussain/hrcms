@@ -128,7 +128,7 @@ public class SignUpSteps {
         // Generate random email
         Random randomGenerator = new Random();
         int randomInt = randomGenerator.nextInt(10000);
-        String generatedEmail = email + randomInt + "@mailinator.com";
+        String generatedEmail = companyName + randomInt + "@mailinator.com";
 
         // Enter email in the UI
         SignUpPage.signUpUserEnterTheEmail().sendKeys(generatedEmail);

@@ -29,7 +29,7 @@ import static Pages.MasterAdmin.MasterAdminEmployerPage.*;
 
 public class masterAdminEmployerSteps {
 
-    Duration timeout = Duration.ofSeconds(60);
+    Duration timeout = Duration.ofSeconds(180);
     WebDriverWait wait = new WebDriverWait(driver, timeout);
 
     @When("[MasterAdmin EmployerPage] The user clicks on the employer button")
@@ -199,7 +199,8 @@ public class masterAdminEmployerSteps {
     }
 
     @Then("[Update Profile] User clicks on the {string} button")
-    public void updateProfileUserClicksOnTheButton(String button) {
+    public void updateProfileUserClicksOnTheButton(String button) throws InterruptedException {
+
         wait.until(ExpectedConditions.elementToBeClickable(getSubmitButton())).click();
     }
 

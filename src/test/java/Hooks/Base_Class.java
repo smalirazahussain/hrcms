@@ -73,8 +73,8 @@ public class Base_Class {
                 options.addArguments("--start-maximized");
                 options.addArguments("--no-sandbox");
                 options.addArguments("--disable-dev-shm-usage");
-                options.addArguments("--headless");
-                options.addArguments("--disable-gpu");
+//                options.addArguments("--headless");
+//                options.addArguments("--disable-gpu");
                 options.addArguments("--window-size=1920,1080");
                 Map<String, Object> prefs = new HashMap<>();
                 prefs.put("download.default_directory", "D:\\Hrcms\\src\\test\\java\\document");

@@ -1,7 +1,7 @@
 @employerSignUp
 Feature: employerSignUp
 
-
+  @employerSignUp1
   Scenario: Create an employer from the master admin,with all steps approved through the master admin.
     Given   [MasterAdmin Page] The user navigate to the master admin portal
     Then    [Admin Page] User enter the  email "admin@admin.com"
@@ -40,7 +40,7 @@ Feature: employerSignUp
     Then    [Onboard Approvals] The user verifies the approval tracking status is "Waiting for Checker's approval"
     And     [Admin Page] User tap on view button
     Then    [Admin Page] User verify establishment id and approve by admin
-        # Then    [Basic EmployerDetails] The user verifies all employer details
+    #Then    [Basic EmployerDetails] The user verifies all employer details
     Then    [Additional Details] The user navigates to the "Additional Details" tab
     Then    [Additional Details] The user click to the AddEdit Onboarding Source button
     Then    [Additional Details] The user selects the Onboarding Source "Kamel Pay"
@@ -49,6 +49,22 @@ Feature: employerSignUp
     Then    [Additional Details] The user selects product type "Kamel Pay PayD"
     Then    [Additional Details] The user enters effect from "{string}" and effect to "{string}"
     Then    [Additional Details] The user enables "Yes" and Four Line Printing
-
-    When    [Onboard Approvals] The user clicks on the "Approve" button
-    Then    [Onboard Approvals] The user verifies the success toast message "Employer successfully approved"
+    Then    [Update Profile] User clicks on the "Submit" button
+    Then    [Additional Details] The user clicks on the AddEdit Additional Details button
+    Then    [Additional Details Modal] The user selects the Company Type "Retail"
+    Then    [Additional Details Modal] The user selects the Sales Agent "Qam"
+    Then    [Additional Details Modal] The user enables Cashback
+    Then    [Additional Details Modal] The user enters Cashback Amount "5"
+    Then    [Additional Details] The user verifies that Pre-Activation is set to "Yes"
+    Then    [Update Profile] User clicks on the "Submit" button
+    Then    [Onboard Approvals] The user confirms the approval action
+    Then    [Admin Page] The user verifies the approval toast message "Request is ready for further approval"
+    Then    [Onboard Approvals] The user searches for employer and verify the employer name in the onboard approvals table   ""
+    Then    [Onboard Approvals] The user verifies the approval tracking status is "Waiting for Authorizer's Approval"
+    And     [Admin Page] User tap on view button
+    Then    [Admin Page] User verify establishment id and approve by admin
+    #Then    [Basic EmployerDetails] The user verifies all employer details
+    Then    [Additional Details] The user navigates to the "Additional Details" tab
+    Then    [Additional Details] The user verifies all product and additional details
+    Then    [Onboard Approvals] The user confirms the approval action
+    Then    [Onboard Approvals] The user verifies the success toast message "Action Successful"

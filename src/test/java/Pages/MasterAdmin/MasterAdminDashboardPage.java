@@ -8,7 +8,7 @@ import static Pages.Android.AdminPage.Approve_Button;
 
 
 public class MasterAdminDashboardPage {
-    public static String Approval_Success_Toast = "";
+    public static String Approval_Success_Toast = "//span[normalize-space()='Action Successful']";
     public static String Onboard_Approvals_Employer_Name = "tbody tr:nth-child(2) td:nth-child(2)";
     public static String Onboard_Approvals_Approval_Status = "tbody tr:nth-child(2) td:nth-child(8)";
     public static String Onboard_Approvals_Button = "#onboardApprovals";
@@ -24,7 +24,7 @@ public class MasterAdminDashboardPage {
 
     public static WebElement get_Approval_Success_Toast() {
 
-        return Base_Class.driver.findElement(By.cssSelector(Approval_Success_Toast));
+        return Base_Class.driver.findElement(By.xpath(Approval_Success_Toast));
     }
 
     public static WebElement get_Onboard_Approvals_Employer_Name() {

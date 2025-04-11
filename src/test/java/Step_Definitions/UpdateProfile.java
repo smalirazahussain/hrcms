@@ -627,7 +627,7 @@ public class UpdateProfile {
         System.out.println(companyName);
         System.out.println(SponsorDocNo);
         System.out.println(tradeno);
-        Thread.sleep(5000);
+        //Thread.sleep(5000);
     }
 
     @Then("[Update Profile] User enter the Passport expire month {string}")

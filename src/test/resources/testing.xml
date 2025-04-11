@@ -6,16 +6,27 @@
 <!--            <class name="cucumbertestrunner"/>-->
 <!--        </classes>-->
 <!--    </test>-->
+<!--<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">-->
+<!--<suite name="CucumberSuite" parallel="false">-->
+
+<!--<suite name="CucumberParallelSuite" parallel="tests" thread-count="1">-->
+<!--    <test name="Run employerSignUp">-->
+<!--        <parameter name="cucumber.tags" value="@employerSignUp1"/>-->
+<!--        <classes>-->
+<!--            <class name="cucumberTestNGRunner"/>-->
+<!--        </classes>-->
+<!--    </test>-->
+<!--&lt;!&ndash;    <test name="Run AddEmployer1">&ndash;&gt;-->
+<!--&lt;!&ndash;        <parameter name="cucumber.tags" value="@AddEmployer1"/>&ndash;&gt;-->
+<!--&lt;!&ndash;        <classes>&ndash;&gt;-->
+<!--&lt;!&ndash;            <class name="cucumberTestNGRunner"/>&ndash;&gt;-->
+<!--&lt;!&ndash;        </classes>&ndash;&gt;-->
+<!--&lt;!&ndash;    </test>&ndash;&gt;-->
+<!--</suite>-->
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
-<suite name="CucumberParallelSuite" parallel="tests" thread-count="2">
-    <test name="Run AddEmployer">
-        <parameter name="cucumber.tags" value="@AddEmployer"/>
-        <classes>
-            <class name="cucumberTestNGRunner"/>
-        </classes>
-    </test>
-    <test name="Run AddEmployer1">
-        <parameter name="cucumber.tags" value="@AddEmployer1"/>
+<suite name="CucumberSuite" parallel="false">
+    <test name="Run employerSignUp">
+        <parameter name="cucumber.tags" value="@employerSignUp1"/>
         <classes>
             <class name="cucumberTestNGRunner"/>
         </classes>
