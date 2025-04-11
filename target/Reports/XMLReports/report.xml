@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="Cucumber" time="109.559" tests="1" skipped="0" failures="0" errors="0">
+<testcase classname="employerSignUp" name="Create an employer from the master admin,with all steps approved through the master admin." time="109.274">
+<system-out><![CDATA[
+Given [MasterAdmin Page] The user navigate to the master admin portal.......passed
+Then [Admin Page] User enter the  email "admin@admin.com"...................passed
+When [Admin Page] User enter the Password "12345678"........................passed
+And [Admin Page] User tap on login page.....................................passed
+Then [Sign Up] User enter the otp code "111111".............................passed
+Then [MasterAdmin Page] the user verifies the OTP toast message "OTP Verified"..passed
+When [MasterAdmin EmployerPage] The user clicks on the employer button......passed
+When [MasterAdmin EmployerPage] The user clicks on the add employer button..passed
+Then [Update Profile] User select the Payroll type"WPS".....................passed
+Then [Update Profile] User enter the establishment id ""....................passed
+When [Sign Up] User enter the name "".......................................passed
+Then [Sign Up] User enter the email "email".................................passed
+Then [Sign Up] User enter the phone no ""...................................passed
+When [Login Page] User enter the password ""................................passed
+Then [Sign Up] User enter the confirm password ""...........................passed
+And [Update Profile] User enter the company address ""......................passed
+Then [Update Profile] User enter the building no "".........................passed
+Then [Update Profile] User enters the Zip Code "00000"......................passed
+And [MasterAdmin EmployerPage] The user Select the state "Dubai"............passed
+When [Update Profile] User enter the city "Dubai"...........................passed
+Then [MasterAdmin OtherDetailsPage] User selects FreeZone "Yes".............passed
+And [MasterAdmin OtherDetailsPage] User checks the Migrated Employer checkbox.passed
+And [Update Profile] User enters the trade license issue date ""............passed
+And [Update Profile] User enters the trade license expiry date ""...........passed
+And [Update Profile] User enters the trade license number ""................passed
+And [Update Profile] User uploads the Trade License document "Trade doc.pdf".passed
+And [Update Profile] User enters the sponsor document issue date "".........passed
+And [Update Profile] User enters the sponsor document expiry date ""........passed
+And [Update Profile] User enters the sponsor document number "".............passed
+And [Update Profile] User uploads the Sponsor Document "sponsor_doc.pdf"....passed
+Then [Update Profile] User clicks on the "Submit" button....................passed
+Then [MasterAdmin Page] The user verifies the success toast message "On Board request has been sent for further approval".passed
+Then [Dashboard Page] The user navigates to "Onboard Approvals".............passed
+Then [Onboard Approvals] The user searches for employer and verify the employer name in the onboard approvals table   "".passed
+Then [Onboard Approvals] The user verifies the approval tracking status is "Waiting for Checker's approval".passed
+And [Admin Page] User tap on view button....................................passed
+Then [Admin Page] User verify establishment id and approve by admin.........passed
+Then [Additional Details] The user navigates to the "Additional Details" tab.passed
+Then [Additional Details] The user click to the AddEdit Onboarding Source button.passed
+Then [Additional Details] The user selects the Onboarding Source "Kamel Pay".passed
+Then [Additional Details] The user clicks on the Add Product button.........passed
+Then [Additional Details] The user selects product type "Kamel Pay PayD"....passed
+Then [Additional Details] The user enters effect from "{string}" and effect to "{string}".passed
+Then [Additional Details] The user enables "Yes" and Four Line Printing.....passed
+Then [Additional Details] The user clicks on the AddEdit Additional Details button.passed
+Then [Additional Details Modal] The user selects the Company Type "Retail"..passed
+Then [Additional Details Modal] The user selects the Sales Agent "Qam"......passed
+Then [Additional Details Modal] The user enables Cashback...................passed
+Then [Additional Details Modal] The user enters Cashback Amount "5".........passed
+Then [Additional Details] The user verifies that Pre-Activation is set to "Yes".passed
+Then [Onboard Approvals] The user confirms the approval action..............passed
+Then [Admin Page] The user verifies the approval toast message "Request is ready for further approval".passed
+Then [Onboard Approvals] The user verifies the approval tracking status is "Waiting for Authorizer's Approval".passed
+Then [Additional Details] The user verifies all product and additional details.passed
+Then [Onboard Approvals] The user verifies the success toast message "Action Successful".passed
+]]></system-out>
+</testcase>
+</testsuite>
