@@ -3,6 +3,7 @@ package Step_Definitions;
 import Pages.Android.AddEmployerPages;
 import Pages.Android.EmployeesPage;
 import Pages.Android.SubAdminPages;
+import Utils.EmployeeAdditionalStorage;
 import Utils.RandomDateGenerator;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
@@ -346,14 +347,22 @@ public class Employeessteps {
             String homePostCode, String workAddress, String workState, String workPostCode,
             String passportNo, String passportExpiry, String eid, String eidExpiry, String est) throws IOException {
 
-       // int numberOfTimes = 1;
-        //for (int h = 0; h <= numberOfTimes; h++) {
-          //  System.out.println("numberOfTimes;"+numberOfTimes);
-        String[] headers = {"Mol No", "Emp Code", "First Name", "Last Name", "Display Name",
+
+        String[] headers = {
+                "Mol No", "Emp Code", "First Name", "Last Name", "Display Name",
                 "Date of Birth", "Gender(M/F)", "Nationality", "Date of Joining", "Email",
                 "Mobile", "Alternate Phone", "Home Address", "Home State", "Home Post Code",
                 "Work Address", "Work State", "Work Post Code", "Passport Number",
                 "Passport Expiry", "EID", "EID Expiry", "Establishment Id"};
+        // ✅ Save headers to EmployeeAdditionalStorage
+        for (int i = 0; i < headers.length; i++) {
+            String key = "employee-header-" + i;
+            EmployeeAdditionalStorage.storeData(key, headers[i]);
+        }
+
+        // ✅ Also save full header list as comma-separated string
+        EmployeeAdditionalStorage.storeData("employee-headers", String.join(",", headers));
+
 
         List<String> firstNames = Arrays.asList("John", "Michael", "Sara", "Laura", "Robert", "Emily",
                 "William", "Oliver", "Sophia", "James", "Liam", "Benjamin", "Emma", "Charlotte",
@@ -387,19 +396,19 @@ public class Employeessteps {
             System.out.print(header + "\t");
         }
         System.out.println();  // New line after headers
-        for (int j = 0; j < 2; j++) {
+        for (int j = 0; j < 10; j++) {
             int randomNumber = random.nextInt(8999999) + 1000000; // Generate random 7-digit number
             long randomMolNumber = (long) (random.nextDouble() * 9_000_000_000_000_00L) + 1_000_000_000_000_00L;
 
             // Generate random first and last names
-            firstName = firstNames.get(random.nextInt(firstNames.size()));
+            firstName = firstNames.get(random.nextInt(lastNames.size()));
             lastName = lastNames.get(random.nextInt(lastNames.size()));
 
             // Merge first and last name into display name
             displayName = firstName + " " + lastName;
             dob = RandomDateGenerator.generateRandomDate(startDate, endDate);
             String[] raws = {
-                    String.valueOf(randomMolNumber), empCode,firstName , lastName ,
+                    molNo+ randomMolNumber, empCode, firstName, lastName ,
                     displayName, dob, gender.trim(), nationality.trim().replaceAll("^\\s+", ""),
                     joiningDate, "user" + randomNumber + email, mobile + randomNumber,
                     alternatePhone + randomNumber, homeAddress + randomNumber, homeState,
@@ -407,7 +416,16 @@ public class Employeessteps {
                     passportNo + randomNumber, passportExpiry, eid + randomNumber, eidExpiry, est
             };
 
-            // Save data to the list
+
+
+            // ✅ Save to key-value storage
+            for (int i = 0; i < headers.length; i++) {
+                String key = "employee-" + j + "-" + headers[i];
+                EmployeeAdditionalStorage.storeData(key, raws[i]);
+            }
+            EmployeeAdditionalStorage.printAll();
+
+            // ✅ Save to list (existing)
             generatedData.add(Arrays.toString(raws));
 
             // Create data rows and populate cells in the Excel sheet
@@ -417,7 +435,7 @@ public class Employeessteps {
                 cell.setCellValue(raws[i]);
             }
             // Print rows
-            System.out.println("Row " + (j + 1) + ":");
+           // System.out.println("Row " + (j + 1) + ":");
             for (String data : raws) {
                 System.out.print(data + "\t");
             }

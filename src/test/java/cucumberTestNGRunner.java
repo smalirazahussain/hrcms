@@ -55,6 +55,7 @@
 //        return super.scenarios();
 //    }
 //}
+//
 import io.cucumber.testng.AbstractTestNGCucumberTests;
 import io.cucumber.testng.CucumberOptions;
 import org.testng.annotations.BeforeClass;
@@ -63,7 +64,7 @@ import org.testng.annotations.DataProvider;
 import java.io.File;
 
 @CucumberOptions(
-        features = "src/test/resources/masterAdminPortal/masterAdminPortal/employerSignup.feature",  // ✅ You can change this to the full folder path for all features
+        features = "src/test/resources/masterAdminPortal/masterAdminPortal/employerSignup.feature",  // ✅ All features
         glue = {
                 "step_Defination_Master_Admin",
                 "Step_Definitions",
@@ -72,21 +73,22 @@ import java.io.File;
         },
         plugin = {
                 "pretty",
-                "io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm",
-                "html:target/Reports/HtmlReport/index.html",
+                "io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm",           // ✅ Allure raw results
+                "html:target/Reports/HtmlReport/index.html",                 // ✅ Built-in Cucumber report
                 "json:target/cucumber.json",
                 "junit:target/Reports/XMLReports/report.xml",
                 "rerun:target/Reports/failed_scenarios.txt"
         },
         monochrome = true,
-        tags = "@employerSignUp"
+        tags = "@employerSignUp"  // ✅ Use tag filtering
 )
 public class cucumberTestNGRunner extends AbstractTestNGCucumberTests {
 
-    // ✅ Cleans previous reports before running
     @BeforeClass
     public static void cleanOldReports() {
-        deleteDirectory(new File("target/Reports"));
+        deleteDirectory(new File("target/Reports"));           // 🧹 Built-in report
+        deleteDirectory(new File("target/allure-results"));    // 🧹 Allure raw results
+        deleteDirectory(new File("allure-report"));            // 🧹 Allure HTML output (if generated before)
     }
 
     private static void deleteDirectory(File file) {
@@ -101,11 +103,11 @@ public class cucumberTestNGRunner extends AbstractTestNGCucumberTests {
         }
     }
 
-    // ✅ Required to run scenarios with TestNG
     @Override
-    @DataProvider(parallel = false) // change to 'true' if you want parallel execution
+    @DataProvider(parallel = false) // 🔁 Parallel execution option
     public Object[][] scenarios() {
         return super.scenarios();
     }
 }
+
 

@@ -6,10 +6,14 @@ import Pages.Android.MolPages;
 import Pages.Android.UpdateProliePage;
 import Pages.HeadOfficePages.ManageEmployeesHeadOfficePage;
 import Pages.HeadOfficePages.OnBoardApprovalHeadOfficePage;
+import Utils.EmployeeAdditionalStorage;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -100,6 +104,7 @@ public class adminsteps {
 
     //public static By spinnerLocator;
     public static By spinnerLocator;
+
     @And("[Admin Page] User tap on view button")
     public void adminPageUserTapOnViewButton() {
         spinnerLocator = By.cssSelector(".ant-spin.ant-spin-spinning.css-qgg3xn");
@@ -566,203 +571,203 @@ public class adminsteps {
         AdminPage.get_Company_Client().sendKeys(subadmincompanyTittle + Keys.ENTER);
         System.out.println(subadmincompanyTittle);
     }
+
     private void manualPause() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Press Enter to continue...");
         scanner.nextLine();
     }
 
-    @Then("[Admin Page] User verify the all data they have creates on the file")
-    public void adminPageUserVerifyTheAllDataTheyHaveCreatesOnTheFile() throws IOException, InterruptedException, AWTException {
-        int previousRowCount = 0;
-      //  manualPause();
-
-        try (FileInputStream fis = new FileInputStream(filePaths)) {
-            System.out.println(filePaths);
-            Workbook workbook = WorkbookFactory.create(fis);
-            System.out.println("workbook: " + workbook);
-            Sheet sheet = workbook.getSheetAt(0);
-
-            // Get header elements from the webpage
-            List<WebElement> employees_File_Header = get_Employee_File_Header();
-            JavascriptExecutor js = (JavascriptExecutor) driver;
-
-            // Extract expected headers from Excel
-            Row headerRow = sheet.getRow(0);
-            List<String> expectedHeaders = new ArrayList<>();
-            for (int i = 0; i < headerRow.getLastCellNum(); i++) {
-                expectedHeaders.add(headerRow.getCell(i).getStringCellValue().trim().toLowerCase());
-            }
-
-            // Extract actual headers from WebElements
-            List<String> actualHeaders = new ArrayList<>();
-            for (WebElement headerElement : employees_File_Header) {
-                js.executeScript("arguments[0].scrollIntoView(true);", headerElement);
-                actualHeaders.add(headerElement.getText().trim().toLowerCase());
-            }
-            actualHeaders.remove("action");
-            Map<String, String> headerConversionMap = new HashMap<>();
-            headerConversionMap.put("emirates id", "eid");
-            headerConversionMap.put("emirates id expiry", "eid expiry");
-            headerConversionMap.put("mol number", "mol no");
-            headerConversionMap.put("gender", "gender(m/f)");
-            List<String> convertedActualHeaders = new ArrayList<>();
-            for (String header : actualHeaders) {
-                convertedActualHeaders.add(headerConversionMap.getOrDefault(header, header));
-            }
-            // Sort both lists to perform unordered comparison
-            Collections.sort(expectedHeaders);
-            Collections.sort(convertedActualHeaders);
-            System.out.println("expectedHeaders:" + expectedHeaders);
-            System.out.println("convertedActualHeaders:" + convertedActualHeaders);
-            // Compare headers unordered
-            Assert.assertEquals(expectedHeaders.toArray(), convertedActualHeaders.toArray(), "Headers do not match");
-            // Prepare tabular output header
-            StringBuilder tableOutput = new StringBuilder();
-            tableOutput.append(String.format("%-10s | %-20s | %-20s | %-20s\n", "Row", "Header", "Excel Value", "Webpage Value"));
-            tableOutput.append("---------------------------------------------------------------------------\n");
-            System.out.println("tableOutput:"+tableOutput);
-
-            // If headers match, proceed with row data comparison
-            Map<Integer, Map<String, String>> excelData = new TreeMap<>();
-            Map<Integer, Map<String, String>> webpageData = new TreeMap<>();
-
-            while (true) {
-                List<WebElement> rowElements = driver.findElements(By.cssSelector(".ant-table-row.editable-row"));
-                if (rowElements.size() > previousRowCount) {
-                    previousRowCount = rowElements.size();
-
-                    // Scroll to the bottom to load more rows
-                    WebElement lastRowElement = rowElements.get(rowElements.size() - 1);
-                    js.executeScript("arguments[0].scrollIntoView(true);", lastRowElement);
-                    Thread.sleep(1000); // Allow time for rows to load
-
-                    for (int i = 0; i < rowElements.size(); i++) {
-                        // Re-locate elements to avoid StaleElementReferenceException
-                        rowElements = driver.findElements(By.cssSelector(".ant-table-row.editable-row"));
-                        Row excelRow = sheet.getRow(i + 1); // Excel row index starts from 1 (skip header)
-                        List<WebElement> cellElements = rowElements.get(i).findElements(By.cssSelector("td.ant-table-cell"));
-
-                        Map<String, String> excelRowMap = new HashMap<>();
-                        Map<String, String> webpageRowMap = new HashMap<>();
-
-                        for (int j = 0; j < Math.min(cellElements.size(), expectedHeaders.size()); j++) {
-                            if (j == cellElements.size() - 1) {
-                                continue; // Skip the comparison for the last column
-                            }
-
-                            js.executeScript("arguments[0].scrollIntoView(true);", cellElements.get(j));
-
-                            String header = expectedHeaders.get(j); // Corresponding header
-                            String expectedCellValue = (excelRow.getCell(j) != null) ? excelRow.getCell(j).toString().trim() : "";
-                            String actualCellValue = cellElements.get(j).getText().trim();
-
-                            // Normalize date formats before comparison
-                            expectedCellValue = expectedCellValue.replace("/", "-").replace(".", "-").replace(" ", "");
-                            actualCellValue = actualCellValue.replace("/", "-").replace(".", "-").replace(" ", "");
-
-                            excelRowMap.put(header, expectedCellValue);
-                            webpageRowMap.put(header, actualCellValue);
-
-                            // Append the comparison result to the table output
-                            tableOutput.append(String.format("%-10d | %-20s | %-20s | %-20s\n", i + 1, header, expectedCellValue, actualCellValue));
-                            System.out.println("header:"+header);
-                        }
-
-                        excelData.put(i + 1, excelRowMap);
-                        webpageData.put(i + 1, webpageRowMap);
-                    }
-
-                } else {
-                    break;
-                }
-            }
-            // Convert the map entries to a list for sorting
-            List<Map.Entry<Integer, Map<String, String>>> excelDataList = new ArrayList<>(excelData.entrySet());
-            List<Map.Entry<Integer, Map<String, String>>> webpageDataList = new ArrayList<>(webpageData.entrySet());
-
-            // Sort the lists based on a specific key (e.g., "eid")
-            Comparator<Map.Entry<Integer, Map<String, String>>> comparator = Comparator.comparing(entry -> entry.getValue().getOrDefault("eid", ""));
-            excelDataList.sort(comparator);
-            webpageDataList.sort(comparator);
-
-            // Comparing sorted rows one by one
-            for (int i = 0; i < excelDataList.size(); i++) {
-                Map<String, String> excelRowMap = excelDataList.get(i).getValue();
-                Map<String, String> webpageRowMap = webpageDataList.get(i).getValue();
-
-                for (String header : excelRowMap.keySet()) {
-                    String excelValue = excelRowMap.get(header);
-                    String webpageValue = webpageRowMap.get(header);
-
-                    // Null check before accessing webpageValue
-                    if (webpageValue == null) {
-                        softAssert.fail("No matching cell found on the webpage for the header: " + header + " in row: " + (i + 1));
-                        continue; // Skip to the next cell
-                    }
-
-                    // Append the comparison result to the table output
-                    tableOutput.append(String.format("%-10d | %-20s | %-20s | %-20s\n", i + 1, header, excelValue, webpageValue));
-                    System.out.println("tableOutput;"+tableOutput);
-
-                    // Assert that the Excel value matches the Webpage value
-                    System.out.println("excelRowMap:"+excelRowMap);
-                    System.out.println("webpageRowMap"+webpageRowMap);
-                    softAssert.assertEquals(excelRowMap, webpageRowMap, "Mismatch for header " + header + " at row " + (i + 1));
-                    
-                }
-            }
-
-            //softAssert.assertAll();
-            workbook.close();
-
-            // Print the table output
-            System.out.println(tableOutput.toString());
-
-        } catch (StaleElementReferenceException e) {
-            System.out.println("Encountered StaleElementReferenceException. Retrying...");
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw e;
-        }
-    }
+//    @Then("[Admin Page] User verify the all data they have creates on the file")
+//    public void adminPageUserVerifyTheAllDataTheyHaveCreatesOnTheFile() throws IOException, InterruptedException, AWTException {
+//        int previousRowCount = 0;
+//      //  manualPause();
+//
+//        try (FileInputStream fis = new FileInputStream(filePaths)) {
+//            System.out.println(filePaths);
+//            Workbook workbook = WorkbookFactory.create(fis);
+//            System.out.println("workbook: " + workbook);
+//            Sheet sheet = workbook.getSheetAt(0);
+//
+//            // Get header elements from the webpage
+//            List<WebElement> employees_File_Header = get_Employee_File_Header();
+//            JavascriptExecutor js = (JavascriptExecutor) driver;
+//
+//            // Extract expected headers from Excel
+//            Row headerRow = sheet.getRow(0);
+//            List<String> expectedHeaders = new ArrayList<>();
+//            for (int i = 0; i < headerRow.getLastCellNum(); i++) {
+//                expectedHeaders.add(headerRow.getCell(i).getStringCellValue().trim().toLowerCase());
+//            }
+//
+//            // Extract actual headers from WebElements
+//            List<String> actualHeaders = new ArrayList<>();
+//            for (WebElement headerElement : employees_File_Header) {
+//                js.executeScript("arguments[0].scrollIntoView(true);", headerElement);
+//                actualHeaders.add(headerElement.getText().trim().toLowerCase());
+//            }
+//            actualHeaders.removeIf(header -> header.equalsIgnoreCase("action") || header.equalsIgnoreCase("camp"));
+//            Map<String, String> headerConversionMap = new HashMap<>();
+//            headerConversionMap.put("emirates id", "eid");
+//            headerConversionMap.put("emirates id expiry", "eid expiry");
+//            headerConversionMap.put("mol number", "mol no");
+//            headerConversionMap.put("gender", "gender(m/f)");
+//            List<String> convertedActualHeaders = new ArrayList<>();
+//            for (String header : actualHeaders) {
+//                convertedActualHeaders.add(headerConversionMap.getOrDefault(header, header));
+//            }
+//            // Sort both lists to perform unordered comparison
+//            Collections.sort(expectedHeaders);
+//            Collections.sort(convertedActualHeaders);
+//            System.out.println("expectedHeaders:" + expectedHeaders);
+//            System.out.println("convertedActualHeaders:" + convertedActualHeaders);
+//            // Compare headers unordered
+//            Assert.assertEquals(expectedHeaders.toArray(), convertedActualHeaders.toArray(), "Headers do not match");
+//            // Prepare tabular output header
+//            StringBuilder tableOutput = new StringBuilder();
+//            tableOutput.append(String.format("%-10s | %-20s | %-20s | %-20s\n", "Row", "Header", "Excel Value", "Webpage Value"));
+//            tableOutput.append("---------------------------------------------------------------------------\n");
+//            System.out.println("tableOutput:"+tableOutput);
+//
+//            // If headers match, proceed with row data comparison
+//            Map<Integer, Map<String, String>> excelData = new TreeMap<>();
+//            Map<Integer, Map<String, String>> webpageData = new TreeMap<>();
+//
+//            while (true) {
+//                List<WebElement> rowElements = driver.findElements(By.cssSelector(".ant-table-row.editable-row"));
+//                if (rowElements.size() > previousRowCount) {
+//                    previousRowCount = rowElements.size();
+//
+//                    // Scroll to the bottom to load more rows
+//                    WebElement lastRowElement = rowElements.get(rowElements.size() - 1);
+//                    js.executeScript("arguments[0].scrollIntoView(true);", lastRowElement);
+//                    Thread.sleep(1000); // Allow time for rows to load
+//
+//                    for (int i = 0; i < rowElements.size(); i++) {
+//                        // Re-locate elements to avoid StaleElementReferenceException
+//                        rowElements = driver.findElements(By.cssSelector(".ant-table-row.editable-row"));
+//                        String[] storedRow = EmployeeAdditionalStorage.getData(); // Get the employee row
+//                        List<WebElement> cellElements = rowElements.get(i).findElements(By.cssSelector("td.ant-table-cell"));
+//
+//                        Map<String, String> excelRowMap = new HashMap<>();
+//                        Map<String, String> webpageRowMap = new HashMap<>();
+//
+//                        for (int j = 1; j < Math.min(cellElements.size()-1, expectedHeaders.size()); j++) {
+////                            if (j == cellElements.size() - 1) continue;
+//
+//                            js.executeScript("arguments[0].scrollIntoView(true);", cellElements.get(j));
+//
+//                            String header = expectedHeaders.get(j); // Excel column header
+//                            String expectedCellValue = storedRow[j].trim();
+//                            String actualCellValue = cellElements.get(j).getText().trim();
+//
+//                            expectedCellValue = expectedCellValue.replace("/", "-").replace(".", "-").replace(" ", "");
+//                            actualCellValue = actualCellValue.replace("/", "-").replace(".", "-").replace(" ", "");
+//
+//                            excelRowMap.put(header, expectedCellValue);
+//                            webpageRowMap.put(header, actualCellValue);
+//
+//                            tableOutput.append(String.format("%-10d | %-20s | %-20s | %-20s\n", i + 1, header, expectedCellValue, actualCellValue));
+//                            System.out.println("header:"+header);
+//                        }
+//
+//                        excelData.put(i + 1, excelRowMap);
+//                        webpageData.put(i + 1, webpageRowMap);
+//                    }
+//
+//                } else {
+//                    break;
+//                }
+//            }
+//            // Convert the map entries to a list for sorting
+//            List<Map.Entry<Integer, Map<String, String>>> excelDataList = new ArrayList<>(excelData.entrySet());
+//            List<Map.Entry<Integer, Map<String, String>>> webpageDataList = new ArrayList<>(webpageData.entrySet());
+//
+//            // Sort the lists based on a specific key (e.g., "eid")
+//            Comparator<Map.Entry<Integer, Map<String, String>>> comparator = Comparator.comparing(entry -> entry.getValue().getOrDefault("eid", ""));
+//            excelDataList.sort(comparator);
+//            webpageDataList.sort(comparator);
+//
+//            // Comparing sorted rows one by one
+//            for (int i = 0; i < excelDataList.size(); i++) {
+//                Map<String, String> excelRowMap = excelDataList.get(i).getValue();
+//                Map<String, String> webpageRowMap = webpageDataList.get(i).getValue();
+//
+//                for (String header : excelRowMap.keySet()) {
+//                    if (header.equalsIgnoreCase("camp")) continue;  // ❌ Skip comparing 'camp'
+//                    String excelValue = excelRowMap.get(header);
+//                    String webpageValue = webpageRowMap.get(header);
+//
+//                    // Null check before accessing webpageValue
+//                    if (webpageValue == null) {
+//                        softAssert.fail("No matching cell found on the webpage for the header: " + header + " in row: " + (i + 1));
+//                        continue; // Skip to the next cell
+//                    }
+//
+//                    // Append the comparison result to the table output
+//                    tableOutput.append(String.format("%-10d | %-20s | %-20s | %-20s\n", i + 1, header, excelValue, webpageValue));
+//                    System.out.println("tableOutput;"+tableOutput);
+//
+//                    // Assert that the Excel value matches the Webpage value
+//                    System.out.println("excelRowMap:"+excelRowMap);
+//                    System.out.println("webpageRowMap"+webpageRowMap);
+//
+//                    Assert.assertEquals(excelRowMap, webpageRowMap, "Mismatch for header " + header + " at row " + (i + 1));
+//
+//                }
+//            }
+//
+//            //softAssert.assertAll();
+//            workbook.close();
+//
+//            // Print the table output
+//            System.out.println(tableOutput.toString());
+//
+//        } catch (StaleElementReferenceException e) {
+//            System.out.println("Encountered StaleElementReferenceException. Retrying...");
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//            throw e;
+//        }
+//    }
 
     @Then("[Admin Page] User tap pn the first approve button")
     public void adminPageUserTapPnTheFirstApproveButton() {
-       String approvalFirstTopic = AdminPage.get_first_Topic().getText();
-        System.out.println("approvalFirstTopic : "+approvalFirstTopic);
+        String approvalFirstTopic = AdminPage.get_first_Topic().getText();
+        System.out.println("approvalFirstTopic : " + approvalFirstTopic);
 
-        if(Objects.equals(approvalFirstTopic, "Employees File Upload")){
+        if (Objects.equals(approvalFirstTopic, "Employees File Upload")) {
             AdminPage.get_first_Approve_Button().click();
+            wait.until(ExpectedConditions.elementToBeClickable(get_Approval_Ok()));
             AdminPage.get_Approval_Ok().click();
             System.out.println("Approve Button");
         }
     }
 
     @Then("[Admin Page] User Tap om the Process file button")
-    public void adminPageUserTapOmTheProcessFileButton(){
-            try {
-        // Wait for the Process File button to be clickable
-        wait.until(ExpectedConditions.elementToBeClickable(By.xpath(Process_File_Button)));
+    public void adminPageUserTapOmTheProcessFileButton() {
+        try {
+            // Wait for the Process File button to be clickable
+            wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(Process_File_Button)));
 
-        // Click the Process File button
-        AdminPage.get_Process_File_Button().click();
+            // Click the Process File button
+            AdminPage.get_Process_File_Button().click();
 
-        // Optional: Log or print success message
-        System.out.println("Process File button clicked successfully.");
-    } catch (Exception e) {
-        // Handle any exception that occurs
-        e.printStackTrace();
-        System.out.println("Failed to click the Process File button: " + e.getMessage());
+            // Optional: Log or print success message
+            System.out.println("Process File button clicked successfully.");
+        } catch (Exception e) {
+            // Handle any exception that occurs
+            e.printStackTrace();
+            //System.out.println("Failed to click the Process File button: " + e.getMessage());
+        }
     }
-}
 
     @And("[Admin Page] User tap on the select all radio button")
     public void adminPageUserTapOnTheSelectAllRadioButton() {
         AdminPage.get_Select_All_Radio_Button().click();
         wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(Bulk_Approval_Submit_Button)));
         AdminPage.get_Bulk_Approval_Submit_Button().click();
-        
+
     }
 
     @Then("[Admin Page] The user verifies the approval toast message {string}")
@@ -782,7 +787,318 @@ public class adminsteps {
             Assert.fail("❌ Failed to verify toast message: " + e.getMessage());
         }
     }
+
+    @Then("[Admin Page] User verify the all data they have creates for the employee")
+    public void adminPageUserVerifyTheAllDataTheyHaveCreatesForTheEmployee() throws InterruptedException {
+//        System.out.println("📋 All stored employee data from EmployeeAdditionalStorage:");
+//        EmployeeAdditionalStorage.printAll();
+//
+//        List<WebElement> uiHeaderElements = get_Employee_File_Header();
+//        List<String> uiHeaders = new ArrayList<>();
+//        JavascriptExecutor js = (JavascriptExecutor) driver;
+//
+//        for (WebElement headerElement : uiHeaderElements) {
+//            String headerText = (String) js.executeScript("return arguments[0].innerText;", headerElement);
+//            headerText = headerText.trim();
+//            if (!headerText.equalsIgnoreCase("Action") && !headerText.equalsIgnoreCase("Camp")) {
+//                uiHeaders.add(headerText);
+//            }
+//        }
+//
+//        int columnsPerRow = uiHeaders.size();
+//
+//        // ✅ Get all <td> cells flat
+//        List<WebElement> allCells = driver.findElements(By.cssSelector(".ant-table-row.editable-row td.ant-table-cell"));
+//
+//        System.out.println("\n📋 Headers from UI:");
+//        for (String header : uiHeaders) {
+//            System.out.println("➡️ " + header);
+//        }
+//
+//        StringBuilder tableOutput = new StringBuilder();
+//        tableOutput.append("\n📊 Comparison Table:\n");
+//        tableOutput.append(String.format("%-8s | %-25s | %-25s | %-25s%n", "Row", "Header", "Expected", "Actual"));
+//        tableOutput.append("-".repeat(100)).append("\n");
+//
+//        int rowCount = allCells.size() / columnsPerRow;
+//        for (int rowIndex = 0; rowIndex < rowCount; rowIndex++) {
+//            for (int colIndex = 0; colIndex < columnsPerRow; colIndex++) {
+//                int flatIndex = rowIndex * columnsPerRow + colIndex;
+//
+//                WebElement cell = allCells.get(flatIndex);
+//                js.executeScript("arguments[0].scrollIntoView(true);", cell);
+//
+//                String actual = normalize(cell.getText().trim());
+//                String header = uiHeaders.get(colIndex);
+//                String key = "employee-" + rowIndex + "-" + header;
+//                String expected = normalize(EmployeeAdditionalStorage.getData(key));
+//
+//                System.out.printf("🔍 Row %d | Header: %-20s | Expected: %-25s | Actual: %-25s%n",
+//                        rowIndex + 1, header, expected, actual);
+//
+//                tableOutput.append(String.format("%-8d | %-25s | %-25s | %-25s%n", rowIndex + 1, header, expected, actual));
+//
+//                // Assertion
+//                softAssert.assertEquals(actual, expected, "❌ Mismatch in '" + header + "' at row " + (rowIndex + 1));
+//            }
+//        }
+//
+//        System.out.println(tableOutput);
+//    }
+//
+//    private String normalize(String value) {
+//        return value == null ? "" : value.replace("/", "-").replace(".", "-").replace(" ", "").trim();
+//    }
+        System.out.println("📋 All stored employee data from EmployeeAdditionalStorage:");
+        EmployeeAdditionalStorage.printAll();
+
+        Map<String, String> allData = EmployeeAdditionalStorage.getAllData();
+        Thread.sleep(2000); // Wait for UI to stabilize
+
+        // Extract stored headers
+        List<String> storedHeaders = Arrays.asList(allData.get("employee-headers").split(","));
+
+        Map<String, String> headerMapping = Map.ofEntries(
+                Map.entry("Mol Number", "Mol No"),
+                Map.entry("Emp Code", "Emp Code"),
+                Map.entry("First Name", "First Name"),
+                Map.entry("Last Name", "Last Name"),
+                Map.entry("Display Name", "Display Name"),
+                Map.entry("Date Of Birth", "Date of Birth"),
+                Map.entry("Gender", "Gender(M/F)"),
+                Map.entry("Nationality", "Nationality"),
+                Map.entry("Date Of Joining", "Date of Joining"),
+                Map.entry("Email", "Email"),
+                Map.entry("Mobile", "Mobile"),
+                Map.entry("Alternate Phone", "Alternate Phone"),
+                Map.entry("Home Address", "Home Address"),
+                Map.entry("Home State", "Home State"),
+                Map.entry("Home Post Code", "Home Post Code"),
+                Map.entry("Work Address", "Work Address"),
+                Map.entry("Work State", "Work State"),
+                Map.entry("Work Post Code", "Work Post Code"),
+                Map.entry("Passport Number", "Passport Number"),
+                Map.entry("Passport Expiry", "Passport Expiry"),
+                Map.entry("Emirates ID", "EID"),
+                Map.entry("Emirates ID Expiry", "EID Expiry"),
+                Map.entry("Establishment ID", "Establishment Id")
+        );
+
+        // Get headers from UI
+        List<WebElement> headerElements = driver.findElements(By.cssSelector(".ant-table-header th.ant-table-cell:not(.ant-table-selection-column)"));
+        List<String> uiHeaders = new ArrayList<>();
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+
+        for (WebElement element : headerElements) {
+            String headerText = element.getText().trim();
+            if (!headerText.equalsIgnoreCase("Action") && !headerText.equalsIgnoreCase("Camp")) {
+                uiHeaders.add(headerText);
+            }
+        }
+
+        // Get UI rows as flat list
+        List<WebElement> allCells = driver.findElements(By.cssSelector(".ant-table-row.editable-row td[id]"));
+        JavascriptExecutor jss = (JavascriptExecutor) driver;
+
+        System.out.println("🧾 Extracted Cell Data:");
+        for (WebElement cell : allCells) {
+            jss.executeScript("arguments[0].scrollIntoView(true);", cell);
+            String header = cell.getAttribute("id").trim();
+            String value = cell.getText().trim();
+            System.out.printf("➡️  %-20s : %s%n", header, value);
+
+        }
+
+        int totalColumns = uiHeaders.size();
+        int totalRows = allCells.size() / totalColumns;
+        // Validate all rows including employee-0
+        for (int i = 0; i < totalRows; i++) {
+            System.out.println("\n🔍 Validating Row: " + (i + 1));
+
+            for (int j = 0; j < totalColumns; j++) {
+                WebElement cell = allCells.get(i * totalColumns + j);
+                js.executeScript("arguments[0].scrollIntoView(true);", cell);
+                String actual = normalize(cell.getText().trim());
+
+                String uiHeader = uiHeaders.get(j);
+                String mappedHeader = headerMapping.getOrDefault(uiHeader, uiHeader);
+
+                if (!storedHeaders.contains(mappedHeader)) {
+                    System.out.printf("⚠️  Skipping header '%s' (mapped: '%s') - not found in stored headers%n", uiHeader, mappedHeader);
+                    continue;
+                }
+
+                String expectedKey = "employee-" + i + "-" + mappedHeader;
+                String expected = normalize(allData.getOrDefault(expectedKey, ""));
+
+                // Print before assertion
+                System.out.printf("   %-20s | Expected: %-25s | Actual: %-25s%n", mappedHeader, expected, actual);
+                softAssert.assertEquals(actual, expected, "❌ Mismatch in row " + (i + 1) + " for field: " + mappedHeader);
+            }
+
+            System.out.println("✅ Row " + (i + 1) + " validated successfully.");
+            System.out.println("---------------------------------------------");
+        }
+
+        System.out.println("✅ All rows processed.");
+        softAssert.assertAll();
+    }
+
+    private String normalize(String value) {
+        return value == null ? "" : value
+                .replace("/", "-")
+                .replace(".", "-")
+                .replace("@", "")
+                .replace("-", "")
+                .replace(" ", "")
+                .trim()
+                .toLowerCase();
+    }
+
+    @Then("[Admin Page] check the data")
+    public void adminPageCheckTheData() {
+//        System.out.println("\n✅ Starting Assertions:");
+//
+//        List<WebElement> allRows = driver.findElements(By.cssSelector(".ant-table-row.editable-row"));
+//        JavascriptExecutor js = (JavascriptExecutor) driver;
+//
+//        // Mapping between UI field IDs and stored keys
+//        Map<String, String> headerMapping = Map.ofEntries(
+//                Map.entry("molNo", "Mol No"),
+//                Map.entry("empCode", "Emp Code"),
+//                Map.entry("firstName", "First Name"),
+//                Map.entry("lastName", "Last Name"),
+//                Map.entry("displayName", "Display Name"),
+//                Map.entry("dob", "Date of Birth"),
+//                Map.entry("gender", "Gender(M/F)"),
+//                Map.entry("nationality", "Nationality"),
+//                Map.entry("doj", "Date of Joining"),
+//                Map.entry("email", "Email"),
+//                Map.entry("mobileNo", "Mobile"),
+//                Map.entry("altMobileNo", "Alternate Phone"),
+//                Map.entry("homeAddress", "Home Address"),
+//                Map.entry("stateId", "Home State"),
+//                Map.entry("homeZipCode", "Home Post Code"),
+//                Map.entry("workAddress", "Work Address"),
+//                Map.entry("workStateId", "Work State"),
+//                Map.entry("workZipCode", "Work Post Code"),
+//                Map.entry("passportNumber", "Passport Number"),
+//                Map.entry("passportExpiry", "Passport Expiry"),
+//                Map.entry("eid", "EID"),
+//                Map.entry("eidExpiry", "EID Expiry"),
+//                Map.entry("establishmentId", "Establishment Id")
+//        );
+//
+//        // Get all stored employee data
+//        Map<String, String> allData = EmployeeAdditionalStorage.getAllData();
+//
+//        for (int rowIndex = 0; rowIndex < allRows.size(); rowIndex++) {
+//            WebElement row = allRows.get(rowIndex);
+//            List<WebElement> cells = row.findElements(By.cssSelector("td[id]"));
+//
+//            System.out.printf("%n📌 Row %d:%n", rowIndex);
+//
+//            for (WebElement cell : cells) {
+//                js.executeScript("arguments[0].scrollIntoView(true);", cell);
+//
+//                String fieldId = cell.getAttribute("id").trim();         // e.g., "dob", "firstName"
+//                String uiValue = cell.getText().trim();                 // Value from UI
+//                String mappedKey = headerMapping.getOrDefault(fieldId, fieldId);  // "Date of Birth"
+//
+//                String storageKey = "employee-" + rowIndex + "-" + mappedKey;
+//                String storedValue = allData.get(storageKey);
+//
+//                System.out.printf("🔍 %-20s | UI: %-30s | Stored: %-30s%n", mappedKey, uiValue, storedValue);
+//
+//                if (storedValue == null) {
+//                    System.out.printf("⚠️  No stored value found for header '%s'%n", mappedKey);
+//                } else {
+//                    // Normalize only for date or expiry fields
+//                    if (mappedKey.toLowerCase().contains("date") || mappedKey.toLowerCase().contains("expiry")) {
+//                        String normalizedUi = uiValue.replace("-", "/").trim();
+//                        String normalizedStored = storedValue.replace("-", "/").trim();
+//                        Assert.assertEquals(normalizedUi, normalizedStored, "❌ Mismatch in '" + mappedKey + "'");
+//                    } else {
+//                        Assert.assertEquals(uiValue.trim(), storedValue.trim(), "❌ Mismatch in '" + mappedKey + "'");
+//                    }
+//                }
+//            }
+//        }
+    }
+
+    @Then("[Admin Page] Checker reviews the employee records created by the Maker")
+    public void adminPageCheckerReviewsTheEmployeeRecordsCreatedByTheMaker() {
+        System.out.println("\n✅ Starting Assertions:");
+
+        List<WebElement> allRows = driver.findElements(By.cssSelector(".ant-table-row.editable-row"));
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+
+        // Mapping between UI field IDs and stored keys
+        Map<String, String> headerMapping = Map.ofEntries(
+                Map.entry("molNo", "Mol No"),
+                Map.entry("empCode", "Emp Code"),
+                Map.entry("firstName", "First Name"),
+                Map.entry("lastName", "Last Name"),
+                Map.entry("displayName", "Display Name"),
+                Map.entry("dob", "Date of Birth"),
+                Map.entry("gender", "Gender(M/F)"),
+                Map.entry("nationality", "Nationality"),
+                Map.entry("doj", "Date of Joining"),
+                Map.entry("email", "Email"),
+                Map.entry("mobileNo", "Mobile"),
+                Map.entry("altMobileNo", "Alternate Phone"),
+                Map.entry("homeAddress", "Home Address"),
+                Map.entry("stateId", "Home State"),
+                Map.entry("homeZipCode", "Home Post Code"),
+                Map.entry("workAddress", "Work Address"),
+                Map.entry("workStateId", "Work State"),
+                Map.entry("workZipCode", "Work Post Code"),
+                Map.entry("passportNumber", "Passport Number"),
+                Map.entry("passportExpiry", "Passport Expiry"),
+                Map.entry("eid", "EID"),
+                Map.entry("eidExpiry", "EID Expiry"),
+                Map.entry("establishmentId", "Establishment Id")
+        );
+
+        // Get all stored employee data
+        Map<String, String> allData = EmployeeAdditionalStorage.getAllData();
+
+        for (int rowIndex = 0; rowIndex < allRows.size(); rowIndex++) {
+            WebElement row = allRows.get(rowIndex);
+            List<WebElement> cells = row.findElements(By.cssSelector("td[id]"));
+
+            System.out.printf("%n📌 Row %d:%n", rowIndex);
+
+            for (WebElement cell : cells) {
+                js.executeScript("arguments[0].scrollIntoView(true);", cell);
+
+                String fieldId = cell.getAttribute("id").trim();         // e.g., "dob", "firstName"
+                String uiValue = cell.getText().trim();                 // Value from UI
+                String mappedKey = headerMapping.getOrDefault(fieldId, fieldId);  // "Date of Birth"
+
+                String storageKey = "employee-" + rowIndex + "-" + mappedKey;
+                String storedValue = allData.get(storageKey);
+
+                System.out.printf("🔍 %-20s | UI: %-30s | Stored: %-30s%n", mappedKey, uiValue, storedValue);
+
+                if (storedValue == null) {
+                    System.out.printf("⚠️  No stored value found for header '%s'%n", mappedKey);
+                } else {
+                    // Normalize only for date or expiry fields
+                    if (mappedKey.toLowerCase().contains("date") || mappedKey.toLowerCase().contains("expiry")) {
+                        String normalizedUi = uiValue.replace("-", "/").trim();
+                        String normalizedStored = storedValue.replace("-", "/").trim();
+                        Assert.assertEquals(normalizedUi, normalizedStored, "❌ Mismatch in '" + mappedKey + "'");
+                    } else {
+                        Assert.assertEquals(uiValue.trim(), storedValue.trim(), "❌ Mismatch in '" + mappedKey + "'");
+                    }
+                }
+            }
+        }
+    }
 }
+
+
 //        // Correcting the way the FileInputStream is initialized
 //        try (FileInputStream fis = new FileInputStream(filePaths)) {
 //            System.out.println(filePaths);

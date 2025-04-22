@@ -14,13 +14,13 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 
 import java.awt.*;
-import java.awt.datatransfer.StringSelection;
 import java.awt.event.KeyEvent;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -548,18 +548,17 @@ public class AddEmployerSteps<Save_mol> {
 
 
     @And("[Employees Page] User upload a bulk employees file {string}")
-    public void
-    employeesPageUserUploadABulkEmployeesFile(String arg0) throws InterruptedException, AWTException {
-        //wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(uploadExcel)));
-        Thread.sleep(5000);
-        wait.until(ExpectedConditions.elementToBeClickable((By.xpath(uploadExcel))));
-        AddEmployerPages.get_uploadExcel().click();
-
+    public void employeesPageUserUploadABulkEmployeesFile(String arg0) throws InterruptedException, AWTException {
+//        //wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(uploadExcel)));
+//        Thread.sleep(5000);
+//        wait.until(ExpectedConditions.elementToBeClickable((By.xpath(uploadExcel))));
+//        AddEmployerPages.get_uploadExcel().click();
+//
+//        Thread.sleep(3000);
+//
 //        Robot rb = new Robot();
-//        System.out.println(filePath);
-//        //StringSelection str = new StringSelection(filePath);
-//        StringSelection str = new StringSelection("D:\\Hrcms\\src\\test\\java\\document\\965.xlsx");
-//        System.out.println(str);
+//        StringSelection str = new StringSelection(filePaths);
+//        System.out.println("str"+str);
 //        Toolkit.getDefaultToolkit().getSystemClipboard().setContents(str, null);
 //        // press Contol+V for pasting
 //        rb.keyPress(KeyEvent.VK_CONTROL);
@@ -573,28 +572,30 @@ public class AddEmployerSteps<Save_mol> {
 //        rb.keyPress(KeyEvent.VK_ENTER);
 //        rb.keyRelease(KeyEvent.VK_ENTER);
 //        //ScrollVertical(get_Add_Emplyer_Button());
-//        Thread.sleep(10000);
+//        //wait.until(ExpectedConditions.presenceOfElementLocated(By.id("uploadSuccessMessage"))); // Replace with actual success message locator
+//        Thread.sleep(5000);
+        // ✅ Click on the visible upload button
+        WebElement uploadButton = wait.until(ExpectedConditions.elementToBeClickable(AddEmployerPages.get_uploadExcel()));
+        uploadButton.click();
+        Thread.sleep(1000);
+        Robot robot = new Robot();
+
+        // Press ESC to close the file upload window
+        robot.keyPress(KeyEvent.VK_ESCAPE);
+        robot.keyRelease(KeyEvent.VK_ESCAPE);
+
+        System.out.println("✅ File upload window closed using ESC.");
+
+        // ✅ Locate the actual <input type="file"> element (behind the styled button)
+        WebElement fileInput = driver.findElement(By.cssSelector("input[type='file']"));
+
+        // ✅ Upload using the generated file path
+        fileInput.sendKeys(filePaths);  // filePaths already contains full absolute path
+
+        System.out.println("📁 File uploaded using path: " + filePaths);
+
+        // ✅ Wait for upload confirmation (replace with your actual success locator)
         Thread.sleep(3000);
-
-
-        Robot rb = new Robot();
-        StringSelection str = new StringSelection(filePaths);
-        System.out.println("str"+str);
-        Toolkit.getDefaultToolkit().getSystemClipboard().setContents(str, null);
-        // press Contol+V for pasting
-        rb.keyPress(KeyEvent.VK_CONTROL);
-        rb.keyPress(KeyEvent.VK_V);
-
-        // release Contol+V for pasting
-        rb.keyRelease(KeyEvent.VK_CONTROL);
-        rb.keyRelease(KeyEvent.VK_V);
-
-        // for pressing and releasing Enter
-        rb.keyPress(KeyEvent.VK_ENTER);
-        rb.keyRelease(KeyEvent.VK_ENTER);
-        //ScrollVertical(get_Add_Emplyer_Button());
-        //wait.until(ExpectedConditions.presenceOfElementLocated(By.id("uploadSuccessMessage"))); // Replace with actual success message locator
-        Thread.sleep(5000);
 
     }
 

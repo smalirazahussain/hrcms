@@ -1,6 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="Cucumber" time="109.559" tests="1" skipped="0" failures="0" errors="0">
-<testcase classname="employerSignUp" name="Create an employer from the master admin,with all steps approved through the master admin." time="109.274">
+<testsuite name="Cucumber" time="103.994" tests="1" skipped="0" failures="1" errors="0">
+<testcase classname="employerSignUp" name="Create an employer from the master admin,with all steps approved through the master admin." time="103.688">
+<failure type="org.openqa.selenium.ElementClickInterceptedException" message="element click intercepted: Element &lt;button title=&quot;Approve&quot; id=&quot;&quot; type=&quot;button&quot; class=&quot;ant-btn css-1d4w9r2 ant-btn-default ant-btn-color-default ant-btn-variant-outlined c-button green-dark-back   &quot;&gt;...&lt;/button&gt; is not clickable at point (1391, 85). Other element would receive the click: &lt;div class=&quot;ant-notification-notice-description&quot;&gt;...&lt;/div&gt;
+  (Session info: chrome=135.0.7049.42)
+Build info: version: '4.18.1', revision: 'b1d3319b48'
+System info: os.name: 'Windows 11', os.arch: 'amd64', os.version: '10.0', java.version: '17.0.11'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Command: [ff9f4ce795579179ba07b51904b53cd5, clickElement {id=f.EB3ACF1C4F3AA996A8E90B5E6AE8E1EA.d.E6ED1B53FF79AA3F00A43DE2FEA38430.e.324}]
+Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 135.0.7049.42, chrome: {chromedriverVersion: 135.0.7049.84 (6c019e560019..., userDataDir: C:\Users\hp\AppData\Local\T...}, fedcm:accounts: true, goog:chromeOptions: {debuggerAddress: localhost:55128}, networkConnectionEnabled: false, pageLoadStrategy: normal, platformName: windows, proxy: Proxy(), se:cdp: ws://localhost:55128/devtoo..., se:cdpVersion: 135.0.7049.42, setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webSocketUrl: ws://localhost:34703/sessio..., webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:extension:minPinLength: true, webauthn:extension:prf: true, webauthn:virtualAuthenticators: true}
+Element: [[ChromeDriver: chrome on windows (ff9f4ce795579179ba07b51904b53cd5)] -&gt; xpath: //button[contains(@title,'Approve')]]
+Session ID: ff9f4ce795579179ba07b51904b53cd5">
+<![CDATA[org.openqa.selenium.ElementClickInterceptedException: element click intercepted: Element <button title="Approve" id="" type="button" class="ant-btn css-1d4w9r2 ant-btn-default ant-btn-color-default ant-btn-variant-outlined c-button green-dark-back   ">...</button> is not clickable at point (1391, 85). Other element would receive the click: <div class="ant-notification-notice-description">...</div>
+  (Session info: chrome=135.0.7049.42)
+Build info: version: '4.18.1', revision: 'b1d3319b48'
+System info: os.name: 'Windows 11', os.arch: 'amd64', os.version: '10.0', java.version: '17.0.11'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Command: [ff9f4ce795579179ba07b51904b53cd5, clickElement {id=f.EB3ACF1C4F3AA996A8E90B5E6AE8E1EA.d.E6ED1B53FF79AA3F00A43DE2FEA38430.e.324}]
+Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 135.0.7049.42, chrome: {chromedriverVersion: 135.0.7049.84 (6c019e560019..., userDataDir: C:\Users\hp\AppData\Local\T...}, fedcm:accounts: true, goog:chromeOptions: {debuggerAddress: localhost:55128}, networkConnectionEnabled: false, pageLoadStrategy: normal, platformName: windows, proxy: Proxy(), se:cdp: ws://localhost:55128/devtoo..., se:cdpVersion: 135.0.7049.42, setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webSocketUrl: ws://localhost:34703/sessio..., webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:extension:minPinLength: true, webauthn:extension:prf: true, webauthn:virtualAuthenticators: true}
+Element: [[ChromeDriver: chrome on windows (ff9f4ce795579179ba07b51904b53cd5)] -> xpath: //button[contains(@title,'Approve')]]
+Session ID: ff9f4ce795579179ba07b51904b53cd5
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:499)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:480)
+	at org.openqa.selenium.remote.ErrorCodec.decode(ErrorCodec.java:167)
+	at org.openqa.selenium.remote.codec.w3c.W3CHttpResponseCodec.decode(W3CHttpResponseCodec.java:138)
+	at org.openqa.selenium.remote.codec.w3c.W3CHttpResponseCodec.decode(W3CHttpResponseCodec.java:50)
+	at org.openqa.selenium.remote.HttpCommandExecutor.execute(HttpCommandExecutor.java:190)
+	at org.openqa.selenium.remote.service.DriverCommandExecutor.invokeExecute(DriverCommandExecutor.java:216)
+	at org.openqa.selenium.remote.service.DriverCommandExecutor.execute(DriverCommandExecutor.java:174)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:519)
+	at org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:223)
+	at org.openqa.selenium.remote.RemoteWebElement.click(RemoteWebElement.java:76)
+	at step_Defination_Master_Admin.masterAdminOnboardApprovalsSteps.onboardApprovalsTheUserConfirmsTheApprovalAction(masterAdminOnboardApprovalsSteps.java:57)
+	at ✽.[Onboard Approvals] The user confirms the approval action(file:///D:/Hrcms/src/test/resources/masterAdminPortal/masterAdminPortal/employerSignup.feature:69)
+]]>
+</failure>
 <system-out><![CDATA[
 Given [MasterAdmin Page] The user navigate to the master admin portal.......passed
 Then [Admin Page] User enter the  email "admin@admin.com"...................passed
@@ -52,11 +88,11 @@ Then [Additional Details Modal] The user selects the Sales Agent "Qam"......pass
 Then [Additional Details Modal] The user enables Cashback...................passed
 Then [Additional Details Modal] The user enters Cashback Amount "5".........passed
 Then [Additional Details] The user verifies that Pre-Activation is set to "Yes".passed
-Then [Onboard Approvals] The user confirms the approval action..............passed
+Then [Onboard Approvals] The user confirms the approval action..............failed
 Then [Admin Page] The user verifies the approval toast message "Request is ready for further approval".passed
 Then [Onboard Approvals] The user verifies the approval tracking status is "Waiting for Authorizer's Approval".passed
 Then [Additional Details] The user verifies all product and additional details.passed
-Then [Onboard Approvals] The user verifies the success toast message "Action Successful".passed
+Then [Onboard Approvals] The user verifies the success toast message "Action Successful".skipped
 ]]></system-out>
 </testcase>
 </testsuite>
