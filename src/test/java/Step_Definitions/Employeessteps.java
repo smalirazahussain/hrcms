@@ -337,7 +337,7 @@ public class Employeessteps {
         }
     private final List<String> generatedData = new ArrayList<String>();
     public static String  filePaths;
-
+    @SuppressWarnings("ConstantConditions")
     @And("[Employees Page] User create a multiple data with non WPS process for the employer {string}{string}{string}{string}{string}{string}{string}{string}{string}{string}{string}{string}{string}{string}{string}{string}{string}{string}{string}{string}{string}{string}{string}")
     public void employeesPageUserCreateAMultipleDataWithNonWPSProcessForTheEmployer(
 
@@ -396,17 +396,17 @@ public class Employeessteps {
             System.out.print(header + "\t");
         }
         System.out.println();  // New line after headers
-        for (int j = 0; j < 10; j++) {
+        for (int j = 0; j < 50; j++) {
             int randomNumber = random.nextInt(8999999) + 1000000; // Generate random 7-digit number
             long randomMolNumber = (long) (random.nextDouble() * 9_000_000_000_000_00L) + 1_000_000_000_000_00L;
 
             // Generate random first and last names
-            firstName = firstNames.get(random.nextInt(lastNames.size()));
+            firstName = firstNames.get(random.nextInt(firstNames.size()));
             lastName = lastNames.get(random.nextInt(lastNames.size()));
 
             // Merge first and last name into display name
             displayName = firstName + " " + lastName;
-            dob = RandomDateGenerator.generateRandomDate(startDate, endDate);
+            dob = RandomDateGenerator.generateAdultDOB();
             String[] raws = {
                     molNo+ randomMolNumber, empCode, firstName, lastName ,
                     displayName, dob, gender.trim(), nationality.trim().replaceAll("^\\s+", ""),
@@ -415,6 +415,16 @@ public class Employeessteps {
                     homePostCode, workAddress, workState, workPostCode,
                     passportNo + randomNumber, passportExpiry, eid + randomNumber, eidExpiry, est
             };
+
+            // ✅ Validate array lengths to avoid ArrayIndexOutOfBoundsException
+            if (headers.length != raws.length) {
+                System.out.println("❌ Header and data length mismatch at row #" + j);
+                System.out.println("Headers count : " + headers.length);
+                System.out.println("Values count  : " + raws.length);
+                System.out.println("Headers: " + Arrays.toString(headers));
+                System.out.println("Values : " + Arrays.toString(raws));
+                throw new IllegalStateException("Mismatch: headers.length != raws.length at row #" + j);
+            }
 
 
 

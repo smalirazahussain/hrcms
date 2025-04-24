@@ -64,7 +64,9 @@ import org.testng.annotations.DataProvider;
 import java.io.File;
 
 @CucumberOptions(
-        features = "src/test/resources/masterAdminPortal/masterAdminPortal/employerSignup.feature",  // ✅ All features
+        features = {"src/test/resources/masterAdminPortal/masterAdminPortal/employerSignup.feature",// ✅ All features
+                "src/test/resources/Features"
+        },
         glue = {
                 "step_Defination_Master_Admin",
                 "Step_Definitions",

@@ -763,10 +763,14 @@ public class adminsteps {
     }
 
     @And("[Admin Page] User tap on the select all radio button")
-    public void adminPageUserTapOnTheSelectAllRadioButton() {
+    public void adminPageUserTapOnTheSelectAllRadioButton() throws InterruptedException {
+        //wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(Bulk_Approval_Submit_Button)));
         AdminPage.get_Select_All_Radio_Button().click();
-        wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(Bulk_Approval_Submit_Button)));
+        //wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(Bulk_Approval_Submit_Button)));
+        //Thread.sleep(3000);
         AdminPage.get_Bulk_Approval_Submit_Button().click();
+        Thread.sleep(3000);
+
 
     }
 

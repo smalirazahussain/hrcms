@@ -43,7 +43,7 @@ public class AdminPage {
     public static  String first_Approve_Button = "(//span[contains(text(),'Approve')])[1]";
     public static String Process_File_Button = "button[title='Process File']";
     public static String Select_All_Radio_Button = "input[type='checkbox']";
-    public static String Bulk_Approval_Submit_Button = "button[class='ant-btn css-1htoz2s ant-btn-primary ant-btn-color-primary ant-btn-variant-solid'] span";
+    public static String Bulk_Approval_Submit_Button = "button[class='ant-btn css-1v5z42l ant-btn-primary ant-btn-color-primary ant-btn-variant-solid']";
     public static String Edit_Employer_Approve_Button= "//button[contains(@title,'Approve')]";
     public static String Action_Successfully(String after){
         return "//span[normalize-space()='"+after+"']";

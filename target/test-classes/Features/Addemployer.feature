@@ -1270,12 +1270,15 @@ Feature: AddEmployer
     Then    [Sign Up] User enter the otp code "111111"
     When    [Admin Page] User tap on client Approvals
     Then    [Admin Page] User enter the company name
+    #Then    [Onboard Approvals] The user verifies the approval tracking status is "Waiting for Checker's approval"
+    Then    [Onboard Approvals] The user verifies the approval tracking status is "Waiting for Checker's approval"
     Then    [Admin Page] User tap pn the first approve button
     #Then    [Admin Page] User tap pn the first approve button
     #And     [Admin Page] User tap on view button
     #Then    [Admin Page] User tap on approve button
     Then    [Admin Page] User Tap om the browse button
     Then    [Admin Page] User select the card type "PayD"
+    Then    [Admin Page] User selects the employee camp "CAMP A2"
     Then    [Admin Page] User Tap om the Process file button
    # Then    [Admin Page] User tap No other bank employees in given file
     #Then    [Admin Page] User verify the all data they have creates on the file
@@ -1283,13 +1286,13 @@ Feature: AddEmployer
     #Then    [Admin Page] check the data
     Then    [Admin Page] Checker reviews the employee records created by the Maker
     And     [Admin Page] User tap on the select all radio button
-
+    And     [Admin Page] User tap on the select all radio button
     And     [Admin Page] User Tap on the approve button
     Then    [Admin Page] User verify the notification message "Action Successful"
 
     Examples:
       |FirstName|MolNo|EmpCode|LastName|DisplayName|DOB|Gender|Nationality|JoiningDate|Email|MobileNo|AlternatePhone|HomeAddress|HomeState|HomePostCode|WorkAddress|WorkState|WorkPostCode|PassportNo|PassportExpiry|EID|EIDExpiry|EstablishmentId|
-      |User||0000|1||01/11/1978|M|BD|05/05/1978|@mailinator.com|97156|97156|Address|1|00001|4|2|3|Passport|10/05/2029|78419910|10/05/2029|FUNDFLEX31235|
+      |User||0000|1||01/11/1978|M|BD|05/05/1978|@mailinator.com|97156|97156|Address|1|00001|4|2|3|Passport|10/05/2029|78419910|10/05/2029|PENDINGBADGE213|
 
 
 

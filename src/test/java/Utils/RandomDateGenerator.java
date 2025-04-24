@@ -74,5 +74,18 @@ public class RandomDateGenerator {
 
         return streetNumber + " " + streetName + ", " + city + ", " + state + " " + zipCode;
     }
+    public static String generateAdultDOB() {
+        LocalDate todayMinus18Years = LocalDate.now().minusYears(18);
+        LocalDate startDate = LocalDate.of(1950, 1, 1); // Earliest valid DOB
 
+        long startEpoch = startDate.toEpochDay();
+        long endEpoch = todayMinus18Years.toEpochDay();
+
+        long randomEpoch = ThreadLocalRandom.current().nextLong(startEpoch, endEpoch + 1);
+        LocalDate dob = LocalDate.ofEpochDay(randomEpoch);
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        return dob.format(formatter);
+
+    }
 }

@@ -5,6 +5,7 @@ import Utils.EmployerAdditionalStorage;
 import Utils.EmployerDataStorage;
 import Utils.RandomDateGenerator;
 import io.cucumber.java.en.Then;
+//import io.cucumber.messages.types.Exception;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.TimeoutException;
@@ -13,6 +14,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
+
 
 import java.time.Duration;
 import java.time.LocalDate;
@@ -59,6 +61,8 @@ public class masterAdminAdditionalDetailsSteps {
             handleException("Clicking 'Add/Edit Onboarding Source' button", e);
         }
     }
+
+
 
     @Then("[Additional Details] The user selects the Onboarding Source {string}")
     public void additionalDetailsTheUserSelectsTheOnboardingSource(String source) {
@@ -289,7 +293,7 @@ public class masterAdminAdditionalDetailsSteps {
             System.out.println("✅ Cashback checkbox enabled.");
 
         } catch (Exception e) {
-            System.out.println("❌ Failed to enable Cashback checkbox.");
+            System.out.println("Failed to enable Cashback checkbox.");
             e.printStackTrace();
         }
     }
