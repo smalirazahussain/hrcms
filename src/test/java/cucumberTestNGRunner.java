@@ -71,6 +71,7 @@ import java.io.File;
                 "step_Defination_Master_Admin",
                 "Step_Definitions",
                 "Step_Definitions_Head_Office",
+                "common_steps",
                 "Hooks"
         },
         plugin = {

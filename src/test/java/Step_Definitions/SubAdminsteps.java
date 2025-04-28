@@ -122,6 +122,7 @@ public class SubAdminsteps {
 
     @And("[Sub Admin] User tap on the submit button")
     public void subAdminUserTapOnTheSubmitButton() throws InterruptedException {
+        wait.until(ExpectedConditions.elementToBeClickable(get_Submit()));
         SubAdminPages.get_Submit().click();
     }
 

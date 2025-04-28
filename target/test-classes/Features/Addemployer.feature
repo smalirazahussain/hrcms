@@ -1270,8 +1270,7 @@ Feature: AddEmployer
     Then    [Sign Up] User enter the otp code "111111"
     When    [Admin Page] User tap on client Approvals
     Then    [Admin Page] User enter the company name
-    #Then    [Onboard Approvals] The user verifies the approval tracking status is "Waiting for Checker's approval"
-    Then    [Onboard Approvals] The user verifies the approval tracking status is "Waiting for Checker's approval"
+    Then    [Onboard Approvals] The user verifies the bulk employees file approval tracking status is "Waiting for Checker's approval"
     Then    [Admin Page] User tap pn the first approve button
     #Then    [Admin Page] User tap pn the first approve button
     #And     [Admin Page] User tap on view button
@@ -1287,7 +1286,14 @@ Feature: AddEmployer
     Then    [Admin Page] Checker reviews the employee records created by the Maker
     And     [Admin Page] User tap on the select all radio button
     And     [Admin Page] User tap on the select all radio button
-    And     [Admin Page] User Tap on the approve button
+    Then    [Admin Page] User tap pn the first approve button
+    Then    [Admin Page] User Tap on the I have done my job button
+    Then    [Onboard Approvals] The user verifies the bulk employees file approval tracking status is "Waiting for Authorizer's Approval"
+    Then    [Admin Page] User tap on the view PayD employee button
+    Then    [Admin Page] Authorizer reviews the employee records they approve by the checker
+    And     [Admin Page] User tap on the select all radio button
+    And     [Admin Page] User tap on the select all radio button
+    Then    [Admin Page] User tap pn the first approve button
     Then    [Admin Page] User verify the notification message "Action Successful"
 
     Examples:

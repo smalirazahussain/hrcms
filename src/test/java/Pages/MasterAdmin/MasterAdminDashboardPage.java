@@ -11,6 +11,7 @@ public class MasterAdminDashboardPage {
     public static String Approval_Success_Toast = "//span[normalize-space()='Action Successful']";
     public static String Onboard_Approvals_Employer_Name = "tbody tr:nth-child(2) td:nth-child(2)";
     public static String Onboard_Approvals_Approval_Status = "tbody tr:nth-child(2) td:nth-child(8)";
+    public static String Bulk_Employee_File_Approval_Status ="tbody tr:nth-child(2) td:nth-child(7)";
     public static String Onboard_Approvals_Button = "#onboardApprovals";
 
 
@@ -33,6 +34,10 @@ public class MasterAdminDashboardPage {
 
     public static WebElement get_Onboard_Approvals_Approval_Status() {
         return Base_Class.driver.findElement(By.cssSelector(Onboard_Approvals_Approval_Status));
+    }
+
+    public static WebElement get_Bulk_Employee_File_Approval_Status() {
+        return Base_Class.driver.findElement(By.cssSelector(Bulk_Employee_File_Approval_Status));
     }
 }
 

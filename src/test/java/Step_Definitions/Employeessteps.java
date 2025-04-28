@@ -396,7 +396,7 @@ public class Employeessteps {
             System.out.print(header + "\t");
         }
         System.out.println();  // New line after headers
-        for (int j = 0; j < 50; j++) {
+        for (int j = 0; j < 10; j++) {
             int randomNumber = random.nextInt(8999999) + 1000000; // Generate random 7-digit number
             long randomMolNumber = (long) (random.nextDouble() * 9_000_000_000_000_00L) + 1_000_000_000_000_00L;
 

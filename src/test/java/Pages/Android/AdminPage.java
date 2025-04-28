@@ -1,10 +1,7 @@
 package Pages.Android;
 
 import Hooks.Base_Class;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -33,7 +30,7 @@ public class AdminPage {
     public static String View = "button[title='View']:nth-child(1)";
     public static String company_Name = "//body//div//ul[2]";
     public static String Trade_No = "//body//div//ul[2]";
-    public static String Approval_Ok = "//span[normalize-space()='OK']";
+    public static String Approval_Ok = "(//span[normalize-space()='OK'])[1]";
     public static String Client_Approval = "#approval";
     public static String Company_Client = "(//input[@id=\"client\"])[2]";
     public static String Admin_Action_Successfully = "//span[normalize-space()='Action Successful']";
@@ -45,6 +42,9 @@ public class AdminPage {
     public static String Select_All_Radio_Button = "input[type='checkbox']";
     public static String Bulk_Approval_Submit_Button = "button[class='ant-btn css-1v5z42l ant-btn-primary ant-btn-color-primary ant-btn-variant-solid']";
     public static String Edit_Employer_Approve_Button= "//button[contains(@title,'Approve')]";
+    public static String I_Have_Done_My_Job_Button="button[title='I have done my job'] span";
+    public static String Bulk_Employees_Approval_Ok_Button = "div[class='ant-popover css-1v5z42l css-1v5z42l ant-popconfirm ant-popover-placement-top'] button:nth-child(2) span:nth-child(1)";
+    public static String View_PayD_Employee_Button = "(//span[contains(text(),'View PayD Employees')])[1]";
     public static String Action_Successfully(String after){
         return "//span[normalize-space()='"+after+"']";
     }//span[normalize-space()='Company product not found']
@@ -57,7 +57,7 @@ public class AdminPage {
         return "//span[@title='" + card + "']";
     }
 
-    public static String Approve_Bulk_Button = "//div[contains(@class,'ant-drawer-body')]//button[contains(@title,'Approve')]";
+    public static String Approve_Bulk_Button = "//td[contains(@class,'ant-table-cell ant-table-cell-row-hover')]//span[contains(text(),'Approve')]";
     public static String Card_Button = "#cardType";
     public static String ExchangeHouseClientButton = " label:nth-child(2)";
     public static String No_Other_Bank_Employees = "label:nth-child(2) > span:nth-child(2)";
@@ -297,6 +297,18 @@ public class AdminPage {
 
     public static WebElement get_Edit_Employer_Approve_Button() {
         return Base_Class.driver.findElement(By.xpath(Edit_Employer_Approve_Button));
+    }
+
+    public static WebElement get_I_Have_Done_My_Job_Button() {
+        return Base_Class.driver.findElement(By.cssSelector(I_Have_Done_My_Job_Button));
+    }
+
+    public static WebElement get_Bulk_Employees_Approval_Ok_Button() {
+        return Base_Class.driver.findElement(By.cssSelector(Bulk_Employees_Approval_Ok_Button));
+    }
+
+    public static WebElement get_View_PayD_Employee_Button() {
+        return Base_Class.driver.findElement(By.xpath(View_PayD_Employee_Button));
     }
 }
 

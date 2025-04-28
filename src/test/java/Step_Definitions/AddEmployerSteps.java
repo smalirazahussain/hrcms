@@ -29,6 +29,7 @@ import java.util.Random;
 
 import static Hooks.Base_Class.driver;
 import static Pages.Android.AddEmployerPages.*;
+import static Pages.Android.RequestPage.Loading;
 import static Pages.Android.UpdateProliePage.get_year_arrow_xpath;
 import static Pages.Android.UpdateProliePage.issueDate;
 import static Step_Definitions.Employeessteps.filePaths;
@@ -575,6 +576,7 @@ public class AddEmployerSteps<Save_mol> {
 //        //wait.until(ExpectedConditions.presenceOfElementLocated(By.id("uploadSuccessMessage"))); // Replace with actual success message locator
 //        Thread.sleep(5000);
         // ✅ Click on the visible upload button
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(Loading)));
         WebElement uploadButton = wait.until(ExpectedConditions.elementToBeClickable(AddEmployerPages.get_uploadExcel()));
         uploadButton.click();
         Thread.sleep(1000);

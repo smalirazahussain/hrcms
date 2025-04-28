@@ -6,6 +6,7 @@ import Pages.Android.MolPages;
 import Pages.Android.UpdateProliePage;
 import Pages.HeadOfficePages.ManageEmployeesHeadOfficePage;
 import Pages.HeadOfficePages.OnBoardApprovalHeadOfficePage;
+import Pages.MasterAdmin.MasterAdminDashboardPage;
 import Utils.EmployeeAdditionalStorage;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
@@ -737,6 +738,7 @@ public class adminsteps {
         System.out.println("approvalFirstTopic : " + approvalFirstTopic);
 
         if (Objects.equals(approvalFirstTopic, "Employees File Upload")) {
+            wait.until(ExpectedConditions.elementToBeClickable(get_first_Approve_Button()));
             AdminPage.get_first_Approve_Button().click();
             wait.until(ExpectedConditions.elementToBeClickable(get_Approval_Ok()));
             AdminPage.get_Approval_Ok().click();
@@ -1070,6 +1072,7 @@ public class adminsteps {
         for (int rowIndex = 0; rowIndex < allRows.size(); rowIndex++) {
             WebElement row = allRows.get(rowIndex);
             List<WebElement> cells = row.findElements(By.cssSelector("td[id]"));
+            //wait.until(ExpectedConditions.visibilityOfElementLocated((By.cssSelector(String.valueOf(cells)))));
 
             System.out.printf("%n📌 Row %d:%n", rowIndex);
 
@@ -1099,6 +1102,158 @@ public class adminsteps {
                 }
             }
         }
+    }
+
+    @Then("[Onboard Approvals] The user verifies the bulk employees file approval tracking status is {string}")
+    public void onboardApprovalsTheUserVerifiesTheBulkEmployeesFileApprovalTrackingStatusIs(String expectedStatus) {
+        try {
+            // Wait for the Approval Tracking Status element to be visible
+            wait.until(ExpectedConditions.visibilityOf(
+                    MasterAdminDashboardPage.get_Bulk_Employee_File_Approval_Status()
+            ));
+
+            // Get the actual Approval Tracking Status from the UI
+            String actualStatus = MasterAdminDashboardPage.get_Bulk_Employee_File_Approval_Status().getText().trim();
+
+            // Assert that the status matches the expected value
+            Assert.assertEquals(actualStatus, expectedStatus, "❌ Approval Tracking Status does not match!");
+
+            System.out.println("✅ Successfully verified Approval Tracking Status: " + actualStatus);
+
+        } catch (Exception e) {
+            System.err.println("⚠️ Error: Unable to verify Approval Tracking Status in Onboard Approvals.");
+            e.printStackTrace();
+            Assert.fail("Approval Tracking Status verification failed due to an exception: " + e.getMessage());
+        }
+    }
+
+    @Then("[Admin Page] User Tap on the I have done my job button")
+    public void adminPageUserTapOnTheIHaveDoneMyJobButton() {
+        String iHaveDoneMyJobButton = AdminPage.get_I_Have_Done_My_Job_Button().getText();
+        System.out.println("iHaveDoneMyJobButton : " + iHaveDoneMyJobButton);
+        //I have done my job
+        //if (iHaveDoneMyJobButton==null) {
+        AdminPage.get_I_Have_Done_My_Job_Button().click();
+        wait.until(ExpectedConditions.elementToBeClickable(get_Bulk_Employees_Approval_Ok_Button()));
+        AdminPage.get_Bulk_Employees_Approval_Ok_Button().click();
+        System.out.println("Approve Button");
+        //}
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(Loading)));
+    }
+
+    @Then("[Admin Page] User tap on the view PayD employee button")
+    public void adminPageUserTapOnTheViewPayDEmployeeButton() {
+        wait.until(ExpectedConditions.elementToBeClickable(get_View_PayD_Employee_Button()));
+        AdminPage.get_View_PayD_Employee_Button().click();
+    }
+
+    @Then("[Admin Page] Authorizer reviews the employee records they approve by the checker")
+    public void adminPageAuthorizerReviewsTheEmployeeRecordsTheyApproveByTheChecker() {
+        System.out.println("\n✅ Starting Assertions:");
+
+// 1️⃣ Find all UI Rows
+        List<WebElement> allRows = driver.findElements(By.cssSelector(".ant-table-row.editable-row"));
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+
+// 2️⃣ Prepare header mapping
+        Map<String, String> headerMapping = Map.ofEntries(
+                Map.entry("molNo", "Mol No"),
+                Map.entry("empCode", "Emp Code"),
+                Map.entry("firstName", "First Name"),
+                Map.entry("lastName", "Last Name"),
+                Map.entry("displayName", "Display Name"),
+                Map.entry("dob", "Date of Birth"),
+                Map.entry("gender", "Gender(M/F)"),
+                Map.entry("nationality", "Nationality"),
+                Map.entry("doj", "Date of Joining"),
+                Map.entry("email", "Email"),
+                Map.entry("mobileNo", "Mobile"),
+                Map.entry("altMobileNo", "Alternate Phone"),
+                Map.entry("homeAddress", "Home Address"),
+                Map.entry("stateId", "Home State"),
+                Map.entry("homeZipCode", "Home Post Code"),
+                Map.entry("workAddress", "Work Address"),
+                Map.entry("workStateId", "Work State"),
+                Map.entry("workZipCode", "Work Post Code"),
+                Map.entry("passportNumber", "Passport Number"),
+                Map.entry("passportExpiry", "Passport Expiry"),
+                Map.entry("eid", "EID"),
+                Map.entry("eidExpiry", "EID Expiry"),
+                Map.entry("establishmentId", "Establishment Id")
+        );
+
+// 3️⃣ Get Stored Data
+        Map<String, String> storedData = EmployeeAdditionalStorage.getAllData();
+
+// 4️⃣ Build Mapping of MolNo -> employee-x
+        Map<String, String> molNoToEmployeeKey = new HashMap<>();
+        for (Map.Entry<String, String> entry : storedData.entrySet()) {
+            String key = entry.getKey();  // example: employee-0-Mol No
+            if (key.contains("Mol No")) {
+                String employeeKey = key.split("-Mol No")[0]; // example: employee-0
+                molNoToEmployeeKey.put(entry.getValue(), employeeKey);
+            }
+        }
+
+// 5️⃣ Now for each UI Row
+        for (int rowIndex = 0; rowIndex < allRows.size(); rowIndex++) {
+            WebElement row = allRows.get(rowIndex);
+            List<WebElement> cells = row.findElements(By.cssSelector("td[id]"));
+
+            String uiMolNo = "";
+            Map<String, String> uiRowData = new HashMap<>();
+
+            for (WebElement cell : cells) {
+                js.executeScript("arguments[0].scrollIntoView(true);", cell);
+
+                String fieldId = cell.getAttribute("id").trim();
+                String fieldLabel = headerMapping.getOrDefault(fieldId, fieldId);
+                String uiValue = cell.getText().trim();
+
+                if (fieldId.equals("molNo")) {
+                    uiMolNo = uiValue;
+                }
+
+                uiRowData.put(fieldLabel, uiValue);
+            }
+
+            if (uiMolNo.isEmpty()) {
+                System.out.println("⚠️ Skipping row: MolNo not found.");
+                continue;
+            }
+
+            // 🔥 Find corresponding stored employee by MolNo
+            String employeeKey = molNoToEmployeeKey.get(uiMolNo);
+            if (employeeKey == null) {
+                System.out.println("❌ No matching employee found in storage for MolNo: " + uiMolNo);
+                continue;
+            }
+
+            System.out.printf("%n📌 Row (MolNo: %s - Employee %s):%n", uiMolNo, employeeKey);
+
+            for (Map.Entry<String, String> uiFieldEntry : uiRowData.entrySet()) {
+                String label = uiFieldEntry.getKey();
+                String uiValue = uiFieldEntry.getValue();
+                String storedValue = storedData.get(employeeKey + "-" + label);
+
+                System.out.printf("🔍 %-20s | UI: %-30s | Stored: %-30s%n", label, uiValue, storedValue);
+
+                if (storedValue == null) {
+                    System.out.printf("⚠️ No stored value found for field '%s'%n", label);
+                    continue;
+                }
+
+                if (label.toLowerCase().contains("date") || label.toLowerCase().contains("expiry")) {
+                    String normalizedUi = uiValue.replace("-", "/").trim();
+                    String normalizedStored = storedValue.replace("-", "/").trim();
+                    softAssert.assertEquals(normalizedUi, normalizedStored, "❌ Mismatch in '" + label + "'");
+                } else {
+                    softAssert.assertEquals(uiValue.trim(), storedValue.trim(), "❌ Mismatch in '" + label + "'");
+                }
+            }
+        }
+
+        softAssert.assertAll();
     }
 }
 

@@ -82,7 +82,6 @@ public class OnBoardApprovalStepsHeadOffice {
         OnBoardApprovalHeadOfficePage.get_Head_office_Search_Branch().sendKeys(branch+ Keys.ENTER);
     }
 
-
 }
 
 
