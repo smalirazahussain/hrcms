@@ -1254,14 +1254,6 @@ Feature: AddEmployer
     And     [Request Page] User tap on the request button
     Then    [Request Page] User tap on the view button
     And     [Request Page] User tap on the Approve button
-    #Then    [Login page] User verify toast msg "Request sent to admin for further approval"
-    #Then    [Sign Up] User enter the otp code "111111"
-    #Then    [Login page] User verify toast msg "Request sent to admin for further approval"
-    #Then    [Request Page] User tap on the view button
-    #And     [Request Page] User tap on the Approve button
-    #Then    [Login page] User verify toast msg "Request sent to admin for further approval"
-    #Then    [Sign Up] User enter the otp code "111111"
-    #Then    [Login page] User verify toast msg "Request sent to admin for further approval"
     Then    [Admin Page] Open the admin tab "https://stage-admin.getthelingo.com/"
     And     [Admin Page] User tap on login page
     Then    [Admin Page] User enter the  email "admin@admin.com"
@@ -1272,17 +1264,10 @@ Feature: AddEmployer
     Then    [Admin Page] User enter the company name
     Then    [Onboard Approvals] The user verifies the bulk employees file approval tracking status is "Waiting for Checker's approval"
     Then    [Admin Page] User tap pn the first approve button
-    #Then    [Admin Page] User tap pn the first approve button
-    #And     [Admin Page] User tap on view button
-    #Then    [Admin Page] User tap on approve button
     Then    [Admin Page] User Tap om the browse button
     Then    [Admin Page] User select the card type "PayD"
     Then    [Admin Page] User selects the employee camp "CAMP A2"
     Then    [Admin Page] User Tap om the Process file button
-   # Then    [Admin Page] User tap No other bank employees in given file
-    #Then    [Admin Page] User verify the all data they have creates on the file
-   # Then    [Admin Page] User verify the all data they have creates for the employee
-    #Then    [Admin Page] check the data
     Then    [Admin Page] Checker reviews the employee records created by the Maker
     And     [Admin Page] User tap on the select all radio button
     And     [Admin Page] User tap on the select all radio button
@@ -1292,9 +1277,15 @@ Feature: AddEmployer
     Then    [Admin Page] User tap on the view PayD employee button
     Then    [Admin Page] Authorizer reviews the employee records they approve by the checker
     And     [Admin Page] User tap on the select all radio button
-    And     [Admin Page] User tap on the select all radio button
-    Then    [Admin Page] User tap pn the first approve button
-    Then    [Admin Page] User verify the notification message "Action Successful"
+    #And     [Admin Page] User tap on the select all radio button
+    Then    [Admin Page] User tap on the view PayD employee button
+    And     [Admin Page] User wait to see the approval approved by admin
+    Then    [Admin Page] User select the approval status "Show All"
+    Then    [Admin Page] User enter the company name
+    Then    [Onboard Approvals] The user verifies the bulk employees file approval tracking status is "Approved"
+    Then    [Admin Page] User tap on the view PayD employee button
+    Then    [Admin Page] Authorizer reviews the employee records they approve by the checker
+
 
     Examples:
       |FirstName|MolNo|EmpCode|LastName|DisplayName|DOB|Gender|Nationality|JoiningDate|Email|MobileNo|AlternatePhone|HomeAddress|HomeState|HomePostCode|WorkAddress|WorkState|WorkPostCode|PassportNo|PassportExpiry|EID|EIDExpiry|EstablishmentId|

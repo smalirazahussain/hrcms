@@ -24,7 +24,7 @@ public class ProcessSalariesDepositSlipPages {
     public static String Salary_Submit_Button = "div:nth-child(7) > button:nth-child(1)";
     public static String Cross_Button = ".ant-modal-close-x";
     public static String Salary_Amount = "//div[@class='ant-modal-body']//span[1]//span[1]";
-    public static String Emp_Codes = ":is(table > tr) td:nth-child(1)";
+    public static String Emp_Codes = ":is(table > tr) td:nth-child(n)";
 
     public static WebElement get_Process_Salaries_Deposit_Slip() {
 

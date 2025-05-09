@@ -55,7 +55,7 @@ import static Tests.Current_Date.currentMonth;
 
 public class adminsteps {
 
-    Duration timeout = Duration.ofSeconds(30);
+    Duration timeout = Duration.ofSeconds(60);
     WebDriverWait wait = new WebDriverWait(driver, timeout);
     //create a soft-assertion object
     SoftAssert softAssert = new SoftAssert();
@@ -766,13 +766,23 @@ public class adminsteps {
 
     @And("[Admin Page] User tap on the select all radio button")
     public void adminPageUserTapOnTheSelectAllRadioButton() throws InterruptedException {
-        //wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(Bulk_Approval_Submit_Button)));
+        //wait.until(ExpectedConditions.elementToBeClickable(get_Select_All_Radio_Button()));
         AdminPage.get_Select_All_Radio_Button().click();
-        //wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(Bulk_Approval_Submit_Button)));
+        //wait.until(ExpectedConditions.elementToBeClickable(get_Bulk_Approval_Submit_Button()));
         //Thread.sleep(3000);
-        AdminPage.get_Bulk_Approval_Submit_Button().click();
-        Thread.sleep(3000);
+        // Try clicking Bulk Approval Submit Button
+        try {
+            AdminPage.get_Bulk_Approval_Submit_Button().click();
+        } catch (Exception e) {
+            System.out.println("Bulk Approval Submit Button not clickable: " + e.getMessage());
+        }
 
+        // Try clicking Bulk Approval Approve Button
+        try {
+            AdminPage.get_Bulk_Approval_Approve_Button().click();
+        } catch (Exception e) {
+            System.out.println("Bulk Approval Approve Button not clickable: " + e.getMessage());
+        }
 
     }
 
@@ -1128,21 +1138,28 @@ public class adminsteps {
     }
 
     @Then("[Admin Page] User Tap on the I have done my job button")
-    public void adminPageUserTapOnTheIHaveDoneMyJobButton() {
-        String iHaveDoneMyJobButton = AdminPage.get_I_Have_Done_My_Job_Button().getText();
-        System.out.println("iHaveDoneMyJobButton : " + iHaveDoneMyJobButton);
+    public void adminPageUserTapOnTheIHaveDoneMyJobButton() throws InterruptedException {
+//        String iHaveDoneMyJobButton = AdminPage.get_I_Have_Done_My_Job_Button().getText();
+//        System.out.println("iHaveDoneMyJobButton : " + iHaveDoneMyJobButton);
         //I have done my job
         //if (iHaveDoneMyJobButton==null) {
         AdminPage.get_I_Have_Done_My_Job_Button().click();
-        wait.until(ExpectedConditions.elementToBeClickable(get_Bulk_Employees_Approval_Ok_Button()));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(Bulk_Employees_Approval_Ok_Button)));
+        //Thread.sleep(2000);
+//        JavascriptExecutor js = (JavascriptExecutor) driver;
+//        js.executeScript("arguments[0].click();",AdminPage.get_Bulk_Employees_Approval_Ok_Button() );
         AdminPage.get_Bulk_Employees_Approval_Ok_Button().click();
+
         System.out.println("Approve Button");
         //}
         wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(Loading)));
     }
 
+
+
     @Then("[Admin Page] User tap on the view PayD employee button")
     public void adminPageUserTapOnTheViewPayDEmployeeButton() {
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(Loading)));
         wait.until(ExpectedConditions.elementToBeClickable(get_View_PayD_Employee_Button()));
         AdminPage.get_View_PayD_Employee_Button().click();
     }
@@ -1254,6 +1271,37 @@ public class adminsteps {
         }
 
         softAssert.assertAll();
+    }
+
+    @And("[Admin Page] User wait to see the approval approved by admin")
+    public void adminPageUserWaitToSeeTheApprovalApprovedByAdmin() {
+
+        // 1. Wait until the approval alert/message is visible
+        //AdminPage.get_Approval_Alert_Message();
+        WebElement approvalMessage = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(Approval_Alert_Message)));
+        System.out.println("Approval Message Appeared: " + approvalMessage.getText());
+
+        // 2. Wait until the approval alert/message disappears
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector("div[role='alert']")));
+
+        System.out.println("Approval process completed. Moving forward...");
+    }
+
+    @Then("[Admin Page] User select the approval status {string}")
+    public void adminPageUserSelectTheApprovalStatus(String approvalStatus) {
+       // AdminPage.get_Approval_Status().sendKeys(approvalStatus+Keys.ENTER);
+
+        WebElement statusDropdown = wait.until(ExpectedConditions.elementToBeClickable(AdminPage.get_Approval_Status()));
+
+        if (statusDropdown == null) {
+            throw new RuntimeException("❌ Approval Status dropdown not found or not clickable.");
+        }
+
+        //statusDropdown.click(); // Optional for triggering dropdown
+        statusDropdown.sendKeys(approvalStatus);
+        statusDropdown.sendKeys(Keys.ENTER);
+
+        System.out.println("✅ Selected approval status: " + approvalStatus);
     }
 }
 

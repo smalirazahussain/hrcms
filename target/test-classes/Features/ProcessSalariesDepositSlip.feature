@@ -79,8 +79,12 @@ Feature: ProcessSalariesDepositSlip
     Given   [Login Page] User enter the email ""
     When    [Login Page] User enter the password ""
     Then    [Login page] User tap on login button
+    And     [Sub Admin] User tap on the submit button
+    #Then    [Login page] User verify toast msg "Two Factor Enabled"
+    Then    [Sign Up] User enter the otp code "111111"
     And     [Process Salaries DepositSlip Page] User Tap on Process Salaries Deposit Slip
-    When    [Process Salaries DepositSlip Page] User enter company name and download the salary template
+   # When    [Process Salaries DepositSlip Page] User enter company name and download the salary template
+    When    [Process Salaries DepositSlip Page] User enter company name and download the salary template save all the data and give them salary
     Then    [Process Salaries DepositSlip Page] User select the month and then upload the process file "2012-04"
     And     [Process Salaries DepositSlip Page] User tap on browse file and upload a salary process file
     Then    [Process Salaries DepositSlip Page] User tap on submit button

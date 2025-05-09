@@ -140,7 +140,7 @@ public class LoginSteps {
 
     @Then("[Login page] User verify toast msg {string}")
     public void loginPageUserVerifyToastMsg(String expected_Toast_Msg) {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(Toast_Msg)));
+       // wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(Toast_Msg)));
         String actual_Toast_Msg = LoginPage.get_Toast_Msg().getText();
         System.out.println("actual_Toast_Msg:"+actual_Toast_Msg);
         Assert.assertEquals(actual_Toast_Msg,expected_Toast_Msg);

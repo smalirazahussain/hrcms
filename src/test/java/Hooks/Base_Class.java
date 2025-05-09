@@ -39,7 +39,13 @@ public class Base_Class {
     @Before
     public void     setup() {
 
+        String testUrl = ConfigReader.getProperty("stageEmployerUrl"); // or "employerurl" if in local env
 
+        if (!Utils.NetworkUtils.isInternetAvailable(testUrl)) {
+            System.err.println("❌ Cannot reach: " + testUrl);
+            System.err.println("Please check your internet connection or environment availability.");
+            throw new RuntimeException("Test aborted due to lack of internet or application access.");
+        }
 
 
         try {
@@ -381,7 +387,12 @@ public class Base_Class {
 
             // 💾 Save screenshot to folder as backup (optional)
             captureScreenshot(scenario);
-        driver.quit();
+        }
+        // ✅ Always close the browser
+        if (driver != null) {
+            driver.quit();
+            System.out.println("✅ Browser closed after scenario: " + scenario.getName());
+        }
     }
-    }
-    }
+
+}

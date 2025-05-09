@@ -2,6 +2,7 @@ package Step_Definitions;
 
 import Pages.Android.AddEmployerPages;
 import Pages.Android.ProcessSalariesDepositSlipPages;
+import Utils.ProcessSalaryEmployeeData;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -111,7 +112,7 @@ public class ProcessSalariesDepositSlipSteps {
     }
 
       public static String  downloadedFileName;
-    public static ArrayList<Object> allData = new ArrayList<Object>();
+    public static ArrayList<Object> allData = new ArrayList<>();
 
     @When("[Process Salaries DepositSlip Page] User enter company name and download the salary template")
     public void processSalariesDepositSlipPageUserEnterCompanyNameAndDownloadTheSalaryTemplate() throws InterruptedException, IOException, AWTException {
@@ -152,7 +153,7 @@ public class ProcessSalariesDepositSlipSteps {
 
         for (Row row : sheet) {
             if (rowIndex > 0) {
-                Cell seventhCell = row.createCell(6);
+                Cell seventhCell = row.createCell(9);
                 Object empCode ;
                 Object molNo;
                 allData.add(new Object[]{empCode = row.getCell(0).getStringCellValue(), molNo = row.getCell(1).getStringCellValue()});
@@ -200,9 +201,13 @@ public class ProcessSalariesDepositSlipSteps {
         ProcessSalariesDepositSlipPages.get_Salary_Browse_File().click();
         Thread.sleep(3000);
 
-            String filePath = "D:\\Hrcms\\src\\test\\java\\document\\" + downloadedFileName;
+            String filePath = "D:\\Hrcms\\src\\test\\java\\document\\" + salaryFile;
         Robot rb = new Robot();
-        StringSelection str = new StringSelection("D:\\Hrcms\\src\\test\\java\\document\\"+downloadedFileName+"");
+        //StringSelection str = new StringSelection("D:\\Hrcms\\src\\test\\java\\document\\"+salaryFile+"");
+            File file = new File(String.valueOf(salaryFile));
+            StringSelection str = new StringSelection(file.getAbsolutePath());
+            System.out.println("salaryFile:"+salaryFile);
+            //StringSelection str = new StringSelection(salaryFile);
 //            ProcessSalariesDepositSlipPages.get_Salary_Browse_File().sendKeys(filePath);
         Toolkit.getDefaultToolkit().getSystemClipboard().setContents(str, null);
         // press Contol+V for pasting
@@ -237,6 +242,7 @@ public class ProcessSalariesDepositSlipSteps {
         for (WebElement element : empElements) {
             String empCode = element.getText();
             uniqueEmpCodes.add(empCode);
+            System.out.println("empCode"+empCode);
         }
 
         StringBuilder result = new StringBuilder();
@@ -273,10 +279,85 @@ public class ProcessSalariesDepositSlipSteps {
             ProcessSalariesDepositSlipPages.get_Salary_Submit_Button().click();
             //Thread.sleep(5000);
         }
+
 //        catch (Exception e) {
 //            // Handle any exceptions here
 //            e.printStackTrace();
 //        }
 //        }
-    }
+    //public static String downloadedFileName;
+    private static final String DOWNLOAD_DIR = "D:\\Hrcms\\src\\test\\java\\document";
+    public static File salaryFile;
+
+    @When("[Process Salaries DepositSlip Page] User enter company name and download the salary template save all the data and give them salary")
+    public void processSalariesDepositSlipPageUserEnterCompanyNameAndDownloadTheSalaryTemplateSaveAllDataAndGiveThemSalary() throws IOException, InterruptedException {
+
+        // Step 1: Trigger download from UI
+        ProcessSalariesDepositSlipPages.get_Company_Name().sendKeys(companyTittle + Keys.ENTER);
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(Loading)));
+        ProcessSalariesDepositSlipPages.get_Download_Button().click();
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(Loading)));
+
+        // Step 2: Identify the latest downloaded file
+        File downloadDir = new File(DOWNLOAD_DIR);
+        File[] files = downloadDir.listFiles();
+        File latestFile = null;
+        long lastModifiedTime = Long.MIN_VALUE;
+
+        if (files == null || files.length == 0) {
+            throw new RuntimeException("No files found in the download directory.");
+        }
+
+        for (File file : files) {
+            if (file.lastModified() > lastModifiedTime) {
+                lastModifiedTime = file.lastModified();
+                latestFile = file;
+            }
+        }
+
+        if (latestFile == null) {
+            throw new RuntimeException("Failed to find the latest downloaded file.");
+        }
+
+        downloadedFileName = latestFile.getName();
+        System.out.println("\uD83D\uDCC1 Downloaded File: " + downloadedFileName);
+
+        // Step 3: Load Excel data using utility
+        ProcessSalaryEmployeeData.loadFromExcel(latestFile);
+        List<Map<String, Object>> employees = ProcessSalaryEmployeeData.getAllData();
+
+        // Step 4: Generate and assign salary + print info
+        Random random = new Random();
+        for (Map<String, Object> employee : employees) {
+            double fixAmount = 4000 + random.nextInt(4001);
+            double varAmount = random.nextInt(2001);
+            double total = fixAmount + varAmount;
+
+            employee.put("FIX AMOUNT", fixAmount);
+            employee.put("VAR AMT", varAmount);
+            employee.put("TOTAL", total);
+
+            System.out.println("\uD83D\uDCB8 Paying Salary to: " + employee.get("EMPLOYEE NAME"));
+            System.out.println("MOL NO: " + employee.get("MOL NO"));
+            System.out.println("EMP CODE: " + employee.get("EMP CODE"));
+            System.out.println("FIX AMOUNT: " + fixAmount);
+            System.out.println("VAR AMT: " + varAmount);
+            System.out.println("TOTAL: " + total);
+            System.out.println("WALLET ID/IBAN: " + employee.get("WALLET ID/IBAN"));
+            System.out.println("DETAIL TYPE: " + employee.get("DETAIL TYPE"));
+            System.out.println("ESTABLISHMENT ID: " + employee.get("ESTABLISHMENT ID"));
+            System.out.println("NO OF LEAVE DAYS: " + employee.get("NO OF LEAVE DAYS"));
+            System.out.println("--------------------------------------");
+
+            // salaryService.sendSalary(employee);
+        }
+
+        // Step 5: Save the updated Excel
+        salaryFile = new File(DOWNLOAD_DIR+downloadedFileName);
+        ProcessSalaryEmployeeData.writeUpdatedExcel(latestFile, salaryFile);
+        System.out.println("\u2705 Updated Excel saved to: " + salaryFile.getAbsolutePath());
+
+        Assert.assertNotNull(downloadedFileName, "Downloaded file name should not be null");
+    }}
+
 
