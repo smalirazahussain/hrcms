@@ -44,6 +44,10 @@ public class AdminPage {
     public static String Bulk_Approval_Approve_Button= "//button[@class='ant-btn css-1m63z2v ant-btn-default ant-btn-color-default ant-btn-variant-outlined']//span[contains(text(),'Approve')]";
     public static String Approval_Alert_Message= "div[role='alert']";
     public static String Approval_Status = "(//*[@id=\"client\"])[1]";
+    private static String Toast_Message(String expectedMessage) {
+        return "//span[normalize-space()='"+expectedMessage+"'"
+                ;
+    }
 
     public static String Edit_Employer_Approve_Button= "//button[contains(@title,'Approve')]";
     public static String I_Have_Done_My_Job_Button="button[title='I have done my job'] span";
@@ -326,6 +330,11 @@ public class AdminPage {
     public static WebElement get_Approval_Status() {
         return Base_Class.driver.findElement(By.xpath(Approval_Status));
     }
+
+    public static WebElement get_Toast_Message(String expectedMessage) {
+        return Base_Class.driver.findElement(By.xpath(Toast_Message(expectedMessage)));
+    }
+
 }
 
 

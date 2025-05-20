@@ -5,9 +5,7 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
@@ -122,7 +120,22 @@ public class SubAdminsteps {
 
     @And("[Sub Admin] User tap on the submit button")
     public void subAdminUserTapOnTheSubmitButton() throws InterruptedException {
-        wait.until(ExpectedConditions.elementToBeClickable(get_Submit()));
+        try {
+            WebDriverWait shortWait = new WebDriverWait(driver, Duration.ofSeconds(2));
+            shortWait.until(ExpectedConditions.alertIsPresent());
+            Alert alert = driver.switchTo().alert();
+            System.out.println("⚠️ Alert detected with text: " + alert.getText());
+            alert.accept();
+        } catch (TimeoutException | NoAlertPresentException e) {
+            System.out.println("✅ No alert present. Proceeding normally.");
+        } catch (UnhandledAlertException e) {
+            // In case alert appears after the previous steps
+            Alert alert = driver.switchTo().alert();
+            System.out.println("⚠️ Unexpected alert handled: " + alert.getText());
+            alert.accept();
+        }
+
+        wait.until(ExpectedConditions.elementToBeClickable(SubAdminPages.get_Submit()));
         SubAdminPages.get_Submit().click();
     }
 

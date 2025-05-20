@@ -1289,7 +1289,7 @@ Feature: AddEmployer
 
     Examples:
       |FirstName|MolNo|EmpCode|LastName|DisplayName|DOB|Gender|Nationality|JoiningDate|Email|MobileNo|AlternatePhone|HomeAddress|HomeState|HomePostCode|WorkAddress|WorkState|WorkPostCode|PassportNo|PassportExpiry|EID|EIDExpiry|EstablishmentId|
-      |User||0000|1||01/11/1978|M|BD|05/05/1978|@mailinator.com|97156|97156|Address|1|00001|4|2|3|Passport|10/05/2029|78419910|10/05/2029|PENDINGBADGE213|
+      |User||0000|1||01/11/1978|M|BD|05/05/1978|@mailinator.com|97156|97156|Address|1|00001|4|2|3|Passport|10/05/2029|78419910|10/05/2029|128290583620849|
 
 
 

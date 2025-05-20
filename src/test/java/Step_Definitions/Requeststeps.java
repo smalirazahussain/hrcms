@@ -19,6 +19,7 @@ import static Hooks.Base_Class.driver;
 import static Pages.Android.AdminPage.*;
 import static Pages.Android.RequestPage.*;
 import static Step_Definitions.AddEmployerSteps.*;
+import static Step_Definitions.ProcessSalariesDepositSlipSteps.actualamount;
 import static Step_Definitions.UpdateProfile.first14;
 
 public class Requeststeps {
@@ -216,6 +217,14 @@ public class Requeststeps {
         String actualRequestDescription = RequestPage.get_Approval_Description().getText();
         System.out.println("Description"+actualRequestDescription);
         Assert.assertEquals(actualRequestDescription,expectedRequestDescription);
+    }
+
+    @Then("[Request Page] User verify the salary approval amount and employee count")
+    public void requestPageUserVerifyTheSalaryApprovalAmountAndEmployeeCount() {
+        String salaryAmount = RequestPage.get_Total_Salary_Amount().getText();
+        System.out.println("Total Salary Amount:"+salaryAmount);
+        Assert.assertEquals(salaryAmount,actualamount);
+
     }
 }
 

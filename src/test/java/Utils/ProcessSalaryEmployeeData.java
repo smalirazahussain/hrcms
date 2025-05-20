@@ -11,10 +11,11 @@ import java.util.*;
 public class ProcessSalaryEmployeeData {
 
     private static final List<Map<String, Object>> employeeDataList = new ArrayList<>();
+    public static String salaryMonth;
     private static List<String> headers = new ArrayList<>();
 
     // Load and save all data from Excel into memory (no salary generation)
-    public static void loadFromExcel(File excelFile) {
+    public static void loadFromExcel(File excelFile, File salaryFile) {
         employeeDataList.clear();
         try (FileInputStream fis = new FileInputStream(excelFile);
              Workbook workbook = new XSSFWorkbook(fis)) {
@@ -56,6 +57,11 @@ public class ProcessSalaryEmployeeData {
                             break;
                     }
                     rowData.put(headers.get(colIndex), value);
+                }
+                // Add ROUTING CODE if DETAIL TYPE is KAMELPAY
+                Object detailType = rowData.get("DETAIL TYPE");
+                if (detailType != null && detailType.toString().equalsIgnoreCase("KAMELPAY")) {
+                    rowData.put("ROUTING CODE", "643140101");
                 }
                 employeeDataList.add(rowData);
             }

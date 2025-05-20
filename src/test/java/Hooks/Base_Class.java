@@ -20,10 +20,7 @@ import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 
 public class Base_Class {
@@ -75,6 +72,8 @@ public class Base_Class {
             // Set ChromeOptions
             if (driver == null) {
                 ChromeOptions options = new ChromeOptions();
+                String tmpProfileDir = System.getProperty("java.io.tmpdir") + "chrome-profile-" + UUID.randomUUID();
+                options.addArguments("--user-data-dir=" + tmpProfileDir);
                 options.setCapability("webSocketUrl", true);
                 options.addArguments("--start-maximized");
                 options.addArguments("--no-sandbox");
@@ -82,7 +81,17 @@ public class Base_Class {
 //                options.addArguments("--headless");
 //                options.addArguments("--disable-gpu");
                 options.addArguments("--window-size=1920,1080");
+                options.addArguments("--reduce-security-for-testing");
+                options.addArguments("disable-popup-blocking");
+                options.addArguments("--disable-blink-features=AutomationControlled");
+                options.addArguments("disable-infobars");
+                options.setExperimentalOption("prefs", Map.of(
+                        "credentials_enable_service", false,
+                        "profile.password_manager_enabled", false
+                ));
                 Map<String, Object> prefs = new HashMap<>();
+                prefs.put("credentials_enable_service", false);
+                prefs.put("profile.password_manager_enabled", false);
                 prefs.put("download.default_directory", "D:\\Hrcms\\src\\test\\java\\document");
                 options.setExperimentalOption("prefs", prefs);
                 //if (isSpecialPageOrScenario()) {

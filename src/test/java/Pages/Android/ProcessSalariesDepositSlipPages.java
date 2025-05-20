@@ -12,6 +12,7 @@ import java.util.List;
 
 public class ProcessSalariesDepositSlipPages {
 
+
     private WebDriver driver;
     Duration timeout = Duration.ofSeconds(30);
     WebDriverWait wait = new WebDriverWait(driver, timeout);
@@ -25,6 +26,9 @@ public class ProcessSalariesDepositSlipPages {
     public static String Cross_Button = ".ant-modal-close-x";
     public static String Salary_Amount = "//div[@class='ant-modal-body']//span[1]//span[1]";
     public static String Emp_Codes = ":is(table > tr) td:nth-child(n)";
+    public static String get_WPS_File_Type_Radio_Button ="input[name='wps']";
+    public static String Salary_File_Submit_Button = "div:nth-child(10) > button:nth-child(1)";
+    public static String Salary_File_Approval_Ok_Button = "button[class='ant-btn css-1d4w9r2 ant-btn-primary ant-btn-color-primary ant-btn-variant-solid ant-btn-sm'] span";
 
     public static WebElement get_Process_Salaries_Deposit_Slip() {
 
@@ -62,6 +66,17 @@ public class ProcessSalariesDepositSlipPages {
     public static List<WebElement> get_Emp_Codes() {
 
         return Base_Class.driver.findElements(By.cssSelector(Emp_Codes));
+    }
+    public static List<WebElement> get_WPS_File_Type_Radio_Button(){
+        return Base_Class.driver.findElements(By.cssSelector(get_WPS_File_Type_Radio_Button));
+    }
+
+    public static WebElement get_Salary_File_Submit_Button() {
+        return Base_Class.driver.findElement(By.cssSelector(Salary_File_Submit_Button));
+    }
+
+    public static WebElement get_Salary_File_Approval_Ok_Button() {
+        return Base_Class.driver.findElement(By.cssSelector(Salary_File_Approval_Ok_Button));
     }
 
     //locator

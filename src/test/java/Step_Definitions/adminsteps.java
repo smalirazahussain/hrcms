@@ -8,6 +8,7 @@ import Pages.HeadOfficePages.ManageEmployeesHeadOfficePage;
 import Pages.HeadOfficePages.OnBoardApprovalHeadOfficePage;
 import Pages.MasterAdmin.MasterAdminDashboardPage;
 import Utils.EmployeeAdditionalStorage;
+import Utils.ProcessSalaryEmployeeData;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -44,6 +45,7 @@ import static Step_Definitions.AddEmployerSteps.IbanNo;
 import static Step_Definitions.Employeessteps.*;
 import static Step_Definitions.EndOfServicesSteps.filePath;
 import static Step_Definitions.ProcessSalariesDepositSlipSteps.actualamount;
+import static Step_Definitions.ProcessSalariesDepositSlipSteps.salaryFile;
 import static Step_Definitions.SignUpSteps.companyName;
 import static Step_Definitions.SubAdminsteps.subadmincompanyTittle;
 import static Step_Definitions.UpdateProfile.*;
@@ -789,10 +791,12 @@ public class adminsteps {
     @Then("[Admin Page] The user verifies the approval toast message {string}")
     public void adminPageTheUserVerifiesTheApprovalToastMessage(String expectedMessage) {
         try {
-            By toastLocator = By.xpath("//span[normalize-space()='Request is ready for further approval']");
+            String toastLocator = String.valueOf(AdminPage.get_Toast_Message(expectedMessage));
+            //span[normalize-space()='Salary file uploaded for approval']
+            //= By.xpath("//span[normalize-space()='Request is ready for further approval']");
             WebDriverWait wait = new WebDriverWait(Base_Class.driver, Duration.ofSeconds(20));
 
-            WebElement toast = wait.until(ExpectedConditions.visibilityOfElementLocated(toastLocator));
+            WebElement toast = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(toastLocator)));
             String actualMessage = toast.getText();
 
             Assert.assertEquals(actualMessage.trim(), expectedMessage.trim());
@@ -1156,7 +1160,6 @@ public class adminsteps {
     }
 
 
-
     @Then("[Admin Page] User tap on the view PayD employee button")
     public void adminPageUserTapOnTheViewPayDEmployeeButton() {
         wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(Loading)));
@@ -1289,7 +1292,7 @@ public class adminsteps {
 
     @Then("[Admin Page] User select the approval status {string}")
     public void adminPageUserSelectTheApprovalStatus(String approvalStatus) {
-       // AdminPage.get_Approval_Status().sendKeys(approvalStatus+Keys.ENTER);
+        // AdminPage.get_Approval_Status().sendKeys(approvalStatus+Keys.ENTER);
 
         WebElement statusDropdown = wait.until(ExpectedConditions.elementToBeClickable(AdminPage.get_Approval_Status()));
 
@@ -1302,6 +1305,75 @@ public class adminsteps {
         statusDropdown.sendKeys(Keys.ENTER);
 
         System.out.println("✅ Selected approval status: " + approvalStatus);
+    }
+
+    @And("[Admin Page] User verifies that the actual salary file matches the employee file uploaded by the client.")
+    public void adminPageUserVerifiesThatTheActualSalaryFileMatchesTheEmployeeFileUploadedByTheClient() throws InterruptedException {
+
+        // Step 1: Download original uploaded salary file
+        WebElement originalSalaryFileDownload = driver.findElement(By.xpath("//div[normalize-space()='Original Salary File']"));
+        originalSalaryFileDownload.click();
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(Loading)));
+
+        // Short delay to allow file write to complete
+        Thread.sleep(2000);
+
+        // Step 2: Get the two most recent downloaded files
+        File downloadDir = new File("D:\\Hrcms\\src\\test\\java\\document\\");
+        File[] files = downloadDir.listFiles();
+        if (files == null || files.length < 2) {
+            throw new RuntimeException("Not enough files found for comparison in the download directory.");
+        }
+
+        Arrays.sort(files, Comparator.comparingLong(File::lastModified).reversed());
+        File adminSalaryFile = files[0];     // Admin downloaded salary file
+        File originalSalaryFile = salaryFile;     // Original uploaded employee file
+
+        System.out.println("📄 Admin File: " + adminSalaryFile.getName());
+        System.out.println("📥 Uploaded File: " + originalSalaryFile.getName());
+
+        // Step 3: Load and compare both files
+        ProcessSalaryEmployeeData.loadFromExcel(originalSalaryFile, null);
+        List<Map<String, Object>> originalEmployees = ProcessSalaryEmployeeData.getAllData();
+
+        ProcessSalaryEmployeeData.loadFromExcel(adminSalaryFile, null);
+        List<Map<String, Object>> adminEmployees = ProcessSalaryEmployeeData.getAllData();
+
+        boolean allMatched = true;
+
+        System.out.println("🔍 Comparing employee records:\n");
+
+        for (int i = 0; i < originalEmployees.size(); i++) {
+            Map<String, Object> originalRow = originalEmployees.get(i);
+            Map<String, Object> matchingAdminRow = adminEmployees.stream()
+                    .filter(adminRow ->
+                            adminRow.get("EMP CODE").toString().trim().equals(originalRow.get("EMP CODE").toString().trim()) &&
+                                    adminRow.get("MOL NO").toString().trim().equals(originalRow.get("MOL NO").toString().trim()) &&
+                                    adminRow.get("WALLET ID/IBAN").toString().trim().equals(originalRow.get("WALLET ID/IBAN").toString().trim()) &&
+                                    adminRow.get("DETAIL TYPE").toString().trim().equals(originalRow.get("DETAIL TYPE").toString().trim()) &&
+                                    adminRow.get("ESTABLISHMENT ID").toString().trim().equals(originalRow.get("ESTABLISHMENT ID").toString().trim()) &&
+                                    adminRow.get("EMPLOYEE NAME").toString().trim().equalsIgnoreCase(originalRow.get("EMPLOYEE NAME").toString().trim())
+                    ).findFirst().orElse(null);
+
+            System.out.println("🧾 Original Employee [" + (i + 1) + "]:");
+            originalRow.forEach((key, value) -> System.out.println("  " + key + ": " + value));
+
+            if (matchingAdminRow != null) {
+                System.out.println("📄 Admin Employee [" + (i + 1) + "]:");
+                matchingAdminRow.forEach((key, value) -> System.out.println("  " + key + ": " + value));
+            } else {
+                System.out.println("❌ No matching admin employee found for this original employee.");
+                allMatched = false;
+            }
+
+            System.out.println("-----------------------------------------------------");
+        }
+
+        if (allMatched) {
+            System.out.println("✅ All employees match between uploaded file and admin salary file.");
+        }
+
+        Assert.assertTrue(allMatched, "Mismatch found between uploaded and downloaded employee data.");
     }
 }
 

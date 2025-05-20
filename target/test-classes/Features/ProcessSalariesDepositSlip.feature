@@ -75,7 +75,7 @@ Feature: ProcessSalariesDepositSlip
     And     [Process Salaries DepositSlip Page] User Tap on Process Salaries Deposit Slip
     When    [Process Salaries DepositSlip Page] User enter company name and download the salary template then enter the salary in total colomn
 
-  Scenario: Multiple approval
+  Scenario: Employer downloads the salary file using the establishment ID, modifies the file and generates the SIF file, then submits it for approval. The admin checks the salary approval and verifies both the original file and the SIF file at the checker and authorizer levels.
     Given   [Login Page] User enter the email ""
     When    [Login Page] User enter the password ""
     Then    [Login page] User tap on login button
@@ -83,35 +83,41 @@ Feature: ProcessSalariesDepositSlip
     #Then    [Login page] User verify toast msg "Two Factor Enabled"
     Then    [Sign Up] User enter the otp code "111111"
     And     [Process Salaries DepositSlip Page] User Tap on Process Salaries Deposit Slip
-   # When    [Process Salaries DepositSlip Page] User enter company name and download the salary template
+    #When    [Process Salaries DepositSlip Page] User enter company name and download the salary template
     When    [Process Salaries DepositSlip Page] User enter company name and download the salary template save all the data and give them salary
     Then    [Process Salaries DepositSlip Page] User select the month and then upload the process file "2012-04"
     And     [Process Salaries DepositSlip Page] User tap on browse file and upload a salary process file
-    Then    [Process Salaries DepositSlip Page] User tap on submit button
-    Then    [Process Salaries DepositSlip Page] User select the month and then upload the process file "2012-04"
-    And     [Process Salaries DepositSlip Page] User tap on browse file and upload a salary process file
-    Then    [Process Salaries DepositSlip Page] User tap on submit button
-    Then    [Process Salaries DepositSlip Page] User select the month and then upload the process file "2012-04"
-    And     [Process Salaries DepositSlip Page] User tap on browse file and upload a salary process file
-    Then    [Process Salaries DepositSlip Page] User tap on submit button
-    Then    [Process Salaries DepositSlip Page] User select the month and then upload the process file "2012-04"
-    And     [Process Salaries DepositSlip Page] User tap on browse file and upload a salary process file
-    Then    [Process Salaries DepositSlip Page] User tap on submit button
-    Then    [Process Salaries DepositSlip Page] User select the month and then upload the process file "2012-04"
-    And     [Process Salaries DepositSlip Page] User tap on browse file and upload a salary process file
-    Then    [Process Salaries DepositSlip Page] User tap on submit button
-    Then    [Process Salaries DepositSlip Page] User select the month and then upload the process file "2012-04"
-    And     [Process Salaries DepositSlip Page] User tap on browse file and upload a salary process file
-    Then    [Process Salaries DepositSlip Page] User tap on submit button
-    Then    [Process Salaries DepositSlip Page] User select the month and then upload the process file "2012-04"
-    And     [Process Salaries DepositSlip Page] User tap on browse file and upload a salary process file
-    Then    [Process Salaries DepositSlip Page] User tap on submit button
-    Then    [Process Salaries DepositSlip Page] User select the month and then upload the process file "2012-04"
-    And     [Process Salaries DepositSlip Page] User tap on browse file and upload a salary process file
-    Then    [Process Salaries DepositSlip Page] User tap on submit button
-    Then    [Process Salaries DepositSlip Page] User select the month and then upload the process file "2012-04"
-    And     [Process Salaries DepositSlip Page] User tap on browse file and upload a salary process file
-    Then    [Process Salaries DepositSlip Page] User tap on submit button
+    Then    [Process Salaries DepositSlip Page] User get the employee salary data in the modify salary screen and verify to the actual salary file
+    #Then    [Process Salaries DepositSlip Page] User verify the file type is "This file contains WPS employees"
+    Then    [Process Salaries DepositSlip Page] User tap on salary file submit button
+    #Then    [Admin Page] The user verifies the approval toast message "Salary file uploaded for approval"
+    And     [Request Page] User tap on the request button
+    Then    [Request Page] User verify the salary approval amount and employee count
+    Then    [Request Page] User tap on the view button
+    Then    [Process Salaries DepositSlip Page] User verifies the downloaded SIF file matches Modify Salary screen data
+    And     [Request Page] User tap on the Approve button
+    Then    [Admin Page] Open the admin tab "https://stage-admin.getthelingo.com/"
+    And     [Admin Page] User tap on login page
+    Then    [Admin Page] User enter the  email "admin@admin.com"
+    When    [Admin Page] User enter the Password "12345678"
+    And     [Admin Page] User tap on login page
+    Then    [Sign Up] User enter the otp code "111111"
+    When    [Admin Page] User tap on client Approvals
+    Then    [Admin Page] User enter the company name
+    And     [Admin Page] User tap on view button
+    And     [Admin Page] User verifies that the actual salary file matches the employee file uploaded by the client.
+    Then    [Process Salaries DepositSlip Page] User verifies the downloaded SIF file matches Modify Salary screen data
+    Then    [Admin Page] User tap on approve button
+    And     [Admin Page] User tap on view button
+    And     [Admin Page] User verifies that the actual salary file matches the employee file uploaded by the client.
+    Then    [Process Salaries DepositSlip Page] User verifies the downloaded SIF file matches Modify Salary screen data
+    Then    [Admin Page] User tap on approve button
+    #Then    [Admin Page] User tap on process salary approve button
+    #And     [Admin Page] User Tap on the approve button
+    Then    [Admin Page] User verify the notification message "Action Successful"
+
+
+
 
 
 

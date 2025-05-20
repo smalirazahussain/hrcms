@@ -34,7 +34,8 @@ public class RequestPage {
     public static String Employer_Approval_Status = "th:nth-child(7) div:nth-child(1) span:nth-child(2) svg";
     public static String Reset_Button = "button[title='Reset']";
     public static String Approval_Description = "//td[contains(@class,'ant-table-cell ant-table-cell-row-hover')]//div[contains(@class,'bold-text')][normalize-space()='Employee Phone Update']";
-
+    public static String Sif_File = "//div[normalize-space()='SIF File']";
+    public static String Total_Salary_Amount = "(//span[@class='bold-font' and normalize-space(.)])[1]";
 
     public static WebElement get_Request() {
 
@@ -94,4 +95,16 @@ public class RequestPage {
     public static WebElement get_Approval_Description() {
         return Base_Class.driver.findElement(By.xpath(Approval_Description));
     }
+
+    public static WebElement get_Sif_File() {
+        return Base_Class.driver.findElement(By.xpath(Sif_File));
+    }
+
+    public static WebElement get_Total_Salary_Amount() {
+        return Base_Class.driver.findElement(By.xpath(Total_Salary_Amount));
+
+    }
+
+
+
 }

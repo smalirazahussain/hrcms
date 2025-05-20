@@ -8,8 +8,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
-import static Hooks.Base_Class.driver;
-
 
 public class UploadDocumentPages {
 
@@ -21,7 +19,9 @@ public class UploadDocumentPages {
     //locator
     public static String Add_New_Emplyer = "button[title='Add Employee'] span:nth-child(1)";
     public static String Edit_Button = "//button[@id='uploadExcel']";
-    public static String  Document_Name(String document) {return "//div[contains(text(),'"+document+"')]";}
+    public static String  Document_Name(String document) {
+        return "//div[contains(text(),'"+document+"')]";
+    }
     public static String Document = "//div[@name=\"documentTitle0\"]";
     public static String Brows_Document = "uploadExcel";
     public static String Upload_Document = "button[title='Update Employee']";

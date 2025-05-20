@@ -335,6 +335,7 @@ public class masterAdminEmployerSteps {
             // Press ESC to close the file upload window
             robot.keyPress(KeyEvent.VK_ESCAPE);
             robot.keyRelease(KeyEvent.VK_ESCAPE);
+            System.out.println("✅ File upload window closed using ESC.");
 
             System.out.println("✅ File upload window closed using ESC.");
 
