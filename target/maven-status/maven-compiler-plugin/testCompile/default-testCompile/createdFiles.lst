@@ -8,7 +8,9 @@ Step_Definitions\Approvalsteps.class
 Step_Definitions\adminsteps.class
 Pages\HeadOfficePages\HeadOfficeLoginPage.class
 Step_Definitions\LoginSteps.class
+Utils\ProcessSalaryEmployeeData$1.class
 Step_Definitions\SubAdminsteps.class
+Utils\SIFFileUtils.class
 Pages\MasterAdmin\MasterAdminAdditionalDetailsPage.class
 Pages\HeadOfficePages\BranchesHeadOfficePage.class
 Pages\Android\SignUpPage.class
@@ -21,6 +23,7 @@ Pages\Android\ACLPAGE.class
 Pages\Android\EmployeesPage.class
 Pages\Android\EidPages.class
 Pages\Android\SubAdminPages.class
+Utils\NetworkUtils.class
 Step_Definitions\OtherCompaniesSteps.class
 Pages\MasterAdmin\MasterAdminEmployerPage.class
 Step_Definitions\EndOfServicesSteps.class
@@ -28,6 +31,7 @@ Step_Definitions_Head_Ofiice\ManageEmployeesStepsHeadOffice.class
 Utils\EmployeeAdditionalStorage.class
 step_Defination_Master_Admin\masterAdminBasicEmployerDetails.class
 Tests\Generate_Random_Date.class
+Utils\SIFFileUtils$1.class
 Step_Definitions\UpdateProfile.class
 Utils\ScreenshotUtility.class
 Pages\HeadOfficePages\EstablishmentsHeadOfficePage.class
@@ -54,6 +58,7 @@ Pages\Android\MolPages.class
 Step_Definitions\Requeststeps.class
 Pages\Page.class
 Step_Definitions_Head_Ofiice\BrachesStepsHeadOffice.class
+Utils\BankReference.class
 Pages\Android\UploadDocumentPages.class
 Step_Definitions\LinkEstablishmentIdSteps.class
 Tests\Current_Date.class
@@ -65,7 +70,9 @@ Pages\MasterAdmin\MasterAdminDashboardPage.class
 Pages\HeadOfficePages\OnBoardApprovalHeadOfficePage.class
 Step_Definitions_Head_Ofiice\WebPortalHeadOfficeSteps.class
 Pages\HeadOfficePages\WebPortalHeadOfficePage.class
+Utils\OtherBankEmployeesStorage.class
 Pages\Android\UpdateProliePage.class
+Utils\BankReferenceUtil.class
 Tests\Password_Builder$PasswordGenerator.class
 Step_Definitions_Head_Ofiice\DashBoardStepsHeadOffice.class
 Step_Definitions\Molsteps.class
@@ -76,6 +83,7 @@ Step_Definitions\AddEmployerSteps.class
 Tests\Exoire_Date.class
 Pages\Android\ProcessSalariesDepositSlipPages.class
 Step_Definitions_Head_Ofiice\EstablishmentsStepsHeadOffice.class
+Utils\ProcessSalaryEmployeeData.class
 Pages\HeadOfficePages\ManageEmployeesHeadOfficePage.class
 Tests\Password_Builder.class
 Pages\Android\ProfilePage.class

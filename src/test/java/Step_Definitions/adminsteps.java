@@ -1,6 +1,5 @@
 package Step_Definitions;
 
-import Hooks.Base_Class;
 import Pages.Android.AdminPage;
 import Pages.Android.MolPages;
 import Pages.Android.UpdateProliePage;
@@ -8,6 +7,7 @@ import Pages.HeadOfficePages.ManageEmployeesHeadOfficePage;
 import Pages.HeadOfficePages.OnBoardApprovalHeadOfficePage;
 import Pages.MasterAdmin.MasterAdminDashboardPage;
 import Utils.EmployeeAdditionalStorage;
+import Utils.OtherBankEmployeesStorage;
 import Utils.ProcessSalaryEmployeeData;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
@@ -192,6 +192,7 @@ public class adminsteps {
         rb.keyPress(KeyEvent.VK_ENTER);
         rb.keyRelease(KeyEvent.VK_ENTER);
         //ScrollVertical(get_Add_Emplyer_Button());
+        Thread.sleep(3000);
     }
 
     @Then("[Admin Page] User select the card type {string}")
@@ -741,6 +742,7 @@ public class adminsteps {
 
         if (Objects.equals(approvalFirstTopic, "Employees File Upload")) {
             wait.until(ExpectedConditions.elementToBeClickable(get_first_Approve_Button()));
+            wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(Loading)));
             AdminPage.get_first_Approve_Button().click();
             wait.until(ExpectedConditions.elementToBeClickable(get_Approval_Ok()));
             AdminPage.get_Approval_Ok().click();
@@ -766,47 +768,153 @@ public class adminsteps {
         }
     }
 
-    @And("[Admin Page] User tap on the select all radio button")
-    public void adminPageUserTapOnTheSelectAllRadioButton() throws InterruptedException {
-        //wait.until(ExpectedConditions.elementToBeClickable(get_Select_All_Radio_Button()));
-        AdminPage.get_Select_All_Radio_Button().click();
-        //wait.until(ExpectedConditions.elementToBeClickable(get_Bulk_Approval_Submit_Button()));
-        //Thread.sleep(3000);
-        // Try clicking Bulk Approval Submit Button
-        try {
-            AdminPage.get_Bulk_Approval_Submit_Button().click();
-        } catch (Exception e) {
-            System.out.println("Bulk Approval Submit Button not clickable: " + e.getMessage());
-        }
+//    @And("[Employees Page] User create a multiple other banks employee {string} {string} {string} {string} {string} {string} {string} {string} {string} {string} {string} {string} {string} {string} {string} {string} {string} {string} {string} {string} {string} {string} {string}")
+//    public void employeesPageUserCreateAMultipleOtherBanksEmployee(
+//            String molNo, String empCode, String firstName, String lastName, String displayName,
+//            String dob, String gender, String nationality, String joiningDate, String email,
+//            String mobile, String alternatePhone, String homeAddress, String homeState,
+//            String homePostCode, String workAddress, String workState, String workPostCode,
+//            String passportNo, String passportExpiry, String eid, String eidExpiry, String est) throws IOException {
+//
+//        List<Map.Entry<String, String>> banks = Arrays.asList(
+//                Map.entry("Abu Dhabi Commercial Bank", "600310101"),
+//                Map.entry("Abu Dhabi Islamic Bank", "405010101"),
+//                Map.entry("Ajman Bank", "805740101"),
+//                Map.entry("Al Hilal Bank", "105310101"),
+//                Map.entry("Al Maryah Community Bank", "009710001"),
+//                Map.entry("Al Masraf Arab Bank for Investment & Foreign Trade", "100810101"),
+//                Map.entry("Bank of Sharjah", "401230101"),
+//                Map.entry("Commercial Bank International", "002220101"),
+//                Map.entry("Commercial Bank of Dubai", "102320150"),
+//                Map.entry("Dubai Bank", "005120101"),
+//                Map.entry("Dubai Islamic Bank", "802420101"),
+//                Map.entry("Emirates Investment Bank", "004820101"),
+//                Map.entry("Emirates Islamic", "703420114"),
+//                Map.entry("Emirates NBD", "302620122"),
+//                Map.entry("First Abu Dhabi Bank", "803510106"),
+//                Map.entry("Invest Bank", "503030102"),
+//                Map.entry("Mashreq", "203320101"),
+//                Map.entry("National Bank of Fujairah", "703820101"),
+//                Map.entry("National Bank of Ras Al-Khaimah PJSC (RAKBANK)", "104060106"),
+//                Map.entry("National Bank of Umm Al-Quwain", "104251001"),
+//                Map.entry("Noor Bank", "905220101"),
+//                Map.entry("Sharjah Islamic Bank", "404130101"),
+//                Map.entry("United Arab Bank", "904630101"),
+//                Map.entry("United Bank Ltd.", "604720106"),
+//                Map.entry("Standard Chartered Bank", "504420120"),
+//                Map.entry("Saudi National Bank", "605520101"),
+//                Map.entry("Rafidain Bank", "400510101"),
+//                Map.entry("National Bank of Oman", "903910101"),
+//                Map.entry("National Bank of Kuwait", "505620101"),
+//                Map.entry("National Bank of Bahrain", "203610101")
+//        );
+//
+//        List<Map.Entry<String, String>> nationalities = Arrays.asList(
+//                Map.entry("DOMINICAN", "DO"), Map.entry("Egypt", "EG"), Map.entry("Lebanon", "LB"),
+//                Map.entry("Jordan", "JO"), Map.entry("Syrian Arab Re", "SY"), Map.entry("Sudan", "SD"),
+//                Map.entry("Tunisia", "TN"), Map.entry("Morocco", "MA"), Map.entry("Mauritania", "MR"),
+//                Map.entry("Yemen", "YE"), Map.entry("UAE", "AE"), Map.entry("Bahrain", "BH"),
+//                Map.entry("Saudi Arabia", "SA"), Map.entry("India", "IN"), Map.entry("Cameroon", "CM"),
+//                Map.entry("pakistan", "PK"), Map.entry("Bangladesh", "BD"), Map.entry("Iran", "IR"),
+//                Map.entry("Sri Lanka", "LK"), Map.entry("Philippines", "PH"), Map.entry("Afghanistan", "AF"),
+//                Map.entry("Indonesia", "ID"), Map.entry("Nepal", "NP"), Map.entry("Myanmar", "MM"),
+//                Map.entry("Kenya", "KE"), Map.entry("Ethiopia", "ET"), Map.entry("Senegal", "SN"),
+//                Map.entry("Uganda", "UG"), Map.entry("Ghana", "GH"), Map.entry("Zimbabwe", "ZW"),
+//                Map.entry("Gambia", "GM"), Map.entry("Nigeria", "NG")
+//        );
+//
+//        Random random = new Random();
+//        HSSFWorkbook workbook = new HSSFWorkbook();
+//        HSSFSheet sheet = workbook.createSheet("Other Banks Employees");
+//
+//        String[] headers = {
+//                "Emp Code",
+//                "Display Name",
+//                "Date of Birth",
+//                "designation",
+//                "Establishment Id",
+//                "iban",
+//                "bankName",
+//                "WPS Person ID",
+//                "Passport Number",
+//                "Nationality",
+//                "laborCard",
+//                "Routing Code"
+//        };
+//
+//        for (int i = 0; i < headers.length; i++) {
+//            OtherBankEmployeesStorage.storeData("employee-header-" + i, headers[i]);
+//        }
+//        OtherBankEmployeesStorage.storeData("employee-headers", String.join(",", headers));
+//
+//        List<String> firstNames = Arrays.asList("John", "Michael", "Sara", "Laura", "Robert", "Emily");
+//        List<String> lastNames = Arrays.asList("Smith", "Johnson", "Williams", "Brown", "Jones", "Garcia");
+//
+//        HSSFRow headerRow = sheet.createRow(0);
+//        for (int i = 0; i < headers.length; i++) {
+//            headerRow.createCell(i).setCellValue(headers[i]);
+//        }
+//
+//        for (int j = 0; j < 10; j++) {
+//            int randomNumber = 100000 + random.nextInt(900000);
+//            Map.Entry<String, String> selectedBank = banks.get(random.nextInt(banks.size()));
+//            Map.Entry<String, String> selectedNationality = nationalities.get(random.nextInt(nationalities.size()));
+//            String countryCode = selectedNationality.getValue();
+//
+//            String employeeId = "EMP" + (1000 + j);
+//            String randomFirst = firstNames.get(random.nextInt(firstNames.size()));
+//            String randomLast = lastNames.get(random.nextInt(lastNames.size()));
+//            String fullName = randomFirst + " " + randomLast;
+//            dob = RandomDateGenerator.generateAdultDOB();
+//            String designation = "Worker";
+//            String iban = "AE" + String.format("%021d", random.nextLong() & Long.MAX_VALUE);
+//            long wpsPersonId = (long) (random.nextDouble() * 9_000_000_000_000_00L) + 1_000_000_000_000_00L;
+//            String passport = passportNo + randomNumber;
+//            String laborCard = "L" + (random.nextInt(99999));
+//
+//            String[] raws = {
+//                    employeeId,
+//                    fullName,
+//                    dob,
+//                    designation,
+//                    est,
+//                    iban,
+//                    selectedBank.getKey(),
+//                    String.valueOf(wpsPersonId),
+//                    passport,
+//                    countryCode,
+//                    laborCard,
+//                    selectedBank.getValue()
+//            };
+//
+//            if (headers.length != raws.length) {
+//                System.out.println("❌ Header and data length mismatch at row #" + j);
+//                throw new IllegalStateException("Mismatch: headers.length != raws.length at row #" + j);
+//            }
+//
+//            for (int i = 0; i < headers.length; i++) {
+//                OtherBankEmployeesStorage.storeData("employee-" + j + "-" + headers[i], raws[i]);
+//            }
+//
+//            HSSFRow row = sheet.createRow(j + 1);
+//            for (int i = 0; i < raws.length; i++) {
+//                row.createCell(i).setCellValue(raws[i]);
+//            }
+//        }
+//
+//        int fileSuffix = random.nextInt(100000);
+//        filePaths = "D:\\Hrcms\\src\\test\\java\\document\\other_employees_" + fileSuffix + ".xlsx";
+//        try (FileOutputStream fileOut = new FileOutputStream(filePaths)) {
+//            workbook.write(fileOut);
+//        } finally {
+//            workbook.close();
+//        }
+//
+//        System.out.println("✅ Other banks employee data saved to: " + filePaths);
+//        System.out.println("📋 Stored Other Bank Employee Data:");
+//        OtherBankEmployeesStorage.printEmployeeTable();
+//    }
 
-        // Try clicking Bulk Approval Approve Button
-        try {
-            AdminPage.get_Bulk_Approval_Approve_Button().click();
-        } catch (Exception e) {
-            System.out.println("Bulk Approval Approve Button not clickable: " + e.getMessage());
-        }
-
-    }
-
-    @Then("[Admin Page] The user verifies the approval toast message {string}")
-    public void adminPageTheUserVerifiesTheApprovalToastMessage(String expectedMessage) {
-        try {
-            String toastLocator = String.valueOf(AdminPage.get_Toast_Message(expectedMessage));
-            //span[normalize-space()='Salary file uploaded for approval']
-            //= By.xpath("//span[normalize-space()='Request is ready for further approval']");
-            WebDriverWait wait = new WebDriverWait(Base_Class.driver, Duration.ofSeconds(20));
-
-            WebElement toast = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(toastLocator)));
-            String actualMessage = toast.getText();
-
-            Assert.assertEquals(actualMessage.trim(), expectedMessage.trim());
-            System.out.println("✅ Verified toast message: " + actualMessage);
-        } catch (TimeoutException e) {
-            Assert.fail("❌ Toast message not visible in time.");
-        } catch (Exception e) {
-            Assert.fail("❌ Failed to verify toast message: " + e.getMessage());
-        }
-    }
 
     @Then("[Admin Page] User verify the all data they have creates for the employee")
     public void adminPageUserVerifyTheAllDataTheyHaveCreatesForTheEmployee() throws InterruptedException {
@@ -1148,7 +1256,7 @@ public class adminsteps {
         //I have done my job
         //if (iHaveDoneMyJobButton==null) {
         AdminPage.get_I_Have_Done_My_Job_Button().click();
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(Bulk_Employees_Approval_Ok_Button)));
+        wait.until(ExpectedConditions.elementToBeClickable(get_Bulk_Employees_Approval_Ok_Button()));
         //Thread.sleep(2000);
 //        JavascriptExecutor js = (JavascriptExecutor) driver;
 //        js.executeScript("arguments[0].click();",AdminPage.get_Bulk_Employees_Approval_Ok_Button() );
@@ -1266,9 +1374,9 @@ public class adminsteps {
                 if (label.toLowerCase().contains("date") || label.toLowerCase().contains("expiry")) {
                     String normalizedUi = uiValue.replace("-", "/").trim();
                     String normalizedStored = storedValue.replace("-", "/").trim();
-                    softAssert.assertEquals(normalizedUi, normalizedStored, "❌ Mismatch in '" + label + "'");
+                    Assert.assertEquals(normalizedUi, normalizedStored, "❌ Mismatch in '" + label + "'");
                 } else {
-                    softAssert.assertEquals(uiValue.trim(), storedValue.trim(), "❌ Mismatch in '" + label + "'");
+                    Assert.assertEquals(uiValue.trim(), storedValue.trim(), "❌ Mismatch in '" + label + "'");
                 }
             }
         }
@@ -1375,7 +1483,218 @@ public class adminsteps {
 
         Assert.assertTrue(allMatched, "Mismatch found between uploaded and downloaded employee data.");
     }
+
+    @Then("[Admin Page] Checker reviews the other bank employee records created by the Maker")
+    public void adminPageCheckerReviewsTheOtherBankEmployeeRecordsCreatedByTheMaker() {
+        System.out.println("\n✅ Starting Assertions:");
+
+        List<WebElement> allRows = driver.findElements(By.cssSelector(".ant-table-row.editable-row"));
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+
+        Map<String, String> headerMapping = Map.ofEntries(
+                Map.entry("empCode", "Employee ID"),
+                Map.entry("displayName", "Name"),
+                Map.entry("dob", "Date of Birth"),
+                Map.entry("designation", "Designation"),
+                Map.entry("establishmentId", "WPS Establishment ID"),
+                Map.entry("iban", "IBAN"),
+                Map.entry("bankName", "Bank Name"),
+                Map.entry("molNo", "WPS Person ID"),
+                Map.entry("passportNumber", "Passport Number"),
+                Map.entry("nationality", "Nationality"),
+                Map.entry("laborCard", "Labor card"),
+                Map.entry("routingCode", "Routing Code")
+        );
+
+        Map<String, String> allData = OtherBankEmployeesStorage.getAllData();
+
+        for (int rowIndex = 0; rowIndex < allRows.size(); rowIndex++) {
+            WebElement row = allRows.get(rowIndex);
+            List<WebElement> cells = row.findElements(By.cssSelector("td[id]"));
+
+            System.out.printf("%n📌 Row %d:%n", rowIndex);
+
+            for (WebElement cell : cells) {
+                js.executeScript("arguments[0].scrollIntoView(true);", cell);
+
+                String fieldId = cell.getAttribute("id").trim();
+                String uiValue = cell.getText().trim();
+                String mappedKey = headerMapping.getOrDefault(fieldId, fieldId);
+
+                String storageKey = "employee-" + rowIndex + "-" + mappedKey;
+                String storedValue = allData.get(storageKey);
+
+                System.out.printf("🔍 %-20s | UI: %-30s | Stored: %-30s%n", mappedKey, uiValue, storedValue);
+
+                if (storedValue == null) {
+                    System.out.printf("⚠️  No stored value found for header '%s'%n", mappedKey);
+                } else {
+                    if (mappedKey.toLowerCase().contains("date") || mappedKey.toLowerCase().contains("expiry")) {
+                        String normalizedUi = uiValue.replace("-", "/").trim();
+                        String normalizedStored = storedValue.replace("-", "/").trim();
+                        Assert.assertEquals(normalizedUi, normalizedStored, "❌ Mismatch in '" + mappedKey + "'");
+                    } else {
+                        Assert.assertEquals(uiValue.trim(), storedValue.trim(), "❌ Mismatch in '" + mappedKey + "'");
+                    }
+                }
+            }
+        }
+    }
+
+//    // Replace HSSFWorkbook with XSSFWorkbook in generation method
+//    Random random = new Random();
+//    XSSFWorkbook workbook = new XSSFWorkbook();
+//    XSSFSheet sheet = workbook.createSheet("Other Banks Employees");
+
+    @Then("[Admin Page] User tap on the other bank button")
+    public void adminPageUserTapOnTheOtherBankButton() {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebElement button = wait.until(ExpectedConditions.elementToBeClickable(AdminPage.get_Other_Bank_Button()));
+
+        try {
+            button.click();
+            JavascriptExecutor js = (JavascriptExecutor) driver;
+            js.executeScript("arguments[0].click();", button);
+            System.out.println("✅ Clicked Other Bank button successfully.");
+        } catch (Exception e) {
+            System.out.println("⚠️ Standard click failed, trying JavaScript click...");
+            JavascriptExecutor js = (JavascriptExecutor) driver;
+            js.executeScript("arguments[0].click();", button);
+        }
+    }
+
+    @And("[Admin Page] User tap on the select all radio button")
+    public void adminPageUserTapOnTheSelectAllRadioButton() throws InterruptedException {
+        Thread.sleep(2000);
+        wait.until(ExpectedConditions.elementToBeClickable(get_Select_All_Radio_Button()));
+        AdminPage.get_Select_All_Radio_Button().click();
+    }
+
+    @Then("[Admin Page] User tap on the view other bank employee button")
+    public void adminPageUserTapOnTheViewOtherBankEmployeeButton() throws InterruptedException {
+        wait.until(ExpectedConditions.elementToBeClickable(get_Other_Bank_Employee_Button()));
+        AdminPage.get_Other_Bank_Employee_Button().click();
+        Thread.sleep(3000);
+    }
+
+    @And("[Admin Page] User Tap on the bulk emplyee approve button")
+    public void adminPageUserTapOnTheBulkEmplyeeApproveButton() {
+       try{
+           wait.until(ExpectedConditions.elementToBeClickable(get_Bulk_Employee_Approve_Button()));
+           AdminPage.get_Bulk_Employee_Approve_Button().click();
+       }
+     catch (Exception e){
+           wait.until(ExpectedConditions.elementToBeClickable(get_Bulk_Other_Bank_Employee_Approve_Button()));
+           AdminPage.get_Bulk_Other_Bank_Employee_Approve_Button().click();
+     }
+    }
+
+    @Then("[Admin Page] Authorizer reviews the other bank employee records they approve by the  admin checker")
+    public void adminPageAuthorizerReviewsTheOtherBankEmployeeRecordsTheyApproveByTheAdminChecker() {
+        System.out.println("\n✅ Starting Assertions:");
+
+        // 1️⃣ Get UI Rows
+        List<WebElement> allRows = driver.findElements(By.cssSelector(".ant-table-row.editable-row"));
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+
+        // 2️⃣ Header Mapping: UI fieldId -> Readable Field Label
+        Map<String, String> headerMapping = Map.ofEntries(
+                Map.entry("empCode", "Employee ID"),
+                Map.entry("displayName", "Name"),
+                Map.entry("dob", "Date of Birth"),
+                Map.entry("designation", "Designation"),
+                Map.entry("establishmentId", "WPS Establishment ID"),
+                Map.entry("iban", "IBAN"),
+                Map.entry("bankName", "Bank Name"),
+                Map.entry("molNo", "WPS Person ID"),
+                Map.entry("passportNumber", "Passport Number"),
+                Map.entry("nationality", "Nationality"),
+                Map.entry("laborCard", "Labor card"),
+                Map.entry("routingCode", "Routing Code")
+        );
+
+        // 3️⃣ Get Stored Data
+        Map<String, String> storedData = OtherBankEmployeesStorage.getAllData();
+
+        // 4️⃣ Build mapping: molNo -> employee-x
+        Map<String, String> molNoToEmployeeKey = new HashMap<>();
+        for (Map.Entry<String, String> entry : storedData.entrySet()) {
+            String key = entry.getKey(); // example: employee-0-WPS Person ID
+            if (key.contains("WPS Person ID")) {
+                String employeeKey = key.split("-WPS Person ID")[0]; // "employee-0"
+                molNoToEmployeeKey.put(entry.getValue(), employeeKey);
+            }
+        }
+
+        // 5️⃣ Iterate through each UI row
+        for (int rowIndex = 0; rowIndex < allRows.size(); rowIndex++) {
+            WebElement row = allRows.get(rowIndex);
+            List<WebElement> cells = row.findElements(By.cssSelector("td[id]"));
+
+            String uiMolNo = "";
+            Map<String, String> uiRowData = new HashMap<>();
+
+            for (WebElement cell : cells) {
+                js.executeScript("arguments[0].scrollIntoView(true);", cell);
+
+                String fieldId = cell.getAttribute("id").trim();
+                String fieldLabel = headerMapping.getOrDefault(fieldId, fieldId);
+                String uiValue = cell.getText().trim();
+
+                if (fieldId.equals("molNo")) {
+                    uiMolNo = uiValue;
+                }
+
+                uiRowData.put(fieldLabel, uiValue);
+            }
+
+            if (uiMolNo.isEmpty()) {
+                System.out.println("⚠️ Skipping row: WPS Person ID (MolNo) not found.");
+                continue;
+            }
+
+            // 🔥 Match stored row using WPS Person ID
+            String employeeKey = molNoToEmployeeKey.get(uiMolNo);
+            if (employeeKey == null) {
+                System.out.println("❌ No matching employee found in storage for WPS Person ID: " + uiMolNo);
+                continue;
+            }
+
+            System.out.printf("%n📌 Row (WPS Person ID: %s - %s):%n", uiMolNo, employeeKey);
+
+            for (Map.Entry<String, String> entry : uiRowData.entrySet()) {
+                String label = entry.getKey();
+                String uiValue = entry.getValue();
+                String storedValue = storedData.get(employeeKey + "-" + label);
+
+                System.out.printf("🔍 %-20s | UI: %-30s | Stored: %-30s%n", label, uiValue, storedValue);
+
+                if (storedValue == null) {
+                    if (label.equalsIgnoreCase("kyc") && uiValue.equalsIgnoreCase("Employee Onboard Approved")) {
+                        System.out.println("✅ No stored KYC but UI is 'Employee Onboard Approved' — Passing this check.");
+                        continue; // don't assert
+                    } else {
+                        System.out.printf("⚠️  No stored value found for field '%s'%n", label);
+                        continue;
+                    }
+                }
+
+                if (label.toLowerCase().contains("date") || label.toLowerCase().contains("expiry")) {
+                    String normalizedUi = uiValue.replace("-", "/").trim();
+                    String normalizedStored = storedValue.replace("-", "/").trim();
+                    Assert.assertEquals(normalizedUi, normalizedStored, "❌ Mismatch in '" + label + "'");
+                } else {
+                    softAssert.assertEquals(uiValue.trim(), storedValue.trim(), "❌ Mismatch in '" + label + "'");
+                }
+            }
+        }
+
+        // ✅ Finalize all soft assertions
+        softAssert.assertAll();
+    }
+
 }
+
 
 
 //        // Correcting the way the FileInputStream is initialized

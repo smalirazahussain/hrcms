@@ -135,8 +135,25 @@ public class SubAdminsteps {
             alert.accept();
         }
 
-        wait.until(ExpectedConditions.elementToBeClickable(SubAdminPages.get_Submit()));
-        SubAdminPages.get_Submit().click();
+        try {
+            SubAdminPages.get_Submit().click();
+        }
+        catch (Exception e){
+            wait.until(ExpectedConditions.elementToBeClickable(get_Employee_Submit_Button()));
+            SubAdminPages.get_Employee_Submit_Button().click();
+        }
+//        try {
+//            get_Submit_button.click();
+//            System.out.println("✅ Clicked get_Submit_button");
+//        } catch (Exception e) {
+//            System.out.println("⚠️ Failed to click get_Submit_button, trying get_Employee_Submit_button");
+//            try {
+//                get_Employee_Submit_button.click();
+//                System.out.println("✅ Clicked get_Employee_Submit_button");
+//            } catch (Exception ex) {
+//                System.out.println("❌ Failed to click both Submit buttons.");
+//            }
+//        }
     }
 
     @And("[Sub Admin] User should validate the error message on the email {string}")

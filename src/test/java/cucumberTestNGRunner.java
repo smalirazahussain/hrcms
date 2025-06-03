@@ -83,7 +83,7 @@ import java.io.File;
                 "rerun:target/Reports/failed_scenarios.txt"
         },
         monochrome = true,
-        tags = "@employerSignUp"  // ✅ Use tag filtering
+        tags = "@debug"  // ✅ Use tag filtering
 )
 public class cucumberTestNGRunner extends AbstractTestNGCucumberTests {
 

@@ -39,7 +39,7 @@ public class AdminPage {
     public static  String first_Topic = "//tr[2]/td[4]";
     public static  String first_Approve_Button = "(//span[contains(text(),'Approve')])[1]";
     public static String Process_File_Button = "button[title='Process File']";
-    public static String Select_All_Radio_Button = "input[type='checkbox']";
+    public static String Select_All_Radio_Button = "th.ant-table-cell.ant-table-selection-column > div > label";
     public static String Bulk_Approval_Submit_Button = "//span[normalize-space()='Submit']";
     public static String Bulk_Approval_Approve_Button= "//button[@class='ant-btn css-1m63z2v ant-btn-default ant-btn-color-default ant-btn-variant-outlined']//span[contains(text(),'Approve')]";
     public static String Approval_Alert_Message= "div[role='alert']";
@@ -48,10 +48,14 @@ public class AdminPage {
         return "//span[normalize-space()='"+expectedMessage+"'"
                 ;
     }
-
+    public static String Other_Bank_Button = "//span[contains(@class, 'ant-radio-button-label') and text()='OtherBank']";
+    public static String Other_Bank_Employee_Button = "(//span[contains(text(),'View Other Bank Employees')])[1]";
+    public static String Bulk_Employee_Approve_Button = "button[class='ant-btn css-vrrzze ant-btn-default ant-btn-color-default ant-btn-variant-outlined'] span";
+    public static String Bulk_Other_Bank_Employee_Approve_Button = "//button[@class='ant-btn css-5uvb3z ant-btn-default ant-btn-color-default ant-btn-variant-outlined']//span[contains(text(),'Approve')]";
+    public static String Select_Other_Bank = "input[value='OTHER_BANK']";
     public static String Edit_Employer_Approve_Button= "//button[contains(@title,'Approve')]";
     public static String I_Have_Done_My_Job_Button="button[title='I have done my job'] span";
-    public static String Bulk_Employees_Approval_Ok_Button = "body > div:nth-child(6) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > button:nth-child(2) > span:nth-child(1)";
+    public static String Bulk_Employees_Approval_Ok_Button = "(//button[span[normalize-space()='OK']])[2]";
     public static String View_PayD_Employee_Button = "(//span[contains(text(),'View PayD Employees')])[1]";
     public static String Action_Successfully(String after){
         return "//span[normalize-space()='"+after+"']";
@@ -312,7 +316,7 @@ public class AdminPage {
     }
 
     public static WebElement get_Bulk_Employees_Approval_Ok_Button() {
-        return Base_Class.driver.findElement(By.cssSelector(Bulk_Employees_Approval_Ok_Button));
+        return Base_Class.driver.findElement(By.xpath(Bulk_Employees_Approval_Ok_Button));
     }
 
     public static WebElement get_View_PayD_Employee_Button() {
@@ -335,6 +339,25 @@ public class AdminPage {
         return Base_Class.driver.findElement(By.xpath(Toast_Message(expectedMessage)));
     }
 
+    public static WebElement get_Other_Bank_Button() {
+        return Base_Class.driver.findElement(By.xpath(Other_Bank_Button));
+    }
+
+    public static WebElement get_Other_Bank_Employee_Button() {
+        return Base_Class.driver.findElement(By.xpath(Other_Bank_Employee_Button));
+    }
+
+    public static WebElement get_Bulk_Employee_Approve_Button() {
+        return Base_Class.driver.findElement(By.cssSelector(Bulk_Employee_Approve_Button));
+    }
+
+    public static WebElement get_Bulk_Other_Bank_Employee_Approve_Button() {
+        return Base_Class.driver.findElement(By.xpath(Bulk_Other_Bank_Employee_Approve_Button));
+    }
+
+    public static WebElement get_Select_Other_Bank() {
+        return Base_Class.driver.findElement(By.cssSelector(Select_Other_Bank));
+    }
 }
 
 

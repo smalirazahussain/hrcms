@@ -117,7 +117,7 @@ Feature: AddEmployer
 
   @Update @UpdateProfile3
   Scenario: Add new employer with other bank
-    Given   [Login Page] User enter the email "12643"
+    Given   [Login Page] User enter the email ""
     When    [Login Page] User enter the password "Password1"
     Then    [Login page] User tap on login button
     Then    [Employees Page] User tap on employees button
@@ -1170,7 +1170,7 @@ Feature: AddEmployer
     Then    [Employees Page] User tap on Template button "kamelpayEmployees"
     And     [Employees Page] User enter Employee ID ""
 
- Scenario Outline: User create a excel and enter the multiple employee data andcheck the dulpication data then approve the admin side
+ Scenario Outline: User create a excel and enter the multiple employee data and check the dulpication data then approve the admin side
    Given   [Login Page] User enter the email "12727"
    When    [Login Page] User enter the password "Password1"
    Then    [Login page] User tap on login button
@@ -1203,9 +1203,12 @@ Feature: AddEmployer
 
   @AddEmployer@SomkeTest31
   Scenario Outline: Create multiple Employee
-    Given   [Login Page] User enter the email "12977"
-    When    [Login Page] User enter the password "Password1"
+    Given   [Login Page] User enter the email ""
+    When    [Login Page] User enter the password ""
     Then    [Login page] User tap on login button
+    And     [Sub Admin] User tap on the submit button
+    #Then    [Login page] User verify toast msg "Two Factor Enabled"
+    Then    [Sign Up] User enter the otp code "111111"
     Then    [Employees Page] User tap on employees button
     And     [Employees Page] User create a multiple data for the employer "<MolNo>""<EmpCode>""<FirstName>""<LastName>""<DisplayName>""<DOB>"" <Gender> "" <Nationality>""<JoiningDate>""<Email>""<MobileNo>""<AlternatePhone>""<HomeAddress>""<HomeState>""<HomePostCode>""<WorkAddress>""<WorkState>""<WorkPostCode>""<PassportNo>""<PassportExpiry>""<EID>""<EIDExpiry>""<EstablishmentId>"
     And     [Employees Page] User upload a bulk employees file ""
@@ -1270,13 +1273,16 @@ Feature: AddEmployer
     Then    [Admin Page] User Tap om the Process file button
     Then    [Admin Page] Checker reviews the employee records created by the Maker
     And     [Admin Page] User tap on the select all radio button
+    And     [Sub Admin] User tap on the submit button
     And     [Admin Page] User tap on the select all radio button
+    And     [Sub Admin] User tap on the submit button
     Then    [Admin Page] User tap pn the first approve button
     Then    [Admin Page] User Tap on the I have done my job button
     Then    [Onboard Approvals] The user verifies the bulk employees file approval tracking status is "Waiting for Authorizer's Approval"
     Then    [Admin Page] User tap on the view PayD employee button
     Then    [Admin Page] Authorizer reviews the employee records they approve by the checker
     And     [Admin Page] User tap on the select all radio button
+    And     [Admin Page] User Tap on the bulk emplyee approve button
     #And     [Admin Page] User tap on the select all radio button
     Then    [Admin Page] User tap on the view PayD employee button
     And     [Admin Page] User wait to see the approval approved by admin
@@ -1289,9 +1295,62 @@ Feature: AddEmployer
 
     Examples:
       |FirstName|MolNo|EmpCode|LastName|DisplayName|DOB|Gender|Nationality|JoiningDate|Email|MobileNo|AlternatePhone|HomeAddress|HomeState|HomePostCode|WorkAddress|WorkState|WorkPostCode|PassportNo|PassportExpiry|EID|EIDExpiry|EstablishmentId|
-      |User||0000|1||01/11/1978|M|BD|05/05/1978|@mailinator.com|97156|97156|Address|1|00001|4|2|3|Passport|10/05/2029|78419910|10/05/2029|128290583620849|
+      |User||0000|1||01/11/1978|M|BD|05/05/1978|@mailinator.com|97156|97156|Address|1|00001|4|2|3|Passport|10/05/2029|78419910|10/05/2029|1879823457123|
+
+  @AddEmployer @AddEmployer1
+  Scenario Outline: Create multiple Employee for the other bank
+    Given   [Login Page] User enter the email ""
+    When    [Login Page] User enter the password ""
+    Then    [Login page] User tap on login button
+    #Then    [Login page] User verify toast msg "OTP Generated"
+    And     [Sub Admin] User tap on the submit button
+    #Then    [Login page] User verify toast msg "Two Factor Enabled"
+    Then    [Sign Up] User enter the otp code "111111"
+    #And     [Sign Up] User tap on verify button
+    Then    [Employees Page] User tap on employees button
+    And     [Employees Page] User create a multiple other banks employee "<MolNo>" "<EmpCode>" "<FirstName>" "<LastName>" "<DisplayName>" "<DOB>" "<Gender>" "<Nationality>" "<JoiningDate>" "<Email>" "<MobileNo>" "<AlternatePhone>" "<HomeAddress>" "<HomeState>" "<HomePostCode>" "<WorkAddress>" "<WorkState>" "<WorkPostCode>" "<PassportNo>" "<PassportExpiry>" "<EID>" "<EIDExpiry>" "<EstablishmentId>"
+    And     [Employees Page] User upload a bulk employees file ""
+    And     [Request Page] User tap on the request button
+    Then    [Request Page] User tap on the view button
+    And     [Request Page] User tap on the Approve button
+    Then    [Admin Page] Open the admin tab "https://stage-admin.getthelingo.com/"
+    And     [Admin Page] User tap on login page
+    Then    [Admin Page] User enter the  email "admin@admin.com"
+    When    [Admin Page] User enter the Password "12345678"
+    And     [Admin Page] User tap on login page
+    Then    [Sign Up] User enter the otp code "111111"
+    When    [Admin Page] User tap on client Approvals
+    Then    [Admin Page] User enter the company name
+    Then    [Onboard Approvals] The user verifies the bulk employees file approval tracking status is "Waiting for Checker's approval"
+    Then    [Admin Page] User tap pn the first approve button
+    Then    [Admin Page] User tap on the other bank button
+    Then    [Admin Page] User Tap om the browse button
+    Then    [Admin Page] User Tap om the Process file button
+    Then    [Admin Page] Checker reviews the other bank employee records created by the Maker
+    And     [Admin Page] User tap on the select all radio button
+    And     [Sub Admin] User tap on the submit button
+    And     [Admin Page] User tap on the select all radio button
+    And     [Sub Admin] User tap on the submit button
+    Then    [Admin Page] User tap pn the first approve button
+    Then    [Admin Page] User Tap on the I have done my job button
+    Then    [Onboard Approvals] The user verifies the bulk employees file approval tracking status is "Waiting for Authorizer's Approval"
+    Then    [Admin Page] User tap on the view other bank employee button
+    Then    [Admin Page] Authorizer reviews the other bank employee records they approve by the  admin checker
+    And     [Admin Page] User tap on the select all radio button
+    And     [Admin Page] User Tap on the bulk emplyee approve button
+    #And     [Admin Page] User tap on the select all radio button
+    #Then    [Admin Page] User tap on the view PayD employee button
+    And     [Admin Page] User wait to see the approval approved by admin
+    Then    [Admin Page] User select the approval status "Show All"
+    Then    [Admin Page] User enter the company name
+    Then    [Onboard Approvals] The user verifies the bulk employees file approval tracking status is "Approved"
+    Then    [Admin Page] User tap on the view other bank employee button
+    Then    [Admin Page] Authorizer reviews the other bank employee records they approve by the  admin checker
 
 
+    Examples:
+      | MolNo            | EmpCode | FirstName | LastName | DisplayName | DOB        | Gender | Nationality | JoiningDate | Email               | MobileNo | AlternatePhone | HomeAddress | HomeState | HomePostCode | WorkAddress | WorkState | WorkPostCode | PassportNo | PassportExpiry | EID        | EIDExpiry   | EstablishmentId     |
+      | 0000             |         |           |          |             |            | M      |             | 10/01/2020  | john@mailinator.com | 97150001 | 97150091       | HomeSt 123  | Dubai     | 00001        | WorkPl 45   | Sharjah   | 00002        | P1234567   | 10/05/2029     | 7841991001 | 10/05/2029  | EST23LQIOFN8KB0       |
 
 
 

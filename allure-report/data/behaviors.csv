@@ -1,0 +1,3 @@
+"BROKEN","EPIC","FAILED","FEATURE","PASSED","SKIPPED","STORY","UNKNOWN"
+"0","","1","ProcessSalariesDepositSlip","0","0","Employer downloads the other bank salary file using the establishment ID, modifies the file and generates the SIF file, then submits it for approval. The admin checks the salary approval and verifies both the original file and the SIF file at the checker and authorizer levels.","0"
+"0","","1","","0","0","","0"

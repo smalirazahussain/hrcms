@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="Cucumber" time="481.631" tests="1" skipped="0" failures="1" errors="0">
+<testcase classname="ProcessSalariesDepositSlip" name="Employer downloads the other bank salary file using the establishment ID, modifies the file and generates the SIF file, then submits it for approval. The admin checks the salary approval and verifies both the original file and the SIF file at the checker and authorizer levels." time="480.607">
+<failure type="java.lang.AssertionError" message="❌ Mismatches found in Row 300">
+<![CDATA[java.lang.AssertionError: ❌ Mismatches found in Row 300
+	at org.testng.Assert.fail(Assert.java:110)
+	at Step_Definitions.ProcessSalariesDepositSlipSteps.processSalariesDepositSlipPageUserVerifiesTheDownloadedSIFFileMatchesModifySalaryScreenData(ProcessSalariesDepositSlipSteps.java:1051)
+	at ✽.[Process Salaries DepositSlip Page] User verifies the downloaded SIF file matches Modify Salary screen data(file:///D:/Hrcms/src/test/resources/Features/ProcessSalariesDepositSlip.feature:142)
+]]>
+</failure>
+<system-out><![CDATA[
+Given [Login Page] User enter the email ""..................................passed
+When [Login Page] User enter the password ""................................passed
+Then [Login page] User tap on login button..................................passed
+And [Sub Admin] User tap on the submit button...............................passed
+Then [Sign Up] User enter the otp code "111111".............................skipped
+And [Process Salaries DepositSlip Page] User Tap on Process Salaries Deposit Slip.passed
+When [Process Salaries DepositSlip Page] User enter company name and download the other bank salary template save all the data and give them salary.passed
+Then [Process Salaries DepositSlip Page] User select the month and then upload the process file "2012-04".passed
+And [Process Salaries DepositSlip Page] User tap on browse file and upload a salary process file.passed
+Then [Process Salaries DepositSlip Page] User get the employee salary data in the modify salary screen and verify to the actual salary file.passed
+Then [Process Salaries DepositSlip Page] User tap on salary file submit button.passed
+And [Request Page] User tap on the request button...........................passed
+Then [Request Page] User verify the salary approval amount and employee count.passed
+Then [Request Page] User tap on the view button.............................passed
+Then [Process Salaries DepositSlip Page] User verifies the downloaded SIF file matches Modify Salary screen data.skipped
+And [Request Page] User tap on the Approve button...........................skipped
+Then [Admin Page] Open the admin tab "https://stage-admin.getthelingo.com/".skipped
+And [Admin Page] User tap on login page.....................................skipped
+Then [Admin Page] User enter the  email "admin@admin.com"...................skipped
+When [Admin Page] User enter the Password "12345678"........................skipped
+When [Admin Page] User tap on client Approvals..............................skipped
+Then [Admin Page] User enter the company name...............................skipped
+Then [Onboard Approvals] The user verifies the bulk employees file approval tracking status is "Waiting for Checker's approval".skipped
+And [Admin Page] User tap on view button....................................skipped
+And [Admin Page] User verifies that the actual salary file matches the employee file uploaded by the client..skipped
+Then [Admin Page] User tap on approve button................................skipped
+Then [Onboard Approvals] The user verifies the bulk employees file approval tracking status is "Waiting for Authorizer's Approval".skipped
+Then [Admin Page] User verify the notification message "Action Successful"..skipped
+]]></system-out>
+</testcase>
+</testsuite>

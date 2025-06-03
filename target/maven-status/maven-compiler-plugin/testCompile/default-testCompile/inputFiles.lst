@@ -73,8 +73,14 @@ D:\Hrcms\src\test\java\Tests\Exoire_Date.java
 D:\Hrcms\src\test\java\Tests\Generate_Random_Date.java
 D:\Hrcms\src\test\java\Tests\Password_Builder.java
 D:\Hrcms\src\test\java\Tests\Scroll.java
+D:\Hrcms\src\test\java\Utils\BankReference.java
+D:\Hrcms\src\test\java\Utils\BankReferenceUtil.java
 D:\Hrcms\src\test\java\Utils\EmployeeAdditionalStorage.java
 D:\Hrcms\src\test\java\Utils\EmployerAdditionalStorage.java
 D:\Hrcms\src\test\java\Utils\EmployerDataStorage.java
+D:\Hrcms\src\test\java\Utils\NetworkUtils.java
+D:\Hrcms\src\test\java\Utils\OtherBankEmployeesStorage.java
+D:\Hrcms\src\test\java\Utils\ProcessSalaryEmployeeData.java
 D:\Hrcms\src\test\java\Utils\RandomDateGenerator.java
 D:\Hrcms\src\test\java\Utils\ScreenshotUtility.java
+D:\Hrcms\src\test\java\Utils\SIFFileUtils.java

@@ -109,9 +109,8 @@ public class masterAdminBasicEmployerDetails {
 
         System.out.println("\n✅ All employer details have been successfully verified!");
     }
-
-
 }
+
 
 
 //        // ✅ Find all elements dynamically
