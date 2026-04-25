@@ -11,16 +11,9 @@ import java.util.List;
 
 public class AdminPage {
 
-    public AdminPage(){
-        String admin_Tab = "//div[@class='body-container scroll-y']";
-    }
-    private WebDriver driver;
-    Duration timeout = Duration.ofSeconds(30);
-    WebDriverWait wait = new WebDriverWait(driver, timeout);
-
     //locator
     public static String admin_Tab = "//div[@class='body-container scroll-y']";
-    public static String Login = "button[title='Login']";
+    public static String Login = "button[type='submit'], button[title='Login']";
     public static String Admin_Email = "#email";
     public static String Admin_Password = "#password";
     public static String Onboard_Approvals = "#onboardApprovals";
@@ -31,7 +24,7 @@ public class AdminPage {
     public static String company_Name = "//body//div//ul[2]";
     public static String Trade_No = "//body//div//ul[2]";
     public static String Approval_Ok = "(//span[normalize-space()='OK'])[1]";
-    public static String Client_Approval = "#approval";
+    public static String Client_Approval = "a[id='/approval']";
     public static String Company_Client = "(//input[@id=\"client\"])[2]";
     public static String Admin_Action_Successfully = "//span[normalize-space()='Action Successful']";
     public static String msg = "div[class='ant-message'] span:nth-child(2)";
@@ -71,6 +64,7 @@ public class AdminPage {
 
     public static String Approve_Bulk_Button = "//td[contains(@class,'ant-table-cell ant-table-cell-row-hover')]//span[contains(text(),'Approve')]";
     public static String Card_Button = "#cardType";
+    public static String Card_Scheme_Button = "#processorId";
     public static String ExchangeHouseClientButton = " label:nth-child(2)";
     public static String No_Other_Bank_Employees = "label:nth-child(2) > span:nth-child(2)";
     public static String message = "//*[@text='Action Successfully']";
@@ -78,7 +72,7 @@ public class AdminPage {
     public static String Admin_Branch_Name = "(//input[@type='search'])[3]";
     public static String Exchange_House_Browse_Button = "button.ant-btn#uploadExcel.primary-outline-filled[title='Browse File'";
     public static String admin_Client_Salary = "div:first-child > ul:first-child > li:nth-child(32) > span:nth-child(2)";
-    public static String Admin_Employer_Button = "#employer";
+    public static String Admin_Employer_Button = "a[id='/employer']";
     public static String Admin_Add_Employer_Button = "button[title='Add Employer']";
     public static String Admin_Company_Name = "input[placeholder='Search']";
     public static String Upload_EOS_Button = "div:nth-child(4) button:nth-child(1) span:nth-child(2)";
@@ -99,19 +93,35 @@ public class AdminPage {
     }
 
     public static WebElement get_Login() {
-
         return Base_Class.driver.findElement(By.cssSelector(Login));
-
     }
 
 
     public static WebElement get_Email() {
-
         return Base_Class.driver.findElement(By.cssSelector(Admin_Email));
     }
 
     public static WebElement get_Password() {
         return Base_Class.driver.findElement(By.cssSelector(Admin_Password));
+    }
+
+    public static boolean isLoginFormVisible() {
+        try {
+            return get_Email().isDisplayed() && get_Password().isDisplayed();
+        } catch (NoSuchElementException e) {
+            return false;
+        }
+    }
+
+    public static boolean hasEnteredCredentials() {
+        try {
+            String emailValue = get_Email().getAttribute("value");
+            String passwordValue = get_Password().getAttribute("value");
+            return emailValue != null && !emailValue.isBlank()
+                    && passwordValue != null && !passwordValue.isBlank();
+        } catch (NoSuchElementException e) {
+            return false;
+        }
     }
 
     public static WebElement get_Onboard_Approvals() {
@@ -329,6 +339,10 @@ public class AdminPage {
 
     public static WebElement get_Approval_Alert_Message() {
         return Base_Class.driver.findElement(By.cssSelector(Approval_Alert_Message));
+    }
+
+    public static WebElement get_Card_Scheme_Button() {
+        return Base_Class.driver.findElement(By.cssSelector(Card_Scheme_Button));
     }
 
     public static WebElement get_Approval_Status() {

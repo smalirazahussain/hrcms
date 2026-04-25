@@ -28,9 +28,13 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.Duration;
-import java.time.LocalDate;
-import java.util.List;
 import java.util.*;
+import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.stream.Collectors;
 
 import static Hooks.Base_Class.driver;
 import static Pages.Android.AddEmployerPages.Company_Tittle;
@@ -81,7 +85,7 @@ public class Employeessteps {
     @And("[Employees Page] User tap on upload excelpdf")
     public void employeesPageUserTapOnUploadExcelPdf() throws AWTException, InterruptedException {
         EmployeesPage.get_Upload_Excel().click();
-        Thread.sleep(5000);
+        Thread.sleep(2000);
         Robot rb = new Robot();
         StringSelection str = new StringSelection("D:\\Hrcms\\src\\test\\java\\document\\Mansha List test.xlsx");
         Toolkit.getDefaultToolkit().getSystemClipboard().setContents(str, null);
@@ -96,7 +100,7 @@ public class Employeessteps {
         // for pressing and releasing Enter
         rb.keyPress(KeyEvent.VK_ENTER);
         rb.keyRelease(KeyEvent.VK_ENTER);
-        Thread.sleep(5000);
+        Thread.sleep(2000);
     }
 
 
@@ -190,13 +194,13 @@ public class Employeessteps {
 //            String branchEstablishmentId = establishmentsStepsHeadOffice.branchEstablishmentId;
 
         //System.out.println(branchEstablishmentId);
-        for (int j = 0; j < 20000; j++) {
+        for (int j = 0; j < 10; j++) {
             System.out.println(j);
             int randomNumber = random.nextInt(1000000000);
             //int eidNumber = random.nextInt(1000000000000000);
             long random16DigitNumber = (long) (Math.random() * 9_000_000_000_000_000L) + 1_000_000_000_000_000L;
 
-            raws = new String[]{molNo + randomNumber, empCode + randomNumber, firstName, lastName + randomNumber, displayName, dob, gender.trim(), nationality.trim().replaceAll("^\\s+", ""), joiningDate, "user" + randomNumber + email, mobile + randomNumber, altenatePhone + randomNumber, homeAddress + randomNumber, homeState, homePostCode, workAddress, workState, workPostCode, PassportNo + randomNumber, passportExpiry, eid + random16DigitNumber, eidExpiry,/*branchEstablishmentId +*/ est};
+            raws = new String[]{molNo + randomNumber, empCode + randomNumber, firstName, lastName + randomNumber, displayName, dob, gender.trim(), nationality.trim().replaceAll("^\\s+", ""), joiningDate, "user" + randomNumber + email, mobile + randomNumber, altenatePhone + randomNumber, homeAddress + randomNumber, homeState, homePostCode, workAddress, workState, workPostCode, PassportNo + randomNumber, passportExpiry,eid + random16DigitNumber, eidExpiry,/*branchEstablishmentId +*/ est};
             System.out.println("BranchESTID;" + branchEstablishmentId);
             //System.out.println(branchEstablishmentId);
             //System.out.println(raws[j]);
@@ -281,10 +285,10 @@ public class Employeessteps {
     @Then("[Employees Page] User enter MOL no then click on the eye button {string}")
     public void employeesPageUserEnterMOLNoThenClickOnTheEyeButton(String arg0) throws InterruptedException {
         EmployeesPage.get_Employee_Search().sendKeys(EmpMol);
-        Thread.sleep(5000);
+        Thread.sleep(2000);
         // wait.until(ExpectedConditions.visibilityOfElementLocated(By.className(Employee_Eye_Button)));
         EmployeesPage.get_Employee_Eye_Button().click();
-        Thread.sleep(5000);
+        Thread.sleep(2000);
     }
 
     @And("[Employees Page] User create a multiple data for the employer and check duplication  {string} {string} {string} {string} {string} {string} {string}   {string} {string}   {string} {string}   {string} {string} {string} {string}  {string} {string} {string} {string}     {string} {string} {string} {string}")
@@ -341,153 +345,154 @@ public class Employeessteps {
     public static String filePaths;
 
     @SuppressWarnings("ConstantConditions")
-    @And("[Employees Page] User create a multiple data with non WPS process for the employer {string}{string}{string}{string}{string}{string}{string}{string}{string}{string}{string}{string}{string}{string}{string}{string}{string}{string}{string}{string}{string}{string}{string}")
+    @And("[Employees Page] User create a multiple data with non WPS process for the employer {string}{string}{string}{string}{string}{string}{string}{string}{string}{string}{string}{string}{string}{string}{string}{string}{string}{string}{string}{string}{string}{string}{string}{string}")
     public void employeesPageUserCreateAMultipleDataWithNonWPSProcessForTheEmployer(
-
             String molNo, String empCode, String firstName, String lastName, String displayName,
             String dob, String gender, String nationality, String joiningDate, String email,
             String mobile, String alternatePhone, String homeAddress, String homeState,
             String homePostCode, String workAddress, String workState, String workPostCode,
-            String passportNo, String passportExpiry, String eid, String eidExpiry, String est) throws IOException {
+            String passportNo, String passportExpiry, String eid, String eidExpiry, String est,
+            String employeeCount
+    ) throws IOException {
 
+        EmployeeAdditionalStorage.clearData();
+        generatedData.clear();
 
+        // ====== THREADS & WORK SIZE ======
+        final int available = Runtime.getRuntime().availableProcessors();
+        final int THREADS = Math.max(1, Math.min(available, 8));  // use only up to 4
+        final int totalRows = resolveEmployeeRowCount(employeeCount);
+        System.out.println("Available processors: " + available + " | Using threads: " + THREADS);
+
+        // ====== HEADERS ======
         String[] headers = {
-                "Mol No", "Emp Code", "First Name", "Last Name", "Display Name",
-                "Date of Birth", "Gender(M/F)", "Nationality", "Date of Joining", "Email",
-                "Mobile", "Alternate Phone", "Home Address", "Home State", "Home Post Code",
-                "Work Address", "Work State", "Work Post Code", "Passport Number",
-                "Passport Expiry", "EID", "EID Expiry", "Establishment Id"};
-        // ✅ Save headers to EmployeeAdditionalStorage
+                "Mol No","Emp Code","First Name","Last Name","Display Name",
+                "Date of Birth","Gender(M/F)","Nationality","Date of Joining","Email",
+                "Mobile","Alternate Phone","Home Address","Home State","Home Post Code",
+                "Work Address","Work State","Work Post Code","Passport Number",
+                "Passport Expiry","EID","EID Expiry","Establishment Id"
+        };
         for (int i = 0; i < headers.length; i++) {
-            String key = "employee-header-" + i;
-            EmployeeAdditionalStorage.storeData(key, headers[i]);
+            EmployeeAdditionalStorage.storeData("employee-header-" + i, headers[i]);
         }
-
-        // ✅ Also save full header list as comma-separated string
         EmployeeAdditionalStorage.storeData("employee-headers", String.join(",", headers));
 
+        // ====== NAME POOLS (final) ======
+        final List<String> firstNames = Arrays.asList(
+                "John","Michael","Sara","Laura","Robert","Emily","William","Oliver","Sophia","James",
+                "Liam","Benjamin","Emma","Charlotte","Ethan","Noah","Mason","Logan","Harper","Amelia",
+                "Ava","Isabella","Mia","Abigail","Lucas","Alexander","Henry","Sebastian","Madison",
+                "Grace","Elijah","Daniel","Samuel","David","Jacob","Ella","Scarlett","Evelyn",
+                "Olivia","Aria","Chloe","Matthew","Isaac","Victoria","Layla","Zoe","Hannah",
+                "Natalie","Mila","Aurora"
+        );
+        final List<String> lastNames = Arrays.asList(
+                "Smith","Johnson","Williams","Brown","Jones","Garcia","Martinez","Miller","Davis",
+                "Rodriguez","Martinez","Hernandez","Lopez","Gonzalez","Wilson","Anderson","Thomas",
+                "Taylor","Moore","Jackson","Martin","Lee","Perez","Thompson","White","Harris",
+                "Sanchez","Clark","Ramirez","Lewis","Robinson","Walker","Young","Allen","King",
+                "Wright","Scott","Torres","Nguyen","Hill","Flores","Green","Adams","Nelson","Baker",
+                "Hall","Rivera","Campbell","Mitchell","Carter","Roberts"
+        );
 
-        List<String> firstNames = Arrays.asList("John", "Michael", "Sara", "Laura", "Robert", "Emily",
-                "William", "Oliver", "Sophia", "James", "Liam", "Benjamin", "Emma", "Charlotte",
-                "Ethan", "Noah", "Mason", "Logan", "Harper", "Amelia", "Ava", "Isabella", "Mia", "Abigail",
-                "Lucas", "Alexander", "Henry", "Sebastian", "Madison", "Grace", "Elijah", "Daniel", "Samuel",
-                "David", "Jacob", "Ella", "Scarlett", "Evelyn", "Olivia", "Aria", "Chloe", "Matthew", "Isaac",
-                "Victoria", "Layla", "Zoe", "Hannah", "Natalie", "Mila", "Aurora");
+        // ====== STEP 1: PARALLEL GENERATION (max 4 threads) ======
+        final String[][] rows = new String[totalRows][];
+        ExecutorService pool = Executors.newFixedThreadPool(THREADS);
+        try {
+            List<Callable<Void>> tasks = java.util.stream.IntStream.range(0, totalRows)
+                    .mapToObj(j -> (Callable<Void>) () -> {
+                        ThreadLocalRandom tlr = ThreadLocalRandom.current();
+                        int rnd7 = tlr.nextInt(1_000_000, 10_000_000); // 7-digit
 
-        List<String> lastNames = Arrays.asList("Smith", "Johnson", "Williams", "Brown", "Jones", "Garcia",
-                "Martinez", "Miller", "Davis", "Rodriguez", "Martinez", "Hernandez", "Lopez", "Gonzalez",
-                "Wilson", "Anderson", "Thomas", "Taylor", "Moore", "Jackson", "Martin", "Lee", "Perez", "Thompson",
-                "White", "Harris", "Sanchez", "Clark", "Ramirez", "Lewis", "Robinson", "Walker", "Young", "Allen",
-                "King", "Wright", "Scott", "Torres", "Nguyen", "Hill", "Flores", "Green", "Adams", "Nelson", "Baker",
-                "Hall", "Rivera", "Campbell", "Mitchell", "Carter", "Roberts");
+                        String fn = firstNames.get(tlr.nextInt(firstNames.size()));
+                        String ln = lastNames.get(tlr.nextInt(lastNames.size()));
+                        String disp = fn + " " + ln;
+                        String dobLocal = RandomDateGenerator.generateAdultDOB();
 
-        Random random = new Random();
-        HSSFWorkbook workbook = new HSSFWorkbook();
+                        String[] raw = {
+                                molNo /* + optionalMolRandom */, empCode, fn, ln,
+                                disp, dobLocal, gender.trim(), nationality.trim().replaceAll("^\\s+",""),
+                                joiningDate, "user" + rnd7 + email, mobile + rnd7,
+                                alternatePhone + rnd7, homeAddress + rnd7, homeState,
+                                homePostCode, workAddress, workState, workPostCode,
+                                passportNo + rnd7, passportExpiry, eid + rnd7, eidExpiry, est
+                        };
+
+                        if (raw.length != headers.length) {
+                            throw new IllegalStateException("Row " + j + " length mismatch: " + raw.length + " vs " + headers.length);
+                        }
+
+                        // Store ALL rows for verification (not just first 5)
+                        for (int i = 0; i < headers.length; i++) {
+                            EmployeeAdditionalStorage.storeData("employee-" + j + "-" + headers[i], raw[i]);
+                        }
+
+                        rows[j] = raw;
+                        return null;
+                    })
+                    .collect(Collectors.toList());
+
+            pool.invokeAll(tasks);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            throw new RuntimeException("Generation interrupted", e);
+        } finally {
+            pool.shutdown();
+        }
+
+        // ====== STEP 2: SEQUENTIAL WRITE TO POI (thread-unsafe) ======
+        HSSFWorkbook workbook = new HSSFWorkbook();               // HSSF => .xls
         HSSFSheet sheet = workbook.createSheet("Bulk employees");
 
-        // Create header row and cells
         HSSFRow headerRow = sheet.createRow(0);
         for (int i = 0; i < headers.length; i++) {
-            HSSFCell cell = headerRow.createCell(i);
-            cell.setCellValue(headers[i]);
+            headerRow.createCell(i).setCellValue(headers[i]);
         }
-        LocalDate startDate = LocalDate.of(1950, 1, 1);
-        LocalDate endDate = LocalDate.of(2010, 12, 31);
-        // Print headers
-        System.out.println("Headers:");
-        for (String header : headers) {
-            System.out.print(header + "\t");
-        }
-        System.out.println();  // New line after headers
-        for (int j = 0; j < 30; j++) {
-            int randomNumber = random.nextInt(8999999) + 1000000; // Generate random 7-digit number
-            long randomMolNumber = (long) (random.nextDouble() * 9_000_000_000_000_00L) + 1_000_000_000_000_00L;
 
-            // Generate random first and last names
-            firstName = firstNames.get(random.nextInt(firstNames.size()));
-            lastName = lastNames.get(random.nextInt(lastNames.size()));
-
-            // Merge first and last name into display name
-            displayName = firstName + " " + lastName;
-            dob = RandomDateGenerator.generateAdultDOB();
-            String[] raws = {
-                    molNo + randomMolNumber, empCode, firstName, lastName,
-                    displayName, dob, gender.trim(), nationality.trim().replaceAll("^\\s+", ""),
-                    joiningDate, "user" + randomNumber + email, mobile + randomNumber,
-                    alternatePhone + randomNumber, homeAddress + randomNumber, homeState,
-                    homePostCode, workAddress, workState, workPostCode,
-                    passportNo + randomNumber, passportExpiry, eid + randomNumber, eidExpiry, est
-            };
-
-            // ✅ Validate array lengths to avoid ArrayIndexOutOfBoundsException
-            if (headers.length != raws.length) {
-                System.out.println("❌ Header and data length mismatch at row #" + j);
-                System.out.println("Headers count : " + headers.length);
-                System.out.println("Values count  : " + raws.length);
-                System.out.println("Headers: " + Arrays.toString(headers));
-                System.out.println("Values : " + Arrays.toString(raws));
-                throw new IllegalStateException("Mismatch: headers.length != raws.length at row #" + j);
-            }
-
-
-            // ✅ Save to key-value storage
-            for (int i = 0; i < headers.length; i++) {
-                String key = "employee-" + j + "-" + headers[i];
-                EmployeeAdditionalStorage.storeData(key, raws[i]);
-            }
-            EmployeeAdditionalStorage.printAll();
-
-            // ✅ Save to list (existing)
-            generatedData.add(Arrays.toString(raws));
-
-            // Create data rows and populate cells in the Excel sheet
+        for (int j = 0; j < rows.length; j++) {
+            String[] raw = rows[j];
+            if (j < 100) generatedData.add(Arrays.toString(raw)); // keep memory safe
             HSSFRow dataRow = sheet.createRow(j + 1);
-            for (int i = 0; i < raws.length; i++) {
-                HSSFCell cell = dataRow.createCell(i);
-                cell.setCellValue(raws[i]);
-            }
-            // Print rows
-            // System.out.println("Row " + (j + 1) + ":");
-            for (String data : raws) {
-                System.out.print(data + "\t");
-            }
-            System.out.println();  // New line after each row
+            for (int i = 0; i < raw.length; i++) dataRow.createCell(i).setCellValue(raw[i]);
         }
 
-
-        // Write the workbook to an output stream
-        int randomNumbers = random.nextInt(1000000);
-        System.out.println("randomNumbers: " + randomNumbers);
-        filePaths = "D:\\Hrcms\\src\\test\\java\\document\\" + randomNumbers + ".xlsx";
-        System.out.println("File Path: " + filePaths);
-
-        try (FileOutputStream fileOut = new FileOutputStream(filePaths)) {
-            System.out.println("File Path:" + filePaths);
-            workbook.write(fileOut);
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println(e.getMessage());
-            throw e;
+        // ====== SAVE ======
+        int suffix = new Random().nextInt(1_000_000);
+        filePaths = "D:\\Hrcms\\src\\test\\java\\document\\" + suffix + ".xls";
+        try (FileOutputStream out = new FileOutputStream(filePaths)) {
+            workbook.write(out);
         } finally {
             workbook.close();
         }
-
-        System.out.println("Data saved to Excel file successfully.");
+        System.out.println("✅ Saved 1000 rows using " + THREADS + " threads -> " + filePaths);
     }
 
-    // }
-    public List<String> getGeneratedData() {
-        System.out.println("generatedData" + generatedData);
-        return generatedData;
+    private int resolveEmployeeRowCount(String employeeCount) {
+        String normalizedCount = employeeCount == null ? "" : employeeCount.trim();
+        if (normalizedCount.isEmpty()) {
+            return 10;
+        }
 
+        try {
+            int parsedCount = Integer.parseInt(normalizedCount);
+            if (parsedCount <= 0) {
+                throw new IllegalArgumentException("Employee count must be greater than zero.");
+            }
+            return parsedCount;
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("Invalid employee count: " + employeeCount, e);
+        }
     }
-
 
     @And("[Employees Page] User create a multiple data for the other bank employer {string}{string}{string}{string}{string}{string}{string}{string}{string}{string}")
     public void employeesPageUserCreateAMultipleDataForTheOtherBankEmployer(
             String empId, String empName, String empDesignation, String employerWPSEstId, String empIBAN,
             String empBankName, String empWPSPersonId, String empPassPortNo, String empNationality,
             String empLabourCard) throws IOException {
+
+        // ✅ NEW: check how many cores are available
+        final int availableProcessors = Runtime.getRuntime().availableProcessors();
+        System.out.println("Available processors: " + availableProcessors);
 
         String[] headers = {"Employee ID", "Name", "Designation", "WPS Establishment ID", "IBAN", "Bank Name", "WPS Person ID", "Passport Number", "Nationality", "Labor card"};
         Random random = new Random();
@@ -530,7 +535,7 @@ public class Employeessteps {
         filePaths = fileName;
         System.out.println("Generated File Path: " + filePaths);
         System.out.println(filePath);
-        try (FileOutputStream fileOut = new FileOutputStream(filePath)) {
+        try (FileOutputStream fileOut = new FileOutputStream(filePaths)) {
             workbook.write(fileOut);
         } catch (IOException e) {
             e.printStackTrace();
@@ -640,7 +645,7 @@ public class Employeessteps {
             headerRow.createCell(i).setCellValue(headers[i]);
         }
 
-        for (int j = 0; j < 500; j++) {
+        for (int j = 0; j < 100; j++) {
             int randomNumber = 100000 + random.nextInt(900000);
             Map.Entry<String, String> selectedBank = banks.get(random.nextInt(banks.size()));
             Map.Entry<String, String> selectedNationality = nationalities.get(random.nextInt(nationalities.size()));

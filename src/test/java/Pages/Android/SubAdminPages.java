@@ -30,7 +30,7 @@ public class SubAdminPages {
         return "input[value='"+role+"']";
     }
     public static String Add_Sub_Admin = "button[title='Add Team Member'][type='submit']";
-    public static String Submit = "//button[@title='Submit']";
+    public static String Submit = "//button[@title='Submit' or normalize-space()='Submit' or .//span[normalize-space()='Submit']]";
     public static String Confirm_Password ="confirmPassword";
     public static String User_Manage_Access = "//h1[text()='Manage Access']";
     public static String All_Check_Boxes="input.ant-checkbox-input";
@@ -62,7 +62,7 @@ public class SubAdminPages {
     public static String Sub_Search_Button = ".search-view input.ant-input";
     public static String team_Member_Email_Id = "tr:nth-child(2) td:nth-child(3)";
     public static String Employee_Button = "#employee";
-    public static String Employee_Submit_Button = "//button[span[text()='Submit']]";
+    public static String Employee_Submit_Button = "(//button[@title='Submit' or normalize-space()='Submit' or .//span[normalize-space()='Submit']])[last()]";
 
 
 

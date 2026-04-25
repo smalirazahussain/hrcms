@@ -2,9 +2,10 @@ package Utils;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class EmployeeAdditionalStorage {
-    private static final Map<String, String> storage = new HashMap<>();
+    private static final Map<String, String> storage = new ConcurrentHashMap<>();
 
 
     // Store employee data by key

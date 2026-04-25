@@ -135,13 +135,26 @@ public class SubAdminsteps {
             alert.accept();
         }
 
-        try {
-            SubAdminPages.get_Submit().click();
+        System.out.println("Current URL before submit: " + driver.getCurrentUrl());
+        waitForLoadingToClear();
+
+        List<By> submitLocators = Arrays.asList(
+                By.xpath(AdminPage.Bulk_Approval_Submit_Button),
+                By.xpath(Submit),
+                By.xpath(Employee_Submit_Button),
+                By.xpath("//button[@title='Submit' or normalize-space()='Submit' or .//span[normalize-space()='Submit']]"),
+                By.xpath("//span[normalize-space()='Submit']")
+        );
+
+        for (By locator : submitLocators) {
+            if (clickFirstVisible(locator)) {
+                System.out.println("Clicked submit using locator: " + locator);
+                return;
+            }
         }
-        catch (Exception e){
-            wait.until(ExpectedConditions.elementToBeClickable(get_Employee_Submit_Button()));
-            SubAdminPages.get_Employee_Submit_Button().click();
-        }
+
+        logVisibleButtons();
+        throw new org.openqa.selenium.NoSuchElementException("Unable to locate a visible Submit control on page: " + driver.getCurrentUrl());
 //        try {
 //            get_Submit_button.click();
 //            System.out.println("✅ Clicked get_Submit_button");
@@ -154,6 +167,57 @@ public class SubAdminsteps {
 //                System.out.println("❌ Failed to click both Submit buttons.");
 //            }
 //        }
+    }
+
+    private void waitForLoadingToClear() {
+        try {
+            wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(Loading)));
+        } catch (Exception ignored) {
+        }
+    }
+
+    private boolean clickFirstVisible(By locator) {
+        List<WebElement> elements = driver.findElements(locator);
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+
+        for (WebElement element : elements) {
+            try {
+                if (!element.isDisplayed()) {
+                    continue;
+                }
+                js.executeScript("arguments[0].scrollIntoView({block:'center'});", element);
+                try {
+                    element.click();
+                } catch (Exception clickError) {
+                    js.executeScript("arguments[0].click();", element);
+                }
+                return true;
+            } catch (StaleElementReferenceException ignored) {
+            } catch (Exception ignored) {
+            }
+        }
+
+        return false;
+    }
+
+    private void logVisibleButtons() {
+        System.out.println("Visible buttons on current page:");
+        List<WebElement> elements = driver.findElements(By.xpath("//button | //*[@role='button'] | //span[normalize-space()='Submit']"));
+
+        for (WebElement element : elements) {
+            try {
+                if (!element.isDisplayed()) {
+                    continue;
+                }
+
+                String tag = element.getTagName();
+                String text = element.getText().trim();
+                String title = Optional.ofNullable(element.getAttribute("title")).orElse("");
+                String id = Optional.ofNullable(element.getAttribute("id")).orElse("");
+                System.out.printf("  tag=%s | text=%s | title=%s | id=%s%n", tag, text, title, id);
+            } catch (StaleElementReferenceException ignored) {
+            }
+        }
     }
 
     @And("[Sub Admin] User should validate the error message on the email {string}")

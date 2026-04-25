@@ -87,16 +87,23 @@ public class adminsteps {
     @And("[Admin Page] User tap on login page")
     public void adminPageUserTapOnLoginPage() {
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(Login)));
+        if (AdminPage.isLoginFormVisible() && !AdminPage.hasEnteredCredentials()) {
+            return;
+        }
         AdminPage.get_Login().click();
     }
 
     @Then("[Admin Page] User enter the  email {string}")
     public void adminPageUserEnterTheEmail(String email) {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(Admin_Email)));
+        AdminPage.get_Email().clear();
         AdminPage.get_Email().sendKeys(email);
     }
 
     @When("[Admin Page] User enter the Password {string}")
     public void adminPageUserEnterThePassword(String paswword) {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(Admin_Password)));
+        AdminPage.get_Password().clear();
         AdminPage.get_Password().sendKeys(paswword);
     }
 
@@ -200,6 +207,12 @@ public class adminsteps {
         //AdminPage.get_Card_Button().click();
         AdminPage.get_Card_Button().sendKeys(card, Keys.ENTER);
         // AdminPage.get_Card_Tpye(card).click();
+    }
+
+    @Then("[Admin Page] User select the card scheme {string}")
+    public void adminPageUserSelectTheCardScheme(String cardScheme) {
+        wait.until(ExpectedConditions.elementToBeClickable(AdminPage.get_Card_Scheme_Button()));
+        AdminPage.get_Card_Scheme_Button().sendKeys(cardScheme, Keys.ENTER);
     }
 
     @And("[Admin Page] User Tap on the approve button")
@@ -1158,7 +1171,7 @@ public class adminsteps {
     public void adminPageCheckerReviewsTheEmployeeRecordsCreatedByTheMaker() {
         System.out.println("\n✅ Starting Assertions:");
 
-        List<WebElement> allRows = driver.findElements(By.cssSelector(".ant-table-row.editable-row"));
+        By employeeRowsLocator = By.cssSelector(".ant-table-row.editable-row");
         JavascriptExecutor js = (JavascriptExecutor) driver;
 
         // Mapping between UI field IDs and stored keys
@@ -1190,23 +1203,38 @@ public class adminsteps {
 
         // Get all stored employee data
         Map<String, String> allData = EmployeeAdditionalStorage.getAllData();
+        Map<String, Map<String, String>> storedEmployees = groupStoredEmployees(allData);
+        Map<String, String> employeeLookup = buildEmployeeLookup(storedEmployees);
+        logStoredEmployeesSnapshot("Before Checker Review", allData);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("td[id]")));
+        List<Map<String, String>> uiEmployees = collectEditableRows(
+                employeeRowsLocator,
+                headerMapping,
+                employeeLookup,
+                storedEmployees.size(),
+                js,
+                "checker"
+        );
+        if (uiEmployees.size() != storedEmployees.size()) {
+            Assert.fail("Unable to collect all checker review rows from the table. Collected "
+                    + uiEmployees.size() + " of " + storedEmployees.size());
+        }
 
-        for (int rowIndex = 0; rowIndex < allRows.size(); rowIndex++) {
-            WebElement row = allRows.get(rowIndex);
-            List<WebElement> cells = row.findElements(By.cssSelector("td[id]"));
-            //wait.until(ExpectedConditions.visibilityOfElementLocated((By.cssSelector(String.valueOf(cells)))));
+        for (int rowIndex = 0; rowIndex < uiEmployees.size(); rowIndex++) {
+            Map<String, String> uiRowData = uiEmployees.get(rowIndex);
+            String employeeKey = resolveEmployeeKey(uiRowData, employeeLookup);
+            if (employeeKey == null) {
+                Assert.fail("No matching employee found in storage for checker row " + rowIndex + " using " + describeUiEmployee(uiRowData));
+            }
+            Map<String, String> storedEmployeeData = storedEmployees.get(employeeKey);
 
             System.out.printf("%n📌 Row %d:%n", rowIndex);
 
-            for (WebElement cell : cells) {
-                js.executeScript("arguments[0].scrollIntoView(true);", cell);
+            for (Map.Entry<String, String> field : uiRowData.entrySet()) {
+                String mappedKey = field.getKey();
+                String uiValue = field.getValue();
 
-                String fieldId = cell.getAttribute("id").trim();         // e.g., "dob", "firstName"
-                String uiValue = cell.getText().trim();                 // Value from UI
-                String mappedKey = headerMapping.getOrDefault(fieldId, fieldId);  // "Date of Birth"
-
-                String storageKey = "employee-" + rowIndex + "-" + mappedKey;
-                String storedValue = allData.get(storageKey);
+                String storedValue = storedEmployeeData.get(mappedKey);
 
                 System.out.printf("🔍 %-20s | UI: %-30s | Stored: %-30s%n", mappedKey, uiValue, storedValue);
 
@@ -1223,6 +1251,317 @@ public class adminsteps {
                     }
                 }
             }
+        }
+        logUiEmployeesSnapshot("After Checker Review", uiEmployees);
+    }
+
+    private List<Map<String, String>> collectEditableRows(
+            By employeeRowsLocator,
+            Map<String, String> headerMapping,
+            Map<String, String> employeeLookup,
+            int expectedCount,
+            JavascriptExecutor js,
+            String stage
+    ) {
+        List<Map<String, String>> collectedRows = new ArrayList<>();
+        Set<String> seenEmployeeKeys = new LinkedHashSet<>();
+        String previousVisibleSignature = "";
+        int stagnantPasses = 0;
+
+        for (int pass = 1; pass <= 20 && collectedRows.size() < expectedCount; pass++) {
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("td[id]")));
+            List<WebElement> rows = driver.findElements(employeeRowsLocator);
+            StringBuilder visibleSignature = new StringBuilder();
+
+            for (WebElement row : rows) {
+                Map<String, String> uiRowData = extractEditableRowData(row, headerMapping, js);
+                if (uiRowData.isEmpty()) {
+                    continue;
+                }
+
+                String employeeKey = resolveEmployeeKey(uiRowData, employeeLookup);
+                String dedupeKey = employeeKey != null ? employeeKey : buildUiEmployeeFingerprint(uiRowData);
+                visibleSignature.append(dedupeKey).append('|');
+
+                if (seenEmployeeKeys.add(dedupeKey)) {
+                    collectedRows.add(uiRowData);
+                }
+            }
+
+            if (collectedRows.size() >= expectedCount) {
+                break;
+            }
+
+            boolean scrolled = scrollEmployeeTable(js, employeeRowsLocator);
+            String currentVisibleSignature = visibleSignature.toString();
+            if (!scrolled || currentVisibleSignature.equals(previousVisibleSignature)) {
+                stagnantPasses++;
+            } else {
+                stagnantPasses = 0;
+            }
+            previousVisibleSignature = currentVisibleSignature;
+
+            if (stagnantPasses >= 3) {
+                System.out.printf("⚠️ No new %s rows appeared after scrolling. Collected %d/%d rows.%n",
+                        stage, collectedRows.size(), expectedCount);
+                break;
+            }
+        }
+
+        return collectedRows;
+    }
+
+    private Map<String, String> getEditableRowDataWithRetry(
+            By employeeRowsLocator,
+            int rowIndex,
+            Map<String, String> headerMapping,
+            JavascriptExecutor js
+    ) {
+        for (int attempt = 1; attempt <= 3; attempt++) {
+            try {
+                List<WebElement> rows = wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(employeeRowsLocator, rowIndex));
+                WebElement row = rows.get(rowIndex);
+                List<WebElement> cells = row.findElements(By.cssSelector("td[id]"));
+                Map<String, String> uiRowData = new LinkedHashMap<>();
+
+                for (WebElement cell : cells) {
+                    js.executeScript("arguments[0].scrollIntoView(true);", cell);
+                    String fieldId = cell.getAttribute("id").trim();
+                    String uiValue = cell.getText().trim();
+                    String mappedKey = headerMapping.getOrDefault(fieldId, fieldId);
+                    uiRowData.put(mappedKey, uiValue);
+                }
+
+                return uiRowData;
+            } catch (StaleElementReferenceException | IndexOutOfBoundsException e) {
+                if (attempt == 3) {
+                    throw e;
+                }
+            }
+        }
+
+        throw new IllegalStateException("Unable to read checker review row data.");
+    }
+
+    private Map<String, String> extractEditableRowData(
+            WebElement row,
+            Map<String, String> headerMapping,
+            JavascriptExecutor js
+    ) {
+        for (int attempt = 1; attempt <= 3; attempt++) {
+            try {
+                List<WebElement> cells = row.findElements(By.cssSelector("td[id]"));
+                Map<String, String> uiRowData = new LinkedHashMap<>();
+
+                for (WebElement cell : cells) {
+                    js.executeScript("arguments[0].scrollIntoView(true);", cell);
+                    String fieldId = cell.getAttribute("id").trim();
+                    String uiValue = cell.getText().trim();
+                    String mappedKey = headerMapping.getOrDefault(fieldId, fieldId);
+                    uiRowData.put(mappedKey, uiValue);
+                }
+
+                return uiRowData;
+            } catch (StaleElementReferenceException e) {
+                if (attempt == 3) {
+                    throw e;
+                }
+            }
+        }
+
+        return Collections.emptyMap();
+    }
+
+    private boolean scrollEmployeeTable(JavascriptExecutor js, By employeeRowsLocator) {
+        List<By> containerLocators = Arrays.asList(
+                By.cssSelector(".ant-table-tbody-virtual-holder"),
+                By.cssSelector(".ant-table-body")
+        );
+
+        for (By containerLocator : containerLocators) {
+            for (WebElement container : driver.findElements(containerLocator)) {
+                try {
+                    if (!container.isDisplayed()) {
+                        continue;
+                    }
+
+                    long previousScrollTop = getScrollMetric(js, container, "scrollTop");
+                    long clientHeight = getScrollMetric(js, container, "clientHeight");
+                    long scrollHeight = getScrollMetric(js, container, "scrollHeight");
+                    long increment = Math.max(clientHeight - 40, 120);
+                    long nextScrollTop = Math.min(scrollHeight, previousScrollTop + increment);
+
+                    js.executeScript("arguments[0].scrollTop = arguments[1];", container, nextScrollTop);
+                    pauseForTableRender();
+
+                    long currentScrollTop = getScrollMetric(js, container, "scrollTop");
+                    if (currentScrollTop > previousScrollTop) {
+                        return true;
+                    }
+                } catch (StaleElementReferenceException ignored) {
+                }
+            }
+        }
+
+        List<WebElement> rows = driver.findElements(employeeRowsLocator);
+        if (!rows.isEmpty()) {
+            try {
+                WebElement lastRow = rows.get(rows.size() - 1);
+                js.executeScript("arguments[0].scrollIntoView({block:'end'});", lastRow);
+                pauseForTableRender();
+                return true;
+            } catch (StaleElementReferenceException ignored) {
+            }
+        }
+
+        return false;
+    }
+
+    private long getScrollMetric(JavascriptExecutor js, WebElement element, String metricName) {
+        Object value = js.executeScript("return arguments[0][arguments[1]];", element, metricName);
+        return value instanceof Number ? ((Number) value).longValue() : 0L;
+    }
+
+    private void pauseForTableRender() {
+        try {
+            Thread.sleep(250);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+    }
+
+    private Map<String, Map<String, String>> groupStoredEmployees(Map<String, String> allData) {
+        Map<String, Map<String, String>> groupedEmployees = new TreeMap<>(Comparator.comparingInt(this::extractEmployeeIndex));
+
+        for (Map.Entry<String, String> entry : allData.entrySet()) {
+            String key = entry.getKey();
+            if (!key.startsWith("employee-") || key.startsWith("employee-header-")) {
+                continue;
+            }
+
+            String[] parts = key.split("-", 3);
+            if (parts.length < 3) {
+                continue;
+            }
+
+            String employeeKey = parts[0] + "-" + parts[1];
+            String fieldName = parts[2];
+            groupedEmployees
+                    .computeIfAbsent(employeeKey, ignored -> new LinkedHashMap<>())
+                    .put(fieldName, entry.getValue());
+        }
+
+        return groupedEmployees;
+    }
+
+    private Map<String, String> buildEmployeeLookup(Map<String, Map<String, String>> storedEmployees) {
+        Map<String, String> lookup = new HashMap<>();
+
+        for (Map.Entry<String, Map<String, String>> employee : storedEmployees.entrySet()) {
+            String employeeKey = employee.getKey();
+            Map<String, String> employeeData = employee.getValue();
+
+            addLookupKey(lookup, "EID", employeeData.get("EID"), employeeKey);
+            addLookupKey(lookup, "Email", employeeData.get("Email"), employeeKey);
+            addLookupKey(lookup, "Passport Number", employeeData.get("Passport Number"), employeeKey);
+            addLookupKey(lookup, "Mobile", employeeData.get("Mobile"), employeeKey);
+            addLookupKey(lookup, "Alternate Phone", employeeData.get("Alternate Phone"), employeeKey);
+            addLookupKey(lookup, "Display Name", employeeData.get("Display Name"), employeeKey);
+        }
+
+        return lookup;
+    }
+
+    private void addLookupKey(Map<String, String> lookup, String fieldName, String value, String employeeKey) {
+        if (value == null || value.isBlank()) {
+            return;
+        }
+        lookup.putIfAbsent(buildLookupKey(fieldName, value), employeeKey);
+    }
+
+    private String resolveEmployeeKey(Map<String, String> uiRowData, Map<String, String> lookup) {
+        String[] candidateFields = {
+                "EID",
+                "Email",
+                "Passport Number",
+                "Mobile",
+                "Alternate Phone",
+                "Display Name"
+        };
+
+        for (String fieldName : candidateFields) {
+            String fieldValue = uiRowData.get(fieldName);
+            if (fieldValue == null || fieldValue.isBlank()) {
+                continue;
+            }
+
+            String employeeKey = lookup.get(buildLookupKey(fieldName, fieldValue));
+            if (employeeKey != null) {
+                return employeeKey;
+            }
+        }
+
+        return null;
+    }
+
+    private String buildLookupKey(String fieldName, String value) {
+        return fieldName + "::" + value.trim().toLowerCase(Locale.ROOT);
+    }
+
+    private String describeUiEmployee(Map<String, String> uiRowData) {
+        String[] candidateFields = {"EID", "Email", "Passport Number", "Display Name", "Mobile"};
+        for (String fieldName : candidateFields) {
+            String fieldValue = uiRowData.get(fieldName);
+            if (fieldValue != null && !fieldValue.isBlank()) {
+                return fieldName + "=" + fieldValue;
+            }
+        }
+        return uiRowData.toString();
+    }
+
+    private String buildUiEmployeeFingerprint(Map<String, String> uiRowData) {
+        String[] candidateFields = {"EID", "Email", "Passport Number", "Display Name", "Mobile"};
+        for (String fieldName : candidateFields) {
+            String fieldValue = uiRowData.get(fieldName);
+            if (fieldValue != null && !fieldValue.isBlank()) {
+                return fieldName + "::" + fieldValue.trim().toLowerCase(Locale.ROOT);
+            }
+        }
+        return uiRowData.toString().toLowerCase(Locale.ROOT);
+    }
+
+    private void logStoredEmployeesSnapshot(String label, Map<String, String> allData) {
+        Map<String, Map<String, String>> groupedEmployees = groupStoredEmployees(allData);
+
+        System.out.println("\n===== " + label + " | Stored Employees =====");
+        for (Map.Entry<String, Map<String, String>> employee : groupedEmployees.entrySet()) {
+            System.out.println(employee.getKey());
+            for (Map.Entry<String, String> field : employee.getValue().entrySet()) {
+                System.out.printf("  %-20s : %s%n", field.getKey(), field.getValue());
+            }
+        }
+    }
+
+    private void logUiEmployeesSnapshot(String label, List<Map<String, String>> uiEmployees) {
+        System.out.println("\n===== " + label + " | UI Employees =====");
+        for (int index = 0; index < uiEmployees.size(); index++) {
+            System.out.println("employee-" + index);
+            for (Map.Entry<String, String> field : uiEmployees.get(index).entrySet()) {
+                System.out.printf("  %-20s : %s%n", field.getKey(), field.getValue());
+            }
+        }
+    }
+
+    private int extractEmployeeIndex(String employeeKey) {
+        String[] parts = employeeKey.split("-");
+        if (parts.length < 2) {
+            return Integer.MAX_VALUE;
+        }
+
+        try {
+            return Integer.parseInt(parts[1]);
+        } catch (NumberFormatException e) {
+            return Integer.MAX_VALUE;
         }
     }
 
@@ -1280,7 +1619,7 @@ public class adminsteps {
         System.out.println("\n✅ Starting Assertions:");
 
 // 1️⃣ Find all UI Rows
-        List<WebElement> allRows = driver.findElements(By.cssSelector(".ant-table-row.editable-row"));
+        By employeeRowsLocator = By.cssSelector(".ant-table-row.editable-row");
         JavascriptExecutor js = (JavascriptExecutor) driver;
 
 // 2️⃣ Prepare header mapping
@@ -1312,46 +1651,41 @@ public class adminsteps {
 
 // 3️⃣ Get Stored Data
         Map<String, String> storedData = EmployeeAdditionalStorage.getAllData();
+        Map<String, Map<String, String>> storedEmployees = groupStoredEmployees(storedData);
+        Map<String, String> employeeLookup = buildEmployeeLookup(storedEmployees);
 
 // 4️⃣ Build Mapping of MolNo -> employee-x
-        Map<String, String> molNoToEmployeeKey = new HashMap<>();
-        for (Map.Entry<String, String> entry : storedData.entrySet()) {
-            String key = entry.getKey();  // example: employee-0-Mol No
-            if (key.contains("Mol No")) {
-                String employeeKey = key.split("-Mol No")[0]; // example: employee-0
-                molNoToEmployeeKey.put(entry.getValue(), employeeKey);
-            }
+        List<Map<String, String>> uiRows = collectEditableRows(
+                employeeRowsLocator,
+                headerMapping,
+                employeeLookup,
+                storedEmployees.size(),
+                js,
+                "authorizer"
+        );
+        if (uiRows.size() != storedEmployees.size()) {
+            Assert.fail("Unable to collect all authorizer review rows from the table. Collected "
+                    + uiRows.size() + " of " + storedEmployees.size());
         }
 
 // 5️⃣ Now for each UI Row
-        for (int rowIndex = 0; rowIndex < allRows.size(); rowIndex++) {
-            WebElement row = allRows.get(rowIndex);
-            List<WebElement> cells = row.findElements(By.cssSelector("td[id]"));
+        for (int rowIndex = 0; rowIndex < uiRows.size(); rowIndex++) {
+            Map<String, String> uiRowData = uiRows.get(rowIndex);
 
-            String uiMolNo = "";
-            Map<String, String> uiRowData = new HashMap<>();
+            String employeeKey = resolveEmployeeKey(uiRowData, employeeLookup);
 
-            for (WebElement cell : cells) {
-                js.executeScript("arguments[0].scrollIntoView(true);", cell);
-
-                String fieldId = cell.getAttribute("id").trim();
-                String fieldLabel = headerMapping.getOrDefault(fieldId, fieldId);
-                String uiValue = cell.getText().trim();
-
-                if (fieldId.equals("molNo")) {
-                    uiMolNo = uiValue;
-                }
-
-                uiRowData.put(fieldLabel, uiValue);
+            if (employeeKey == null) {
+                Assert.fail("No matching employee found in storage for authorizer row " + rowIndex + " using " + describeUiEmployee(uiRowData));
             }
 
-            if (uiMolNo.isEmpty()) {
+            Map<String, String> storedEmployeeData = storedEmployees.get(employeeKey);
+            /*
                 System.out.println("⚠️ Skipping row: MolNo not found.");
                 continue;
             }
 
             // 🔥 Find corresponding stored employee by MolNo
-            String employeeKey = molNoToEmployeeKey.get(uiMolNo);
+            // Legacy MolNo matching removed. The row is already resolved via employeeKey above.
             if (employeeKey == null) {
                 System.out.println("❌ No matching employee found in storage for MolNo: " + uiMolNo);
                 continue;
@@ -1359,10 +1693,16 @@ public class adminsteps {
 
             System.out.printf("%n📌 Row (MolNo: %s - Employee %s):%n", uiMolNo, employeeKey);
 
+            //
+            System.out.printf("%nðŸ“Œ Row %d (%s):%n", rowIndex, employeeKey);
+
+            */
+            System.out.printf("%nRow %d (%s):%n", rowIndex, employeeKey);
+
             for (Map.Entry<String, String> uiFieldEntry : uiRowData.entrySet()) {
                 String label = uiFieldEntry.getKey();
                 String uiValue = uiFieldEntry.getValue();
-                String storedValue = storedData.get(employeeKey + "-" + label);
+                String storedValue = storedEmployeeData.get(label);
 
                 System.out.printf("🔍 %-20s | UI: %-30s | Stored: %-30s%n", label, uiValue, storedValue);
 
@@ -1693,7 +2033,106 @@ public class adminsteps {
         softAssert.assertAll();
     }
 
-}
+    @And("[Admin Page] User verifies that the actual employees with salary employees file employees.")
+    public void adminPageUserVerifiesThatTheActualEmployeesWithSalaryEmployeesFileEmployees() throws InterruptedException {
+        // Step 1: Download Admin View Salary File
+        WebElement originalSalaryFileDownload = driver.findElement(By.xpath("//div[normalize-space()='Original Salary File']"));
+        originalSalaryFileDownload.click();
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(Loading)));
+
+        Thread.sleep(2000); // Wait for download to finish
+
+        // Step 2: Find latest downloaded file
+        File downloadDir = new File("D:\\Hrcms\\src\\test\\java\\document\\");
+        File[] files = downloadDir.listFiles();
+        if (files == null || files.length == 0) {
+            throw new RuntimeException("No files found in the download directory.");
+        }
+
+        Arrays.sort(files, Comparator.comparingLong(File::lastModified).reversed());
+        File adminSalaryFile = files[0];
+
+        System.out.println("📄 Admin Salary File: " + adminSalaryFile.getName());
+
+        // Step 3: Load data from Admin Salary File
+        ProcessSalaryEmployeeData.loadFromExcel(adminSalaryFile, null);
+        List<Map<String, Object>> adminEmployees = ProcessSalaryEmployeeData.getAllData();
+
+        // Step 4: Use selected employee from memory
+        Map<String, String> selected = ProcessSalaryEmployeeData.getSelectedEmployee();
+
+        System.out.println("\n🔍 Selected Employee (from processed file):");
+        selected.forEach((k, v) -> System.out.println("  " + k + ": " + v));
+
+        // Step 5: Try to find matching admin record
+        Map<String, Object> matchingAdminRow = adminEmployees.stream()
+                .filter(adminRow ->
+                        normalize("EMP CODE", adminRow.get("EMP CODE")).equals(normalize("EMP CODE", selected.get("EMP CODE"))) &&
+                                normalize("MOL NO", adminRow.get("MOL NO")).equals(normalize("MOL NO", selected.get("MOL NO"))) &&
+                                normalize("WALLET ID/IBAN", adminRow.get("WALLET ID/IBAN")).endsWith(normalize("WALLET ID/IBAN", selected.get("WALLET ID/IBAN")))
+                )
+                .findFirst()
+                .orElse(null);
+
+        if (matchingAdminRow == null) {
+            System.err.println("\n❌ No matching row found in admin file for:");
+            selected.forEach((k, v) -> System.err.println("  " + k + ": " + v));
+
+            System.out.println("\n📄 Admin File Entries (Normalized):");
+            for (int i = 0; i < adminEmployees.size(); i++) {
+                Map<String, Object> row = adminEmployees.get(i);
+                System.out.println("Row " + (i + 1) + ":");
+                System.out.println("  EMP CODE        : " + normalize("EMP CODE", row.get("EMP CODE")));
+                System.out.println("  MOL NO          : " + normalize("MOL NO", row.get("MOL NO")));
+                System.out.println("  WALLET ID/IBAN  : " + normalize("WALLET ID/IBAN", row.get("WALLET ID/IBAN")));
+                System.out.println("  -------------------------------");
+            }
+
+            Assert.fail("❌ No matching row found for selected employee in admin file.");
+        }
+
+        System.out.println("\n✅ Match found in Admin Salary File:");
+        matchingAdminRow.forEach((k, v) -> System.out.println("  " + k + ": " + v));
+
+// Optional: Compare selected and admin record field by field
+        System.out.println("\n🧾 Admin Employee Entries (Normalized):");
+        for (Map<String, Object> row : adminEmployees) {
+            System.out.println(" - EMP CODE: " + normalize("EMP CODE", row.get("EMP CODE")));
+            System.out.println("   MOL NO: " + normalize("MOL NO", row.get("MOL NO")));
+            System.out.println("   WALLET ID/IBAN: " + normalize("WALLET ID/IBAN", row.get("WALLET ID/IBAN")));
+            System.out.println("   -----------------------------");
+        }
+    }
+        // Normalizer method
+        private String normalize (String key, Object value){
+            if (value == null) return "";
+            String raw = value.toString().trim();
+
+            // Do not strip leading zeros for EMP CODE
+            if ("EMP CODE".equalsIgnoreCase(key)) {
+                return raw.replaceAll("[^\\dA-Za-z]", "");
+            }
+
+            // Handle scientific notation from Excel
+            if (raw.matches("(?i)^\\d+(\\.\\d+)?[eE][+-]?\\d+$")) {
+                try {
+                    raw = new java.math.BigDecimal(raw).toPlainString();
+                } catch (NumberFormatException ignored) {
+                }
+            }
+
+            // Strip decimal part like ".0"
+            if (raw.matches("^\\d+\\.0+$")) {
+                raw = raw.replaceAll("\\.0+$", "");
+            }
+
+            // Remove non-alphanumeric characters, strip leading zeros
+            return raw.replaceAll("[^\\dA-Za-z]", "").replaceFirst("^0+(?!$)", "");
+        }
+    }
+
+
+
 
 
 
